@@ -1,0 +1,46 @@
+﻿<prism:PrismApplication x:Class="FST.Client.App"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:local="clr-namespace:FST.Client"
+                        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+	                    xmlns:prism="http://prismlibrary.com/"
+                        xmlns:converters="clr-namespace:FST.Client.Converters">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="LightBlue" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/FST.CultureLocalization;component/Resources/lang.xaml"/>
+                <ResourceDictionary Source="Resources/ButtonStyles.xaml" />
+                <ResourceDictionary Source="Resources/WindowStyles.xaml" />
+                <ResourceDictionary Source="Resources/ToggleSwitchStyle.xaml" />
+
+                <ResourceDictionary Source="Resources/ViewToViewModelBindings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
+                                                  FalseValue="Visible"
+                                                  TrueValue="Hidden" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsCollapsed"
+                                                  FalseValue="Collapsed"
+                                                  TrueValue="Visible" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsHidden"
+                                                  FalseValue="Hidden"
+                                                  TrueValue="Visible" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsVisible"
+                                                  FalseValue="Visible"
+                                                  TrueValue="Collapsed" />
+            <converters:ReversBoolConverter x:Key="ReversBoolConverter"/>
+            <converters:EnumToStringConverter x:Key="EnumToStringConverter"/>
+            <converters:StringToStarsConverter x:Key="StringToStarsConverter"/>
+            <converters:NullToDoNothingConverter x:Key="NullToDoNothingConverter"/>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters:PagesToChunkListConverter x:Key="PagesToChunkListConverter"/>
+            <converters:IsValuesEqualsToBoolConverter x:Key="IsValuesEqualsToBoolConverter"/>
+            <converters:InformationKindToIconConverter x:Key="InformationKindToIconConverter"/>
+            <converters:IsValuesEqualsToBoolMultiConverter x:Key="IsValuesEqualsToBoolMultiConverter"/>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

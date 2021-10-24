@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="FST.Client.Views.DesignView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:vm="clr-namespace:FST.ViewModel.ViewModels;assembly=FST.ViewModel"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:ToggleSwitch="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
+             xmlns:Borders="clr-namespace:ToggleSwitch.Borders;assembly=ToggleSwitch"
+             xmlns:local="clr-namespace:FST.Client.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:DesignViewModel}">
+    <StackPanel Width="auto"
+                Margin="50">
+        <StackPanel.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin"
+                        Value="0 30 0 30" />
+            </Style>
+        </StackPanel.Resources>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Command="{Binding ChangeLanguageCmd}"
+                    Width="200"
+                    Margin="0 0 30 0"
+                    CommandParameter="en-US"
+                    Content="{DynamicResource DesignViewButtonLanguageEng}" />
+            <Button Command="{Binding ChangeLanguageCmd}"
+                    Width="200"
+                    Margin="30 0 0 0"
+                    CommandParameter="ru-RU"
+                    Content="{DynamicResource DesignViewButtonLanguageRu}" />
+        </StackPanel>
+
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Margin="50 0 10 0"
+                     Text="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="True"
+                     Focusable="False"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Style="{StaticResource MaterialDesignFilledTextBox}"
+                     materialDesign:HintAssist.Hint="{DynamicResource DesignViewTextBoxImageChoosing}" />
+            <Button Grid.Column="1"
+                    Width="150"
+                    Command="{Binding SelectGridPreviewBackgroundImageCmd}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
+        </Grid>
+
+        <Grid HorizontalAlignment="Stretch"
+              Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Margin="50 0 10 0"
+                     Text="{Binding EmailSendBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="True"
+                     Focusable="False"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Style="{StaticResource MaterialDesignFilledTextBox}"
+                     materialDesign:HintAssist.Hint="{DynamicResource DesignViewEmailSendButtonImageChoosing}" />
+            <Button Grid.Column="1"
+                    Width="150"
+                    Command="{Binding SelectEmailSendBackgroundImageCmd}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
+        </Grid>
+
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="2">
+            <Label Content="{DynamicResource DesignViewLabelLocationIcons}"
+                   FontSize="17"
+                   HorizontalAlignment="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <UniformGrid Grid.Column="1"
+                             Columns="5">
+                    <UniformGrid.Resources>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Cursor"
+                                    Value="Hand" />
+                            <Setter Property="Margin"
+                                    Value="10 0 10 0" />
+                        </Style>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Setter Property="Opacity"
+                                    Value="1" />
+                        </Style>
+                    </UniformGrid.Resources>
+
+                    <StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding UpdatePreviewGridCmd}"
+                                                       CommandParameter="20" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Border BorderThickness="0.5"
+                                BorderBrush="Black">
+                            <Image Source="/FST.Client;component/Resources/Img/5x4.png" />
+                        </Border>
+                        <RadioButton IsChecked="{Binding ItemsInPreviewGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=20}"
+                                     HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding UpdatePreviewGridCmd}"
+                                                       CommandParameter="16" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Border BorderThickness="0.5"
+                                BorderBrush="Black">
+                            <Image Source="/FST.Client;component/Resources/Img/4x3.png" />
+                        </Border>
+                        <RadioButton IsChecked="{Binding ItemsInPreviewGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=16}"
+                                     HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding UpdatePreviewGridCmd}"
+                                                       CommandParameter="9" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Border BorderThickness="0.5"
+                                BorderBrush="Black">
+                            <Image Source="/FST.Client;component/Resources/Img/3x3.png" />
+                        </Border>
+                        <RadioButton IsChecked="{Binding ItemsInPreviewGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=9}"
+                                     HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding UpdatePreviewGridCmd}"
+                                                       CommandParameter="4" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Border BorderThickness="0.5"
+                                BorderBrush="Black">
+                            <Image Source="/FST.Client;component/Resources/Img/2x2.png" />
+                        </Border>
+                        <RadioButton IsChecked="{Binding ItemsInPreviewGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=4}"
+                                     HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding UpdatePreviewGridCmd}"
+                                                       CommandParameter="1" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Border BorderThickness="0.5"
+                                BorderBrush="Black">
+                            <Image Source="/FST.Client;component/Resources/Img/1x1.png" />
+                        </Border>
+                        <RadioButton IsChecked="{Binding ItemsInPreviewGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=1}"
+                                     HorizontalAlignment="Center" />
+                    </StackPanel>
+                </UniformGrid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Command="{Binding ChangeWindowModeCmd}"
+                    CommandParameter="full"
+                    Width="220"
+                    Margin="0 0 30 0"
+                    Content="{DynamicResource DesignViewButtonFullScreenMode}" />
+            <Button Command="{Binding ChangeWindowModeCmd}"
+                    Width="220"
+                    Margin="30 0 0 0"
+                    CommandParameter="normal"
+                    Content="{DynamicResource DesignViewButtonWindowMode}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+
+            <ToggleSwitch:HorizontalToggleSwitch Height="25"
+                                                 Width="70"
+                                                 FontSize="12"
+                                                 Style="{StaticResource SimpleThumbTemplate}"
+                                                 BorderBrush="#FF6A6A6A"
+                                                 UncheckedForeground="White"
+                                                 UncheckedContent="{DynamicResource ToggleButtonOff}"
+                                                 CheckedContent="{DynamicResource ToggleButtonOn}"
+                                                 IsChecked="{Binding SortingDisplayFiles}"
+                                                 Margin="0,5,0,10"
+                                                 ThumbBrush="White"
+                                                 UncheckedBackground="Red"
+                                                 CheckedBackground="Green"
+                                                 HorizontalAlignment="Left" />
+            
+            <Label Content="{DynamicResource DesignViewLabelSortingFiles}"
+                   FontSize="17"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>
