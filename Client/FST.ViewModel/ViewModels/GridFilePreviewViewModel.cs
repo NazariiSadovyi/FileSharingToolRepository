@@ -22,7 +22,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
-
+using FST.DataAccess.Repositories.Interfaces;
 
 namespace FST.ViewModel.ViewModels
 {
@@ -47,9 +47,13 @@ namespace FST.ViewModel.ViewModels
         [Dependency]
         public IRegionManager _regionManager;
         [Dependency]
+        public IWebServerService WebServerService;
+        [Dependency]
         public IAppSettingService _appSettingService;
         [Dependency]
         public ILocalFilesService _localFilesService;
+        [Dependency]
+        public ILocalFileRepository LocalFileRepository;
         [Dependency]
         public IApplicationTaskUtility _applicationTaskUtility;
         [Dependency]
@@ -57,15 +61,10 @@ namespace FST.ViewModel.ViewModels
 
         public ICommand ClosePreviewCmd
         {
-            get
+            get => new DelegateCommand(() => 
             {
-                return _closePreviewCmd ??
-                  (_closePreviewCmd = new DelegateCommand(
-                      () => {
-                          SharedAppDataViewModel.IsPreviewVisible = false;
-                      }
-                  ));
-            }
+                SharedAppDataViewModel.IsPreviewVisible = false;
+            });
         }
 
         public ICommand OnLoadCmd
@@ -103,19 +102,6 @@ namespace FST.ViewModel.ViewModels
                               }
                           });
 
-                          //var importedFiles = FileImportBackgroundService.ProccessigItems.Where(_ => _.Status == ImportStatus.Imported);
-                          //foreach (var importedFile in importedFiles)
-                          //{
-                          //    var file = AllFiles.FirstOrDefault((_ => _.Name == importedFile.Name && _.LocalPath == importedFile.LocalPath));
-                          //    if (file == null)
-                          //    {
-                          //        continue;
-                          //    }
-
-                          //    file.Id = importedFile.Id;
-                          //    file.WebPath = importedFile.WebPath;
-                          //}
-
                           IEnumerable<FilePreviewViewModel> files = AllFiles;
                           if (_appSettingService.SortingDisplayFiles)
                           {
@@ -133,20 +119,6 @@ namespace FST.ViewModel.ViewModels
                   ));
             }
         }
-
-        //private void FileImportService_FileImportedEvent(object sender, ImportFileViewModel e)
-        //{
-        //    var previewFile = AllFiles.FirstOrDefault(_ => _.LocalPath == e.LocalPath && _.Name == e.Name);
-        //    if (previewFile == null)
-        //    {
-        //        return;
-        //    }
-
-        //    previewFile.Id = e.Id;
-        //    previewFile.WebPath = e.WebPath;
-
-        //    Task.Run(async () => await FetchQRCodeImage(previewFile));
-        //}
 
         public ICommand OpenFullPreviewCmd
         {
@@ -293,55 +265,44 @@ namespace FST.ViewModel.ViewModels
             }
         }
 
-        //public async Task<string> GetSharedLink(FilePreviewViewModel file, CloudApi client)
-        //{
-        //    var sharedLink = await client.GetSharedLink(file.WebPath);
+        private async Task<string> GetOrCreateFileId(FilePreviewViewModel viewModel)
+        {
 
-        //    if (string.IsNullOrEmpty(sharedLink))
-        //    {
-        //        sharedLink = await client.CreateSharedLink(file.WebPath);
-        //    }
+            var localFile = await LocalFileRepository.GetByFullPath(viewModel.FullLocalPath);
+            if (localFile == null)
+            {
+                localFile = await LocalFileRepository.Add(viewModel.FullLocalPath);
+            }
 
-        //    return sharedLink;
-        //}
+            return localFile.Id;
+        }
 
         private async Task FetchQRCodeImage(FilePreviewViewModel file)
         {
-            if (string.IsNullOrEmpty(file.WebPath))
+            file.Id = await GetOrCreateFileId(file);
+            file.SharedLink = WebServerService.GetFilePath(file.Id);
+            
+            var localQRImageName = $"{HashStringHelper.GetHashString(file.Id)}.jpeg";
+            var localImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
+            if (localImage != null)
             {
+                file.QRImage = localImage;
                 return;
             }
-
-            //var client = await _cloudService.GetCurrentCloudeApi();
-            //if (client == null)
-            //{
-            //    return;
-            //}
-
-            //var sharedLink = await GetSharedLink(file, client);
-            //file.SharedLink = sharedLink;
-
-            //var localQRImageName = $"{HashStringHelper.GetHashString(sharedLink)}.jpeg";
-            //var localImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
-            //if (localImage != null)
-            //{
-            //    file.QRImage = localImage;
-            //    return;
-            //}
-
-            //var qrCodeImagePath = await _localFileCacheService.SaveFile(fileStream =>
-            //{
-            //    return Task.Run(() =>
-            //    {
-            //        var qrGenerator = new QRCodeGenerator();
-            //        var qrCodeData = qrGenerator.CreateQrCode(sharedLink, QRCodeGenerator.ECCLevel.Q);
-            //        var qrCode = new QRCode(qrCodeData);
-            //        var qrCodeImage = qrCode.GetGraphic(5);
-            //        qrCodeImage.Save(fileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //    });
-            //}, localQRImageName, false);
-
-            //file.QRImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
+            
+            var qrCodeImagePath = await _localFileCacheService.SaveFile(fileStream =>
+            {
+                return Task.Run(() =>
+                {
+                    var qrGenerator = new QRCodeGenerator();
+                    var qrCodeData = qrGenerator.CreateQrCode(file.SharedLink, QRCodeGenerator.ECCLevel.Q);
+                    var qrCode = new QRCode(qrCodeData);
+                    var qrCodeImage = qrCode.GetGraphic(5);
+                    qrCodeImage.Save(fileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                });
+            }, localQRImageName, false);
+            
+            file.QRImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
         }
 
         private void UpdateGridStructure()
@@ -425,21 +386,5 @@ namespace FST.ViewModel.ViewModels
             }
         }
         #endregion
-
-        private BitmapImage BitmapToImageSource(Bitmap bitmap)
-        {
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
-
-                return bitmapimage;
-            }
-        }
     }
 }

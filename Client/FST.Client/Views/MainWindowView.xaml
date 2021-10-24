@@ -27,8 +27,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="300"
-                              MinWidth="300" />
+            <ColumnDefinition MaxWidth="300" MinWidth="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -45,12 +44,9 @@
             <Grid.Resources>
                 <Style TargetType="Button"
                        BasedOn="{StaticResource MainButtonWithIconStyle}">
-                    <Setter Property="HorizontalAlignment"
-                            Value="Stretch" />
-                    <Setter Property="Height"
-                            Value="50" />
-                    <Setter Property="Margin"
-                            Value="0 14 0 0" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="Height" Value="50" />
+                    <Setter Property="Margin" Value="0 14 0 0" />
                 </Style>
             </Grid.Resources>
 
@@ -71,27 +67,6 @@
                         properties:ButtonProperties.Image="Folder"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="HotFoldersView" />
-                <Button Content="{DynamicResource MainViewButtonCloudSettings}"
-                        properties:ButtonProperties.Image="CloudUploadOutline"
-                        Command="{Binding SwitchUserControl}"
-                        CommandParameter="CloudSettingsView" />
-                <Button Content="{DynamicResource MainViewButtonEmail}"
-                        properties:ButtonProperties.Image="EmailOutline"
-                        Command="{Binding SwitchUserControl}"
-                        CommandParameter="EmailSettingView" />
-                <Button Content="{DynamicResource MainViewButtonStatus}"
-                        properties:ButtonProperties.Image="ListStatus"
-                        Command="{Binding SwitchUserControl}"
-                        CommandParameter="StatusView" />
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Bottom"
-                        Margin="10 30 10 10"
-                        Grid.Row="1">
-                <Label HorizontalAlignment="Center"
-                       Content="{DynamicResource MainViewLabelUploading}" />
-                <Label HorizontalAlignment="Center"
-                       Content="{Binding SharedAppDataViewModel.UploadingMessage, NotifyOnSourceUpdated=True}" />
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
@@ -102,30 +77,6 @@
                         Content="{DynamicResource MainViewButtonStart}"
                         Command="{Binding StartPreviewCmd}"
                         Style="{StaticResource MainButtonStyle}" />
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Center"
-                        Margin="10"
-                        Grid.Row="3">
-                <Label HorizontalAlignment="Center"
-                       Content="{DynamicResource MainViewLabelFreeSpace}" />
-                <Grid Margin="20 0 20 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <ProgressBar Height="25"
-                                 Value="{Binding SpaceUsagePercentage, NotifyOnSourceUpdated=True}"
-                                 materialDesign:TransitionAssist.DisableTransitions="True" />
-                    <TextBlock Foreground="White"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="16"
-                               Text="{Binding SpaceUsageMessage, NotifyOnSourceUpdated=True}">
-                        <TextBlock.Effect>
-                            <DropShadowEffect BlurRadius="10"></DropShadowEffect>
-                        </TextBlock.Effect>
-                    </TextBlock>
-                </Grid>
             </StackPanel>
 
             <Grid Grid.Row="4">

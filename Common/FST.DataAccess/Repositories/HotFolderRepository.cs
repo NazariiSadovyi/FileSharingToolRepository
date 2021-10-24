@@ -1,7 +1,7 @@
 ﻿using FST.DataAccess.Entities;
 using FST.DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +30,7 @@ namespace FST.DataAccess.Repositories
         public async Task<IEnumerable<HotFolder>> GetAll()
         {
             Monitor.Enter(_locker);
-            var hotFolders = await _context.HotFolder.ToListAsync();
+            var hotFolders = await _context.HotFolder.AsQueryable().ToListAsync();
             Monitor.Exit(_locker);
 
             return hotFolders;

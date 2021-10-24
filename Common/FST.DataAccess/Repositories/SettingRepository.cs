@@ -1,7 +1,7 @@
 ﻿using FST.DataAccess.Entities;
 using FST.DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

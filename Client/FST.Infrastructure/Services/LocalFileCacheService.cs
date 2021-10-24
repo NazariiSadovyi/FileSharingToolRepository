@@ -13,7 +13,7 @@ namespace FST.Infrastructure.Services
 
         public LocalFileCacheService()
         {
-            var tempDirectoryName = "Event QR Sender";
+            var tempDirectoryName = "File Sharing Tool";
             var tempDirectoryPath = Path.GetTempPath();
             _eternalDirectoryPath = Path.Combine(tempDirectoryPath, tempDirectoryName, "Eternal");
             _temporaryDirectoryPath = Path.Combine(tempDirectoryPath, tempDirectoryName, "Temporary");

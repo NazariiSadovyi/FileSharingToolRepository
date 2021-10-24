@@ -1,8 +1,12 @@
+using FST.DataAccess;
+using FST.DataAccess.Repositories;
+using FST.DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -23,6 +27,9 @@ namespace FST.WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ApplicationDBContext>();
+            services.AddSingleton<ILocalFileRepository, LocalFileRepository>();
+
             services.AddControllersWithViews();
         }
 
@@ -41,6 +48,11 @@ namespace FST.WebApplication
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(@"C:\"),
+                RequestPath = "/test"
+            });
 
             app.UseRouting();
 

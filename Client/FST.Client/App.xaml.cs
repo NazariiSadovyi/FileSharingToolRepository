@@ -51,8 +51,8 @@ namespace FST.Client
 
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
             {
-                var viewName = viewType.FullName.Replace(".Views.", ".ViewModel.ViewModels.");
-                var viewAssemblyName = "EventQRSender.ViewModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                var viewName = viewType.FullName.Replace(".Client.Views.", ".ViewModel.ViewModels.");
+                var viewAssemblyName = "FST.ViewModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                 var viewModelName = $"{viewName}Model, {viewAssemblyName}";
                 return Type.GetType(viewModelName);
             });

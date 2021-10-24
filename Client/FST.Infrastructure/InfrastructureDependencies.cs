@@ -11,6 +11,7 @@ namespace FST.Infrastructure
         {
             containerRegistry.RegisterSingleton<ILocalFileCacheService, LocalFileCacheService>();
             containerRegistry.RegisterSingleton<IHotFolderService, HotFolderService>();
+            containerRegistry.RegisterSingleton<IWebServerService, WebServerService>();
             containerRegistry.Register<IAppSettingService, AppSettingService>();
             containerRegistry.Register<IFileExplorerService, FileExplorerService>();
 

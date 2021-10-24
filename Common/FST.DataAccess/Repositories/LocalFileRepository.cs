@@ -1,8 +1,8 @@
 ﻿using FST.DataAccess.Entities;
 using FST.DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace FST.DataAccess.Repositories
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = Path.GetFileName(localFilePath),
-                Path = Path.GetFullPath(localFilePath)
+                Path = Path.GetDirectoryName(localFilePath)
             };
             _context.LocalFile.Add(localfile);
             await _context.SaveChangesAsync();
@@ -44,6 +44,14 @@ namespace FST.DataAccess.Repositories
         public async Task<LocalFile> GetById(string fileId)
         {
             return await _context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
+        }
+
+        public async Task<LocalFile> GetByFullPath(string fileFullPath)
+        {
+            var name = Path.GetFileName(fileFullPath);
+            var path = Path.GetDirectoryName(fileFullPath);
+            return await _context.LocalFile
+                .FirstOrDefaultAsync(_ => _.Name == name && _.Path == path);
         }
 
         public async Task Remove(string fileId)
