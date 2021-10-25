@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
   <?if $(var.Platform) = x64 ?>
   <?define ProductName = "File Sharing Tool x64" ?>
   <?define Win64 = "yes" ?>
@@ -44,7 +45,9 @@
 			<ComponentGroupRef Id="ClientDynamic" />
 			<ComponentGroupRef Id="ServerDynamic" />
       <ComponentRef Id="SetPermissionComponent"/>
-		</Feature>
+      <ComponentRef Id="CommonDirComponent"/>
+      <ComponentRef Id="C_IISWebsite"/>
+    </Feature>
 
     <DirectoryRef Id="INSTALL_DIR">
       <Component DiskId="1" Id="SetPermissionComponent" Guid="{7CDC3F9E-F2A6-4C34-A328-D13F5290D6B8}">
@@ -57,11 +60,31 @@
       </Component>
     </DirectoryRef>
 
-    <!--<DirectoryRef Id="COMMON_DIR">
-      <Component DiskId="1" Id="DummyComponentForPermissionsWebsite2" Guid="{BD5DAA9F-9DC9-4EB3-99A9-0BA8243DCD70}">
+    <!--<Component DiskId="1"
+               Id="InstalWebApplication"
+               Directory="SERVER_DIR"
+               Guid="{50CA708F-CC5C-4E1F-BD97-AB20D7E0346F}">
+      <iis:WebSite Id="WebSite"
+              ConfigureIfExists="yes"
+              AutoStart="yes"
+              Description="MyWebsite"
+              StartOnInstall="yes"
+              Directory="SERVER_DIR">
+        <iis:WebAddress Id="AllUnassigned" Port="80"/>
+      </iis:WebSite>
+    </Component>-->
+
+    <!--<iis:WebSite Id="DefaultWebSite"
+                 Description="Default Web Site"
+                 Directory="SERVER_DIR">
+      <iis:WebAddress Id="AllUnassigned" Port="80"/>
+    </iis:WebSite>-->
+    
+    <DirectoryRef Id="COMMON_DIR">
+      <Component DiskId="1" Id="CommonDirComponent" Guid="{BD5DAA9F-9DC9-4EB3-99A9-0BA8243DCD70}">
         <CreateFolder />
       </Component>
-    </DirectoryRef>-->
+    </DirectoryRef>
 
     <!--<CustomAction Id="CopyDatabaseFromClientToCommon"
                   Directory="CLIENT_DIR"
@@ -77,7 +100,24 @@
     
 	</Product>
 
-	 <!--<Fragment>
+  <Fragment>
+    <DirectoryRef Id="SERVER_DIR">
+      <Component Id="C_IISWebsite" Guid="{E45FBE0E-4C65-4D07-A236-55A16F172920}" KeyPath="yes">
+        <!-- The "Identity" attritbute below needs to be set to "other" to use the util:User defined above -->
+        <!--<iis:WebAppPool Id="WebAppPool" Name="[WEB_APP_POOL_NAME]" Identity="other" User="WebAppPoolUser"/>-->
+
+        <iis:WebSite Id="DefaultWebSite" Description="Default Web Site" Directory="COMMON_DIR" >
+          <iis:WebAddress Id="AllUnassigned" Port="80"/>
+        </iis:WebSite>
+
+        <iis:WebVirtualDir Id="My.VirtualDir" Alias="FileSharingTool" Directory="SERVER_DIR" WebSite="DefaultWebSite">
+          <iis:WebApplication Id="Application" Name="FileSharingTool"/>
+        </iis:WebVirtualDir>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <!--<Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALL_DIR" Name="File Sharing Tool">
