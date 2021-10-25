@@ -27,7 +27,6 @@
                 DowngradeErrorMessage="A newer version of File Sharing Tool is already installed." />
 		<MediaTemplate EmbedCab="yes"/>
 
-    <UIRef Id="WixUI_InstallDir" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_DIR" />
 
     <!--Directory structure-->
@@ -59,32 +58,14 @@
         </CreateFolder>
       </Component>
     </DirectoryRef>
-
-    <!--<Component DiskId="1"
-               Id="InstalWebApplication"
-               Directory="SERVER_DIR"
-               Guid="{50CA708F-CC5C-4E1F-BD97-AB20D7E0346F}">
-      <iis:WebSite Id="WebSite"
-              ConfigureIfExists="yes"
-              AutoStart="yes"
-              Description="MyWebsite"
-              StartOnInstall="yes"
-              Directory="SERVER_DIR">
-        <iis:WebAddress Id="AllUnassigned" Port="80"/>
-      </iis:WebSite>
-    </Component>-->
-
-    <!--<iis:WebSite Id="DefaultWebSite"
-                 Description="Default Web Site"
-                 Directory="SERVER_DIR">
-      <iis:WebAddress Id="AllUnassigned" Port="80"/>
-    </iis:WebSite>-->
     
     <DirectoryRef Id="COMMON_DIR">
       <Component DiskId="1" Id="CommonDirComponent" Guid="{BD5DAA9F-9DC9-4EB3-99A9-0BA8243DCD70}">
         <CreateFolder />
       </Component>
     </DirectoryRef>
+
+    <UIRef Id="CustomUI" />
 
     <!--<CustomAction Id="CopyDatabaseFromClientToCommon"
                   Directory="CLIENT_DIR"
@@ -103,28 +84,20 @@
   <Fragment>
     <DirectoryRef Id="SERVER_DIR">
       <Component Id="C_IISWebsite" Guid="{E45FBE0E-4C65-4D07-A236-55A16F172920}" KeyPath="yes">
-        <!-- The "Identity" attritbute below needs to be set to "other" to use the util:User defined above -->
-        <!--<iis:WebAppPool Id="WebAppPool" Name="[WEB_APP_POOL_NAME]" Identity="other" User="WebAppPoolUser"/>-->
+        <util:User Id="WebAppPoolUser" CreateUser="no" Name="[WEB_APP_POOL_IDENTITY_NAME]"
+                  Password="[WEB_APP_POOL_IDENTITY_PWD]" Domain="[WEB_APP_POOL_IDENTITY_DOMAIN]"/>
 
-        <iis:WebSite Id="DefaultWebSite" Description="Default Web Site" Directory="COMMON_DIR" >
+        <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="other" User="WebAppPoolUser"/>
+
+        <iis:WebSite Id="FileSharingToolWebSite" Description="File Sharing Tool Web Site" Directory="COMMON_DIR" >
           <iis:WebAddress Id="AllUnassigned" Port="80"/>
         </iis:WebSite>
 
-        <iis:WebVirtualDir Id="My.VirtualDir" Alias="FileSharingTool" Directory="SERVER_DIR" WebSite="DefaultWebSite">
-          <iis:WebApplication Id="Application" Name="FileSharingTool"/>
+        <iis:WebVirtualDir Id="My.VirtualDir" Alias="FileSharingTool" Directory="SERVER_DIR" WebSite="FileSharingToolWebSite">
+          <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
         </iis:WebVirtualDir>
       </Component>
     </DirectoryRef>
   </Fragment>
-
-  <!--<Fragment>
-    <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="$(var.PlatformProgramFilesFolder)">
-        <Directory Id="INSTALL_DIR" Name="File Sharing Tool">
-          <Directory Id="CLIENT_DIR" Name="Client" />
-          <Directory Id="SERVER_DIR" Name="Server" />
-        </Directory>
-      </Directory>
-    </Directory>
-  </Fragment>-->
+  
 </Wix>
