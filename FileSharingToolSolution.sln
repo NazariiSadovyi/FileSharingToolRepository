@@ -25,7 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "FST.Installer", "Installer\FST.Installer\FST.Installer.wixproj", "{88658453-505B-42DD-B7A7-C37DE43E03C0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{24732B48-5F1E-4985-8817-8F46186F900B} = {24732B48-5F1E-4985-8817-8F46186F900B}
 		{E120635D-7350-4C3F-BB38-D97AA906B016} = {E120635D-7350-4C3F-BB38-D97AA906B016}
 	EndProjectSection
 EndProject

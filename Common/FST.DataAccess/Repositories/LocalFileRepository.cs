@@ -43,7 +43,11 @@ namespace FST.DataAccess.Repositories
 
         public async Task<LocalFile> GetById(string fileId)
         {
-            return await _context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
+            Monitor.Enter(_locker);
+            var localFile =  await _context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
+            Monitor.Exit(_locker);
+
+            return localFile;
         }
 
         public async Task<LocalFile> GetByFullPath(string fileFullPath)

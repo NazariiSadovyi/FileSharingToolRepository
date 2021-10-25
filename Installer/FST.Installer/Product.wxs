@@ -1,30 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="FST.Installer" Language="1033" Version="1.0.0.0" Manufacturer="ELEKS" UpgradeCode="3c000a1a-5314-4560-85e5-bf5868f67892">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?if $(var.Platform) = x64 ?>
+  <?define ProductName = "File Sharing Tool x64" ?>
+  <?define Win64 = "yes" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+  <?define ProductName = "File Sharing Tool" ?>
+  <?define Win64 = "no" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+  <Product Id="*"
+           Name="$(var.ProductName)"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="Sadovyi"
+           UpgradeCode="3c000a1a-5314-4560-85e5-bf5868f67892">
+		<Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine" />
 
-		<Feature Id="ProductFeature" Title="FST.Installer" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+                Schedule="afterInstallInitialize"
+                DowngradeErrorMessage="A newer version of File Sharing Tool is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_DIR" />
+
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALL_DIR" Name="File Sharing Tool">
+          <Directory Id="CLIENT_DIR" Name="Client" />
+          <Directory Id="SERVER_DIR" Name="Server" />
+          <Directory Id="COMMON_DIR" Name="Common" />
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="FST.Installer" Level="1">
+			<ComponentGroupRef Id="ClientDynamic" />
+			<ComponentGroupRef Id="ServerDynamic" />
+      <ComponentRef Id="SetPermissionComponent"/>
 		</Feature>
+
+    <DirectoryRef Id="INSTALL_DIR">
+      <Component DiskId="1" Id="SetPermissionComponent" Guid="{7CDC3F9E-F2A6-4C34-A328-D13F5290D6B8}">
+        <CreateFolder>
+          <util:PermissionEx GenericRead="yes"
+                             GenericAll="yes"
+                             GenericWrite="yes"
+                             User="Users" />
+        </CreateFolder>
+      </Component>
+    </DirectoryRef>
+
+    <!--<DirectoryRef Id="COMMON_DIR">
+      <Component DiskId="1" Id="DummyComponentForPermissionsWebsite2" Guid="{BD5DAA9F-9DC9-4EB3-99A9-0BA8243DCD70}">
+        <CreateFolder />
+      </Component>
+    </DirectoryRef>-->
+
+    <!--<CustomAction Id="CopyDatabaseFromClientToCommon"
+                  Directory="CLIENT_DIR"
+                  ExeCommand="move &quot;[CLIENT_DIR]FileSharingTool.db&quot; &quot;[COMMON_DIR]FileSharingTool.db&quot;"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate="no"/>-->
+    <!--<InstallExecuteSequence>
+      <Custom Action='CopyDatabaseFromClientToCommon' Before='InstallFinalize'>
+        NOT WIX_UPGRADE_DETECTED
+      </Custom>
+    </InstallExecuteSequence>-->
+    
 	</Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="FST.Installer" />
-			</Directory>
-		</Directory>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+	 <!--<Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALL_DIR" Name="File Sharing Tool">
+          <Directory Id="CLIENT_DIR" Name="Client" />
+          <Directory Id="SERVER_DIR" Name="Server" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>-->
 </Wix>

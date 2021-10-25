@@ -34,7 +34,7 @@ namespace FST.Infrastructure.Services
 
         private string BuildFilePath(string localIp, string fileId)
         {
-            return $@"https://{localIp}/home/file?id={fileId}";
+            return $@"http://{localIp}/FileSharingTool/home/file?id={fileId}";
         }
 
         private string GetLocalAdress()

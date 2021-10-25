@@ -1,4 +1,5 @@
 ﻿using FST.DataAccess.Repositories.Interfaces;
+using FST.WebApplication.Helpers;
 using FST.WebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -36,16 +37,41 @@ namespace FST.WebApplication.Controllers
         public async Task<IActionResult> File(string id)
         {
             var localFile = await _localFileRepository.GetById(id);
-            var fullPath = Path.Combine(localFile.Path, localFile.Name);
-            fullPath = fullPath.Replace(@"C:\", @"\test\");
-            fullPath = fullPath.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            var viewModel = new PreviewFileViewModel()
+            var viewModel = new FilePreviewViewModel()
             {
                 Name = localFile.Name,
-                FullPath = fullPath
             };
 
-            return View("PhotoPreviewView", viewModel);
+            if (FileNameHelper.IsPhoto(localFile.Name))
+            {
+                viewModel.Adress = Url.Action("image", new { id });
+                viewModel.IsPhoto = true;
+            }
+            else if (FileNameHelper.IsVideo(localFile.Name))
+            {
+                viewModel.Adress = Url.Action("video", new { id });
+                viewModel.IsVideo = true;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            return View("FilePreviewView", viewModel);
+        }
+
+        public async Task<IActionResult> Video(string id)
+        {
+            var localFile = await _localFileRepository.GetById(id);
+            var fullPath = Path.Combine(localFile.Path, localFile.Name);
+            return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
+        }
+
+        public async Task<IActionResult> Image(string id)
+        {
+            var localFile = await _localFileRepository.GetById(id);
+            var fullPath = Path.Combine(localFile.Path, localFile.Name);
+            return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

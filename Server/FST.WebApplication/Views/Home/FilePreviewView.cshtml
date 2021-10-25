@@ -1,0 +1,19 @@
+﻿@model FilePreviewViewModel
+
+@if (Model.IsPhoto)
+{
+    <h1>@Model.Name</h1>
+    <img style="width:100%" src='@Model.Adress' />
+}
+else if (Model.IsVideo)
+{
+    <h1>@Model.Name</h1>
+    <video style="width:100%" controls>
+        <source src="@Model.Adress" type="video/mp4">
+    </video>
+}
+else
+{
+    <h1>@Model.Name</h1>
+    <h3>Sorry, not able to preview this format of file'</h3>
+}
