@@ -28,9 +28,12 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClientDynamic.wxs" />
     <Compile Include="CustomActions.wxs" />
+    <Compile Include="CustomDialog.wxs" />
     <Compile Include="CustomUI.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="ServerDynamic.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixIIsExtension">
