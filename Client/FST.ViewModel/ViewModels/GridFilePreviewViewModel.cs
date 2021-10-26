@@ -127,6 +127,8 @@ namespace FST.ViewModel.ViewModels
                 return _openFullPreviewCmd ??
                   (_openFullPreviewCmd = new DelegateCommand<FilePreviewViewModel>(
                       file => {
+                          return;
+
                           if (file == null)
                           {
                               return;
@@ -238,6 +240,7 @@ namespace FST.ViewModel.ViewModels
                     var filePreviewViewModel = new FilePreviewViewModel(newLocalFile);
                     AllFiles.Add(filePreviewViewModel);
                     Task.Run(async () => await FetchThumbnailImage(filePreviewViewModel));
+                    Task.Run(async () => await FetchQRCodeImage(filePreviewViewModel));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var locaFileToRemove = e.OldItems[0] as LocalFile;
