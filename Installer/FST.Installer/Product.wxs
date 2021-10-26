@@ -84,8 +84,10 @@
   <Fragment>
     <DirectoryRef Id="SERVER_DIR">
       <Component Id="C_IISWebsite" Guid="{E45FBE0E-4C65-4D07-A236-55A16F172920}" KeyPath="yes">
-        <util:User Id="WebAppPoolUser" CreateUser="no" Name="[WEB_APP_POOL_IDENTITY_NAME]"
-                  Password="[WEB_APP_POOL_IDENTITY_PWD]" Domain="[WEB_APP_POOL_IDENTITY_DOMAIN]"/>
+        <util:User Id="WebAppPoolUser"
+                   CreateUser="no"
+                   Name="[WEB_APP_POOL_IDENTITY_NAME]"
+                   Password="[WEB_APP_POOL_IDENTITY_PWD]"/>
 
         <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="other" User="WebAppPoolUser"/>
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <Binary Id="CustomActions" SourceFile="$(var.FST.Installer.CustomAction.TargetDir)$(var.FST.Installer.CustomAction.TargetName).CA.dll" />
+
+    <CustomAction
+      Id="WindowsCredentialValidation"
+      Impersonate="no"
+      BinaryKey="CustomActions"
+      DllEntry="WindowsCredentialValidation"
+      Return="check"/>
+    
+	</Fragment>
+</Wix>

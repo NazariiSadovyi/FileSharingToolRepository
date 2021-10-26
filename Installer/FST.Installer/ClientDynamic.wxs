@@ -2,264 +2,264 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="CLIENT_DIR">
-            <Component Id="cmpED39EF82FF0AB369F112ACE0F7F6A29B" Guid="{5E39E98C-0700-4BE6-9A37-98DA5AA675D2}">
+            <Component Id="cmpED39EF82FF0AB369F112ACE0F7F6A29B" Guid="{0729ADB8-43A3-421E-A2BE-26DAD1AD7C01}">
                 <File Id="filB79E1BFA2F2033DE4DBD9844E8310248" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FileSharingTool.db" />
             </Component>
-            <Component Id="cmp10EE4F0CB0AF4F56C772240EDE031887" Guid="{242E618B-159A-422B-8427-E3475D899891}">
+            <Component Id="cmp10EE4F0CB0AF4F56C772240EDE031887" Guid="{B759FE50-8D3F-465A-9A87-7C75E631A2F9}">
                 <File Id="fil540972A90190498BEB9675308EE82762" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.deps.json" />
             </Component>
-            <Component Id="cmpCE211B5DE2E85C47CFAB12F2AC227B61" Guid="{C1D5C0C7-F3B6-4982-BE98-FDA59B44B514}">
+            <Component Id="cmpCE211B5DE2E85C47CFAB12F2AC227B61" Guid="{756E9E96-0AB6-40A9-B611-F4808C1A414F}">
                 <File Id="filDC8B7EC4EEDE78639F328F0EE71CECD8" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.dll" />
             </Component>
-            <Component Id="cmpCDFDB055369349B388ED81F60530167E" Guid="{775B552F-B036-4D69-B23F-A4323BDCC36C}">
+            <Component Id="cmpCDFDB055369349B388ED81F60530167E" Guid="{DF443465-D226-4069-82E6-6E8FCC3C193A}">
                 <File Id="fil940166498325BB8617FE786D20E63E84" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.dll.config" />
             </Component>
-            <Component Id="cmp990F124CB76A684207200915398CDF74" Guid="{6F461EB1-72A3-4AEB-922F-E30C4899A4E9}">
+            <Component Id="cmp990F124CB76A684207200915398CDF74" Guid="{949B5891-FA02-40F8-B93F-800271A60394}">
                 <File Id="fil7B2C5B03B16B5E6B58619E42858C9558" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.exe" />
             </Component>
-            <Component Id="cmpDA1C4D23C63F7A7AC40A8AD2E57D5375" Guid="{1F154F34-BA99-4468-A2B9-66206D5C4CEC}">
+            <Component Id="cmpDA1C4D23C63F7A7AC40A8AD2E57D5375" Guid="{B0C59D04-4848-44EB-B9E1-BFC3BE53B9E1}">
                 <File Id="fil55E13C839EFD5155DC182C9E1767E787" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.pdb" />
             </Component>
-            <Component Id="cmp27EDB1E3D2D9147C4003443EA4CAFE19" Guid="{62181CDB-99B1-4376-990C-BFB28878756A}">
+            <Component Id="cmp27EDB1E3D2D9147C4003443EA4CAFE19" Guid="{4BC82F32-B3C8-48EB-948B-4C3049E1DF7D}">
                 <File Id="fil1B91FDD05447005A9683B1A93AB82593" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.runtimeconfig.dev.json" />
             </Component>
-            <Component Id="cmpEB2C5F2607FE19D0085BF245F27FAEEE" Guid="{684BE4E1-BDFB-4B00-AFBD-1B6E0C3F7A6B}">
+            <Component Id="cmpEB2C5F2607FE19D0085BF245F27FAEEE" Guid="{E7E9FA1D-B43E-434A-B9BD-5FAB3ACCEE8F}">
                 <File Id="filFE1B510CB8271BC0B264A4AD9FE05366" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Client.runtimeconfig.json" />
             </Component>
-            <Component Id="cmpDE1BB82382ACF97C651C117CDCF829E5" Guid="{35FE3254-F907-4EFE-A089-9A7A2B8A46DB}">
+            <Component Id="cmpDE1BB82382ACF97C651C117CDCF829E5" Guid="{E7500EAF-D43B-4015-878D-32E14862487C}">
                 <File Id="fil1E9FC1780B96EC9556F9EFE81DCAB6B1" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.CultureLocalization.dll" />
             </Component>
-            <Component Id="cmpD39B2A1177D7C10AA339BF7D6F7B48CF" Guid="{A5E0EA9B-BEA9-4AB5-9962-3DA461F55AF7}">
+            <Component Id="cmpD39B2A1177D7C10AA339BF7D6F7B48CF" Guid="{91C03915-F35E-4687-979E-F70D7AB5DCCF}">
                 <File Id="fil406767B19A436C9F5B21DDE2A27883A7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.CultureLocalization.pdb" />
             </Component>
-            <Component Id="cmp4E692FD293AB5EA1730B6541F3550307" Guid="{87CA67D4-0B7D-4776-B0D5-C9D74E298E7C}">
+            <Component Id="cmp4E692FD293AB5EA1730B6541F3550307" Guid="{A0CE7DE2-D2D8-456C-A778-6BA75656BCEF}">
                 <File Id="filFB8D3784A0847E8B573CB7A5C997CA3D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.DataAccess.dll" />
             </Component>
-            <Component Id="cmpF1C1DB592C289897D0B2D93E494F3218" Guid="{44FA2E85-2B5F-4C87-BBEF-C8A578822756}">
+            <Component Id="cmpF1C1DB592C289897D0B2D93E494F3218" Guid="{4AB85BD8-F4D3-43AD-B403-30D4188ECFED}">
                 <File Id="filCE08F5CA2B6927753FEF0FB80B90F2E2" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.DataAccess.pdb" />
             </Component>
-            <Component Id="cmp487D0EE28A0268BC0838FBF51EE29B16" Guid="{DE4655D7-7C2A-41FA-A146-B65FCF35DC66}">
+            <Component Id="cmp487D0EE28A0268BC0838FBF51EE29B16" Guid="{64E503F6-E361-437B-BEE9-228CA1A0A99B}">
                 <File Id="fil9A579805DE9AFF4053C3FE1A443CB470" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Infrastructure.dll" />
             </Component>
-            <Component Id="cmp51F1CF1F1F7A1D243D2C0F2744998F0B" Guid="{8ED3CDA4-1073-4013-B09C-377BD5C4D504}">
+            <Component Id="cmp51F1CF1F1F7A1D243D2C0F2744998F0B" Guid="{A23DC6E4-AED5-44F5-8F52-DC318367023F}">
                 <File Id="fil7015E8DE022543E47F50AA30C01BFA63" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.Infrastructure.pdb" />
             </Component>
-            <Component Id="cmpF9EF6B0F8AE5D4E19E9BFC89E7183722" Guid="{386B9474-2A28-4A96-9ED5-15D23F027F75}">
+            <Component Id="cmpF9EF6B0F8AE5D4E19E9BFC89E7183722" Guid="{0FB66594-CFA5-4B36-9EA4-455088D750DE}">
                 <File Id="filEA56B871184EC248CD99E5E9A6BE59E1" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.ViewModel.dll" />
             </Component>
-            <Component Id="cmp2B0DD76B25E647EA9A7AC6CB3C625B65" Guid="{CAB82743-89CC-43E2-A6AD-740728E4EE73}">
+            <Component Id="cmp2B0DD76B25E647EA9A7AC6CB3C625B65" Guid="{7C347884-6A7C-47B0-8AAF-B6A5DF6D1189}">
                 <File Id="fil2B78D279F124BAA5CBD24729200C1871" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\FST.ViewModel.pdb" />
             </Component>
-            <Component Id="cmp2FFF79D4BE95E03922972826FAB38B08" Guid="{2766352A-14BD-4239-A0B0-5C2881EB7E3F}">
+            <Component Id="cmp2FFF79D4BE95E03922972826FAB38B08" Guid="{12701784-0AB6-4603-8258-8663B378E83D}">
                 <File Id="fil3B61E6E581CE5710D8FD1A4EC27E2A92" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Gu.Wpf.FlipView.dll" />
             </Component>
-            <Component Id="cmpC7E5BF2611700E2848728970C084DCCB" Guid="{907F2C0A-A86F-4F61-9468-579C633A3F56}">
+            <Component Id="cmpC7E5BF2611700E2848728970C084DCCB" Guid="{25459930-C863-49E8-A3EC-B8436ADC8779}">
                 <File Id="fil7F03D9FFA65EA01386AF952C9CA79846" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\MaterialDesignColors.dll" />
             </Component>
-            <Component Id="cmp83D3DF8CAC31F5BD6CFD7C8CDA91F2B0" Guid="{84A8AC7D-A581-4D35-BD3D-DAA444182B73}">
+            <Component Id="cmp83D3DF8CAC31F5BD6CFD7C8CDA91F2B0" Guid="{BD73C75E-0C43-44DD-BF2C-0BBB12CE657B}">
                 <File Id="filDADA0D35315FF24DEA8C222396E57E0E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\MaterialDesignThemes.Wpf.dll" />
             </Component>
-            <Component Id="cmp90B9B8DE4A1CE8FBD7707328EDEA8B1D" Guid="{1AA4FA6C-D1C9-40C7-854D-B1C4EE78DAAB}">
+            <Component Id="cmp90B9B8DE4A1CE8FBD7707328EDEA8B1D" Guid="{BA990C18-0F6B-4687-B459-C33146CC4F44}">
                 <File Id="fil052FE4878F0E521A34E3D1A7A7116B43" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Data.Sqlite.dll" />
             </Component>
-            <Component Id="cmpED017B318BA26BEB25D883F1D52C4CA3" Guid="{09AE84A1-779A-4669-853C-79D1C54B7746}">
+            <Component Id="cmpED017B318BA26BEB25D883F1D52C4CA3" Guid="{0D41B3FD-96F4-44BA-9D21-A627A9BF8B39}">
                 <File Id="fil5D3B56FD5CD50644AD2C77FBBB59E579" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.DotNet.PlatformAbstractions.dll" />
             </Component>
-            <Component Id="cmpE6D09DF0AA2E07B1C823AB492A74FAC3" Guid="{D84A7E53-CAAF-4E5D-996D-6CE2CBD8A8B8}">
+            <Component Id="cmpE6D09DF0AA2E07B1C823AB492A74FAC3" Guid="{B09F37FA-95F8-455A-A07A-3898835E4723}">
                 <File Id="fil92E46ABF091596FBD5BEC7BA2D1667B6" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll" />
             </Component>
-            <Component Id="cmp759BFE575F3F806BA1735999C8EF5821" Guid="{AF76A1CC-C4FB-4178-A1E2-6F9ABE728AEE}">
+            <Component Id="cmp759BFE575F3F806BA1735999C8EF5821" Guid="{50592B2C-CDC2-4139-80A9-4326138897A9}">
                 <File Id="fil56B58B3844CF76B0CF88EB7642BCE7CA" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.EntityFrameworkCore.dll" />
             </Component>
-            <Component Id="cmp3A53E62F5670D49B59254150B6E3C173" Guid="{D28A1C43-9013-4E09-87F7-A53233FDB6FB}">
+            <Component Id="cmp3A53E62F5670D49B59254150B6E3C173" Guid="{14B3A2EE-2852-4655-BD7B-F79C8D27A0D1}">
                 <File Id="filC21BA8156168213F8FD5993C6DF4F7FF" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.EntityFrameworkCore.Relational.dll" />
             </Component>
-            <Component Id="cmp41B982D1CCB2B1C4ACA4C2F809CF1878" Guid="{58CBEA41-F7BC-41F0-96A9-11BCFDB0FA8F}">
+            <Component Id="cmp41B982D1CCB2B1C4ACA4C2F809CF1878" Guid="{DC5E07E2-15D4-46D2-AAA7-E542F8039325}">
                 <File Id="fil010DE1996405D2D74F8CC95096BAE982" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.EntityFrameworkCore.Sqlite.dll" />
             </Component>
-            <Component Id="cmp7103E2F87BBFB2A9ED36B20CF8AA4379" Guid="{0DBA78B7-447F-4788-9FBE-E1DCCF588ED8}">
+            <Component Id="cmp7103E2F87BBFB2A9ED36B20CF8AA4379" Guid="{3FC4DC22-DEC3-4B8A-A72D-34DB7E1B4D80}">
                 <File Id="filA22625E79D9801A0AA5B88457823401B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Expression.Interactions.dll" />
             </Component>
-            <Component Id="cmpBD5BF60B0199EB122A090994AFC27113" Guid="{348AFD41-53D9-4A7D-B288-AA5BDB6F7C3C}">
+            <Component Id="cmpBD5BF60B0199EB122A090994AFC27113" Guid="{2BC5D976-3DB5-4E20-825A-2DF60EEA1EE4}">
                 <File Id="fil33AF0602D2A10D25F843C3BBA543600F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Caching.Abstractions.dll" />
             </Component>
-            <Component Id="cmp156A09980019E81715DB58562ACE05C2" Guid="{B1DC7CC2-2276-4754-8BB5-6188C7FB539E}">
+            <Component Id="cmp156A09980019E81715DB58562ACE05C2" Guid="{53CFED92-EE4B-4D00-A0A8-CC1C1273CA1E}">
                 <File Id="filBB24EBDE98A963533D45EEE729D0BBFE" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Caching.Memory.dll" />
             </Component>
-            <Component Id="cmp1FB7F6F0D84E2B2D9FF0E16F8296C711" Guid="{3924DB0F-C2E3-40BA-99C0-44E8F8E12EBD}">
+            <Component Id="cmp1FB7F6F0D84E2B2D9FF0E16F8296C711" Guid="{2736D0A9-4691-45CF-900D-DB270993CEC7}">
                 <File Id="filEEC41D99CC4C68D3833D2E8BCE3F1917" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll" />
             </Component>
-            <Component Id="cmp52284E31F8DE7ABDD4A325CCC87351C7" Guid="{21C72CA4-79A6-42F6-8A8C-5D890C2B2B71}">
+            <Component Id="cmp52284E31F8DE7ABDD4A325CCC87351C7" Guid="{F98C10DC-1E94-44C4-8A0F-5A37C5258FBA}">
                 <File Id="filE86D3E8817D78E21E6C4829C97BF06D3" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
             </Component>
-            <Component Id="cmp5F15E653A86F9D71026C96FB2E32B869" Guid="{C108AC87-21C9-466D-888F-46DC93378F64}">
+            <Component Id="cmp5F15E653A86F9D71026C96FB2E32B869" Guid="{EB034182-5273-4D4E-B35A-9E5F11B0DF3E}">
                 <File Id="fil82CE6EF6B9EEC400F171A3EDBE43E9EB" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.DependencyInjection.dll" />
             </Component>
-            <Component Id="cmpF7BD83786967753B55BB4F819C21A865" Guid="{20644BB2-9602-40B2-AAD0-FF269851B361}">
+            <Component Id="cmpF7BD83786967753B55BB4F819C21A865" Guid="{BF52C573-8FDA-4926-9406-342B18BD910E}">
                 <File Id="filF021956A442AD488A05C92D526A9B7DC" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.DependencyModel.dll" />
             </Component>
-            <Component Id="cmpE4DA778789C409283BB41EA51D48B85C" Guid="{A07A4291-6069-4B2C-89CA-9D91CB72759B}">
+            <Component Id="cmpE4DA778789C409283BB41EA51D48B85C" Guid="{14C8BD1D-9138-41FE-8A56-1AD4CB83B8E8}">
                 <File Id="fil331F9C4E4B726F4A3AD727DB96D760E4" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Logging.Abstractions.dll" />
             </Component>
-            <Component Id="cmpC54515A541258AB510A2AA95395483E4" Guid="{77F54C58-3EF5-492A-94BE-799F579AF65F}">
+            <Component Id="cmpC54515A541258AB510A2AA95395483E4" Guid="{0D41779B-EB57-46FB-B74E-C69E1919454D}">
                 <File Id="fil73CBFCF9A54C5F037DC630816912134F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Logging.dll" />
             </Component>
-            <Component Id="cmpB6DD47535FCFFE1776C69489E2C6C1C0" Guid="{F7A9C433-A63F-4ADE-BC97-BE1C8AE327C0}">
+            <Component Id="cmpB6DD47535FCFFE1776C69489E2C6C1C0" Guid="{0B0642BA-C9EA-4922-AFAA-50CE0C8BB0AA}">
                 <File Id="fil6F25C298B09BBF79BD8D0B415731590F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Options.dll" />
             </Component>
-            <Component Id="cmpF9D6916522B6DC6920229CE8A348C4C7" Guid="{364D25DA-43FE-43E2-BACE-4F36F41908AC}">
+            <Component Id="cmpF9D6916522B6DC6920229CE8A348C4C7" Guid="{B3404B26-0092-4B07-BBA4-E6637231D2DD}">
                 <File Id="fil502C981671A074F1EAA6A3ADA4F61AEE" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Extensions.Primitives.dll" />
             </Component>
-            <Component Id="cmp0C7D7B8BED4AC9491A6E22D34CB7D0A9" Guid="{F8F52DE4-A7AB-42A3-AF30-02D1D32B5BA2}">
+            <Component Id="cmp0C7D7B8BED4AC9491A6E22D34CB7D0A9" Guid="{97D7A70A-4EA2-45D9-9477-C0C0E2BAC32B}">
                 <File Id="fil9FBB4392AD8BBC09F597B31AB975994B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.WindowsAPICodePack.dll" />
             </Component>
-            <Component Id="cmpE3501C044A4ABF7264A2B616BF598F4E" Guid="{F9B3CACB-C229-4F2D-9EEB-394D57422B1D}">
+            <Component Id="cmpE3501C044A4ABF7264A2B616BF598F4E" Guid="{0A867404-5073-4AC9-959C-2996D1EE6E2C}">
                 <File Id="fil92D4E75F4335F26A2F8AE465565D01CA" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.WindowsAPICodePack.Shell.dll" />
             </Component>
-            <Component Id="cmpF4E2C8D7B43E20D6AAFD7B346F9928AB" Guid="{40E618D6-9B7B-4F7C-896B-89610E778731}">
+            <Component Id="cmpF4E2C8D7B43E20D6AAFD7B346F9928AB" Guid="{7630FC64-6899-4E97-8D44-5AD09504ABB2}">
                 <File Id="fil1596FBB5B7D9FB6767267131E66EE863" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Microsoft.Xaml.Behaviors.dll" />
             </Component>
-            <Component Id="cmp92601A93B70A871A2D1DE625A34CBF35" Guid="{79EBABDB-7A38-42C1-9C10-1AD613EAD897}">
+            <Component Id="cmp92601A93B70A871A2D1DE625A34CBF35" Guid="{AF474723-BD39-4586-8DA6-59C9D10DBBA0}">
                 <File Id="fil5C496F97B843E272D0AB0713C99D7694" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\NLog.config" />
             </Component>
-            <Component Id="cmpD61C7320DD7208869FA6CDA48C4C7EB6" Guid="{9A15CFD1-65E8-468D-AFE0-EBAF4B3C9B69}">
+            <Component Id="cmpD61C7320DD7208869FA6CDA48C4C7EB6" Guid="{252B58DC-43CE-4DC7-BFCA-D7F65F0AB9D2}">
                 <File Id="filA668B2BFD5F8ADDF0E3B544CD1FDDDF8" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\NLog.dll" />
             </Component>
-            <Component Id="cmpF4EF2763D9A33180689111760C86A70D" Guid="{72BFE68E-A842-4548-A3BC-9F1899D45781}">
+            <Component Id="cmpF4EF2763D9A33180689111760C86A70D" Guid="{A1F4F52C-CAFF-4E6D-82C4-C61A7062A080}">
                 <File Id="filF19B188DF1ECC0B7F54F28B2CB6A684E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\NLog.xsd" />
             </Component>
-            <Component Id="cmp891B8D71844BC7666121A27E48C9581C" Guid="{C26A3953-3E44-43FC-A8C6-E35AFBFEDAC2}">
+            <Component Id="cmp891B8D71844BC7666121A27E48C9581C" Guid="{F41A5B9A-B502-4F35-AF5E-5E034B8E0A36}">
                 <File Id="fil97787AB1D9156EFF6449AE39E2264E63" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Prism.dll" />
             </Component>
-            <Component Id="cmpA7643E29D171678525D01F479056EADC" Guid="{6549A6D0-11D0-4821-9DBC-F0A8F9BB6509}">
+            <Component Id="cmpA7643E29D171678525D01F479056EADC" Guid="{B4371E20-8FBD-4453-B3B3-B46747D8B377}">
                 <File Id="fil60BE415727882606F22CA2F7D7F3B00E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Prism.Unity.Wpf.dll" />
             </Component>
-            <Component Id="cmpF6E8084F24A87E1D5024037DC6181487" Guid="{13304559-F730-4685-AD67-3149E5C7CAFB}">
+            <Component Id="cmpF6E8084F24A87E1D5024037DC6181487" Guid="{0F919761-E8A7-47D9-8386-91210393E441}">
                 <File Id="fil833EA9F091293B59FBA654AC6195C534" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Prism.Wpf.dll" />
             </Component>
-            <Component Id="cmpC6C12BD76BDB08D266A4BAA409A1E328" Guid="{523813ED-43D1-45DC-B0F8-B597F16946AC}">
+            <Component Id="cmpC6C12BD76BDB08D266A4BAA409A1E328" Guid="{3C25E8B7-05EC-422D-BD64-37CE0B2B7F62}">
                 <File Id="fil35657D4B04C288408C69F6987935C58D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\QRCoder.dll" />
             </Component>
-            <Component Id="cmp3ECACE5D0D0CDE66291528F6FB248B4E" Guid="{B86E2FB6-6E17-4F97-BD7B-FA660A3B6E9B}">
+            <Component Id="cmp3ECACE5D0D0CDE66291528F6FB248B4E" Guid="{3B55C8DB-1E6A-422C-82A0-08C843ECD7E3}">
                 <File Id="fil0CB8128B95777929737E589A57890F4D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\SQLitePCLRaw.batteries_v2.dll" />
             </Component>
-            <Component Id="cmp33D96E83E9B1552754BC717A0B67E5DC" Guid="{87257CE7-4A06-4931-B3B6-4397082BC809}">
+            <Component Id="cmp33D96E83E9B1552754BC717A0B67E5DC" Guid="{D84B2F0E-4565-4677-85BD-793B75582FD9}">
                 <File Id="fil34FCAD76AEA3F26E566740D802862298" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\SQLitePCLRaw.core.dll" />
             </Component>
-            <Component Id="cmp3876ADC600E772D11F879D3E9FF1C399" Guid="{ED3FE2B4-18BF-441C-8278-CE28C576C5CD}">
+            <Component Id="cmp3876ADC600E772D11F879D3E9FF1C399" Guid="{21EC69C6-DEF3-4332-9BBB-2213089AA60D}">
                 <File Id="fil212B2E33C3502EF090F70193DF92179A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\SQLitePCLRaw.nativelibrary.dll" />
             </Component>
-            <Component Id="cmpE592F2C1AF8E2109035009EE51314DB7" Guid="{F6193CDF-05C5-48EC-B64D-F3AB891DFA18}">
+            <Component Id="cmpE592F2C1AF8E2109035009EE51314DB7" Guid="{B5E6170B-A264-444B-8A52-135CA234454D}">
                 <File Id="fil1829B2A7CA3630973FD0BFA565B10748" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\SQLitePCLRaw.provider.dynamic_cdecl.dll" />
             </Component>
-            <Component Id="cmpABB854F11DE4039E1D4106FB14330E6F" Guid="{0F85F713-CCC1-4049-90DA-78118C0CEDA7}">
+            <Component Id="cmpABB854F11DE4039E1D4106FB14330E6F" Guid="{B4B80636-D8F0-4AF1-AF84-C4158FB33153}">
                 <File Id="fil5662C378724FD5DC4489996811A40675" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\System.Diagnostics.DiagnosticSource.dll" />
             </Component>
-            <Component Id="cmpCD4F4F922E897006E8CA671974519DA5" Guid="{02553F56-59F4-4196-95AC-7A6DB4F32233}">
+            <Component Id="cmpCD4F4F922E897006E8CA671974519DA5" Guid="{65D8A9F2-4EEE-486F-9792-247582F1C010}">
                 <File Id="fil9235691E34DB1060ED2B7AD995869666" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\System.Windows.Interactivity.dll" />
             </Component>
-            <Component Id="cmpAB3A61C0B3DB986AF967C9EE27511669" Guid="{0EF0D4A4-F836-4A11-9758-F878230341A6}">
+            <Component Id="cmpAB3A61C0B3DB986AF967C9EE27511669" Guid="{7081984D-A782-4DEE-9533-96351D58343D}">
                 <File Id="fil44F636BAB91F3D2A5D32CC41FBD2B6FF" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\ToggleSwitch.dll" />
             </Component>
-            <Component Id="cmp5DB6151B921AF0B629F08E70DE67A5DF" Guid="{CC03288C-C5E1-4BE5-B1A8-530B51EDAE80}">
+            <Component Id="cmp5DB6151B921AF0B629F08E70DE67A5DF" Guid="{AEBF4110-41CD-4287-BA0B-64BF1473E36F}">
                 <File Id="fil99A4F9FECFD68850691E444F14F61FD7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Unity.Abstractions.dll" />
             </Component>
-            <Component Id="cmpFDBFA609C26956C33BDE5280E6EB69E2" Guid="{B295801B-7ECA-48B3-95C3-46DD190325D7}">
+            <Component Id="cmpFDBFA609C26956C33BDE5280E6EB69E2" Guid="{68EE6F47-5D5D-43DD-82AD-B81960D26AA6}">
                 <File Id="filC4DEEDF5DA582B0BF31B89A69836B103" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\Unity.Container.dll" />
             </Component>
             <Directory Id="dirE12EF3E24C9CEC8D3DC93519F76DBED8" Name="ref">
-                <Component Id="cmp8B03890747C2D2AD988C5274A9F664A9" Guid="{9DC230C1-C9F4-403B-9CEC-BFB989E27407}">
+                <Component Id="cmp8B03890747C2D2AD988C5274A9F664A9" Guid="{182F3FD9-A136-4CE4-9492-83DC95BD119A}">
                     <File Id="fil4F38B8D233069B20AAB376AADA3E9CAD" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\ref\FST.Client.dll" />
                 </Component>
             </Directory>
             <Directory Id="dir38CD7FD4EA7866E671B73CC4E0717D75" Name="runtimes">
                 <Directory Id="dir2C17608827119C609BEA21B27A0CC32C" Name="alpine-x64">
                     <Directory Id="dir649ED47761D96801D9E09757B9B2BB73" Name="native">
-                        <Component Id="cmp46C2A20D42A481AC60A349F38C50FD9A" Guid="{736E1E22-D973-4CD9-BC1B-F9DE7645C5EB}">
+                        <Component Id="cmp46C2A20D42A481AC60A349F38C50FD9A" Guid="{46C69326-3CC0-48F5-8A30-2CA5C9754CBB}">
                             <File Id="fil3D9EA9F87E20A48AFE1EB819D686DEA5" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\alpine-x64\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirC5C745FBA30EC8CCBC6C0980DA08DFBD" Name="linux-arm">
                     <Directory Id="dirA23A9DBF08E3A948D58B6684759A2A3A" Name="native">
-                        <Component Id="cmp7282698F909D16A2958CE26A355AC848" Guid="{08811381-49DC-4CE2-A9F4-A01C57D609C3}">
+                        <Component Id="cmp7282698F909D16A2958CE26A355AC848" Guid="{5CBD4E41-95D5-4E1C-AC3A-052858D5FD4A}">
                             <File Id="fil5AE5270B68238744B1957454D0B32947" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-arm\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirAA58B0DD112376FA6CF57CC7C063C279" Name="linux-arm64">
                     <Directory Id="dir453556537BC72F9E4C049E11C1086941" Name="native">
-                        <Component Id="cmp1B4C5E7155A0C3462B0DBFE3E43B0C0A" Guid="{4C272401-83C0-42C1-881A-14B861960DCF}">
+                        <Component Id="cmp1B4C5E7155A0C3462B0DBFE3E43B0C0A" Guid="{7EAB9F50-67F4-49C0-A695-05600084CE57}">
                             <File Id="fil2A163E42F58AE97C7B94AAE1512906DC" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir21E5F50E4FE0351BB2C9AE6539E8E6D1" Name="linux-armel">
                     <Directory Id="dirDADCC846FE143C0002BFC33A90FE4899" Name="native">
-                        <Component Id="cmp8CE4C02EE72E79A98DC5803F0738273D" Guid="{E9BD7F5D-CBF4-484D-ADB8-EECE5E5EDB99}">
+                        <Component Id="cmp8CE4C02EE72E79A98DC5803F0738273D" Guid="{DE6E6198-2EA2-48C2-9671-5010B0FE3DA5}">
                             <File Id="fil8CE18C028E9689870C42E50CDC34CDAB" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-armel\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir842FEDD0D13CDD1ED0C7F11678989877" Name="linux-mips64">
                     <Directory Id="dir6FB0F0C8177CBD07F683EA47A84D1CC1" Name="native">
-                        <Component Id="cmpBC7988B4E7C01B83B2CF096C7DB24EDE" Guid="{C9B7D63F-83A0-46BE-8929-439500D6F16B}">
+                        <Component Id="cmpBC7988B4E7C01B83B2CF096C7DB24EDE" Guid="{02E16CA6-7B53-4539-B786-A8AC6A7C1FFF}">
                             <File Id="filA439B36C2799BD38BD1D10487D35F3A2" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirBE461F69D4C95E931DAE0D41BE7A9177" Name="linux-musl-x64">
                     <Directory Id="dirB1E91C6E8B9C139EF64F2EAE4DD57A53" Name="native">
-                        <Component Id="cmp32BDFCAC5D10B03A85ACF30C5980FDC4" Guid="{E1079AF7-6FED-453D-B025-B046CC24EEF0}">
+                        <Component Id="cmp32BDFCAC5D10B03A85ACF30C5980FDC4" Guid="{C0EC7EE0-C0A5-4C56-84C7-3B8657ECD6FC}">
                             <File Id="fil67730CC47499397CF013262E2D942479" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir17739D40D52C02BBBC58BA06CA32732F" Name="linux-x64">
                     <Directory Id="dir97FCE350AE7D50F856C32DC683026485" Name="native">
-                        <Component Id="cmp1E923B8CCE9FC4432D333E25AA1C5866" Guid="{7028A173-16E1-4527-9DCD-0213B93F8E3B}">
+                        <Component Id="cmp1E923B8CCE9FC4432D333E25AA1C5866" Guid="{08E8C5E9-618D-4674-8CBF-3964C3A9ED52}">
                             <File Id="filF03B5D1FEF638E70D7F736153CCEBC31" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-x64\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirA3AEF1332D1CE80F8ABFB576FD3CE4C5" Name="linux-x86">
                     <Directory Id="dir0AAA96C378AA3BD143D448997AF22F48" Name="native">
-                        <Component Id="cmpA9783B78C202BA15FF6CE57CAF46BA3F" Guid="{486431FE-AC54-4176-9DC3-3438AB0AAD03}">
+                        <Component Id="cmpA9783B78C202BA15FF6CE57CAF46BA3F" Guid="{08DC29FF-0BEF-46EA-84E2-7B3DC52B8AEA}">
                             <File Id="filF5BB4DDB117D9E573F0CE1AD393C211E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\linux-x86\native\libe_sqlite3.so" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir5D2A9C6B0B283EC46D7B956BE7C4ABBF" Name="osx-x64">
                     <Directory Id="dirA0823D666388F00C70756EE8A3CAC50C" Name="native">
-                        <Component Id="cmp1AE2DA199500392E3A39EEC82DB4E7B4" Guid="{E25296A9-A648-4AAA-A4A6-E3C6AA7503BE}">
+                        <Component Id="cmp1AE2DA199500392E3A39EEC82DB4E7B4" Guid="{773BCE75-D3C7-4A90-8BA4-71B7B2017CEE}">
                             <File Id="filD8476A05562A348909FC334E8EDA2C67" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirA8BD555DC3EEC9A6971790A6612572CD" Name="win-arm">
                     <Directory Id="dirC9E67FD283D9F1175EBC118B95AAA9AD" Name="native">
-                        <Component Id="cmp5CD8A282F6CEFA6E3DB9902F97B4BB69" Guid="{10F2A294-0CCC-498F-9BF1-194A5BF7701D}">
+                        <Component Id="cmp5CD8A282F6CEFA6E3DB9902F97B4BB69" Guid="{E33B6AC2-86C6-4DA3-979C-D0892B8E961C}">
                             <File Id="fil626603A81BD3364F78D0732256DDBF5E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\win-arm\native\e_sqlite3.dll" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dirB7EBF9364F66DF3AD03AF60D31CA6BD2" Name="win-arm64">
                     <Directory Id="dir43CBBCF27ECEBB6A9FEDBA530C645A73" Name="native">
-                        <Component Id="cmpB050E701F4B0097069C859A5B01D18A8" Guid="{FADC8F59-E498-4F0D-A4FD-1488B8ED4351}">
+                        <Component Id="cmpB050E701F4B0097069C859A5B01D18A8" Guid="{6F15EDC3-A8F3-4B3F-AF4F-5486DB753EAA}">
                             <File Id="fil36C4D58EF5055F5857F6408CEC5DDF53" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\win-arm64\native\e_sqlite3.dll" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir38C2C89C07151FE12BE54D6EA4FEAAB4" Name="win-x64">
                     <Directory Id="dir374BBD32146E73F86F9FC954EEC4C5FA" Name="native">
-                        <Component Id="cmp2E96271885798877F4540B28C2999FBF" Guid="{F960FE99-323E-4B75-A94D-BA3D1614DA73}">
+                        <Component Id="cmp2E96271885798877F4540B28C2999FBF" Guid="{23B06824-9AE7-4ABE-8525-5E913D830090}">
                             <File Id="fil508AF5A1B66DD6FDB3350E9C8C3CE34F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\win-x64\native\e_sqlite3.dll" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir3F115E5F03C1523107642735210A1D97" Name="win-x86">
                     <Directory Id="dirC03F244D439D5DB9D639FD97879073F0" Name="native">
-                        <Component Id="cmp4A33C9D8DB1C1E804EA2BD083D41C974" Guid="{BADF08FC-E7B2-40EC-AD92-70705D2B4862}">
+                        <Component Id="cmp4A33C9D8DB1C1E804EA2BD083D41C974" Guid="{E29FB9D2-E72D-4243-A0F4-FCE1A2EE04C7}">
                             <File Id="fil4CD2F3F2D6C89952828D490739F0BF6F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\FST.Client\bin\x64\Release\net5.0-windows\runtimes\win-x86\native\e_sqlite3.dll" />
                         </Component>
                     </Directory>

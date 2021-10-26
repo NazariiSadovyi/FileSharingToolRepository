@@ -4,23 +4,17 @@
     <UI>
       <Dialog Id="PoolSettingsDlg" Width="370" Height="270"
           Title="Application Pool Settings - [ProductName]" NoMinimize="yes">
-        <!-- domain -->
-        <Control Id="DomainPoolLabel" Type="Text" X="45" Y="73"
-          Width="100" Height="15" TabSkip="no" Text="&amp;Domain for AppPool:" />
-        <Control Id="DomainPoolEdit" Type="Edit" X="45" Y="85"
-          Width="220" Height="18"
-          Property="WEB_APP_POOL_IDENTITY_DOMAIN" Text="{80}" />
 
         <!-- Login -->
-        <Control Id="LoginPoolLabel" Type="Text" X="45" Y="105"
+        <Control Id="LoginPoolLabel" Type="Text" X="45" Y="73"
           Width="100" Height="15" TabSkip="no" Text="&amp;Login for Windows account:" />
-        <Control Id="LoginPoolEdit" Type="Edit" X="45" Y="117"
+        <Control Id="LoginPoolEdit" Type="Edit" X="45" Y="85"
           Width="220" Height="18" Property="WEB_APP_POOL_IDENTITY_NAME" Text="{80}" />
 
         <!-- Password -->
-        <Control Id="PasswordPoolLabel" Type="Text" X="45" Y="149"
+        <Control Id="PasswordPoolLabel" Type="Text" X="45" Y="105"
           Width="100" Height="15" TabSkip="no" Text="&amp;Password for account:" />
-        <Control Id="PasswordPoolEdit" Type="Edit" X="45" Y="169"
+        <Control Id="PasswordPoolEdit" Type="Edit" X="45" Y="117"
           Width="220" Height="18" Property="WEB_APP_POOL_IDENTITY_PWD"
           Text="{80}" Password="yes" />
         
@@ -31,11 +25,14 @@
         </Control>
         <Control Id="Next" Type="PushButton" X="236" Y="243"
           Width="56" Height="17" Default="yes" Text="&amp;Next">
+          <Publish Event="DoAction" Value="WindowsCredentialValidation">1</Publish>
           <Publish Event="NewDialog" Value="InstallDirDlg">
+            TEST_DB_CONNECTION_RESULT = "True"
             <!--if settings are correct, allow next dialog-->
-            <![CDATA[WEB_APP_POOL_IDENTITY_DOMAIN <> 
+            <!--<![CDATA[WEB_APP_POOL_IDENTITY_DOMAIN <> 
                           "" or WEB_APP_POOL_IDENTITY_NAME <> "" 
-                          or WEB_APP_POOL_IDENTITY_PWD <> ""]]>
+                          or WEB_APP_POOL_IDENTITY_PWD <> ""]]>-->
+          
           </Publish>
         </Control>
         <Control Id="Cancel" Type="PushButton" X="304" Y="243"

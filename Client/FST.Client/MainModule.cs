@@ -1,5 +1,4 @@
-﻿using FST.ViewModel.ViewModels;
-using FST.Client.Views;
+﻿using FST.Client.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -17,8 +16,6 @@ namespace FST.Client
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<HotFoldersView>();
-            //containerRegistry.RegisterForNavigation<UploadFileControl>();
         }
     }
-
 }
