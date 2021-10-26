@@ -31,8 +31,8 @@ namespace FST.Installer.CustomAction
             }
             catch (Exception e)
             {
-                session.Log(e.Message);
-                return ActionResult.Failure;
+                MessageBox.Show($"Can't check credential: {e.Message}", "Error");
+                return ActionResult.Success;
             }
 
             return ActionResult.Success;
