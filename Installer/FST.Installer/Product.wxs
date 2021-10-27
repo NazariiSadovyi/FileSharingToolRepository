@@ -28,7 +28,7 @@
 		<MediaTemplate EmbedCab="yes"/>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_DIR" />
-
+	
     <!--Directory structure-->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -41,8 +41,9 @@
     </Directory>
 
     <Feature Id="ProductFeature" Title="FST.Installer" Level="1">
-			<ComponentGroupRef Id="ClientDynamic" />
-			<ComponentGroupRef Id="ServerDynamic" />
+      <ComponentGroupRef Id="ClientDynamic" />
+      <ComponentGroupRef Id="ServerDynamic" />
+      <ComponentGroupRef Id="RuntimeComponent" />
       <ComponentRef Id="SetPermissionComponent"/>
       <ComponentRef Id="CommonDirComponent"/>
       <ComponentRef Id="C_IISWebsite"/>
@@ -54,7 +55,7 @@
           <util:PermissionEx GenericRead="yes"
                              GenericAll="yes"
                              GenericWrite="yes"
-                             User="Users" />
+                             User="Users" />    
         </CreateFolder>
       </Component>
     </DirectoryRef>
@@ -67,18 +68,22 @@
 
     <UIRef Id="CustomUI" />
 
-    <!--<CustomAction Id="CopyDatabaseFromClientToCommon"
-                  Directory="CLIENT_DIR"
-                  ExeCommand="move &quot;[CLIENT_DIR]FileSharingTool.db&quot; &quot;[COMMON_DIR]FileSharingTool.db&quot;"
-                  Execute="deferred"
-                  Return="check"
-                  Impersonate="no"/>-->
-    <!--<InstallExecuteSequence>
-      <Custom Action='CopyDatabaseFromClientToCommon' Before='InstallFinalize'>
-        NOT WIX_UPGRADE_DETECTED
-      </Custom>
-    </InstallExecuteSequence>-->
-    
+	  <!-- Schedule custom actions -->
+	  <InstallExecuteSequence>
+		  <Custom Action="InstallIISSetProperty" After="CostFinalize">
+			  <![CDATA[NOT Installed AND NOT IISMAJORVERSION]]>
+		  </Custom>
+		  <Custom Action="InstallIIS" Before="WriteRegistryValues">
+			  <![CDATA[NOT Installed AND NOT IISMAJORVERSION]]>
+		  </Custom>
+	      <Custom Action="UpdateFirewallRule" After="InstallFiles">
+			  <![CDATA[NOT Installed AND NOT REMOVED]]>
+		  </Custom>
+	      <Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
+			  NOT WIX_UPGRATE_DETECTED
+		  </Custom>
+	  </InstallExecuteSequence>
+
 	</Product>
 
   <Fragment>
@@ -91,13 +96,11 @@
 
         <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="other" User="WebAppPoolUser"/>
 
-        <iis:WebSite Id="FileSharingToolWebSite" Description="File Sharing Tool Web Site" Directory="COMMON_DIR" >
-          <iis:WebAddress Id="AllUnassigned" Port="80"/>
+        <iis:WebSite Id="FileSharingToolWebApp" Description="File Sharing Tool Web App" Directory="SERVER_DIR" >
+          <iis:WebAddress Id="AllUnassigned" Port="56"/>
+		  <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
         </iis:WebSite>
-
-        <iis:WebVirtualDir Id="My.VirtualDir" Alias="FileSharingTool" Directory="SERVER_DIR" WebSite="FileSharingToolWebSite">
-          <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
-        </iis:WebVirtualDir>
+	  
       </Component>
     </DirectoryRef>
   </Fragment>

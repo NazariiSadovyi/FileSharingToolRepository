@@ -33,6 +33,7 @@
     <Compile Include="CustomDialog.wxs" />
     <Compile Include="CustomUI.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="Runtime.wxs" />
     <Compile Include="ServerDynamic.wxs" />
   </ItemGroup>
   <ItemGroup>

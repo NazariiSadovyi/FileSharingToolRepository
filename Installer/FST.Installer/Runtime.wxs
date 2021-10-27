@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="COMMON_DIR">
+			<Component Id="dotnet_hosting_5_0_11_win" Guid="{8F46694D-1C23-4C51-9C45-64ACAEB79711}">
+				<File KeyPath="yes" Source="$(var.SolutionDir)Installer\Runtime\dotnet-hosting-5.0.11-win.exe" />
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="RuntimeComponent">
+			<ComponentRef Id="dotnet_hosting_5_0_11_win" />
+		</ComponentGroup>
+	</Fragment>
+</Wix>
