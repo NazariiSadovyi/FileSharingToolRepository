@@ -38,6 +38,24 @@
           <Directory Id="COMMON_DIR" Name="Common" />
         </Directory>
       </Directory>
+    
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="ApplicationShortcutDesktop" Guid="BD8013FB-DAA3-450C-8430-9D898E0C17D0">
+          <Shortcut Id="ApplicationDesktopShortcut"
+              Name="FST.Client.exe"
+              Description="FST.Client.exe"
+              Target="[CLIENT_DIR]FST.Client.exe"
+              WorkingDirectory="CLIENT_DIR"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue
+              Root="HKCU"
+              Key="Software\FileSharingTool\FileSharingTool"
+              Name="installed"
+              Type="integer"
+              Value="1"
+              KeyPath="yes"/>
+        </Component>
+      </Directory>
     </Directory>
 
     <Feature Id="ProductFeature" Title="FST.Installer" Level="1">
@@ -47,6 +65,7 @@
       <ComponentRef Id="SetPermissionComponent"/>
       <ComponentRef Id="CommonDirComponent"/>
       <ComponentRef Id="C_IISWebsite"/>
+      <ComponentRef Id="ApplicationShortcutDesktop"/>
     </Feature>
 
     <DirectoryRef Id="INSTALL_DIR">

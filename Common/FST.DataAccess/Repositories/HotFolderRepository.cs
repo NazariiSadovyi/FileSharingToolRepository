@@ -2,60 +2,66 @@
 using FST.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FST.DataAccess.Repositories
 {
-    public class HotFolderRepository : IHotFolderRepository
+    public class HotFolderRepository : BaseRepository, IHotFolderRepository
     {
-        private static object _locker = new object();
-        private readonly ApplicationDBContext _context;
         public HotFolderRepository(ApplicationDBContext context)
-        {
-            _context = context;
-        }
+            : base(context) { }
 
         public async Task<HotFolder> Add(string folderPath)
         {
-            _context.HotFolder.Add(new HotFolder()
+            return await ThreadSafeTaskExecute(async () => 
             {
-                FolderPath = folderPath
-            });
-            await _context.SaveChangesAsync();
+                Context.HotFolder.Add(new HotFolder()
+                {
+                    FolderPath = folderPath
+                });
+                await Context.SaveChangesAsync();
 
-            return await _context.HotFolder.FirstAsync(_ => _.FolderPath == folderPath);
+                return await Context.HotFolder.FirstAsync(_ => _.FolderPath == folderPath);
+            });
         }
 
         public async Task<IEnumerable<HotFolder>> GetAll()
         {
-            Monitor.Enter(_locker);
-            var hotFolders = await _context.HotFolder.AsQueryable().ToListAsync();
-            Monitor.Exit(_locker);
-
-            return hotFolders;
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                return await Context.HotFolder.AsQueryable().ToListAsync();
+            });
         }
 
         public async Task<HotFolder> GetById(int folderId)
         {
-            return await _context.HotFolder.FirstOrDefaultAsync(_ => _.Id == folderId);
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                return await Context.HotFolder.FirstOrDefaultAsync(_ => _.Id == folderId);
+            });
         }
 
         public async Task<HotFolder> GetByPath(string folderPath)
         {
-            return await _context.HotFolder.FirstOrDefaultAsync(_ => _.FolderPath == folderPath);
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                return await Context.HotFolder.FirstOrDefaultAsync(_ => _.FolderPath == folderPath);
+            });
         }
 
         public async Task Remove(int folderId)
         {
-            var folder = await _context.HotFolder.FirstOrDefaultAsync(_ => _.Id == folderId);
-            if (folder == null)
+            await ThreadSafeTaskExecute(async () =>
             {
-                return;
-            }
+                var folder = await Context.HotFolder.FirstOrDefaultAsync(_ => _.Id == folderId);
+                if (folder == null)
+                {
+                    return;
+                }
 
-            _context.HotFolder.Remove(folder);
-            await _context.SaveChangesAsync();
+                Context.HotFolder.Remove(folder);
+                await Context.SaveChangesAsync();
+            });
         }
     }
 }

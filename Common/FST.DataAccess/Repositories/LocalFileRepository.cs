@@ -4,70 +4,71 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FST.DataAccess.Repositories
 {
-    public class LocalFileRepository : ILocalFileRepository
+    public class LocalFileRepository : BaseRepository, ILocalFileRepository
     {
-        private static object _locker = new object();
-        private readonly ApplicationDBContext _context;
         public LocalFileRepository(ApplicationDBContext context)
-        {
-            _context = context;
-        }
+            : base(context) { }
 
         public async Task<LocalFile> Add(string localFilePath)
         {
-            var localfile = new LocalFile()
+            return await ThreadSafeTaskExecute(async () => 
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = Path.GetFileName(localFilePath),
-                Path = Path.GetDirectoryName(localFilePath)
-            };
-            _context.LocalFile.Add(localfile);
-            await _context.SaveChangesAsync();
+                var localfile = new LocalFile()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = Path.GetFileName(localFilePath),
+                    Path = Path.GetDirectoryName(localFilePath)
+                };
+                Context.LocalFile.Add(localfile);
+                await Context.SaveChangesAsync();
 
-            return localfile;
+                return localfile;
+            });
         }
 
         public async Task<IEnumerable<LocalFile>> GetAll()
         {
-            Monitor.Enter(_locker);
-            var localFiles = await _context.LocalFile.ToListAsync();
-            Monitor.Exit(_locker);
-
-            return localFiles;
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                return await Context.LocalFile.ToListAsync();
+            });
         }
 
         public async Task<LocalFile> GetById(string fileId)
         {
-            Monitor.Enter(_locker);
-            var localFile =  await _context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
-            Monitor.Exit(_locker);
-
-            return localFile;
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                return await Context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
+            });
         }
 
         public async Task<LocalFile> GetByFullPath(string fileFullPath)
         {
-            var name = Path.GetFileName(fileFullPath);
-            var path = Path.GetDirectoryName(fileFullPath);
-            return await _context.LocalFile
-                .FirstOrDefaultAsync(_ => _.Name == name && _.Path == path);
+            return await ThreadSafeTaskExecute(async () =>
+            {
+                var name = Path.GetFileName(fileFullPath);
+                var path = Path.GetDirectoryName(fileFullPath);
+                return await Context.LocalFile.FirstOrDefaultAsync(_ => _.Name == name && _.Path == path);
+            });
         }
 
         public async Task Remove(string fileId)
         {
-            var locaFile = await _context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
-            if (locaFile == null)
+            await ThreadSafeTaskExecute(async () =>
             {
-                return;
-            }
+                var locaFile = await Context.LocalFile.FirstOrDefaultAsync(_ => _.Id == fileId);
+                if (locaFile == null)
+                {
+                    return;
+                }
 
-            _context.LocalFile.Remove(locaFile);
-            await _context.SaveChangesAsync();
+                Context.LocalFile.Remove(locaFile);
+                await Context.SaveChangesAsync();
+            });
         }
     }
 }
