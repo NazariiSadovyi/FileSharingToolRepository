@@ -4,13 +4,13 @@
     <UI Id="CustomUI">
       <UIRef Id="WixUI_InstallDir" />
 
-      <DialogRef Id="PoolSettingsDlg" />
-      <!-- Injection of custom UI. -->
-      <Publish Dialog="LicenseAgreementDlg" Control="Next"
+      <!--<DialogRef Id="PoolSettingsDlg" />-->
+
+      <!--<Publish Dialog="LicenseAgreementDlg" Control="Next"
            Event="NewDialog" Value="PoolSettingsDlg"
            Order="3">LicenseAccepted = "1"</Publish>
       <Publish Dialog="InstallDirDlg" Control="Back"
-           Event="NewDialog" Value="PoolSettingsDlg">1</Publish>
+           Event="NewDialog" Value="PoolSettingsDlg">1</Publish>-->
     </UI>
 	</Fragment>
 </Wix>

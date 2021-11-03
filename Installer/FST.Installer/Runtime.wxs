@@ -5,11 +5,15 @@
 			<Component Id="dotnet_hosting_5_0_11_win" Guid="{8F46694D-1C23-4C51-9C45-64ACAEB79711}">
 				<File KeyPath="yes" Source="$(var.SolutionDir)Installer\Runtime\dotnet-hosting-5.0.11-win.exe" />
 			</Component>
+			<Component Id="dotnet_runtime_5_0_11_win_x64" Guid="{D5D14003-04C8-407A-9754-A619D07A5DD2}">
+				<File KeyPath="yes" Source="$(var.SolutionDir)Installer\Runtime\dotnet-runtime-5.0.11-win-x64.exe" />
+			</Component>
 		</DirectoryRef>
 	</Fragment>
 	<Fragment>
 		<ComponentGroup Id="RuntimeComponent">
 			<ComponentRef Id="dotnet_hosting_5_0_11_win" />
+			<ComponentRef Id="dotnet_runtime_5_0_11_win_x64" />
 		</ComponentGroup>
 	</Fragment>
 </Wix>

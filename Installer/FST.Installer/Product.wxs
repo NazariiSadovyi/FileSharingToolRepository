@@ -95,10 +95,13 @@
 		  <Custom Action="InstallIIS" Before="WriteRegistryValues">
 			  <![CDATA[NOT Installed AND NOT IISMAJORVERSION]]>
 		  </Custom>
-	      <Custom Action="UpdateFirewallRule" After="InstallFiles">
+	    <Custom Action="UpdateFirewallRule" After="InstallFiles">
 			  <![CDATA[NOT Installed AND NOT REMOVED]]>
 		  </Custom>
-	      <Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
+	    <Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
+			  NOT WIX_UPGRATE_DETECTED
+		  </Custom>
+	    <Custom Action="InstallDotnetHosting" Before="InstallFinalize">
 			  NOT WIX_UPGRATE_DETECTED
 		  </Custom>
 	  </InstallExecuteSequence>
@@ -108,16 +111,17 @@
   <Fragment>
     <DirectoryRef Id="SERVER_DIR">
       <Component Id="C_IISWebsite" Guid="{E45FBE0E-4C65-4D07-A236-55A16F172920}" KeyPath="yes">
-        <util:User Id="WebAppPoolUser"
+        <!--<util:User Id="WebAppPoolUser"
                    CreateUser="no"
                    Name="[WEB_APP_POOL_IDENTITY_NAME]"
                    Password="[WEB_APP_POOL_IDENTITY_PWD]"/>
 
-        <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="other" User="WebAppPoolUser"/>
+        <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="other" User="WebAppPoolUser"/>-->
+        <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="localSystem"/>
 
         <iis:WebSite Id="FileSharingToolWebApp" Description="File Sharing Tool Web App" Directory="SERVER_DIR" >
           <iis:WebAddress Id="AllUnassigned" Port="56"/>
-		  <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
+		      <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
         </iis:WebSite>
 	  
       </Component>

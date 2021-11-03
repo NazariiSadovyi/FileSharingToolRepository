@@ -284,14 +284,18 @@ namespace FST.ViewModel.ViewModels
         {
             file.Id = await GetOrCreateFileId(file);
             file.SharedLink = WebServerService.GetFilePath(file.Id);
-            
-            var localQRImageName = $"{HashStringHelper.GetHashString(file.Id)}.jpeg";
-            var localImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
-            if (localImage != null)
+            if (string.IsNullOrEmpty(file.SharedLink))
             {
-                file.QRImage = localImage;
                 return;
             }
+            
+            var localQRImageName = $"{HashStringHelper.GetHashString(file.Id)}.jpeg";
+            //var localImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
+            //if (localImage != null)
+            //{
+            //    file.QRImage = localImage;
+            //    return;
+            //}
             
             var qrCodeImagePath = await _localFileCacheService.SaveFile(fileStream =>
             {

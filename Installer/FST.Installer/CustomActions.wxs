@@ -20,12 +20,20 @@
 	  HideTarget="no"/>
 
 	<CustomAction
+	  Id="InstallDotnetHosting"
+    Directory="COMMON_DIR"
+    ExeCommand="&quot;[COMMON_DIR]dotnet-hosting-5.0.11-win.exe&quot;"
+    Execute="deferred"
+    Return="asyncNoWait"
+    Impersonate="no"/>
+
+	<CustomAction
 	  Id="InstallDotnetRuntime"
-      Directory="COMMON_DIR"
-      ExeCommand="&quot;[COMMON_DIR]dotnet-hosting-5.0.11-win.exe&quot;"
-      Execute="deferred"
-      Return="asyncNoWait"
-      Impersonate="no"/>
+    Directory="COMMON_DIR"
+    ExeCommand="&quot;[COMMON_DIR]dotnet-runtime-5.0.11-win-x64.exe&quot;"
+    Execute="deferred"
+    Return="asyncNoWait"
+    Impersonate="no"/>
 		
 	<!-- Use DISM to setup IIS (see also http://support.microsoft.com/kb/2736284) -->
 	<!-- Build path to dism.exe (full path is important, just calling dism.exe without path will fail) -->
