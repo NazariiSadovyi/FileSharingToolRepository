@@ -45,12 +45,12 @@ namespace FST.DataAccess
 
         private string BuildDebugDbPath(string libraryPath)
         {
-            if (libraryPath.EndsWith(@"Server\FST.WebApplication\bin\x64\Debug\net5.0"))
+            if (libraryPath.Contains(@"Server\FST.WebApplication"))
             {
                 return ReplaceLastOccurrence(
                     libraryPath,
-                    @"Server\FST.WebApplication\bin\x64\Debug\net5.0",
-                    @"Client\FST.Client\bin\x64\Debug\net5.0-windows");
+                    @"Server\FST.WebApplication",
+                    @"Client\FST.Client");
             }
             return libraryPath;
         }

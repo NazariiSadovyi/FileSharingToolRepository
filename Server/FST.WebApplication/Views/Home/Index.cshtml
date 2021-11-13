@@ -1,8 +1,36 @@
-﻿@{
+﻿@model List<FilePreviewViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="display:inline">
+    @foreach (var viewModel in Model)
+    {
+        if (viewModel.IsPhoto || viewModel.IsVideo)
+        {
+            <div style="width: 300px; display: inline;">
+
+                @if (viewModel.IsPhoto)
+                {
+                    <img class="lightboxed"
+                         rel="group1"
+                         src="@viewModel.ThumbnailAdress"
+                         data-link="@viewModel.Adress"
+                         data-type="photo"
+                         alt="Image Alt 1"
+                         data-caption="Caption 1" />
+                }
+                else if (viewModel.IsVideo)
+                {
+                    <img class="lightboxed"
+                         rel="group1"
+                         src="@viewModel.ThumbnailAdress"
+                         data-link="@viewModel.Adress"
+                         data-type="video"
+                         alt="Image Alt 1"
+                         data-caption="Caption 1" />
+                }
+            </div>
+        }
+    }
 </div>

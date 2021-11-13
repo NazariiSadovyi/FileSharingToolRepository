@@ -1,10 +1,11 @@
-﻿using FST.ViewModel.Helpers;
-using FST.ViewModel.Interfaces;
-using FST.ViewModel.Models;
-using FST.ViewModel.Services;
-using FST.ViewModel.ViewModels.Interfaces;
+﻿using FST.Common.Services.Interfaces;
+using FST.DataAccess.Repositories.Interfaces;
 using FST.Infrastructure.Models;
 using FST.Infrastructure.Services.Interfaces;
+using FST.ViewModel.Helpers;
+using FST.ViewModel.Interfaces;
+using FST.ViewModel.Services;
+using FST.ViewModel.ViewModels.Interfaces;
 using Microsoft.WindowsAPICodePack.Shell;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -14,15 +15,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Unity;
-using FST.DataAccess.Repositories.Interfaces;
 
 namespace FST.ViewModel.ViewModels
 {
@@ -58,6 +55,8 @@ namespace FST.ViewModel.ViewModels
         public IApplicationTaskUtility _applicationTaskUtility;
         [Dependency]
         public ILocalFileCacheService _localFileCacheService;
+        [Dependency]
+        public IQRCodeGeneratorService QRCodeGeneratorService;
 
         public ICommand ClosePreviewCmd
         {
@@ -301,11 +300,7 @@ namespace FST.ViewModel.ViewModels
             {
                 return Task.Run(() =>
                 {
-                    var qrGenerator = new QRCodeGenerator();
-                    var qrCodeData = qrGenerator.CreateQrCode(file.SharedLink, QRCodeGenerator.ECCLevel.Q);
-                    var qrCode = new QRCode(qrCodeData);
-                    var qrCodeImage = qrCode.GetGraphic(5);
-                    qrCodeImage.Save(fileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    QRCodeGeneratorService.SaveToStream(file.SharedLink, fileStream);
                 });
             }, localQRImageName, false);
             
