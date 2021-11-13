@@ -10,7 +10,6 @@ namespace FST.Common.Services
     public class WebServerService : IWebServerService
     {
         private static int _networkAddressChangedCount = 0;
-        private readonly NetworkInterfaceType[] _allowedNetworkInterfaceTypes = new[] { NetworkInterfaceType.Wireless80211 };
 
         public event EventHandler<bool> NetworkChanged;
 
@@ -63,13 +62,31 @@ namespace FST.Common.Services
         {
             foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (_allowedNetworkInterfaceTypes.Contains(item.NetworkInterfaceType) && item.OperationalStatus == OperationalStatus.Up)
+                if (item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && item.OperationalStatus == OperationalStatus.Up)
                 {
                     foreach (var ip in item.GetIPProperties().UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                         {
                             return ip.Address.ToString();
+                        }
+                    }
+                }
+            }
+
+            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
+                {
+                    var ipProperties = item.GetIPProperties();
+                    foreach (var ip in ipProperties.UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            if (ipProperties.GatewayAddresses.FirstOrDefault() != null)
+                            {
+                                return ip.Address.ToString();
+                            }
                         }
                     }
                 }
