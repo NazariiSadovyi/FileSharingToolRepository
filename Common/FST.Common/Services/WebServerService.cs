@@ -1,9 +1,9 @@
-﻿using FST.Infrastructure.Services.Interfaces;
+﻿using FST.Common.Services.Interfaces;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace FST.Infrastructure.Services
+namespace FST.Common.Services
 {
     public class WebServerService : IWebServerService
     {
@@ -41,7 +41,7 @@ namespace FST.Infrastructure.Services
         {
             foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 
+                if (item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211
                     && item.OperationalStatus == OperationalStatus.Up)
                 {
                     foreach (var ip in item.GetIPProperties().UnicastAddresses)

@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64;ARM32;x86</Platforms>
   </PropertyGroup>
 
@@ -11,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\FST.Common\FST.Common.csproj" />
     <ProjectReference Include="..\..\Common\FST.DataAccess\FST.DataAccess.csproj" />
   </ItemGroup>
 

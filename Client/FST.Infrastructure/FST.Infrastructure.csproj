@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\FST.Common\FST.Common.csproj" />
     <ProjectReference Include="..\..\Common\FST.DataAccess\FST.DataAccess.csproj" />
   </ItemGroup>
 

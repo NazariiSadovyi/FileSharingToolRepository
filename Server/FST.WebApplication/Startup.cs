@@ -1,17 +1,14 @@
+using FST.Common.Services;
+using FST.Common.Services.Interfaces;
 using FST.DataAccess;
 using FST.DataAccess.Repositories;
 using FST.DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FST.WebApplication
 {
@@ -29,6 +26,10 @@ namespace FST.WebApplication
         {
             services.AddSingleton<ApplicationDBContext>();
             services.AddSingleton<ILocalFileRepository, LocalFileRepository>();
+
+            services.AddSingleton<IWebServerService, WebServerService>();
+            services.AddSingleton<IFileThumbnailService, FileThumbnailService>();
+            services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
 
             services.AddControllersWithViews();
         }

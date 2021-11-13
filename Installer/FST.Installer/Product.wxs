@@ -61,7 +61,7 @@
     <Feature Id="ProductFeature" Title="FST.Installer" Level="1">
       <ComponentGroupRef Id="ClientDynamic" />
       <ComponentGroupRef Id="ServerDynamic" />
-      <ComponentGroupRef Id="RuntimeComponent" />
+      <!--<ComponentGroupRef Id="RuntimeComponent" />-->
       <ComponentRef Id="SetPermissionComponent"/>
       <ComponentRef Id="CommonDirComponent"/>
       <ComponentRef Id="C_IISWebsite"/>
@@ -98,12 +98,12 @@
 	    <Custom Action="UpdateFirewallRule" After="InstallFiles">
 			  <![CDATA[NOT Installed AND NOT REMOVED]]>
 		  </Custom>
-	    <Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
+	    <!--<Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
 			  NOT WIX_UPGRATE_DETECTED
 		  </Custom>
 	    <Custom Action="InstallDotnetHosting" Before="InstallFinalize">
 			  NOT WIX_UPGRATE_DETECTED
-		  </Custom>
+		  </Custom>-->
 	  </InstallExecuteSequence>
 
 	</Product>
