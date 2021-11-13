@@ -3,9 +3,11 @@
     public interface IAppSettingService
     {
         string CultureName { get; set; }
-        int ItemsInGrid { get; set; }
         string BackgroundImagePath { get; set; }
-        string EmailSendBackgroundImagePath { get; set; }
         bool SortingDisplayFiles { get; set; }
+        string WifiLogin { get; set; }
+        string WifiPassword { get; set; }
+        bool WifiIsHidden { get; set; }
+        int WifiAuthenticationType { get; set; }
     }
 }

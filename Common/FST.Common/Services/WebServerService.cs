@@ -1,5 +1,7 @@
 ﻿using FST.Common.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
@@ -7,6 +9,16 @@ namespace FST.Common.Services
 {
     public class WebServerService : IWebServerService
     {
+        private static int _networkAddressChangedCount = 0;
+        private readonly NetworkInterfaceType[] _allowedNetworkInterfaceTypes = new[] { NetworkInterfaceType.Wireless80211 };
+
+        public event EventHandler<bool> NetworkChanged;
+
+        public WebServerService()
+        {
+            NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+        }
+
         public string GetFilePath(string fileId)
         {
             var localIp = GetLocalAdress();
@@ -32,6 +44,16 @@ namespace FST.Common.Services
             }
         }
 
+        private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
+        {
+            _networkAddressChangedCount++;
+            if (_networkAddressChangedCount % 2 == 0)
+            {
+                var localAdress = GetLocalAdress();
+                NetworkChanged?.Invoke(this, !string.IsNullOrEmpty(localAdress));
+            }
+        }
+
         private string BuildFilePath(string localIp, string fileId)
         {
             return $@"http://{localIp}:56/home/file?id={fileId}";
@@ -41,8 +63,7 @@ namespace FST.Common.Services
         {
             foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211
-                    && item.OperationalStatus == OperationalStatus.Up)
+                if (_allowedNetworkInterfaceTypes.Contains(item.NetworkInterfaceType) && item.OperationalStatus == OperationalStatus.Up)
                 {
                     foreach (var ip in item.GetIPProperties().UnicastAddresses)
                     {

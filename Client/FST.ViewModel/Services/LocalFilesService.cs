@@ -45,7 +45,7 @@ namespace FST.ViewModel.Services
             var hotFolders = (await _hotFolderService.GetAll()).Where(_ => _.IsAvailable);
             foreach (var hotFolder in hotFolders)
             {
-                NewHotFolderAdded(hotFolder);
+                await NewHotFolderAddedAsync(hotFolder);
             }
         }
 
@@ -120,6 +120,20 @@ namespace FST.ViewModel.Services
             {
                 await AddFilesFromDirectory(hotFolder);
             });
+        }
+
+        private async Task NewHotFolderAddedAsync(HotFolder hotFolder)
+        {
+            var watcher = new FileSystemWatcher
+            {
+                Path = hotFolder.FolderPath
+            };
+            watcher.Created += new FileSystemEventHandler(OnFileAdded);
+            watcher.Deleted += new FileSystemEventHandler(OnFileDeleted);
+            watcher.EnableRaisingEvents = true;
+            HotFolderWatchers.Add(new KeyValuePair<int, FileSystemWatcher>(hotFolder.Id, watcher));
+            
+            await AddFilesFromDirectory(hotFolder);
         }
 
         private void OnFileAdded(object sender, FileSystemEventArgs e)

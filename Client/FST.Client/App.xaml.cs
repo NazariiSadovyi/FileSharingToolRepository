@@ -2,7 +2,6 @@
 using FST.Infrastructure;
 using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Interfaces;
-using FST.ViewModel.Models;
 using FST.ViewModel.Services;
 using FST.ViewModel.ViewModels;
 using FST.ViewModel.ViewModels.Interfaces;
@@ -11,7 +10,6 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
 using System;
-using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,7 +35,7 @@ namespace FST.Client
             {
                 await CheckActivation();
                 await InitCurrentFiles();
-                //await InitFFMPEG();
+                await InitPreviewFiles();
             });
 
             var localFileCacheService = Container.Resolve<ILocalFileCacheService>();
@@ -73,6 +71,7 @@ namespace FST.Client
             containerRegistry.RegisterSingleton<ILocalFilesService, LocalFilesService>();
 
             RegisterForNavigation(containerRegistry);
+            RegisterViewModels(containerRegistry);
 
             InfrastructureDependencies.Register(containerRegistry);
         }
@@ -102,21 +101,36 @@ namespace FST.Client
             containerRegistry.RegisterForNavigation<HotFoldersView>();
             containerRegistry.RegisterForNavigation<ActivationView>();
             containerRegistry.RegisterForNavigation<GridFilePreviewView>();
-            //containerRegistry.RegisterForNavigation<VideoPreviewView>();
-            //containerRegistry.RegisterForNavigation<PhotoPreviewView>();
+            containerRegistry.RegisterForNavigation<WifiConfigurationView>();
+        }
+
+        private void RegisterViewModels(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterSingleton<GridFilePreviewViewModel>();
+            containerRegistry.RegisterSingleton<IGridFilePreviewViewModel, GridFilePreviewViewModel>();
+            containerRegistry.RegisterSingleton<WifiConfigurationViewModel>();
         }
 
         private async Task InitCurrentFiles()
         {
             var applicationUtility = Container.Resolve<IApplicationTaskUtility>();
             var localFilesService = Container.Resolve<ILocalFilesService>();
-            await applicationUtility.ExecuteFetchDataAsync(async () =>
-            {
-                await localFilesService.InitCurrentFiles();
-            },
+            await applicationUtility.ExecuteFetchDataAsync(() =>
+                {
+                    return localFilesService.InitCurrentFiles();
+                },
                 Localization.GetResource("AddingCurrentHotFoldersAndFilesFetchMessage"),
                 false
             );
+        }
+
+        private async Task InitPreviewFiles()
+        {
+            var gridFilePreviewViewModel = Container.Resolve<IGridFilePreviewViewModel>();
+            await gridFilePreviewViewModel.LoadDataAsync();
+
+            var wifiConfigurationViewModel = Container.Resolve<WifiConfigurationViewModel>();
+            wifiConfigurationViewModel.UpdateQRCodeCmd.Execute(null);
         }
 
         private async Task CheckActivation()

@@ -50,11 +50,8 @@ namespace FST.ViewModel.ViewModels
                           {
                               ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("HotFolderInformationDialog"), Models.InformationKind.Error);
                           }
-                      },
-                      () => {
-                          return !SharedAppDataViewModel.IsInImportState;
                       }
-                  ).ObservesProperty(() => SharedAppDataViewModel.IsInImportState));
+                  ));
             }
         }
 
@@ -67,11 +64,8 @@ namespace FST.ViewModel.ViewModels
                       async folderId => {
                           await _hotFolderService.Remove(folderId.Value);
                           await RefreshFolders();
-                      },
-                      _ => {
-                          return !SharedAppDataViewModel.IsInImportState;
                       }
-                  ).ObservesProperty(() => SharedAppDataViewModel.IsInImportState));
+                  ));
             }
         }
 

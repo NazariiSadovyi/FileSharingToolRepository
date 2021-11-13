@@ -14,21 +14,12 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:GridFilePreviewViewModel}">
-    
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding OnLoadCmd}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
-    <Grid Background="White"
-          Focusable="True">
-
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="8*"/>
@@ -53,89 +44,99 @@
                     <gu:MouseGestureTracker>
                         <gu:MouseGestureTracker.Interpreter>
                             <gu:DefaultGestureInterpreter MinSwipeLength="15"
-                                                            MinSwipeVelocity="1" />
+                                                          MinSwipeVelocity="1" />
                         </gu:MouseGestureTracker.Interpreter>
                     </gu:MouseGestureTracker>
                     <gu:TouchGestureTracker>
                         <gu:TouchGestureTracker.Interpreter>
                             <gu:DefaultGestureInterpreter MinSwipeLength="15"
-                                                            MinSwipeVelocity="1" />
+                                                          MinSwipeVelocity="1" />
                         </gu:TouchGestureTracker.Interpreter>
                     </gu:TouchGestureTracker>
                 </gu:CompositeGestureTracker>
             </gu:GesturePanel.GestureTracker>
            
-            <ItemsControl ItemsSource="{Binding FilesOnPage}"
-                          Margin="10 10 10 0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="{Binding DataContext.Rows, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                     Columns="{Binding DataContext.Columns, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <gu:FlipView ItemsSource="{Binding Files}"
+                         SelectedIndex="{Binding CurrentPage}"
+                         ArrowPlacement="Outside">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="5,0,5,5">
-                            <Grid Cursor="Hand">
+                        <Grid Grid.Row="0"
+                              Margin="0 5 0 0">
 
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseUp">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.OpenFullPreviewCmd, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                               CommandParameter="{Binding}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.6*"/>
+                                <ColumnDefinition Width="0.2*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Row="0"
-                                      Margin="0 5 0 0">
-                                    <Image Source="{Binding Image}"
-                                           Stretch="UniformToFill"
-                                           VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="0"
+                                        Margin="0 0 20 0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Wifi QR code"
+                                           TextAlignment="Center"
+                                           FontSize="15"/>
+                                <Grid>
                                     <materialDesign:PackIcon Kind="Cancel"
-                                                             Visibility="{Binding Image, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                                                             Visibility="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
                                                              Opacity="0.1"
                                                              VerticalAlignment="Stretch"
                                                              HorizontalAlignment="Stretch"
                                                              Width="100"
                                                              Height="100"/>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition Height="1.5*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Image Grid.Row="1"
-                                               Grid.Column="1"
-                                               HorizontalAlignment="Right"
-                                               VerticalAlignment="Bottom"
-                                               Source="{Binding QRImage}" />
-                                    </Grid>
+                                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage}" />
                                 </Grid>
-
+                            </StackPanel>
+                            
+                            <Grid Grid.Column="1">
+                                <Image Source="{Binding Image}"
+                                       Stretch="Uniform"
+                                       VerticalAlignment="Center" />
+                                <materialDesign:PackIcon Kind="Cancel"
+                                                         Visibility="{Binding Image, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                                                         Opacity="0.1"
+                                                         VerticalAlignment="Stretch"
+                                                         HorizontalAlignment="Stretch"
+                                                         Width="100"
+                                                         Height="100"/>
                                 <ProgressBar Width="50"
                                              Height="50"
                                              IsIndeterminate="{Binding IsLoading}"
                                              Style="{StaticResource MaterialDesignCircularProgressBar}"
                                              Value="0" />
                             </Grid>
-                        </Border>
+
+                            <StackPanel Grid.Column="2"
+                                        Margin="20 0 0 0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="File QR code"
+                                           TextAlignment="Center"
+                                           FontSize="15"/>
+                                <Grid>
+                                    <materialDesign:PackIcon Kind="Cancel"
+                                                             Visibility="{Binding QRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                                                             Opacity="0.1"
+                                                             VerticalAlignment="Stretch"
+                                                             HorizontalAlignment="Stretch"
+                                                             Width="100"
+                                                             Height="100"/>
+                                    <Image Source="{Binding QRImage}" />
+                                </Grid>
+                            </StackPanel>
+                            
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </gu:FlipView>
         </gu:GesturePanel>
 
         <Grid Grid.Row="1"
               Grid.Column="0">
             <Button Height="100"
-                    Style="{StaticResource EmptyButtonStyle}"
-                    Grid.Row="1">
+                    Grid.Row="1"
+                    Style="{StaticResource EmptyButtonStyle}">
                 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -145,58 +146,6 @@
                 
             </Button>
         </Grid>
-
-        <gu:FlipView Grid.Row="1"
-                     Grid.Column="1"
-                     ShowIndex="False">
-            <gu:FlipView.ItemsSource>
-                <MultiBinding Converter="{StaticResource PagesToChunkListConverter}" ConverterParameter="8">
-                    <Binding Path="Pages"/>
-                    <Binding Path="Pages.Count" Delay="322"/>
-                </MultiBinding>
-            </gu:FlipView.ItemsSource>
-            <gu:FlipView.ItemTemplate>
-                <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="20,0,20,0">
-                                    <Button Width="20"
-                                            Height="20"
-                                            materialDesign:ButtonAssist.CornerRadius="25"
-                                            Command="{Binding DataContext.ChangeFilePageCmd, RelativeSource={RelativeSource AncestorType=gu:FlipView}}"
-                                            CommandParameter="{Binding}">
-                                        <Button.Style>
-                                            <Style BasedOn="{StaticResource MaterialDesignRaisedDarkButton}" TargetType="Button">
-                                                <Style.Triggers>
-                                                    <DataTrigger Value="True">
-                                                        <DataTrigger.Binding>
-                                                            <MultiBinding Converter="{StaticResource IsValuesEqualsToBoolMultiConverter}">
-                                                                <Binding Path="DataContext.CurrentPage" RelativeSource="{RelativeSource AncestorType=gu:FlipView}" />
-                                                                <Binding Path="" />
-                                                            </MultiBinding>
-                                                        </DataTrigger.Binding>
-                                                        <Setter Property="Background" Value="#59b1c5" />
-                                                        <Setter Property="BorderThickness" Value="0" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                                <Setter Property="Background" Value="#eceeef" />
-                                                <Setter Property="BorderThickness" Value="0" />
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </gu:FlipView.ItemTemplate>
-        </gu:FlipView>
 
     </Grid>
 </UserControl>

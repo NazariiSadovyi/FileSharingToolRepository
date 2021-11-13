@@ -10,7 +10,6 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,41 +22,33 @@ using Unity;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class GridFilePreviewViewModel : BindableBase, INavigationAware
+    public class GridFilePreviewViewModel : BindableBase, IGridFilePreviewViewModel, INavigationAware
     {
+        #region Private fields
         private ObservableCollection<FilePreviewViewModel> _files;
         private ISharedAppDataViewModel _sharedAppDataViewModel;
         private string _backgroundImagePath;
         private int _currentPage;
-        private int _columns;
-        private int _rows;
-        private int _itemsPerPage;
-        private ObservableCollection<int> _pages;
+        #endregion
 
-        private IList<FilePreviewViewModel> AllFiles = new List<FilePreviewViewModel>();
-
-        private ICommand _onLoad;
-        private ICommand _closePreviewCmd;
-        private ICommand _openFullPreviewCmd;
-        private ICommand _changeFilePageCmd;
-
-        [Dependency]
-        public IRegionManager _regionManager;
+        #region Dependencies
         [Dependency]
         public IWebServerService WebServerService;
         [Dependency]
-        public IAppSettingService _appSettingService;
+        public IAppSettingService AppSettingService;
         [Dependency]
-        public ILocalFilesService _localFilesService;
+        public ILocalFilesService LocalFilesService;
         [Dependency]
         public ILocalFileRepository LocalFileRepository;
         [Dependency]
-        public IApplicationTaskUtility _applicationTaskUtility;
+        public ILocalFileCacheService LocalFileCacheService;
         [Dependency]
-        public ILocalFileCacheService _localFileCacheService;
+        public IApplicationTaskUtility ApplicationTaskUtility;
         [Dependency]
         public IQRCodeGeneratorService QRCodeGeneratorService;
+        #endregion
 
+        #region Commands
         public ICommand ClosePreviewCmd
         {
             get => new DelegateCommand(() => 
@@ -66,121 +57,20 @@ namespace FST.ViewModel.ViewModels
             });
         }
 
-        public ICommand OnLoadCmd
-        {
-            get
-            {
-                return _onLoad ??
-                  (_onLoad = new DelegateCommand(
-                      async () => {
-                          if (FilesOnPage != null)
-                          {
-                              return;
-                          }
-
-                          UpdateGridStructure();
-
-                          _localFilesService.LocalFiles.CollectionChanged += LocalFiles_CollectionChanged;
-
-                          Application.Current.Dispatcher.Invoke(() =>
-                          {
-                              AllFiles = new ObservableCollection<FilePreviewViewModel>(_localFilesService
-                                  .LocalFiles
-                                  .OrderBy(_ => _.CreationDate)
-                                  .Select(_ => new FilePreviewViewModel(_)));
-
-                              InitPages();
-
-                              if (_appSettingService.SortingDisplayFiles)
-                              {
-                                  FilesOnPage = new ObservableCollection<FilePreviewViewModel>(AllFiles.Reverse().Take(ItemsPerPage));
-                              }
-                              else
-                              {
-                                  FilesOnPage = new ObservableCollection<FilePreviewViewModel>(AllFiles.Take(ItemsPerPage));
-                              }
-                          });
-
-                          IEnumerable<FilePreviewViewModel> files = AllFiles;
-                          if (_appSettingService.SortingDisplayFiles)
-                          {
-                              files = AllFiles.Reverse();
-                          }
-
-                          foreach (var file in files)
-                          {
-                              file.IsLoading = true;
-                              await FetchThumbnailImage(file);
-                              await FetchQRCodeImage(file);
-                              file.IsLoading = false;
-                          }
-                      }
-                  ));
-            }
-        }
-
-        public ICommand OpenFullPreviewCmd
-        {
-            get
-            {
-                return _openFullPreviewCmd ??
-                  (_openFullPreviewCmd = new DelegateCommand<FilePreviewViewModel>(
-                      file => {
-                          return;
-
-                          if (file == null)
-                          {
-                              return;
-                          }
-
-                          var param = new NavigationParameters()
-                          {
-                              { nameof(FilePreviewViewModel), file }
-                          };
-
-                          if (file.IsVideo)
-                          {
-                              _regionManager.RequestNavigate("PreviewContentRegion", "VideoPreviewView", param);
-                          }
-                          else if (file.IsPhoto)
-                          {
-                              _regionManager.RequestNavigate("PreviewContentRegion", "PhotoPreviewView", param);
-                          }
-                      }
-                  ));
-            }
-        }
-
         public ICommand ChangeFilePageCmd
         {
-            get
+            get => new DelegateCommand<int?>(pageNumber =>
             {
-                return _changeFilePageCmd ??
-                  (_changeFilePageCmd = new DelegateCommand<int?>(
-                      pageNumber => {
-                          CurrentPage = pageNumber.Value;
-                          UpdateCurrentPageItems();
-                      }
-                  ));
-            }
+                CurrentPage = pageNumber.Value;
+            });
         }
+        #endregion
 
+        #region Properties
         public string BackgroundImagePath
         {
             get { return _backgroundImagePath; }
             set { SetProperty(ref _backgroundImagePath, value); }
-        }
-
-        public int Rows
-        {
-            get { return _rows; }
-            set { SetProperty(ref _rows, value); }
-        }
-
-        public int Columns
-        {
-            get { return _columns; }
-            set { SetProperty(ref _columns, value); }
         }
 
         public int CurrentPage
@@ -189,33 +79,74 @@ namespace FST.ViewModel.ViewModels
             set { SetProperty(ref _currentPage, value); }
         }
 
-        public int ItemsPerPage
-        {
-            get { return _itemsPerPage; }
-            set { SetProperty(ref _itemsPerPage, value); }
-        }
-
-        public ObservableCollection<int> Pages
-        {
-            get { return _pages; }
-            set { SetProperty(ref _pages, value); }
-        }
-
-        public ObservableCollection<FilePreviewViewModel> FilesOnPage
-        {
-            get { return _files; }
-            set { SetProperty(ref _files, value); }
-        }
-
         public ISharedAppDataViewModel SharedAppDataViewModel
         {
             get { return _sharedAppDataViewModel; }
             set { SetProperty(ref _sharedAppDataViewModel, value); }
         }
 
-        public GridFilePreviewViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
+        public ObservableCollection<FilePreviewViewModel> Files
+        {
+            get { return _files; }
+            set { SetProperty(ref _files, value); }
+        }
+        #endregion
+
+        public GridFilePreviewViewModel(ISharedAppDataViewModel sharedAppDataViewModel,
+            ILocalFilesService localFilesService,
+            IWebServerService webServerService)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
+            Files = new ObservableCollection<FilePreviewViewModel>();
+            localFilesService.LocalFiles.CollectionChanged += LocalFiles_CollectionChanged;
+            webServerService.NetworkChanged += WebServerService_NetworkChanged;
+        }
+
+        #region Navigation
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.TryGetValue<bool>("FromPreview", out _))
+            {
+                return;
+            }
+
+            BackgroundImagePath = AppSettingService.BackgroundImagePath;
+        }
+        #endregion
+
+        public async Task LoadDataAsync()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Files = new ObservableCollection<FilePreviewViewModel>(LocalFilesService
+                    .LocalFiles
+                    .OrderBy(_ => _.CreationDate)
+                    .Select(_ => new FilePreviewViewModel(_)));
+            });
+
+            IEnumerable<FilePreviewViewModel> files = Files;
+            if (AppSettingService.SortingDisplayFiles)
+            {
+                files = Files.Reverse();
+            }
+
+            foreach (var file in files)
+            {
+                file.IsLoading = true;
+                await FetchThumbnailImage(file);
+                await FetchQRCodeImage(file);
+                file.IsLoading = false;
+            }
         }
 
         private async Task FetchThumbnailImage(FilePreviewViewModel file)
@@ -237,39 +168,26 @@ namespace FST.ViewModel.ViewModels
                 case NotifyCollectionChangedAction.Add:
                     var newLocalFile = e.NewItems[0] as LocalFile;
                     var filePreviewViewModel = new FilePreviewViewModel(newLocalFile);
-                    AllFiles.Add(filePreviewViewModel);
+                    Files.Add(filePreviewViewModel);
                     Task.Run(async () => await FetchThumbnailImage(filePreviewViewModel));
                     Task.Run(async () => await FetchQRCodeImage(filePreviewViewModel));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var locaFileToRemove = e.OldItems[0] as LocalFile;
-                    var fileToRemove = AllFiles.FirstOrDefault(_ => _.Name == locaFileToRemove.Name && _.LocalPath == locaFileToRemove.Path);
+                    var fileToRemove = Files.FirstOrDefault(_ => _.Name == locaFileToRemove.Name && _.LocalPath == locaFileToRemove.Path);
                     if (fileToRemove == null)
                     {
                         return;
                     }
-                    AllFiles.Remove(fileToRemove);
+                    Files.Remove(fileToRemove);
                     break;
                 default:
                     break;
-            }
-
-            InitPages();
-            UpdateCurrentPageItems();
-        }
-
-        private void InitPages()
-        {
-            Pages = new ObservableCollection<int>();
-            for (int i = 0; i < (AllFiles.Count + ItemsPerPage - 1) / ItemsPerPage; i++)
-            {
-                Application.Current.Dispatcher.Invoke(() => Pages.Add(i));
             }
         }
 
         private async Task<string> GetOrCreateFileId(FilePreviewViewModel viewModel)
         {
-
             var localFile = await LocalFileRepository.GetByFullPath(viewModel.FullLocalPath);
             if (localFile == null)
             {
@@ -289,14 +207,7 @@ namespace FST.ViewModel.ViewModels
             }
             
             var localQRImageName = $"{HashStringHelper.GetHashString(file.Id)}.jpeg";
-            //var localImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
-            //if (localImage != null)
-            //{
-            //    file.QRImage = localImage;
-            //    return;
-            //}
-            
-            var qrCodeImagePath = await _localFileCacheService.SaveFile(fileStream =>
+            var qrCodeImagePath = await LocalFileCacheService.SaveFile(fileStream =>
             {
                 return Task.Run(() =>
                 {
@@ -304,89 +215,27 @@ namespace FST.ViewModel.ViewModels
                 });
             }, localQRImageName, false);
             
-            file.QRImage = await _localFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
+            file.QRImage = await LocalFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
         }
 
-        private void UpdateGridStructure()
+        private void WebServerService_NetworkChanged(object sender, bool e)
         {
-            if (ItemsPerPage == _appSettingService.ItemsInGrid)
+            Task.Run(async () => 
             {
-                return;
-            }
-            ItemsPerPage = _appSettingService.ItemsInGrid;
-            Application.Current.Dispatcher.Invoke(() => 
-            {
-                switch (ItemsPerPage)
+                await LocalFileRepository.RemoveAll();
+                foreach (var file in Files)
                 {
-                    case 20:
-                        Rows = 4;
-                        Columns = 5;
-                        break;
-                    case 16:
-                        Rows = 4;
-                        Columns = 4;
-                        break;
-                    case 9:
-                        Rows = 3;
-                        Columns = 3;
-                        break;
-                    case 4:
-                        Rows = 2;
-                        Columns = 2;
-                        break;
-                    default:
-                        Rows = 1;
-                        Columns = 1;
-                        break;
+                    file.QRImage = null;
+                }
+
+                if (e)
+                {
+                    foreach (var file in Files)
+                    {
+                        await FetchQRCodeImage(file);
+                    }
                 }
             });
         }
-
-        private void UpdateCurrentPageItems()
-        {
-            if ((ItemsPerPage * CurrentPage) >= AllFiles.Count)
-            {
-                CurrentPage--;
-            }
-            FilesOnPage.Clear();
-
-            IEnumerable<FilePreviewViewModel> files = AllFiles;
-            if (_appSettingService.SortingDisplayFiles)
-            {
-                files = AllFiles.Reverse();
-            }
-
-            FilesOnPage.AddRange(files.Skip(CurrentPage * ItemsPerPage).Take(ItemsPerPage));
-        }
-
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            if (navigationContext.Parameters.TryGetValue<bool>("FromPreview", out _))
-            {
-                return;
-            }
-
-            BackgroundImagePath = _appSettingService.BackgroundImagePath;
-
-            if (FilesOnPage != null)
-            {
-                CurrentPage = 0;
-                UpdateGridStructure();
-                InitPages();
-                UpdateCurrentPageItems();
-            }
-        }
-        #endregion
     }
 }

@@ -11,5 +11,6 @@ namespace FST.DataAccess.Repositories.Interfaces
         Task<LocalFile> GetByFullPath(string fileFullPath);
         Task<LocalFile> GetById(string fileId);
         Task Remove(string fileId);
+        Task RemoveAll();
     }
 }

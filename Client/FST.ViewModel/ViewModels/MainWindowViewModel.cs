@@ -5,11 +5,7 @@ using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,13 +16,7 @@ namespace FST.ViewModel.ViewModels
     public class MainWindowViewModel : BindableBase, IMainWindowViewModel
     {
         #region Private fields
-        private readonly string _uploadingMessageTemplate = CultureLocalization.Localization.GetResource("MainViewLabelProgress"); 
-        
-        private ICommand _shutdownApplicationCmd;
-        private ICommand _switchUserControl;
-        private ICommand _startPreviewCmd;
-        private ICommand _closePreviewCmd;
-
+        private ISharedAppDataViewModel _sharedAppDataViewModel;
         private WindowStyle _windowStyle = WindowStyle.SingleBorderWindow;
         private WindowState _windowState = WindowState.Normal;
         private ResizeMode _resizeMode = ResizeMode.CanResize;
@@ -37,8 +27,6 @@ namespace FST.ViewModel.ViewModels
         private InformationKind _informationKind;
         private string _spaceUsageMessage;
         private int _spaceUsagePercentage;
-
-        private ISharedAppDataViewModel _sharedAppDataViewModel;
         #endregion
 
         #region Dependencies
@@ -113,89 +101,67 @@ namespace FST.ViewModel.ViewModels
         #region Commands
         public ICommand SwitchUserControl
         {
-            get
+            get => new DelegateCommand<string>(obj =>
             {
-                return _switchUserControl ??
-                  (_switchUserControl = new DelegateCommand<string>(
-                      obj => {
-                          var navigationParams = new NavigationParameters
-                          {
-                              { nameof(IMainWindowViewModel), this as IMainWindowViewModel }
-                          };
-                          NavigateToPage(obj, navigationParams);
-                      }
-                  ));
-            }
+                var navigationParams = new NavigationParameters
+                {
+                    { nameof(IMainWindowViewModel), this as IMainWindowViewModel }
+                };
+                NavigateToPage(obj, navigationParams);
+            });
         }
 
         public ICommand StartPreviewCmd
         {
-            get
+            get => new DelegateCommand(() =>
             {
-                return _startPreviewCmd ??
-                  (_startPreviewCmd = new DelegateCommand(
-                      () => {
-                          RegionManager.RequestNavigate("PreviewContentRegion", "GridFilePreviewView");
-                          SharedAppDataViewModel.IsPreviewVisible = true;
-                      }
-                  ));
-            }
+                RegionManager.RequestNavigate("PreviewContentRegion", "GridFilePreviewView");
+                SharedAppDataViewModel.IsPreviewVisible = true;
+            });
         }
 
         public ICommand ClosePreviewCmd
         {
-            get
+            get => new DelegateCommand(() =>
             {
-                return _closePreviewCmd ??
-                  (_closePreviewCmd = new DelegateCommand(
-                      () => {
-                          if (Keyboard.IsKeyDown(Key.Escape))
-                          {
-                              var isFileFullPreviewView = RegionManager.Regions["PreviewContentRegion"]
-                                        .ActiveViews
-                                        .Select(_ => _ as UserControl)
-                                        .FirstOrDefault(_ => !(_.DataContext is GridFilePreviewViewModel));
-                              if (isFileFullPreviewView == null)
-                              {
-                                  SharedAppDataViewModel.IsPreviewVisible = false;
-                              }
-                          }
-                      }
-                  ));
-            }
+                if (Keyboard.IsKeyDown(Key.Escape))
+                {
+                    var isFileFullPreviewView = RegionManager.Regions["PreviewContentRegion"]
+                              .ActiveViews
+                              .Select(_ => _ as UserControl)
+                              .FirstOrDefault(_ => !(_.DataContext is GridFilePreviewViewModel));
+                    if (isFileFullPreviewView == null)
+                    {
+                        SharedAppDataViewModel.IsPreviewVisible = false;
+                    }
+                }
+            });
         }
 
         public ICommand ShutdownApplicationCmd
         {
-            get
+            get => new DelegateCommand(() =>
             {
-                return _shutdownApplicationCmd ??
-                  (_shutdownApplicationCmd = new DelegateCommand(
-                      () => {
-                          Application.Current.Shutdown();
-                      }
-                  ));
-            }
+                Application.Current.Shutdown();
+            });
         }
 
         public ICommand CloseInformationMessageCmd
         {
-            get => new DelegateCommand(
-                () => {
-                    ShowInformationMessage = false;
-                    InformationMessage = string.Empty;
-                });
+            get => new DelegateCommand(() =>
+            {
+                ShowInformationMessage = false;
+                InformationMessage = string.Empty;
+            });
         }
         #endregion
 
         public MainWindowViewModel(IApplicationTaskUtility applicationTaskUtility,
-            ISharedAppDataViewModel sharedAppDataViewModel,
-            ILocalFilesService localFilesService)
+            ISharedAppDataViewModel sharedAppDataViewModel)
         {
             IsTaskControlShown = true;
             FetchDataMessage = "Aplication is starting...";
 
-            sharedAppDataViewModel.UploadingMessage = string.Format(_uploadingMessageTemplate, 0, 0);
             SharedAppDataViewModel = sharedAppDataViewModel;
             applicationTaskUtility.FetchDataCommand.RegisterCommand(
                 new DelegateCommand<FetchDataInfo>((obj) =>

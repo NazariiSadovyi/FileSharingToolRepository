@@ -70,5 +70,15 @@ namespace FST.DataAccess.Repositories
                 await Context.SaveChangesAsync();
             });
         }
+
+        public async Task RemoveAll()
+        {
+            await ThreadSafeTaskExecute(async () =>
+            {
+                var locaFiles = await Context.LocalFile.ToListAsync();
+                Context.LocalFile.RemoveRange(locaFiles);
+                await Context.SaveChangesAsync();
+            });
+        }
     }
 }

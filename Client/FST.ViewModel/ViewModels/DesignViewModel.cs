@@ -35,22 +35,10 @@ namespace FST.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public int ItemsInPreviewGrid
-        {
-            get { return _itemsInPreviewGrid; }
-            set { SetProperty(ref _itemsInPreviewGrid, value); }
-        }
-
         public string BackgroundImagePath
         {
             get { return _backgroundImagePath; }
             set { SetProperty(ref _backgroundImagePath, value); }
-        }
-
-        public string EmailSendBackgroundImagePath
-        {
-            get { return _emailSendBackgroundImagePath; }
-            set { SetProperty(ref _emailSendBackgroundImagePath, value); }
         }
 
         public bool SortingDisplayFiles
@@ -94,43 +82,6 @@ namespace FST.ViewModel.ViewModels
             }
         }
 
-        public ICommand SelectEmailSendBackgroundImageCmd
-        {
-            get
-            {
-                return _selectEmailSendBackgroundImageCmd ??
-                  (_selectEmailSendBackgroundImageCmd = new DelegateCommand(
-                      () => {
-                          var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
-                          if (string.IsNullOrEmpty(filePath))
-                          {
-                              return;
-                          }
-
-                          EmailSendBackgroundImagePath = filePath;
-                      }
-                  ));
-            }
-        }
-
-        public ICommand UpdatePreviewGridCmd
-        {
-            get
-            {
-                return _updatePreviewGridCmd ??
-                  (_updatePreviewGridCmd = new DelegateCommand<string>(
-                      _itemsInGrid => {
-                          var itemsInGrid = int.Parse(_itemsInGrid);
-                          if (itemsInGrid != ItemsInPreviewGrid)
-                          {
-                              ItemsInPreviewGrid = itemsInGrid;
-                              AppSettingService.ItemsInGrid = itemsInGrid;
-                          }
-                      }
-                  ));
-            }
-        }
-
         public ICommand ChangeWindowModeCmd
         {
             get
@@ -166,10 +117,8 @@ namespace FST.ViewModel.ViewModels
 
         public DesignViewModel(IAppSettingService appSettingService)
         {
-            ItemsInPreviewGrid = appSettingService.ItemsInGrid;
             BackgroundImagePath = appSettingService.BackgroundImagePath;
             SortingDisplayFiles = appSettingService.SortingDisplayFiles;
-            EmailSendBackgroundImagePath = appSettingService.EmailSendBackgroundImagePath;
 
             PropertyChanged += (e, args) => 
             {
@@ -180,9 +129,6 @@ namespace FST.ViewModel.ViewModels
                         break;
                     case nameof(BackgroundImagePath):
                         AppSettingService.BackgroundImagePath = BackgroundImagePath;
-                        break;
-                    case nameof(EmailSendBackgroundImagePath):
-                        AppSettingService.EmailSendBackgroundImagePath = EmailSendBackgroundImagePath;
                         break;
                     default:
                         break;

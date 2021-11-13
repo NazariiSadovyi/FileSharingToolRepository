@@ -1,5 +1,6 @@
 ﻿using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Mvvm;
+using System.Windows.Media.Imaging;
 
 namespace FST.ViewModel.ViewModels
 {
@@ -13,14 +14,6 @@ namespace FST.ViewModel.ViewModels
             set { SetProperty(ref _isActivated, value); }
         }
 
-        private bool _isInImportState;
-
-        public bool IsInImportState
-        {
-            get { return _isInImportState; }
-            set { SetProperty(ref _isInImportState, value); }
-        }
-
         private bool _isPreviewVisible;
 
         public bool IsPreviewVisible
@@ -29,12 +22,11 @@ namespace FST.ViewModel.ViewModels
             set { SetProperty(ref _isPreviewVisible, value); }
         }
 
-        private string _uploadingMessage;
-
-        public string UploadingMessage
+        private BitmapImage _wifiQRImage;
+        public BitmapImage WifiQRImage
         {
-            get { return _uploadingMessage; }
-            set { SetProperty(ref _uploadingMessage, value); }
+            get { return _wifiQRImage; }
+            set { SetProperty(ref _wifiQRImage, value); }
         }
     }
 }

@@ -18,6 +18,7 @@ namespace FST.Infrastructure
             containerRegistry.RegisterSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             containerRegistry.Register<IAppSettingService, AppSettingService>();
             containerRegistry.Register<IFileExplorerService, FileExplorerService>();
+            containerRegistry.Register<IWifiService, WifiService>();
 
             DataAccessDependencies.Register(containerRegistry);
         }

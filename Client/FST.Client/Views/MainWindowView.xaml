@@ -68,6 +68,16 @@
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="HotFoldersView" />
             </StackPanel>
+            
+            <StackPanel Grid.Row="1"
+                        Margin="10 0 10 0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                <Button Content="Wifi Setting"
+                        properties:ButtonProperties.Image="Wifi"
+                        Command="{Binding SwitchUserControl}"
+                        CommandParameter="WifiConfigurationView" />
+            </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
                         Grid.Row="2">

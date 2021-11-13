@@ -8,10 +8,12 @@ namespace FST.Infrastructure.Services
         private readonly ISettingRepository _settingRepository;
 
         private readonly string _localizationKey = "Localization";
-        private readonly string _itemsInGridKey = "ItemsInGrid";
         private readonly string _backgroundImagePathKey = "BackgroundImagePath";
         private readonly string _sortingDisplayFilesKey = "SortingDisplayFiles";
-        private readonly string _emailSendBackgroundImagePath = "EmailSendBackgroundImagePath";
+        private readonly string _wifiLogin = "WifiLogin";
+        private readonly string _wifiPassword = "WifiPassword";
+        private readonly string _wifiAuthenticationType = "wifiAuthenticationType";
+        private readonly string _wifiIsHidden = "wifiIsHidden";
 
         public string CultureName
         {
@@ -25,19 +27,28 @@ namespace FST.Infrastructure.Services
             set { _settingRepository.SetSetting(_backgroundImagePathKey, value); }
         }
 
-        public string EmailSendBackgroundImagePath
+        public string WifiLogin
         {
-            get { return _settingRepository.GetStringSetting(_emailSendBackgroundImagePath) ?? string.Empty; }
-            set { _settingRepository.SetSetting(_emailSendBackgroundImagePath, value); }
+            get { return _settingRepository.GetStringSetting(_wifiLogin) ?? string.Empty; }
+            set { _settingRepository.SetSetting(_wifiLogin, value); }
         }
 
-        public int ItemsInGrid
+        public string WifiPassword
         {
-            get {
-                var itemsInGrid = _settingRepository.GetIntSetting(_itemsInGridKey);
-                return itemsInGrid == 0 ? 9 : itemsInGrid;
-            }
-            set { _settingRepository.SetSetting(_itemsInGridKey, value); }
+            get { return _settingRepository.GetStringSetting(_wifiPassword) ?? string.Empty; }
+            set { _settingRepository.SetSetting(_wifiPassword, value); }
+        }
+
+        public int WifiAuthenticationType
+        {
+            get { return _settingRepository.GetIntSetting(_wifiAuthenticationType); }
+            set { _settingRepository.SetSetting(_wifiAuthenticationType, value); }
+        }
+
+        public bool WifiIsHidden
+        {
+            get { return _settingRepository.GetBoolSetting(_wifiIsHidden, false); }
+            set { _settingRepository.SetSetting(_wifiIsHidden, value); }
         }
 
         public bool SortingDisplayFiles 

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!-- Main view -->
-    <v:String x:Key="TitleApp">Event QR sender</v:String>
+    <v:String x:Key="TitleApp">File sharing tool</v:String>
     <v:String x:Key="MainViewButtonHotFolders">HOT FOLDERS</v:String>
     <v:String x:Key="MainViewButtonCloudSettings">CLOUD SETTINGS</v:String>
     <v:String x:Key="MainViewButtonStatus">STATUS</v:String>
