@@ -70,14 +70,14 @@ namespace FST.DataAccess.Repositories
             });
         }
 
-        public int GetIntSetting(string key)
+        public int GetIntSetting(string key, int defaultValue = 0)
         {
             return ThreadSafeExecute(() =>
             {
                 var setting = Context.Setting.FirstOrDefault(_ => _.Key == key);
                 if (setting == null)
                 {
-                    return default;
+                    return defaultValue;
                 }
                 return int.Parse(setting.Value);
             });

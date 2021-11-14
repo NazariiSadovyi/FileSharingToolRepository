@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -25,6 +26,7 @@ namespace FST.ViewModel.ViewModels
     public class GridFilePreviewViewModel : BindableBase, IGridFilePreviewViewModel, INavigationAware
     {
         #region Private fields
+        private readonly Timer _autoSwitchTimer;
         private ObservableCollection<FilePreviewViewModel> _files;
         private ISharedAppDataViewModel _sharedAppDataViewModel;
         private string _backgroundImagePath;
@@ -100,6 +102,7 @@ namespace FST.ViewModel.ViewModels
             Files = new ObservableCollection<FilePreviewViewModel>();
             localFilesService.LocalFiles.CollectionChanged += LocalFiles_CollectionChanged;
             webServerService.NetworkChanged += WebServerService_NetworkChanged;
+            _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
         }
 
         #region Navigation
@@ -110,7 +113,7 @@ namespace FST.ViewModel.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
+            
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -147,6 +150,27 @@ namespace FST.ViewModel.ViewModels
                 await FetchQRCodeImage(file);
                 file.IsLoading = false;
             }
+        }
+
+        public void StartAutoSwitchTimer()
+        {
+            var milliseconds = (int)TimeSpan.FromSeconds(AppSettingService.AutoSwitchSeconds).TotalMilliseconds;
+            _autoSwitchTimer.Change(milliseconds, milliseconds);
+        }
+
+        public void StopAutoSwitchTimer()
+        {
+            _autoSwitchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+
+        private void AutoPageSwitch(object obj)
+        {
+            if (CurrentPage + 1 == Files.Count)
+            {
+                CurrentPage = 0;
+                return;
+            }
+            CurrentPage++;
         }
 
         private async Task FetchThumbnailImage(FilePreviewViewModel file)

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Prism.Regions;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace FST.ViewModel.ViewModels.Interfaces
@@ -7,5 +8,8 @@ namespace FST.ViewModel.ViewModels.Interfaces
     {
         ObservableCollection<FilePreviewViewModel> Files { get; set; }
         Task LoadDataAsync();
+        void OnNavigatedFrom(NavigationContext navigationContext);
+        void StartAutoSwitchTimer();
+        void StopAutoSwitchTimer();
     }
 }

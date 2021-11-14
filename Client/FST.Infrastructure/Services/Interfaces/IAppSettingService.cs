@@ -9,5 +9,6 @@
         string WifiPassword { get; set; }
         bool WifiIsHidden { get; set; }
         int WifiAuthenticationType { get; set; }
+        int AutoSwitchSeconds { get; set; }
     }
 }

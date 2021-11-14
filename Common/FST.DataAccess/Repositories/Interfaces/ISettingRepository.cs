@@ -8,7 +8,7 @@ namespace FST.DataAccess.Repositories.Interfaces
         Task<string> GetStringSettingAsync(string key);
         Task SetSettingAsync(string key, int value);
         Task SetSettingAsync(string key, string value);
-        int GetIntSetting(string key);
+        int GetIntSetting(string key, int defaultValue = 0);
         string GetStringSetting(string key, string defaultValue = null);
         bool GetBoolSetting(string key, bool defaultBool = false);
         void SetSetting(string key, int value);

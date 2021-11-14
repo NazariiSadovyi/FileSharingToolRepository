@@ -34,6 +34,8 @@ namespace FST.ViewModel.ViewModels
         public IRegionManager RegionManager { get; set; }
         [Dependency]
         public ILocalFilesService LocalFilesService { get; set; }
+        [Dependency]
+        public IGridFilePreviewViewModel GridFilePreviewViewModel { get; set; }
         #endregion
 
         #region Properties
@@ -117,6 +119,7 @@ namespace FST.ViewModel.ViewModels
             {
                 RegionManager.RequestNavigate("PreviewContentRegion", "GridFilePreviewView");
                 SharedAppDataViewModel.IsPreviewVisible = true;
+                GridFilePreviewViewModel.StartAutoSwitchTimer();
             });
         }
 
@@ -133,6 +136,7 @@ namespace FST.ViewModel.ViewModels
                     if (isFileFullPreviewView == null)
                     {
                         SharedAppDataViewModel.IsPreviewVisible = false;
+                        GridFilePreviewViewModel.StopAutoSwitchTimer();
                     }
                 }
             });

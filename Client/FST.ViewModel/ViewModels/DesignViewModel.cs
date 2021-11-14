@@ -12,19 +12,11 @@ namespace FST.ViewModel.ViewModels
     public class DesignViewModel : BindableBase, INavigationAware
     {
         #region Private fields
-        private ICommand _selectGridPreviewBackgroundImageCmd;
-        private ICommand _selectEmailSendBackgroundImageCmd;
-        private ICommand _updatePreviewGridCmd;
-        private ICommand _changeWindowModeCmd;
-        private ICommand _changeLanguageCmd;
-
+        private IMainWindowViewModel _mainWindowViewModel;
         private WindowState _previousWindowState;
-        private string _emailSendBackgroundImagePath;
         private string _backgroundImagePath;
         private bool _sortingDisplayFiles;
-        private int _itemsInPreviewGrid;
-
-        private IMainWindowViewModel _mainWindowViewModel;
+        private int _autoSwitchSeconds;
         #endregion
 
         #region Dependencies
@@ -46,72 +38,63 @@ namespace FST.ViewModel.ViewModels
             get { return _sortingDisplayFiles; }
             set { SetProperty(ref _sortingDisplayFiles, value); }
         }
+
+        public int AutoSwitchSeconds
+        {
+            get { return _autoSwitchSeconds; }
+            set { SetProperty(ref _autoSwitchSeconds, value); }
+        }
         #endregion
 
         #region Commands
         public ICommand ChangeLanguageCmd
         {
-            get
-            {
-                return _changeLanguageCmd ??
-                  (_changeLanguageCmd = new DelegateCommand<string>(
-                      cultureName => {
-                          CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
-                          AppSettingService.CultureName = cultureName;
-                      }
-                  ));
-            }
+            get => new DelegateCommand<string>(
+            cultureName => {
+                CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
+                AppSettingService.CultureName = cultureName;
+            });
         }
 
         public ICommand SelectGridPreviewBackgroundImageCmd
         {
-            get
-            {
-                return _selectGridPreviewBackgroundImageCmd ??
-                  (_selectGridPreviewBackgroundImageCmd = new DelegateCommand(
-                      () => {
-                          var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
-                          if (string.IsNullOrEmpty(filePath))
-                          {
-                              return;
-                          }
+            get => new DelegateCommand(
+            () => {
+                var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
 
-                          BackgroundImagePath = filePath;
-                      }
-                  ));
-            }
+                BackgroundImagePath = filePath;
+            });
         }
 
         public ICommand ChangeWindowModeCmd
         {
-            get
-            {
-                return _changeWindowModeCmd ??
-                  (_changeWindowModeCmd = new DelegateCommand<string>(
-                      mode => {
-                          switch (mode)
-                          {
-                              case "full":
-                                  _previousWindowState = _mainWindowViewModel.WindowState;
-                                  _mainWindowViewModel.WindowState = WindowState.Maximized;
-                                  _mainWindowViewModel.WindowStyle = WindowStyle.None;
-                                  _mainWindowViewModel.ResizeMode = ResizeMode.NoResize;
-                                  break;
-                              case "normal":
-                                  _mainWindowViewModel.WindowState = _previousWindowState;
-                                  _mainWindowViewModel.WindowStyle = WindowStyle.SingleBorderWindow;
-                                  _mainWindowViewModel.ResizeMode = ResizeMode.CanResize;
-                                  break;
-                              default:
-                                  break;
-                          }
+            get => new DelegateCommand<string>(
+            mode => {
+                switch (mode)
+                {
+                    case "full":
+                        _previousWindowState = _mainWindowViewModel.WindowState;
+                        _mainWindowViewModel.WindowState = WindowState.Maximized;
+                        _mainWindowViewModel.WindowStyle = WindowStyle.None;
+                        _mainWindowViewModel.ResizeMode = ResizeMode.NoResize;
+                        break;
+                    case "normal":
+                        _mainWindowViewModel.WindowState = _previousWindowState;
+                        _mainWindowViewModel.WindowStyle = WindowStyle.SingleBorderWindow;
+                        _mainWindowViewModel.ResizeMode = ResizeMode.CanResize;
+                        break;
+                    default:
+                        break;
+                }
 
-                          Application.Current.MainWindow.Hide();
-                          Application.Current.MainWindow.Show();
-                          Application.Current.MainWindow.BringIntoView();
-                      }
-                  ));
-            }
+                Application.Current.MainWindow.Hide();
+                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.BringIntoView();
+            });
         }
         #endregion
 
@@ -119,6 +102,7 @@ namespace FST.ViewModel.ViewModels
         {
             BackgroundImagePath = appSettingService.BackgroundImagePath;
             SortingDisplayFiles = appSettingService.SortingDisplayFiles;
+            AutoSwitchSeconds = appSettingService.AutoSwitchSeconds;
 
             PropertyChanged += (e, args) => 
             {
@@ -129,6 +113,9 @@ namespace FST.ViewModel.ViewModels
                         break;
                     case nameof(BackgroundImagePath):
                         AppSettingService.BackgroundImagePath = BackgroundImagePath;
+                        break;
+                    case nameof(AutoSwitchSeconds):
+                        AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
                         break;
                     default:
                         break;

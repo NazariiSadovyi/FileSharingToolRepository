@@ -14,6 +14,7 @@ namespace FST.Infrastructure.Services
         private readonly string _wifiPassword = "WifiPassword";
         private readonly string _wifiAuthenticationType = "wifiAuthenticationType";
         private readonly string _wifiIsHidden = "wifiIsHidden";
+        private readonly string _autoSwitchSeconds = "AutoSwitchSeconds";
 
         public string CultureName
         {
@@ -55,6 +56,12 @@ namespace FST.Infrastructure.Services
         {
             get { return _settingRepository.GetBoolSetting(_sortingDisplayFilesKey, true); }
             set { _settingRepository.SetSetting(_sortingDisplayFilesKey, value); }
+        }
+
+        public int AutoSwitchSeconds
+        {
+            get { return _settingRepository.GetIntSetting(_autoSwitchSeconds, 15); }
+            set { _settingRepository.SetSetting(_autoSwitchSeconds, value); }
         }
 
         public AppSettingService(ISettingRepository settingRepository)
