@@ -101,9 +101,9 @@
     <v:String x:Key="LicenseKeyIsNotValid">This license key is not valid</v:String>
     <v:String x:Key="UpdatingActivationKeyFetchMessage">Updating activation key...</v:String>
     <v:String x:Key="RemovingActivationFetchMessage">Removing activation...</v:String>
-    <v:String x:Key="LicenseKeyIsResetStatusFormat">Current license key is reset. You can reuse new key: {0}. (New key is set to clipboard)</v:String>
+    <v:String x:Key="LicenseKeyIsResetStatusFormat">Current license key is reset. Tool will be closed after 5 minutes.</v:String>
     <v:String x:Key="ThisToolIsActivated">This tool is Activated</v:String>
-    <v:String x:Key="ToolIsNotActivatedWarningMessage">This tool is not activated. Uploading and displaying will work only for files with size less than 200 KB</v:String>
+    <v:String x:Key="ToolIsNotActivatedWarningMessage">This tool is not activated. Tool will be closed after 5 minutes.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Tool has been activated</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Checking activation...</v:String>
 

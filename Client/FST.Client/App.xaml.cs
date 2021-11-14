@@ -2,6 +2,7 @@
 using FST.Infrastructure;
 using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Interfaces;
+using FST.ViewModel.Models;
 using FST.ViewModel.Services;
 using FST.ViewModel.ViewModels;
 using FST.ViewModel.ViewModels.Interfaces;
@@ -68,6 +69,7 @@ namespace FST.Client
         {
             containerRegistry.RegisterSingleton<IApplicationTaskUtility, ApplicationTaskUtility>();
             containerRegistry.RegisterSingleton<ISharedAppDataViewModel, SharedAppDataViewModel>();
+            containerRegistry.RegisterSingleton<IActivationService, ActivationService>();
             containerRegistry.RegisterSingleton<ILocalFilesService, LocalFilesService>();
 
             RegisterForNavigation(containerRegistry);
@@ -135,27 +137,40 @@ namespace FST.Client
 
         private async Task CheckActivation()
         {
-            //var applicationUtility = Container.Resolve<IApplicationTaskUtility>();
-            //var sharedAppData = Container.Resolve<ISharedAppDataViewModel>();
-            //var activationService = Container.Resolve<IActivationService>();
+            var applicationUtility = Container.Resolve<IApplicationTaskUtility>();
+            var sharedAppData = Container.Resolve<ISharedAppDataViewModel>();
+            var activationService = Container.Resolve<IActivationService>();
 
-            //bool? isActivated = false;
-            //await applicationUtility.ExecuteFetchDataAsync(
-                //() =>
-                //{
-                    //return Task.Run(async () =>
-                    //{
-                        //isActivated = await activationService.IsActivated();
-                    //});
-                //},
-                //Localization.GetResource("CheckingActivationFetchMessage")
-            //);
+            bool? isActivated = false;
+            await applicationUtility.ExecuteFetchDataAsync(
+                () =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        isActivated = await activationService.IsActivated();
+                    });
+                },
+                Localization.GetResource("CheckingActivationFetchMessage")
+            );
 
-            //if (!isActivated.Value)
-            //{
-                //applicationUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
-            //}
-            //sharedAppData.IsActivated = isActivated.Value;
+            if (!isActivated.Value)
+            {
+                RunTaskToCloseToolAfter5minutes();
+                applicationUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
+            }
+            sharedAppData.IsActivated = isActivated.Value;
+        }
+
+        public void RunTaskToCloseToolAfter5minutes()
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(TimeSpan.FromMinutes(5));
+                if (!Container.Resolve<ISharedAppDataViewModel>().IsActivated)
+                {
+                    Current.Dispatcher.Invoke(Current.Shutdown);
+                }
+            });
         }
 
         private void SetupExceptionHandling()

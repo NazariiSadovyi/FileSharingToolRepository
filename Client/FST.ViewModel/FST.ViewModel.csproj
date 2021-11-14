@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FST.Activation\FST.Activation.csproj" />
     <ProjectReference Include="..\FST.CultureLocalization\FST.CultureLocalization.csproj" />
     <ProjectReference Include="..\FST.Infrastructure\FST.Infrastructure.csproj" />
   </ItemGroup>
