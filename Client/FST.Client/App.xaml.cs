@@ -132,7 +132,10 @@ namespace FST.Client
             await gridFilePreviewViewModel.LoadDataAsync();
 
             var wifiConfigurationViewModel = Container.Resolve<WifiConfigurationViewModel>();
-            wifiConfigurationViewModel.UpdateQRCodeCmd.Execute(null);
+            if (!string.IsNullOrEmpty(wifiConfigurationViewModel.SSID))
+            {
+                wifiConfigurationViewModel.UpdateQRCodeCmd.Execute(null);
+            }
         }
 
         private async Task CheckActivation()

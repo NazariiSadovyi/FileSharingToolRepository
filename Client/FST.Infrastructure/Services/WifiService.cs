@@ -22,7 +22,7 @@ namespace FST.Infrastructure.Services
             string wifiContext = "";
             wifiContext += $"WIFI:T:{wifiAuthenticationType};";
             wifiContext += $"S:{ssid};";
-            wifiContext += wifiAuthenticationType == WifiAuthenticationType.Nopass ? $"P:{password};" : ";";
+            wifiContext += wifiAuthenticationType != WifiAuthenticationType.Nopass ? $"P:{password};" : ";";
             wifiContext += isHidden ? "H:True;" : ";";
 
             return wifiContext;
