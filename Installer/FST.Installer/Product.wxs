@@ -120,7 +120,7 @@
         <iis:WebAppPool Id="WebAppPool" Name="FileSharingToolWebAppPool" Identity="localSystem"/>
 
         <iis:WebSite Id="FileSharingToolWebApp" Description="File Sharing Tool Web App" Directory="SERVER_DIR" >
-          <iis:WebAddress Id="AllUnassigned" Port="56"/>
+          <iis:WebAddress Id="AllUnassigned" Port="5666"/>
 		      <iis:WebApplication Id="Application" Name="FileSharingTool" WebAppPool="WebAppPool"/>
         </iis:WebSite>
 	  

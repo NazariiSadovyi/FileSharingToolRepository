@@ -1,5 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 
 namespace FST.WebApplication
 {
@@ -7,7 +9,22 @@ namespace FST.WebApplication
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("start init main");
+                CreateHostBuilder(args).Build().Run();
+                logger.Debug("end init main");
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -15,7 +32,7 @@ namespace FST.WebApplication
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseUrls("http://localhost:56")
+                        .UseUrls("http://localhost:5666")
                         .UseStartup<Startup>();
                 });
     }

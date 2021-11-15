@@ -68,7 +68,7 @@ namespace FST.Installer.CustomAction
                 inboundRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
                 //Using protocol TCP
                 inboundRule.Protocol = 6; // TCP
-                inboundRule.LocalPorts = "56"; //Port 56
+                inboundRule.LocalPorts = "5666"; //Port 56
                 //Name of rule
                 inboundRule.Name = newRuleName;
                 // ...//
