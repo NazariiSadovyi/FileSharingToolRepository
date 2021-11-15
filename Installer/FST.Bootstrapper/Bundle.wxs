@@ -17,9 +17,15 @@
 									SourceFile='$(var.SolutionDir)Installer\Runtime\dotnet-runtime-5.0.11-win-x64.exe'
 									PerMachine='yes'
                   InstallCommand='/passive'/>-->
-      <ExePackage Id='DotnetHostingRuntime'
+      <ExePackage Id='WindowsdesktopRuntime'
 									Compressed='yes'
                   After='MsiInstaller'
+									SourceFile='$(var.SolutionDir)Installer\Runtime\windowsdesktop-runtime-5.0.11-win-x64.exe'
+									PerMachine='yes'
+                  InstallCommand='/passive'/>
+      <ExePackage Id='DotnetHostingRuntime'
+									Compressed='yes'
+                  After='WindowsdesktopRuntime'
 									SourceFile='$(var.SolutionDir)Installer\Runtime\dotnet-hosting-5.0.11-win.exe'
 									PerMachine='yes'
                   InstallCommand='/passive'/>
