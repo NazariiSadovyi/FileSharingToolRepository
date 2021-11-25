@@ -75,16 +75,16 @@
   
   dotnet publish "$(SolutionDir)\Server\FST.WebApplication\FST.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\FST.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
   
-  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
-  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
 ) ELSE (
   "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\FST.Client\bin\x86\Release\net5.0-windows" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
   powershell -Command "(gc %27$(ProjectDir)ClientDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Client\FST.Client\bin\x86\Release\net5.0-windows%27 | Out-File -encoding ASCII %27$(ProjectDir)ClientDynamic.wxs%27"
   
   dotnet publish "$(SolutionDir)\Server\FST.WebApplication\FST.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\FST.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
   
-  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
-  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\FST.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
 )</PreBuildEvent>
   </PropertyGroup>
   <!--
