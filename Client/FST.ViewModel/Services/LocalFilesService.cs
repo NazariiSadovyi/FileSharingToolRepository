@@ -68,9 +68,12 @@ namespace FST.ViewModel.Services
                     IsPhoto = LocalFileHelper.IsPhoto(fileName),
                     IsVideo = LocalFileHelper.IsVideo(fileName),
                     CreationDate = File.GetCreationTime(localFilePath)
-            };
+                };
 
-                Application.Current.Dispatcher.Invoke(() => LocalFiles.Add(localFile));
+                if (localFile.IsPhoto || localFile.IsVideo)
+                {
+                    Application.Current.Dispatcher.Invoke(() => LocalFiles.Add(localFile));
+                }
             }
         }
 

@@ -5,6 +5,7 @@ using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Helpers;
 using FST.ViewModel.Interfaces;
 using FST.ViewModel.Services;
+using FST.ViewModel.ViewModels.FilePreviewVIewModels;
 using FST.ViewModel.ViewModels.Interfaces;
 using Microsoft.WindowsAPICodePack.Shell;
 using Prism.Commands;
@@ -14,11 +15,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Unity;
 
 namespace FST.ViewModel.ViewModels
@@ -27,7 +32,7 @@ namespace FST.ViewModel.ViewModels
     {
         #region Private fields
         private readonly Timer _autoSwitchTimer;
-        private ObservableCollection<FilePreviewViewModel> _files;
+        private ObservableCollection<FilePreviewBaseViewModel> _files;
         private ISharedAppDataViewModel _sharedAppDataViewModel;
         private string _backgroundImagePath;
         private int _currentPage;
@@ -87,7 +92,7 @@ namespace FST.ViewModel.ViewModels
             set { SetProperty(ref _sharedAppDataViewModel, value); }
         }
 
-        public ObservableCollection<FilePreviewViewModel> Files
+        public ObservableCollection<FilePreviewBaseViewModel> Files
         {
             get { return _files; }
             set { SetProperty(ref _files, value); }
@@ -99,7 +104,7 @@ namespace FST.ViewModel.ViewModels
             IWebServerService webServerService)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
-            Files = new ObservableCollection<FilePreviewViewModel>();
+            Files = new ObservableCollection<FilePreviewBaseViewModel>();
             localFilesService.LocalFiles.CollectionChanged += LocalFiles_CollectionChanged;
             webServerService.NetworkChanged += WebServerService_NetworkChanged;
             _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
@@ -131,13 +136,14 @@ namespace FST.ViewModel.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Files = new ObservableCollection<FilePreviewViewModel>(LocalFilesService
+                Files = new ObservableCollection<FilePreviewBaseViewModel>(LocalFilesService
                     .LocalFiles
                     .OrderBy(_ => _.CreationDate)
-                    .Select(_ => new FilePreviewViewModel(_)));
+                    .Where(_ => _.IsPhoto || _.IsVideo)
+                    .Select(_ => _.ToFilePreviewViewModel()));
             });
 
-            IEnumerable<FilePreviewViewModel> files = Files;
+            IEnumerable<FilePreviewBaseViewModel> files = Files;
             if (AppSettingService.SortingDisplayFiles)
             {
                 files = Files.Reverse();
@@ -173,16 +179,22 @@ namespace FST.ViewModel.ViewModels
             CurrentPage++;
         }
 
-        private async Task FetchThumbnailImage(FilePreviewViewModel file)
+        private async Task FetchThumbnailImage(FilePreviewBaseViewModel file)
         {
-            file.IsLoading = true;
+            var photoPreview = file as PhotoFilePreviewViewModel;
+            if (photoPreview == null)
+            {
+                return;
+            }
+
+            photoPreview.IsLoading = true;
             await Task.Run(() => 
             {
-                var shellFile = ShellFile.FromFilePath(file.FullLocalPath);
-                Application.Current.Dispatcher.Invoke(() => 
-                    file.Image = shellFile.Thumbnail.ExtraLargeBitmapSource);
+                var shellFile = ShellFile.FromFilePath(photoPreview.FullLocalPath);
+                Application.Current.Dispatcher.Invoke(() =>
+                    photoPreview.Image = shellFile.Thumbnail.ExtraLargeBitmapSource);
             });
-            file.IsLoading = false;
+            photoPreview.IsLoading = false;
         }
 
         private void LocalFiles_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -191,7 +203,7 @@ namespace FST.ViewModel.ViewModels
             {
                 case NotifyCollectionChangedAction.Add:
                     var newLocalFile = e.NewItems[0] as LocalFile;
-                    var filePreviewViewModel = new FilePreviewViewModel(newLocalFile);
+                    var filePreviewViewModel = newLocalFile.ToFilePreviewViewModel();
                     Files.Add(filePreviewViewModel);
                     Task.Run(async () => await FetchThumbnailImage(filePreviewViewModel));
                     Task.Run(async () => await FetchQRCodeImage(filePreviewViewModel));
@@ -210,7 +222,7 @@ namespace FST.ViewModel.ViewModels
             }
         }
 
-        private async Task<string> GetOrCreateFileId(FilePreviewViewModel viewModel)
+        private async Task<string> GetOrCreateFileId(FilePreviewBaseViewModel viewModel)
         {
             var localFile = await LocalFileRepository.GetByFullPath(viewModel.FullLocalPath);
             if (localFile == null)
@@ -221,7 +233,7 @@ namespace FST.ViewModel.ViewModels
             return localFile.Id;
         }
 
-        private async Task FetchQRCodeImage(FilePreviewViewModel file)
+        private async Task FetchQRCodeImage(FilePreviewBaseViewModel file)
         {
             file.Id = await GetOrCreateFileId(file);
             file.SharedLink = WebServerService.GetFilePath(file.Id);
@@ -230,16 +242,8 @@ namespace FST.ViewModel.ViewModels
                 return;
             }
             
-            var localQRImageName = $"{HashStringHelper.GetHashString(file.Id)}.jpeg";
-            var qrCodeImagePath = await LocalFileCacheService.SaveFile(fileStream =>
-            {
-                return Task.Run(() =>
-                {
-                    QRCodeGeneratorService.SaveToStream(file.SharedLink, fileStream);
-                });
-            }, localQRImageName, false);
-            
-            file.QRImage = await LocalFileCacheService.GetBitmapImage(localQRImageName).ConfigureAwait(false);
+            var bitMap = QRCodeGeneratorService.BitmapImage(file.SharedLink);
+            file.QRImage = ToBitmapImage(bitMap);
         }
 
         private void WebServerService_NetworkChanged(object sender, bool e)
@@ -260,6 +264,24 @@ namespace FST.ViewModel.ViewModels
                     }
                 }
             });
+        }
+
+        public BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
         }
     }
 }

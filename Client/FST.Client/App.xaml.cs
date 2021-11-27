@@ -1,4 +1,5 @@
-﻿using FST.Client.Views;
+﻿using FFmpeg.AutoGen;
+using FST.Client.Views;
 using FST.Infrastructure;
 using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Interfaces;
@@ -11,9 +12,11 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Unosquare.FFME;
 using Localization = FST.CultureLocalization.Localization;
 
 namespace FST.Client
@@ -34,6 +37,7 @@ namespace FST.Client
 
             Task.Run(async () =>
             {
+                await InitFFMPEG();
                 await CheckActivation();
                 await InitCurrentFiles();
                 await InitPreviewFiles();
@@ -174,6 +178,15 @@ namespace FST.Client
                     Current.Dispatcher.Invoke(Current.Shutdown);
                 }
             });
+        }
+
+        private async Task InitFFMPEG()
+        {
+            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Library.FFmpegDirectory = Path.Combine(assemblyFolder, "FFMPEGBinaries");
+            Library.EnableWpfMultiThreadedVideo = false;
+            Library.FFmpegLoadModeFlags = FFmpegLoadMode.FullFeatures;
+            await Library.LoadFFmpegAsync();
         }
 
         private void SetupExceptionHandling()
