@@ -26,7 +26,11 @@
                        VerticalAlignment="Center" />
             </DataTemplate>
             <DataTemplate DataType="{x:Type filePreviewVM:VideoFilePreviewViewModel}">
-                <MediaElement Source="{Binding FullLocalPath}"/>
+                <MediaElement Source="{Binding FullLocalPath}"
+                              Loaded="MediaElement_Loaded"
+                              LoadedBehavior="Manual"
+                              UnloadedBehavior="Manual"
+                              MouseDown="MediaElement_MouseDown"/>
             </DataTemplate>
         </Grid.Resources>
         
@@ -72,6 +76,7 @@
            
             <gu:FlipView ItemsSource="{Binding Files}"
                          SelectedIndex="{Binding CurrentPage}"
+                         Name="FlipViewControl"
                          ArrowPlacement="Outside">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
