@@ -1,7 +1,10 @@
-﻿namespace FST.WebApplication.Models
+﻿using System;
+
+namespace FST.WebApplication.Models
 {
     public class FilePreviewViewModel
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Adress { get; set; }
         public bool IsPhoto { get; set; }

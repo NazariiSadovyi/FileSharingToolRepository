@@ -40,10 +40,7 @@ namespace FST.WebApplication.Controllers
             var localFiles = await _localFileRepository.GetAll();
             foreach (var localFile in localFiles)
             {
-                var viewModel = ComposeFilePreviewViewModel(localFile);
-                viewModel.QRCodeAdress = Url.Action(nameof(QRCode), new { localFile.Id });
-                viewModel.ThumbnailAdress = Url.Action(nameof(FileThumbnail), new { localFile.Id });
-                result.Add(viewModel);
+                result.Add(ComposeFilePreviewViewModel(localFile));
             }
 
             return View(result);
@@ -88,6 +85,12 @@ namespace FST.WebApplication.Controllers
             return File(qrCodeStream, "image/jpeg");
         }
 
+        [HttpGet]
+        public IActionResult SaveDownloadData(string id, string name, string email, string phone)
+        {
+            return Ok();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -98,7 +101,10 @@ namespace FST.WebApplication.Controllers
         {
             var viewModel = new FilePreviewViewModel()
             {
+                Id = localFile.Id,
                 Name = localFile.Name,
+                QRCodeAdress = Url.Action(nameof(QRCode), new { localFile.Id }),
+                ThumbnailAdress = Url.Action(nameof(FileThumbnail), new { localFile.Id }),
             };
 
             if (FileNameHelper.IsPhoto(localFile.Name))
