@@ -30,6 +30,7 @@ namespace FST.DataAccess
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
         }
 
+        public DbSet<DownloadHistory> DownloadHistory { get; set; }
         public DbSet<LocalFile> LocalFile { get; set; }
         public DbSet<HotFolder> HotFolder { get; set; }
         public DbSet<Setting> Setting { get; set; }

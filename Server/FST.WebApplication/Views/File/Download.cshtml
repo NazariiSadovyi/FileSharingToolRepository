@@ -1,4 +1,5 @@
-﻿@model DownloadDataViewModel
+﻿@using FST.WebApplication.Controllers
+@model DownloadDataViewModel
 
 <div class="card text-center">
     <div class="card-header">
@@ -6,7 +7,8 @@
     </div>
     <div class="card-body">
         <div style="position: relative;">
-            <form class="was-validated card-body" onsubmit="OnDownloadFormSubmit(event)" method="post">
+            <form class="was-validated card-body" onsubmit="OnDownloadFormSubmit(event)"
+                  method="post" action="/DownloadHistory/@nameof(DownloadHistoryController.Save)">
                 @Html.HiddenFor(_ => _.Id)
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>

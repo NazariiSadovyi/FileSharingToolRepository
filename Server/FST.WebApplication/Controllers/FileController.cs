@@ -100,12 +100,6 @@ namespace FST.WebApplication.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public IActionResult Download(DownloadDataViewModel model)
-        {
-            return RedirectToAction(nameof(Preview), new { model.Id });
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

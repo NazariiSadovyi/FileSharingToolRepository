@@ -26,6 +26,7 @@ namespace FST.WebApplication
         {
             services.AddSingleton<ApplicationDBContext>();
             services.AddSingleton<ILocalFileRepository, LocalFileRepository>();
+            services.AddSingleton<IDownloadHistoryRepository, DownloadHistoryRepository>();
 
             services.AddSingleton<IWebServerService, WebServerService>();
             services.AddSingleton<IFileThumbnailService, FileThumbnailService>();

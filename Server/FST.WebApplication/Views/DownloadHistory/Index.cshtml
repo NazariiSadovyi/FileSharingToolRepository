@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DownloadHistoryViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">File Name</th>
+            <th scope="col">File Path</th>
+            <th scope="col">User Email</th>
+            <th scope="col">User Name</th>
+            <th scope="col">User Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var viewModel in Model)
+	    {
+            <tr>
+                <th>@viewModel.Date</th>
+                <th>@viewModel.FileName</th>
+                <th>@viewModel.FilePath</th>
+                <th>@viewModel.UserEmail</th>
+                <th>@viewModel.UserName</th>
+                <th>@viewModel.UserPhone</th>
+            </tr>	 
+	    }
+    </tbody>
+</table>
