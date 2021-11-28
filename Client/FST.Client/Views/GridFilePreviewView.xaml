@@ -116,12 +116,12 @@
                                                          HorizontalAlignment="Stretch"
                                                          Width="100"
                                                          Height="100"/>
-                                <ContentControl x:Name="PreviewContentControl" Content="{Binding}"/>
                                 <ProgressBar Width="50"
                                              Height="50"
                                              IsIndeterminate="{Binding IsLoading}"
                                              Style="{StaticResource MaterialDesignCircularProgressBar}"
                                              Value="0" />
+                                <ContentControl x:Name="PreviewContentControl" Content="{Binding}"/>
                             </Grid>
 
                             <StackPanel Grid.Column="2"

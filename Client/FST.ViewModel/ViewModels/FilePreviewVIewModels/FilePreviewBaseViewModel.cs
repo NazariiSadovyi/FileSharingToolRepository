@@ -55,7 +55,6 @@ namespace FST.ViewModel.ViewModels.FilePreviewVIewModels
 
         public FilePreviewBaseViewModel(LocalFile localFile)
         {
-            IsLoading = true;
             Name = localFile.Name;
             LocalPath = localFile.Path;
             FullLocalPath = Path.Combine(LocalPath, Name);
