@@ -6,6 +6,7 @@ using Prism.Regions;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
+using FST.Common.Services.Interfaces;
 
 namespace FST.ViewModel.ViewModels
 {
@@ -16,6 +17,7 @@ namespace FST.ViewModel.ViewModels
         private WindowState _previousWindowState;
         private string _backgroundImagePath;
         private bool _sortingDisplayFiles;
+        private bool _downloadViaForm;
         private int _autoSwitchSeconds;
         #endregion
 
@@ -24,6 +26,8 @@ namespace FST.ViewModel.ViewModels
         public IAppSettingService AppSettingService;
         [Dependency]
         public IFileExplorerService FileExplorerService;
+        [Dependency]
+        public ISharedSettingService SharedSettingService;
         #endregion
 
         #region Properties
@@ -37,6 +41,12 @@ namespace FST.ViewModel.ViewModels
         {
             get { return _sortingDisplayFiles; }
             set { SetProperty(ref _sortingDisplayFiles, value); }
+        }
+
+        public bool DownloadViaForm
+        {
+            get { return _downloadViaForm; }
+            set { SetProperty(ref _downloadViaForm, value); }
         }
 
         public int AutoSwitchSeconds
@@ -98,10 +108,11 @@ namespace FST.ViewModel.ViewModels
         }
         #endregion
 
-        public DesignViewModel(IAppSettingService appSettingService)
+        public DesignViewModel(IAppSettingService appSettingService, ISharedSettingService sharedSettingService)
         {
             BackgroundImagePath = appSettingService.BackgroundImagePath;
             SortingDisplayFiles = appSettingService.SortingDisplayFiles;
+            DownloadViaForm = sharedSettingService.DownloadViaForm;
             AutoSwitchSeconds = appSettingService.AutoSwitchSeconds;
 
             PropertyChanged += (e, args) => 
@@ -116,6 +127,9 @@ namespace FST.ViewModel.ViewModels
                         break;
                     case nameof(AutoSwitchSeconds):
                         AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
+                        break;
+                    case nameof(DownloadViaForm):
+                        SharedSettingService.DownloadViaForm = DownloadViaForm;
                         break;
                     default:
                         break;

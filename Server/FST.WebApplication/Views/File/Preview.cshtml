@@ -19,6 +19,17 @@ else
     <h3>Sorry, not able to preview this format of file'</h3>
 }
 
-<div style="display: flex; justify-content: center;">
-    @Html.ActionLink("Download", nameof(FileController.Download), new { id = Model.Id }, new { @class = "btn btn-primary" })
-</div>
+@if (Model.DownloadViaForm)
+{
+    <div style="display: flex; justify-content: center;">
+        @Html.ActionLink("Download", nameof(FileController.Download), new { id = Model.Id }, new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    <div style="display: flex; justify-content: center;">
+        <a id="download-file-link" class="btn btn-primary" href="@Model.Adress" download="@Model.Name">
+            Download
+        </a>
+    </div>
+}

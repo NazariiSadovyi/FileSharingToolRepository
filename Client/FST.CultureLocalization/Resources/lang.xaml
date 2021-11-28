@@ -54,6 +54,7 @@
     <v:String x:Key="DesignViewButtonFullScreenMode">FULL-SCREEN MODE</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">WINDOW MODE</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">SORTING DISPLAY FILES: NEWEST FIRST</v:String>
+    <v:String x:Key="DesignViewLabelDirectFileDownload">DIRECT FILE DOWNLOAD</v:String>
     <v:String x:Key="DesignViewEmailSendButtonImageChoosing">EMAIL SEND BACKGROUND PICTURE</v:String>
 
     <!-- Activation view -->

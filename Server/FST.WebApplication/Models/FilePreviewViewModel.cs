@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FST.WebApplication.Models
+﻿namespace FST.WebApplication.Models
 {
     public class FilePreviewViewModel
     {
@@ -11,5 +9,6 @@ namespace FST.WebApplication.Models
         public bool IsVideo { get; set; }
         public string QRCodeAdress { get; set; }
         public string ThumbnailAdress { get; set; }
+        public bool DownloadViaForm { get; set; }
     }
 }

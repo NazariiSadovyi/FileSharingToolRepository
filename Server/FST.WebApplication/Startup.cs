@@ -24,13 +24,15 @@ namespace FST.WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ApplicationDBContext>();
-            services.AddSingleton<ILocalFileRepository, LocalFileRepository>();
-            services.AddSingleton<IDownloadHistoryRepository, DownloadHistoryRepository>();
+            services.AddScoped<ApplicationDBContext>();
+            services.AddScoped<ISettingRepository, SettingRepository>();
+            services.AddScoped<ILocalFileRepository, LocalFileRepository>();
+            services.AddScoped<IDownloadHistoryRepository, DownloadHistoryRepository>();
+            services.AddScoped<ISharedSettingService, SharedSettingService>();
 
-            services.AddSingleton<IWebServerService, WebServerService>();
-            services.AddSingleton<IFileThumbnailService, FileThumbnailService>();
-            services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
+            services.AddScoped<IWebServerService, WebServerService>();
+            services.AddScoped<IFileThumbnailService, FileThumbnailService>();
+            services.AddScoped<IQRCodeGeneratorService, QRCodeGeneratorService>();
 
             services.AddControllersWithViews();
         }

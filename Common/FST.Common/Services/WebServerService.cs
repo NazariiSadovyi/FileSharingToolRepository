@@ -9,8 +9,6 @@ namespace FST.Common.Services
 {
     public class WebServerService : IWebServerService
     {
-        private static int _networkAddressChangedCount = 0;
-
         public event EventHandler<bool> NetworkChanged;
 
         public WebServerService()
@@ -45,17 +43,13 @@ namespace FST.Common.Services
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
-            _networkAddressChangedCount++;
-            if (_networkAddressChangedCount % 2 == 0)
-            {
-                var localAdress = GetLocalAdress();
-                NetworkChanged?.Invoke(this, !string.IsNullOrEmpty(localAdress));
-            }
+            var localAdress = GetLocalAdress();
+            NetworkChanged?.Invoke(this, !string.IsNullOrEmpty(localAdress));
         }
 
         private string BuildFilePath(string localIp, string fileId)
         {
-            return $@"http://{localIp}:5666/file/preview?id={fileId}";
+            return $@"http://{localIp}:5666/file/preview/{fileId}";
         }
 
         private string GetLocalAdress()

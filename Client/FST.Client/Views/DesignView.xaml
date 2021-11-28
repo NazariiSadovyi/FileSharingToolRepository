@@ -86,27 +86,48 @@
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
-
-            <ToggleSwitch:HorizontalToggleSwitch Height="25"
-                                                 Width="70"
-                                                 FontSize="12"
-                                                 Style="{StaticResource SimpleThumbTemplate}"
-                                                 BorderBrush="#FF6A6A6A"
-                                                 UncheckedForeground="White"
-                                                 UncheckedContent="{DynamicResource ToggleButtonOff}"
-                                                 CheckedContent="{DynamicResource ToggleButtonOn}"
-                                                 IsChecked="{Binding SortingDisplayFiles}"
-                                                 Margin="0,0,0,10"
-                                                 ThumbBrush="White"
-                                                 UncheckedBackground="Red"
-                                                 CheckedBackground="Green"
-                                                 HorizontalAlignment="Left" />
-            
+            <ToggleSwitch:HorizontalToggleSwitch
+                Height="25"
+                Width="70"
+                FontSize="12"
+                Style="{StaticResource SimpleThumbTemplate}"
+                BorderBrush="#FF6A6A6A"
+                UncheckedForeground="White"
+                UncheckedContent="{DynamicResource ToggleButtonOff}"
+                CheckedContent="{DynamicResource ToggleButtonOn}"
+                IsChecked="{Binding SortingDisplayFiles}"
+                Margin="0,0,0,10"
+                ThumbBrush="White"
+                UncheckedBackground="Red"
+                CheckedBackground="Green"
+                HorizontalAlignment="Left" />
             <Label Content="{DynamicResource DesignViewLabelSortingFiles}"
                    FontSize="17"
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Top"
                    HorizontalAlignment="Center" />
+        </StackPanel>
 
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <ToggleSwitch:HorizontalToggleSwitch
+                Height="25"
+                Width="70"
+                FontSize="12"
+                Style="{StaticResource SimpleThumbTemplate}"
+                BorderBrush="#FF6A6A6A"
+                UncheckedForeground="White"
+                UncheckedContent="{DynamicResource ToggleButtonOff}"
+                CheckedContent="{DynamicResource ToggleButtonOn}"
+                IsChecked="{Binding DownloadViaForm}"
+                Margin="0,0,0,10"
+                ThumbBrush="White"
+                UncheckedBackground="Red"
+                CheckedBackground="Green"
+                HorizontalAlignment="Left" />
+            <Label Content="{DynamicResource DesignViewLabelDirectFileDownload}"
+                   FontSize="17"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center" />
         </StackPanel>
 
     </StackPanel>

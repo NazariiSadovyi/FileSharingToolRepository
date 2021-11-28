@@ -17,16 +17,19 @@ namespace FST.WebApplication.Controllers
         private readonly ILogger<FileController> _logger;
         private readonly IQRCodeGeneratorService _qrCodeGeneratorService;
         private readonly IFileThumbnailService _fileThumbnailService;
+        private readonly ISharedSettingService _sharedSettingService;
         private readonly ILocalFileRepository _localFileRepository;
         private readonly IWebServerService _webServerService;
 
         public FileController(ILogger<FileController> logger,
             IQRCodeGeneratorService qrCodeGeneratorService,
             IFileThumbnailService fileThumbnailService,
+            ISharedSettingService sharedSettingService,
             ILocalFileRepository localFileRepository,
             IWebServerService webServerService)
         {
             _qrCodeGeneratorService = qrCodeGeneratorService;
+            _sharedSettingService = sharedSettingService;
             _fileThumbnailService = fileThumbnailService;
             _localFileRepository = localFileRepository;
             _webServerService = webServerService;
@@ -52,6 +55,7 @@ namespace FST.WebApplication.Controllers
         {
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = ComposeFilePreviewViewModel(localFile);
+            viewModel.DownloadViaForm = _sharedSettingService.DownloadViaForm;
 
             return View(viewModel);
         }

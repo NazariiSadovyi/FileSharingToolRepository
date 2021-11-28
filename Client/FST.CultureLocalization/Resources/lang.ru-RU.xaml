@@ -54,6 +54,7 @@
     <v:String x:Key="DesignViewButtonFullScreenMode">ПОЛНОЭКРАННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">ОКОННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">ОТОБРАЖЕНИЕ ФАЙЛОВ: СНАЧАЛА НОВЫЕ</v:String>
+    <v:String x:Key="DesignViewLabelDirectFileDownload">ПРЯМАЯ ЗАГРУЗКА ФАЙЛА</v:String>
     <v:String x:Key="DesignViewEmailSendButtonImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ОТПРАВКИ</v:String>
 
     <!-- Activation view -->
