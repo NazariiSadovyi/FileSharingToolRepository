@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace FST.WebApplication.Controllers
 {
-    public class HomeController : Controller
+    public class FileController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<FileController> _logger;
         private readonly IQRCodeGeneratorService _qrCodeGeneratorService;
         private readonly IFileThumbnailService _fileThumbnailService;
         private readonly ILocalFileRepository _localFileRepository;
         private readonly IWebServerService _webServerService;
 
-        public HomeController(ILogger<HomeController> logger,
+        public FileController(ILogger<FileController> logger,
             IQRCodeGeneratorService qrCodeGeneratorService,
             IFileThumbnailService fileThumbnailService,
             ILocalFileRepository localFileRepository,
@@ -33,6 +33,7 @@ namespace FST.WebApplication.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = new List<FilePreviewViewModel>();
@@ -46,49 +47,63 @@ namespace FST.WebApplication.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> File(string id)
+        [HttpGet]
+        public async Task<IActionResult> Preview(string id)
         {
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = ComposeFilePreviewViewModel(localFile);
 
-            return View("FilePreviewView", viewModel);
+            return View(viewModel);
         }
 
-        public async Task<IActionResult> Video(string id)
+        [HttpGet]
+        public async Task<IActionResult> PhysicalFile(string id)
         {
             var localFile = await _localFileRepository.GetById(id);
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
+
             return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
         }
 
-        public async Task<IActionResult> Image(string id)
-        {
-            var localFile = await _localFileRepository.GetById(id);
-            var fullPath = Path.Combine(localFile.Path, localFile.Name);
-            return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
-        }
-
-        public async Task<IActionResult> FileThumbnail(string id)
+        [HttpGet]
+        public async Task<IActionResult> Thumbnail(string id)
         {
             var localFile = await _localFileRepository.GetById(id);
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
             var fileThumbnailStream = new MemoryStream();
             await _fileThumbnailService.SaveToStreamAsync(fullPath, fileThumbnailStream);
+
             return File(fileThumbnailStream, "image/png");
         }
 
+        [HttpGet]
         public IActionResult QRCode(string id)
         {
             var fileWebPath = _webServerService.GetFilePath(id);
             var qrCodeStream = new MemoryStream();
             _qrCodeGeneratorService.SaveToStream(fileWebPath, qrCodeStream);
+
             return File(qrCodeStream, "image/jpeg");
         }
 
         [HttpGet]
-        public IActionResult SaveDownloadData(string id, string name, string email, string phone)
+        public async Task<IActionResult> Download(string id)
         {
-            return Ok();
+            var localFile = await _localFileRepository.GetById(id);
+            var viewModel = new DownloadDataViewModel()
+            {
+                Id = localFile.Id,
+                Name = localFile.Name,
+                PhysicalFileAdress = Url.Action(nameof(PhysicalFile), new { localFile.Id })
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Download(DownloadDataViewModel model)
+        {
+            return RedirectToAction(nameof(Preview), new { model.Id });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -103,18 +118,17 @@ namespace FST.WebApplication.Controllers
             {
                 Id = localFile.Id,
                 Name = localFile.Name,
+                Adress = Url.Action(nameof(PhysicalFile), new { localFile.Id }),
                 QRCodeAdress = Url.Action(nameof(QRCode), new { localFile.Id }),
-                ThumbnailAdress = Url.Action(nameof(FileThumbnail), new { localFile.Id }),
+                ThumbnailAdress = Url.Action(nameof(Thumbnail), new { localFile.Id })
             };
 
             if (FileNameHelper.IsPhoto(localFile.Name))
             {
-                viewModel.Adress = Url.Action(nameof(Image), new { localFile.Id });
                 viewModel.IsPhoto = true;
             }
             else if (FileNameHelper.IsVideo(localFile.Name))
             {
-                viewModel.Adress = Url.Action(nameof(Video), new { localFile.Id });
                 viewModel.IsVideo = true;
             }
 

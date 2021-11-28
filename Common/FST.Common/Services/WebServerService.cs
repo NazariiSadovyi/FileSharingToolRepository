@@ -55,7 +55,7 @@ namespace FST.Common.Services
 
         private string BuildFilePath(string localIp, string fileId)
         {
-            return $@"http://{localIp}:5666/home/file?id={fileId}";
+            return $@"http://{localIp}:5666/file/preview?id={fileId}";
         }
 
         private string GetLocalAdress()

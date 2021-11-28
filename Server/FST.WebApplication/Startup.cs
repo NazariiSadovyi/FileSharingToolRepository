@@ -63,7 +63,7 @@ namespace FST.WebApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=File}/{action=Index}/{id?}");
             });
         }
     }
