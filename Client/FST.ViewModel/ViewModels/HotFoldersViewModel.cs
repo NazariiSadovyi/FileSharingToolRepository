@@ -1,19 +1,18 @@
 ﻿using FST.CultureLocalization;
+using FST.Infrastructure.Models;
 using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Interfaces;
+using FST.ViewModel.ViewModels.Base;
 using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Unity;
-using FST.Infrastructure.Models;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class HotFoldersViewModel : BindableBase, INavigationAware
+    public class HotFoldersViewModel : BaseNavigationViewModel
     {
         private ICommand _selectFolderCmd;
         private ICommand _removeFolderCmd;
@@ -104,22 +103,5 @@ namespace FST.ViewModel.ViewModels
             var hotFolders = await _hotFolderService.GetAll();
             HotFolders = new ObservableCollection<HotFolder>(hotFolders);
         }
-
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            
-        }
-        #endregion
     }
 }

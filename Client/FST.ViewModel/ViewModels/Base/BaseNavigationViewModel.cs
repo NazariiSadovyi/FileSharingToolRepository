@@ -1,27 +1,14 @@
-﻿using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Prism.Mvvm;
+using Prism.Regions;
 
 namespace FST.ViewModel.ViewModels.Base
 {
-    public class BaseNavigationViewModel : INavigationAware
+    public class BaseNavigationViewModel : BindableBase, INavigationAware
     {
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual bool IsNavigationTarget(NavigationContext navigationContext) => true;
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual void OnNavigatedFrom(NavigationContext navigationContext) { }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual void OnNavigatedTo(NavigationContext navigationContext) { }
     }
 }

@@ -5,11 +5,11 @@ using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Helpers;
 using FST.ViewModel.Interfaces;
 using FST.ViewModel.Services;
+using FST.ViewModel.ViewModels.Base;
 using FST.ViewModel.ViewModels.FilePreviewVIewModels;
 using FST.ViewModel.ViewModels.Interfaces;
 using Microsoft.WindowsAPICodePack.Shell;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ using Unity;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class GridFilePreviewViewModel : BindableBase, IGridFilePreviewViewModel, INavigationAware
+    public class GridFilePreviewViewModel : BaseNavigationViewModel, IGridFilePreviewViewModel
     {
         #region Private fields
         private readonly Timer _autoSwitchTimer;
@@ -110,18 +110,7 @@ namespace FST.ViewModel.ViewModels
             _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
         }
 
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             if (navigationContext.Parameters.TryGetValue<bool>("FromPreview", out _))
             {
@@ -130,7 +119,6 @@ namespace FST.ViewModel.ViewModels
 
             BackgroundImagePath = AppSettingService.BackgroundImagePath;
         }
-        #endregion
 
         public async Task LoadDataAsync()
         {

@@ -1,19 +1,17 @@
-﻿using FST.ViewModel.Interfaces;
+﻿using FST.Common.Services.Interfaces;
 using FST.Infrastructure.Services.Interfaces;
+using FST.ViewModel.Interfaces;
+using FST.ViewModel.ViewModels.Base;
 using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
-using FST.Common.Services.Interfaces;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class DesignViewModel : BindableBase, INavigationAware
+    public class DesignViewModel : BaseNavigationViewModel
     {
         #region Private fields
-        private IMainWindowViewModel _mainWindowViewModel;
         private WindowState _previousWindowState;
         private string _backgroundImagePath;
         private bool _sortingDisplayFiles;
@@ -28,6 +26,8 @@ namespace FST.ViewModel.ViewModels
         public IFileExplorerService FileExplorerService;
         [Dependency]
         public ISharedSettingService SharedSettingService;
+        [Dependency]
+        public IMainWindowViewModel MainWindowViewModel;
         #endregion
 
         #region Properties
@@ -87,15 +87,15 @@ namespace FST.ViewModel.ViewModels
                 switch (mode)
                 {
                     case "full":
-                        _previousWindowState = _mainWindowViewModel.WindowState;
-                        _mainWindowViewModel.WindowState = WindowState.Maximized;
-                        _mainWindowViewModel.WindowStyle = WindowStyle.None;
-                        _mainWindowViewModel.ResizeMode = ResizeMode.NoResize;
+                        _previousWindowState = MainWindowViewModel.WindowState;
+                        MainWindowViewModel.WindowState = WindowState.Maximized;
+                        MainWindowViewModel.WindowStyle = WindowStyle.None;
+                        MainWindowViewModel.ResizeMode = ResizeMode.NoResize;
                         break;
                     case "normal":
-                        _mainWindowViewModel.WindowState = _previousWindowState;
-                        _mainWindowViewModel.WindowStyle = WindowStyle.SingleBorderWindow;
-                        _mainWindowViewModel.ResizeMode = ResizeMode.CanResize;
+                        MainWindowViewModel.WindowState = _previousWindowState;
+                        MainWindowViewModel.WindowStyle = WindowStyle.SingleBorderWindow;
+                        MainWindowViewModel.ResizeMode = ResizeMode.CanResize;
                         break;
                     default:
                         break;
@@ -136,23 +136,5 @@ namespace FST.ViewModel.ViewModels
                 }
             };
         }
-
-        #region Navigation
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            _mainWindowViewModel = navigationContext.Parameters
-                .GetValue<IMainWindowViewModel>(nameof(IMainWindowViewModel));
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-        #endregion
     }
 }

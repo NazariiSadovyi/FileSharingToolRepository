@@ -103,13 +103,9 @@ namespace FST.ViewModel.ViewModels
         #region Commands
         public ICommand SwitchUserControl
         {
-            get => new DelegateCommand<string>(obj =>
+            get => new DelegateCommand<string>(userControlName =>
             {
-                var navigationParams = new NavigationParameters
-                {
-                    { nameof(IMainWindowViewModel), this as IMainWindowViewModel }
-                };
-                NavigateToPage(obj, navigationParams);
+                NavigateToPage(userControlName);
             });
         }
 

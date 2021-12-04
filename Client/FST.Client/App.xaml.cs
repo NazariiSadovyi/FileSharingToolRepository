@@ -114,6 +114,8 @@ namespace FST.Client
 
         private void RegisterViewModels(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<MainWindowViewModel>();
+            containerRegistry.RegisterSingleton<IMainWindowViewModel, MainWindowViewModel>();
             containerRegistry.RegisterSingleton<GridFilePreviewViewModel>();
             containerRegistry.RegisterSingleton<IGridFilePreviewViewModel, GridFilePreviewViewModel>();
             containerRegistry.RegisterSingleton<WifiConfigurationViewModel>();

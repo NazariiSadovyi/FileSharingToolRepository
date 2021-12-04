@@ -23,61 +23,13 @@ namespace FST.ViewModel.Services
 
         public async Task ExecuteFetchDataAsync(Func<Task> action, string message = default, bool showAtLeastSecond = true)
         {
-            var fetchDataInfo = new FetchDataInfo()
-            {
-                ShowControl = true,
-                Message = string.IsNullOrEmpty(message) ? CultureLocalization.Localization.GetResource("DialogTextFetching") : message
-            };
-
-            FetchDataCommand.Execute(fetchDataInfo);
-
-            var mainActionTask = action();
-            var oneSecondTask = Task.Delay(1000);
-
-            var tasksToWait = new Collection<Task>()
-            {
-                mainActionTask
-            };
-
-            if (showAtLeastSecond)
-            {
-                tasksToWait.Add(oneSecondTask);
-            }
-
-            await Task.WhenAll(tasksToWait);
-
-            fetchDataInfo.ShowControl = false;
-            FetchDataCommand.Execute(fetchDataInfo);
+            await ExecuteFetchDataInternalAsync(action(), message, showAtLeastSecond);
         }
 
         public async Task<T> ExecuteFetchDataAsync<T>(Func<Task<T>> action, string message = default, bool showAtLeastSecond = true)
         {
-            var fetchDataInfo = new FetchDataInfo()
-            {
-                ShowControl = true,
-                Message = string.IsNullOrEmpty(message) ? CultureLocalization.Localization.GetResource("DialogTextFetching") : message
-            };
-
-            FetchDataCommand.Execute(fetchDataInfo);
-
             var mainActionTask = action();
-            var oneSecondTask = Task.Delay(1000);
-
-            var tasksToWait = new Collection<Task>()
-            {
-                mainActionTask
-            };
-
-            if (showAtLeastSecond)
-            {
-                tasksToWait.Add(oneSecondTask);
-            }
-
-
-            await Task.WhenAll(tasksToWait);
-
-            fetchDataInfo.ShowControl = false;
-            FetchDataCommand.Execute(fetchDataInfo);
+            await ExecuteFetchDataInternalAsync(mainActionTask, message, showAtLeastSecond);
 
             return mainActionTask.Result;
         }
@@ -91,6 +43,34 @@ namespace FST.ViewModel.Services
             };
 
             InformationMessageCommand.Execute(informationMessageInfo);
+        }
+
+        private async Task ExecuteFetchDataInternalAsync(Task action, string message = default, bool showAtLeastSecond = true)
+        {
+            var fetchDataInfo = new FetchDataInfo()
+            {
+                ShowControl = true,
+                Message = string.IsNullOrEmpty(message) ? CultureLocalization.Localization.GetResource("DialogTextFetching") : message
+            };
+
+            FetchDataCommand.Execute(fetchDataInfo);
+
+            var oneSecondTask = Task.Delay(1000);
+
+            var tasksToWait = new Collection<Task>()
+            {
+                action
+            };
+
+            if (showAtLeastSecond)
+            {
+                tasksToWait.Add(oneSecondTask);
+            }
+
+            await Task.WhenAll(tasksToWait);
+
+            fetchDataInfo.ShowControl = false;
+            FetchDataCommand.Execute(fetchDataInfo);
         }
     }
 

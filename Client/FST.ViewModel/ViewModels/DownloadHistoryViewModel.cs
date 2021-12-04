@@ -1,22 +1,19 @@
-﻿using FST.CultureLocalization;
+﻿using FST.Infrastructure.Models;
 using FST.Infrastructure.Services.Interfaces;
 using FST.ViewModel.Interfaces;
-using FST.ViewModel.ViewModels.Interfaces;
+using FST.ViewModel.ViewModels.Base;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Unity;
-using FST.Infrastructure.Models;
-using System.Collections.Generic;
-using System.Windows;
-using System.Linq;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class DownloadHistoryViewModel : BindableBase, INavigationAware
+    public class DownloadHistoryViewModel : BaseNavigationViewModel
     {
         #region Private fields
         private ObservableCollection<DownloadHistoryModel> _historyItems;
@@ -82,22 +79,10 @@ namespace FST.ViewModel.ViewModels
             HistoryItems = new ObservableCollection<DownloadHistoryModel>();
         }
 
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             RefreshDownloadHistoryData();
         }
-        #endregion
 
         private void RefreshDownloadHistoryData()
         {

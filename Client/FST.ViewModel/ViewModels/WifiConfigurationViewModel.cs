@@ -1,10 +1,9 @@
 ﻿using FST.Common.Services.Interfaces;
 using FST.Infrastructure.Enums;
 using FST.Infrastructure.Services.Interfaces;
+using FST.ViewModel.ViewModels.Base;
 using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -14,7 +13,7 @@ using Unity;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class WifiConfigurationViewModel : BindableBase, INavigationAware
+    public class WifiConfigurationViewModel : BaseNavigationViewModel
     {
         #region Private fields
         private ObservableCollection<WifiAuthenticationType> _wifiAuthenticationTypes;
@@ -184,23 +183,6 @@ namespace FST.ViewModel.ViewModels
 
             PropertyChanged += WifiConfigurationViewModel_PropertyChanged;
         }
-
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            
-        }
-        #endregion
 
         private void WifiConfigurationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

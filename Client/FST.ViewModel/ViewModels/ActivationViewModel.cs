@@ -1,9 +1,8 @@
 ﻿using FST.ViewModel.Interfaces;
 using FST.ViewModel.Models;
+using FST.ViewModel.ViewModels.Base;
 using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +12,7 @@ using Localization = FST.CultureLocalization.Localization;
 
 namespace FST.ViewModel.ViewModels
 {
-    public class ActivationViewModel : BindableBase, INavigationAware
+    public class ActivationViewModel : BaseNavigationViewModel
     {
         #region Private fields
         private string _newActivationKey;
@@ -113,23 +112,6 @@ namespace FST.ViewModel.ViewModels
         {
             CurrentActivationKey = _activationService.Key;
         }
-
-        #region Navigation
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-
-        }
-        #endregion
 
         public void RunTaskToCloseToolAfter5minutes()
         {
