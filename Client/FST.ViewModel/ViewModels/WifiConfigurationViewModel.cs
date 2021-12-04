@@ -78,6 +78,25 @@ namespace FST.ViewModel.ViewModels
             .ObservesProperty(() => CurrentWifiAuthenticationType)
             .ObservesProperty(() => CurrentIsHidden);
         }
+
+        public ICommand ClearQRCodeCmd
+        {
+            get => new DelegateCommand(() =>
+            {
+                SharedAppDataViewModel.WifiQRImage = null;
+                CurrentSSID = string.Empty;
+                CurrentPassword = string.Empty;
+                CurrentWifiAuthenticationType = WifiAuthenticationType.Nopass;
+                SSID = string.Empty;
+                Password = string.Empty;
+                WifiAuthenticationType = WifiAuthenticationType.Nopass;
+            },
+            () =>
+            {
+                return !string.IsNullOrEmpty(CurrentSSID);
+            })
+            .ObservesProperty(() => CurrentSSID);
+        }
         #endregion
 
         #region Properties

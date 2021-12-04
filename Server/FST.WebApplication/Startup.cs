@@ -24,6 +24,9 @@ namespace FST.WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Note: disable thread safe db repository
+            BaseRepository.IsThreadSafeAnabled = false;
+
             services.AddScoped<ApplicationDBContext>();
             services.AddScoped<ISettingRepository, SettingRepository>();
             services.AddScoped<ILocalFileRepository, LocalFileRepository>();

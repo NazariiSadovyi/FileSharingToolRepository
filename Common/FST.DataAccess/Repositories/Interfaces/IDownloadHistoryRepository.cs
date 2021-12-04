@@ -8,5 +8,6 @@ namespace FST.DataAccess.Repositories.Interfaces
     {
         Task Add(DownloadHistory downloadHistory);
         Task<IEnumerable<DownloadHistory>> GetAll();
+        Task ClearAsync();
     }
 }

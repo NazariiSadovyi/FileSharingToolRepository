@@ -15,6 +15,7 @@ namespace FST.DataAccess.Repositories
         {
             return await ThreadSafeTaskExecute(async () =>
             {
+                await Context.DownloadHistory.LoadAsync();
                 return await Context.DownloadHistory.AsQueryable().ToListAsync();
             });
         }
@@ -26,6 +27,11 @@ namespace FST.DataAccess.Repositories
                 Context.DownloadHistory.Add(downloadHistory);
                 await Context.SaveChangesAsync();
             });
+        }
+
+        public async Task ClearAsync()
+        {
+            await Context.Database.ExecuteSqlRawAsync($"delete from [{nameof(ApplicationDBContext.DownloadHistory)}]");
         }
     }
 }

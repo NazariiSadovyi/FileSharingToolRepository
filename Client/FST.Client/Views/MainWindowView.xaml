@@ -53,7 +53,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -78,9 +78,19 @@
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="WifiConfigurationView" />
             </StackPanel>
+            
+            <StackPanel Grid.Row="2"
+                        Margin="10 0 10 0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                <Button Content="Download history"
+                        properties:ButtonProperties.Image="DatabaseClockOutline"
+                        Command="{Binding SwitchUserControl}"
+                        CommandParameter="DownloadHistoryView" />
+            </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
-                        Grid.Row="2">
+                        Grid.Row="3">
                 <Button Width="200"
                         Height="70"
                         Background="#00657F"

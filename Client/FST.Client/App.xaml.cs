@@ -75,6 +75,7 @@ namespace FST.Client
             containerRegistry.RegisterSingleton<ISharedAppDataViewModel, SharedAppDataViewModel>();
             containerRegistry.RegisterSingleton<IActivationService, ActivationService>();
             containerRegistry.RegisterSingleton<ILocalFilesService, LocalFilesService>();
+            containerRegistry.RegisterSingleton<IDataExportService, DataExportService>();
 
             RegisterForNavigation(containerRegistry);
             RegisterViewModels(containerRegistry);
@@ -108,6 +109,7 @@ namespace FST.Client
             containerRegistry.RegisterForNavigation<ActivationView>();
             containerRegistry.RegisterForNavigation<GridFilePreviewView>();
             containerRegistry.RegisterForNavigation<WifiConfigurationView>();
+            containerRegistry.RegisterForNavigation<DownloadHistoryView>();
         }
 
         private void RegisterViewModels(IContainerRegistry containerRegistry)

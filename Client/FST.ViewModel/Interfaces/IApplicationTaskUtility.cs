@@ -11,6 +11,7 @@ namespace FST.ViewModel.Interfaces
         CompositeCommand InformationMessageCommand { get; }
 
         Task ExecuteFetchDataAsync(Func<Task> action, string message = null, bool showAtLeastSecond = true);
+        Task<T> ExecuteFetchDataAsync<T>(Func<Task<T>> action, string message = null, bool showAtLeastSecond = true);
         void ShowInformationMessage(string message, InformationKind kind = InformationKind.Success);
     }
 }

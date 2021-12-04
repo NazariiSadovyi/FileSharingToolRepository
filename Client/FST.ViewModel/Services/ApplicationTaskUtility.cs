@@ -50,6 +50,38 @@ namespace FST.ViewModel.Services
             FetchDataCommand.Execute(fetchDataInfo);
         }
 
+        public async Task<T> ExecuteFetchDataAsync<T>(Func<Task<T>> action, string message = default, bool showAtLeastSecond = true)
+        {
+            var fetchDataInfo = new FetchDataInfo()
+            {
+                ShowControl = true,
+                Message = string.IsNullOrEmpty(message) ? CultureLocalization.Localization.GetResource("DialogTextFetching") : message
+            };
+
+            FetchDataCommand.Execute(fetchDataInfo);
+
+            var mainActionTask = action();
+            var oneSecondTask = Task.Delay(1000);
+
+            var tasksToWait = new Collection<Task>()
+            {
+                mainActionTask
+            };
+
+            if (showAtLeastSecond)
+            {
+                tasksToWait.Add(oneSecondTask);
+            }
+
+
+            await Task.WhenAll(tasksToWait);
+
+            fetchDataInfo.ShowControl = false;
+            FetchDataCommand.Execute(fetchDataInfo);
+
+            return mainActionTask.Result;
+        }
+
         public void ShowInformationMessage(string message, InformationKind kind = InformationKind.Success)
         {
             var informationMessageInfo = new InformationMessageInfo()

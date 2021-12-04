@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 
-namespace FST.DataAccess.Entities
+namespace FST.Infrastructure.Models
 {
-    public class DownloadHistory
+    public class DownloadHistoryModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string FileId { get; set; }
         public string FileName { get; set; }
@@ -14,6 +11,6 @@ namespace FST.DataAccess.Entities
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

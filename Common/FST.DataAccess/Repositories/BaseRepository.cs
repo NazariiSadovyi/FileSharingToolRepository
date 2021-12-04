@@ -8,6 +8,7 @@ namespace FST.DataAccess.Repositories
     {
         private static readonly object _locker = new object();
         protected ApplicationDBContext Context { get; private set; }
+        public static bool IsThreadSafeAnabled = true;
 
         public BaseRepository(ApplicationDBContext context)
         {
@@ -16,31 +17,65 @@ namespace FST.DataAccess.Repositories
 
         protected void ThreadSafeExecute(Action action)
         {
-            Monitor.Enter(_locker);
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Enter(_locker);
+            }
+
             action();
-            Monitor.Exit(_locker);
+
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Exit(_locker);
+            }
         }
 
         protected async Task ThreadSafeTaskExecute(Func<Task> action)
         {
-            Monitor.Enter(_locker);
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Enter(_locker);
+            }
+
             await action();
-            Monitor.Exit(_locker);
+
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Exit(_locker);
+            }
         }
 
         protected T ThreadSafeExecute<T>(Func<T> action)
         {
-            Monitor.Enter(_locker);
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Enter(_locker);
+            }
+
             var result = action();
-            Monitor.Exit(_locker);
+
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Exit(_locker);
+            }
+
             return result;
         }
 
         protected async Task<T> ThreadSafeTaskExecute<T>(Func<Task<T>> action)
         {
-            Monitor.Enter(_locker);
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Enter(_locker);
+            }
+
             var result = await action();
-            Monitor.Exit(_locker);
+
+            if (IsThreadSafeAnabled)
+            {
+                Monitor.Exit(_locker);
+            }
+
             return result;
         }
     }
