@@ -20,7 +20,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone number</label>
-                    <input id="phone" name="phone" type="tel" class="form-control" placeholder="0981234567" pattern="[0-9]{10}" required>
+                    <input id="phone" name="phone" type="tel" class="form-control" pattern="^\+[0-9]{3}\((\d+)\)-\d{3}-\d{2}-\d{2}" required>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-primary" type="submit">Download file</button>
@@ -39,4 +39,12 @@
     function OnDownloadFormSubmit(e) {
         document.getElementById('download-file-link').click();
     }
+
+    (function () {
+        var phoneMask = IMask(
+            document.getElementById('phone'), {
+                mask: '+{380}(00)-000-00-00',
+                lazy: false,
+        });
+    })();
 </script>
