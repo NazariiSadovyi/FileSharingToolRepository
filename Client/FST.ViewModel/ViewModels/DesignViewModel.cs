@@ -13,6 +13,7 @@ namespace FST.ViewModel.ViewModels
     {
         #region Private fields
         private WindowState _previousWindowState;
+        private string _webBackgroundImagePath;
         private string _backgroundImagePath;
         private bool _sortingDisplayFiles;
         private bool _downloadViaForm;
@@ -35,6 +36,12 @@ namespace FST.ViewModel.ViewModels
         {
             get { return _backgroundImagePath; }
             set { SetProperty(ref _backgroundImagePath, value); }
+        }
+
+        public string WebBackgroundImagePath
+        {
+            get { return _webBackgroundImagePath; }
+            set { SetProperty(ref _webBackgroundImagePath, value); }
         }
 
         public bool SortingDisplayFiles
@@ -80,6 +87,20 @@ namespace FST.ViewModel.ViewModels
             });
         }
 
+        public ICommand SelectWebBackgroundImageCmd
+        {
+            get => new DelegateCommand(
+            () => {
+                var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
+
+                WebBackgroundImagePath = filePath;
+            });
+        }
+
         public ICommand ChangeWindowModeCmd
         {
             get => new DelegateCommand<string>(
@@ -110,6 +131,7 @@ namespace FST.ViewModel.ViewModels
 
         public DesignViewModel(IAppSettingService appSettingService, ISharedSettingService sharedSettingService)
         {
+            WebBackgroundImagePath = sharedSettingService.WebBackgroundImagePath;
             BackgroundImagePath = appSettingService.BackgroundImagePath;
             SortingDisplayFiles = appSettingService.SortingDisplayFiles;
             DownloadViaForm = sharedSettingService.DownloadViaForm;
@@ -130,6 +152,9 @@ namespace FST.ViewModel.ViewModels
                         break;
                     case nameof(DownloadViaForm):
                         SharedSettingService.DownloadViaForm = DownloadViaForm;
+                        break;
+                    case nameof(WebBackgroundImagePath):
+                        SharedSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
                         break;
                     default:
                         break;

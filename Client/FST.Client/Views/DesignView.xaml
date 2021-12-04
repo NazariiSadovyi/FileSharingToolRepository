@@ -59,6 +59,27 @@
                     Content="{DynamicResource DesignViewButtonImageChoosing}" />
         </Grid>
 
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Margin="50 10 10 0"
+                     Text="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="True"
+                     Focusable="False"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Style="{StaticResource MaterialDesignFilledTextBox}"
+                     materialDesign:HintAssist.Hint="WEB PREVIEW BACKGROUND PICTURE" />
+            <Button Grid.Column="1"
+                    Width="150"
+                    Command="{Binding SelectWebBackgroundImageCmd}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
+        </Grid>
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button Command="{Binding ChangeWindowModeCmd}"

@@ -1,5 +1,16 @@
 ﻿@using FST.WebApplication.Controllers
+@using FST.Common.Services.Interfaces
+@inject ISharedSettingService SharedSettingService
 @model FilePreviewViewModel
+
+<style>
+    body {
+        background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(SharedSettingService.WebBackgroundImagePath)}")');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
 
 @if (Model.IsPhoto)
 {
@@ -21,13 +32,13 @@ else
 
 @if (Model.DownloadViaForm)
 {
-    <div style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
         @Html.ActionLink("Download", nameof(FileController.Download), new { id = Model.Id }, new { @class = "btn btn-primary" })
     </div>
 }
 else
 {
-    <div style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
         <a id="download-file-link" class="btn btn-primary" href="@Model.Adress" download="@Model.Name">
             Download
         </a>

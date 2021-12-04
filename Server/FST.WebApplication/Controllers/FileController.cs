@@ -3,6 +3,7 @@ using FST.DataAccess.Entities;
 using FST.DataAccess.Repositories.Interfaces;
 using FST.WebApplication.Helpers;
 using FST.WebApplication.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace FST.WebApplication.Controllers
         private readonly IFileThumbnailService _fileThumbnailService;
         private readonly ISharedSettingService _sharedSettingService;
         private readonly ILocalFileRepository _localFileRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWebServerService _webServerService;
 
         public FileController(ILogger<FileController> logger,
@@ -26,12 +28,14 @@ namespace FST.WebApplication.Controllers
             IFileThumbnailService fileThumbnailService,
             ISharedSettingService sharedSettingService,
             ILocalFileRepository localFileRepository,
-            IWebServerService webServerService)
+            IWebServerService webServerService,
+            IWebHostEnvironment webHostEnvironment)
         {
             _qrCodeGeneratorService = qrCodeGeneratorService;
             _sharedSettingService = sharedSettingService;
             _fileThumbnailService = fileThumbnailService;
             _localFileRepository = localFileRepository;
+            _webHostEnvironment = webHostEnvironment;
             _webServerService = webServerService;
             _logger = logger;
         }
@@ -53,6 +57,8 @@ namespace FST.WebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Preview(string id)
         {
+            InitBackgroundImage();
+
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = ComposeFilePreviewViewModel(localFile);
             viewModel.DownloadViaForm = _sharedSettingService.DownloadViaForm;
@@ -93,6 +99,8 @@ namespace FST.WebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Download(string id)
         {
+            InitBackgroundImage();
+
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = new DownloadDataViewModel()
             {
@@ -131,6 +139,24 @@ namespace FST.WebApplication.Controllers
             }
 
             return viewModel;
+        }
+
+        private void InitBackgroundImage()
+        {
+            var localImagePath = _sharedSettingService.WebBackgroundImagePath;
+            if (string.IsNullOrEmpty(localImagePath) || !System.IO.File.Exists(localImagePath))
+            {
+                return;
+            }
+
+            var imageName = Path.GetFileName(localImagePath);
+            var webImagePath = Path.Combine(_webHostEnvironment.WebRootPath, imageName);
+            if (System.IO.File.Exists(webImagePath))
+            {
+                return;
+            }
+
+            System.IO.File.Copy(localImagePath, webImagePath);
         }
     }
 }

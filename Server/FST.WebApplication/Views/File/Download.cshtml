@@ -1,5 +1,16 @@
 ﻿@using FST.WebApplication.Controllers
+@using FST.Common.Services.Interfaces
+@inject ISharedSettingService SharedSettingService
 @model DownloadDataViewModel
+
+<style>
+    body {
+        background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(SharedSettingService.WebBackgroundImagePath)}")');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
 
 <div class="card text-center">
     <div class="card-header">
