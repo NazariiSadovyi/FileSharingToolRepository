@@ -54,6 +54,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -89,8 +90,17 @@
                         CommandParameter="DownloadHistoryView" />
             </StackPanel>
 
+            <StackPanel Grid.Row="3"
+                        Margin="10 0 10 0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                <Button Content="Web preview"
+                        properties:ButtonProperties.Image="Web"
+                        Command="{Binding OpenWebPreviewCmd}" />
+            </StackPanel>
+
             <StackPanel VerticalAlignment="Center"
-                        Grid.Row="3">
+                        Grid.Row="4">
                 <Button Width="200"
                         Height="70"
                         Background="#00657F"
@@ -99,14 +109,14 @@
                         Style="{StaticResource MainButtonStyle}" />
             </StackPanel>
 
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="5">
                 <Image VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"
                        Source="/Resources/Img/ms2.png" />
             </Grid>
             
             <StackPanel VerticalAlignment="Bottom"
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Margin="10 0 10 10">
                 <Button Content="{DynamicResource MainViewButtonDesign}"
                         properties:ButtonProperties.Image="Cube"

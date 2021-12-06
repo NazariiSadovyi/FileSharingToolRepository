@@ -9,7 +9,10 @@ namespace FST.Common.Services
 {
     public class WebServerService : IWebServerService
     {
+        private readonly int _port = 5666;
+
         public event EventHandler<bool> NetworkChanged;
+        public string WebLocalhostUrl => $"http://localhost:{_port}";
 
         public WebServerService()
         {

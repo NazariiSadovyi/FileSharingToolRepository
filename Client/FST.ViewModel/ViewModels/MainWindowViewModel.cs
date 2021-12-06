@@ -1,10 +1,12 @@
-﻿using FST.ViewModel.Interfaces;
+﻿using FST.Common.Services.Interfaces;
+using FST.ViewModel.Interfaces;
 using FST.ViewModel.Models;
 using FST.ViewModel.Services;
 using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +34,8 @@ namespace FST.ViewModel.ViewModels
         #region Dependencies
         [Dependency]
         public IRegionManager RegionManager { get; set; }
+        [Dependency]
+        public IWebServerService WebServerService { get; set; }
         [Dependency]
         public ILocalFilesService LocalFilesService { get; set; }
         [Dependency]
@@ -152,6 +156,18 @@ namespace FST.ViewModel.ViewModels
             {
                 ShowInformationMessage = false;
                 InformationMessage = string.Empty;
+            });
+        }
+
+        public ICommand OpenWebPreviewCmd
+        {
+            get => new DelegateCommand(() =>
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = WebServerService.WebLocalhostUrl,
+                    UseShellExecute = true
+                });
             });
         }
         #endregion

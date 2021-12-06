@@ -38,6 +38,8 @@ namespace FST.WebApplication.Controllers
             _webHostEnvironment = webHostEnvironment;
             _webServerService = webServerService;
             _logger = logger;
+
+            InitBackgroundImage();
         }
 
         [HttpGet]
@@ -57,8 +59,6 @@ namespace FST.WebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Preview(string id)
         {
-            InitBackgroundImage();
-
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = ComposeFilePreviewViewModel(localFile);
             viewModel.DownloadViaForm = _sharedSettingService.DownloadViaForm;
@@ -99,8 +99,6 @@ namespace FST.WebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Download(string id)
         {
-            InitBackgroundImage();
-
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = new DownloadDataViewModel()
             {

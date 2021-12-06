@@ -3,34 +3,21 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center" style="display:inline">
-    @foreach (var viewModel in Model)
+<div  style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly;">
+    @foreach (var viewModel in Model.Where(_ => _.IsPhoto || _.IsVideo))
     {
-        if (viewModel.IsPhoto || viewModel.IsVideo)
-        {
-            <div style="width: 300px; display: inline;">
-
-                @if (viewModel.IsPhoto)
-                {
-                    <img class="lightboxed"
-                         rel="group1"
-                         src="@viewModel.ThumbnailAdress"
-                         data-link="@viewModel.Adress"
-                         data-type="photo"
-                         alt="Image Alt 1"
-                         data-caption="Caption 1" />
-                }
-                else if (viewModel.IsVideo)
-                {
-                    <img class="lightboxed"
-                         rel="group1"
-                         src="@viewModel.ThumbnailAdress"
-                         data-link="@viewModel.Adress"
-                         data-type="video"
-                         alt="Image Alt 1"
-                         data-caption="Caption 1" />
-                }
-            </div>
-        }
+        <div class="border border-4" 
+             style="width: 308px; height: 350px; position: relative; display: flex; 
+                    align-content: center; flex-wrap: wrap; margin:5px;">
+            <img class="lightboxed"
+                 style="width: 300px; margin:0px"
+                 rel="group1"
+                 src="@viewModel.ThumbnailAdress"
+                 data-link="@viewModel.Adress"
+                 data-type="@(viewModel.IsVideo ? "video" : "photo")"
+                 alt="Image Alt 1"/>
+            <img style="width: 150px; height: 150px; position: absolute; bottom: 0%; right: 0%;"
+                 src="@viewModel.QRCodeAdress" />
+        </div>
     }
 </div>
