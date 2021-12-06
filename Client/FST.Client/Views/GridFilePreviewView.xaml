@@ -108,13 +108,6 @@
                             </StackPanel>
 
                             <Grid Grid.Column="1">
-                                <materialDesign:PackIcon Kind="Cancel"
-                                                         Visibility="{Binding Image, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                                                         Opacity="0.1"
-                                                         VerticalAlignment="Stretch"
-                                                         HorizontalAlignment="Stretch"
-                                                         Width="100"
-                                                         Height="100"/>
                                 <ProgressBar Width="50"
                                              Height="50"
                                              IsIndeterminate="{Binding IsLoading}"
