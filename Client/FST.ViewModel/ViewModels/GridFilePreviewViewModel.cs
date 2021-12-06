@@ -71,6 +71,36 @@ namespace FST.ViewModel.ViewModels
                 CurrentPage = pageNumber.Value;
             });
         }
+
+        public ICommand SwitchFilePageCmd
+        {
+            get => new DelegateCommand<string>(action =>
+            {
+                switch (action)
+                {
+                    case "left":
+                        if (CurrentPage - 1 < 0)
+                        {
+                            CurrentPage = Files.Count - 1;
+                            return;
+                        }
+
+                        CurrentPage--;
+                        break;
+                    case "right":
+                        if (CurrentPage + 1 >= Files.Count)
+                        {
+                            CurrentPage = 0;
+                            return;
+                        }
+
+                        CurrentPage++;
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
         #endregion
 
         #region Properties
@@ -159,11 +189,17 @@ namespace FST.ViewModel.ViewModels
 
         private void AutoPageSwitch(object obj)
         {
+            if (!SharedAppDataViewModel.IsPreviewVisible)
+            {
+                return;
+            }
+
             if (CurrentPage + 1 == Files.Count)
             {
                 CurrentPage = 0;
                 return;
             }
+
             CurrentPage++;
         }
 

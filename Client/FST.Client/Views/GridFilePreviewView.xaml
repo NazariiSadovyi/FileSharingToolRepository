@@ -39,9 +39,9 @@
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0"
@@ -55,8 +55,7 @@
         </Grid>
 
         <gu:GesturePanel Grid.Row="0"
-                         Grid.Column="0"
-                         Grid.ColumnSpan="3">
+                         Grid.Column="1">
             <gu:GesturePanel.GestureTracker>
                 <gu:CompositeGestureTracker>
                     <gu:MouseGestureTracker>
@@ -77,7 +76,7 @@
             <gu:FlipView ItemsSource="{Binding Files}"
                          SelectedIndex="{Binding CurrentPage}"
                          Name="FlipViewControl"
-                         ArrowPlacement="Outside">
+                         ShowArrows="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Grid.Row="0"
@@ -148,6 +147,28 @@
                 </ItemsControl.ItemTemplate>
             </gu:FlipView>
         </gu:GesturePanel>
+
+        <Grid Grid.Row="0"
+              Grid.Column="0">
+            <Button
+                Command="{Binding SwitchFilePageCmd}"
+                CommandParameter="left"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}">
+                <materialDesign:PackIcon Kind="ArrowLeft" />
+            </Button>
+        </Grid>
+        
+        <Grid Grid.Row="0"
+              Grid.Column="2">
+            <Button
+                Command="{Binding SwitchFilePageCmd}"
+                CommandParameter="right"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}">
+                <materialDesign:PackIcon Kind="ArrowRight" />
+            </Button>
+        </Grid>
 
         <Grid Grid.Row="1"
               Grid.Column="0">

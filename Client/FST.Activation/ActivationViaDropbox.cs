@@ -10,7 +10,7 @@ namespace FST.Activation
     {
         private static readonly LicenseKeyProvider _licenseKeyProvider = new LicenseKeyProvider();
         private readonly DropboxClient _dropboxClient;
-        private const string _dropboxAccessToken = "TyJLi8pZPqQAAAAAAAAAAV2Cm99SFQcp8zb56rJW8qniXCrYS78gWWG4KgUxcq3y";
+        private string _dropboxAccessToken = Consts.DropboxAccessToken;
 
         public ActivationViaDropbox()
         {
