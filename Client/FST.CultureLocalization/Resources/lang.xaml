@@ -4,6 +4,9 @@
     <!-- Main view -->
     <v:String x:Key="TitleApp">File sharing tool</v:String>
     <v:String x:Key="MainViewButtonHotFolders">HOT FOLDERS</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">WIFI SETTING</v:String>
+    <v:String x:Key="MainViewButtonDownloadHistory">DOWNLOAD HISTORY</v:String>
+    <v:String x:Key="MainViewButtonWebPreview">WEB PAGE</v:String>
     <v:String x:Key="MainViewButtonCloudSettings">CLOUD SETTINGS</v:String>
     <v:String x:Key="MainViewButtonStatus">STATUS</v:String>
     <v:String x:Key="MainViewButtonEmail">EMAIL</v:String>
@@ -108,4 +111,14 @@
     <v:String x:Key="ToolHasBeenActivated">Tool has been activated</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Checking activation...</v:String>
 
+    <!-- Other -->
+    <v:String x:Key="Refresh">Refresh</v:String>
+    <v:String x:Key="Export">Export</v:String>
+    <v:String x:Key="Clean">Clear</v:String>
+    <v:String x:Key="Update">Update</v:String>
+    <v:String x:Key="FetchingDownloadHistoryData">Fetching download history data...</v:String>
+    <v:String x:Key="AplicationIsStartingProcess">Aplication is starting...</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">PREVIEW FILE AUTO SWITCH (SECONDS)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">WEB PREVIEW BACKGROUND PICTURE</v:String>
+    
 </ResourceDictionary>

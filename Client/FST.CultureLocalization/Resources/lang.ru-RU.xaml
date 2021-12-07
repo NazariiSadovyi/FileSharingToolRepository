@@ -4,6 +4,9 @@
     <!-- Main view -->
     <v:String x:Key="TitleApp">File sharing tool</v:String>
     <v:String x:Key="MainViewButtonHotFolders">ГОРЯЧИЕ ПАПКИ</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">НАСТРОЙКА WIFI</v:String>
+    <v:String x:Key="MainViewButtonDownloadHistory">ИСТОРИЯ ЗАГРУЗОК</v:String>
+    <v:String x:Key="MainViewButtonWebPreview">WEB СТРАНИЦА</v:String>
     <v:String x:Key="MainViewButtonCloudSettings">НАСТРОЙКА ОБЛАКА</v:String>
     <v:String x:Key="MainViewButtonStatus">СТАТУС</v:String>
     <v:String x:Key="MainViewButtonEmail">ПОЧТА</v:String>
@@ -107,5 +110,15 @@
     <v:String x:Key="ToolIsNotActivatedWarningMessage">Эта программа не активирована. Программа будет закрыта через 5 минут.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Программа была активирована</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Проверка активации...</v:String>
+
+    <!-- Other -->
+    <v:String x:Key="Refresh">Обновить</v:String>
+    <v:String x:Key="Export">Экспорт</v:String>
+    <v:String x:Key="Clean">Очистить</v:String>
+    <v:String x:Key="Update">Обновить</v:String>
+    <v:String x:Key="FetchingDownloadHistoryData">Получение данных истории загрузок...</v:String>
+    <v:String x:Key="AplicationIsStartingProcess">Приложение запускается...</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">АВТОМАТИЧЕСКОЕ ПЕРЕКЛЮЧЕНИЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА (СЕКУНДЫ)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">ФОНОВАЯ КАРТИНКА В WEB ПРОСМОТРЕ</v:String>
 
 </ResourceDictionary>

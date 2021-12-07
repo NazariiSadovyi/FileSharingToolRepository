@@ -74,7 +74,7 @@
                         Margin="10 0 10 0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
-                <Button Content="Wifi Setting"
+                <Button Content="{DynamicResource MainViewButtonWifiSetting}"
                         properties:ButtonProperties.Image="Wifi"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="WifiConfigurationView" />
@@ -84,7 +84,7 @@
                         Margin="10 0 10 0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
-                <Button Content="Download history"
+                <Button Content="{DynamicResource MainViewButtonDownloadHistory}"
                         properties:ButtonProperties.Image="DatabaseClockOutline"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="DownloadHistoryView" />
@@ -94,7 +94,7 @@
                         Margin="10 0 10 0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
-                <Button Content="Web preview"
+                <Button Content="{DynamicResource MainViewButtonWebPreview}"
                         properties:ButtonProperties.Image="Web"
                         Command="{Binding OpenWebPreviewCmd}" />
             </StackPanel>

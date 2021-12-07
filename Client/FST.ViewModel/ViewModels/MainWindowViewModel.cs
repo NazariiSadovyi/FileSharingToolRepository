@@ -176,7 +176,7 @@ namespace FST.ViewModel.ViewModels
             ISharedAppDataViewModel sharedAppDataViewModel)
         {
             IsTaskControlShown = true;
-            FetchDataMessage = "Aplication is starting...";
+            FetchDataMessage = CultureLocalization.Localization.GetResource("AplicationIsStartingProcess");
 
             SharedAppDataViewModel = sharedAppDataViewModel;
             applicationTaskUtility.FetchDataCommand.RegisterCommand(
