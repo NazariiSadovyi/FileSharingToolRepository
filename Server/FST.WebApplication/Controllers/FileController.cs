@@ -1,6 +1,7 @@
 ﻿using FST.Common.Services.Interfaces;
 using FST.DataAccess.Entities;
 using FST.DataAccess.Repositories.Interfaces;
+using FST.WebApplication.Converters;
 using FST.WebApplication.Helpers;
 using FST.WebApplication.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,7 @@ namespace FST.WebApplication.Controllers
     public class FileController : Controller
     {
         private readonly ILogger<FileController> _logger;
+        private readonly IDownloadHistoryRepository _downloadHistoryRepository;
         private readonly IQRCodeGeneratorService _qrCodeGeneratorService;
         private readonly IFileThumbnailService _fileThumbnailService;
         private readonly ISharedSettingService _sharedSettingService;
@@ -24,6 +26,7 @@ namespace FST.WebApplication.Controllers
         private readonly IWebServerService _webServerService;
 
         public FileController(ILogger<FileController> logger,
+            IDownloadHistoryRepository downloadHistoryRepository,
             IQRCodeGeneratorService qrCodeGeneratorService,
             IFileThumbnailService fileThumbnailService,
             ISharedSettingService sharedSettingService,
@@ -31,6 +34,7 @@ namespace FST.WebApplication.Controllers
             IWebServerService webServerService,
             IWebHostEnvironment webHostEnvironment)
         {
+            _downloadHistoryRepository = downloadHistoryRepository;
             _qrCodeGeneratorService = qrCodeGeneratorService;
             _sharedSettingService = sharedSettingService;
             _fileThumbnailService = fileThumbnailService;
@@ -71,6 +75,23 @@ namespace FST.WebApplication.Controllers
         {
             var localFile = await _localFileRepository.GetById(id);
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
+
+            return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PhysicalFileWithDataSave([FromQuery]string id, [FromQuery] string name, [FromQuery] string email, [FromQuery] string phone)
+        {
+            var localFile = await _localFileRepository.GetById(id);
+            var fullPath = Path.Combine(localFile.Path, localFile.Name);
+            var downloadHistory = new DownloadDataViewModel() 
+            {
+                Id = id,
+                Email = email,
+                Name = name,
+                Phone = phone
+            }.ToEntity(localFile);
+            await _downloadHistoryRepository.Add(downloadHistory);
 
             return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
         }

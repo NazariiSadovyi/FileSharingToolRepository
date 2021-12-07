@@ -1,49 +1,74 @@
 ﻿@using FST.WebApplication.Controllers
 @model DownloadDataViewModel
 
+<style>
+    a .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
 <div class="card text-center">
     <div class="card-header">
         Download file: @Model.Name
     </div>
     <div class="card-body">
         <div style="position: relative;">
-            <form class="was-validated card-body" onsubmit="OnDownloadFormSubmit(event)"
+            <form id="download-file-form" class="was-validated card-body" onsubmit="OnDownloadFormSubmit(event)"
                   method="post" action="/DownloadHistory/@nameof(DownloadHistoryController.Save)">
                 @Html.HiddenFor(_ => _.Id)
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input id="name" name="name" type="text" class="form-control" required>
+                    <input id="name" name="name" type="text" class="form-control" required onkeyup="OnFormInputChanged(event)">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email" name="email" type="email" class="form-control" required>
+                    <input id="email" name="email" type="email" class="form-control" required onkeyup="OnFormInputChanged(event)">
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone number</label>
-                    <input id="phone" name="phone" type="tel" class="form-control" pattern="^\+[0-9]{3}\((\d+)\)-\d{3}-\d{2}-\d{2}" required>
+                    <input id="phone" name="phone" type="tel" class="form-control" pattern="^\+[0-9]{3}\((\d+)\)-\d{3}-\d{2}-\d{2}" required onkeyup="OnFormInputChanged(event)">
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-primary" type="submit">Download file</button>
+                    <a class="btn btn-outline-primary" href="@($"/File/{nameof(FileController.Preview)}/{Model.Id}")">
+                        Back
+                    </a>
+                    <a id="download-file-link" class="btn btn-primary disabled" href="@Model.PhysicalFileAdress" download="@Model.Name">
+                        Download file
+                    </a>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<a id="download-file-link" class="btn btn-primary"
-   href="@Model.PhysicalFileAdress" download="@Model.Name" style="display:none">
-    Download
-</a>
-
 <script type="text/JavaScript">
-    function OnDownloadFormSubmit(e) {
-        document.getElementById('download-file-link').click();
+    var baseFileAdress = '/File/PhysicalFileWithDataSave?';
+    var fileId = '@Model.Id'
+
+    function OnFormInputChanged(e) {
+        if (document.getElementById("name").checkValidity()
+            && document.getElementById("email").checkValidity()
+            && !document.getElementById("phone").value.includes('_')) {
+            var element = document.getElementById("download-file-link");
+            element.classList.remove("disabled");
+
+            document.getElementById('download-file-link').href = baseFileAdress
+                + "id=" + fileId
+                + "&name=" + encodeURIComponent(document.getElementById("name").value)
+                + "&email=" + encodeURIComponent(document.getElementById("email").value)
+                + "&phone=" + encodeURIComponent(document.getElementById("phone").value);
+        }
+        else {
+            var element = document.getElementById("download-file-link");
+            element.classList.add("disabled");
+        }
     }
 
     (function () {
-        var phoneMask = IMask(
+        IMask(
             document.getElementById('phone'), {
-                mask: '+{380}(00)-000-00-00',
+                mask: '+{000}(00)-000-00-00',
                 lazy: false,
         });
     })();
