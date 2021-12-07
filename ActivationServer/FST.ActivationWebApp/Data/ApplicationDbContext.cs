@@ -1,4 +1,5 @@
-﻿using FST.ActivationWebApp.Data.EntityConfigurations;
+﻿using FST.ActivationWebApp.Data.Entities;
+using FST.ActivationWebApp.Data.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +11,9 @@ namespace FST.ActivationWebApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public DbSet<ActivationKey> ActivationKey { get; set; }
+        public DbSet<ProgramUser> ProgramUser { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
