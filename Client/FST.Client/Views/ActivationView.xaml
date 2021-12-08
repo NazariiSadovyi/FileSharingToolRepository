@@ -32,7 +32,7 @@
 
             <Grid Margin="20 20 20 10">
                 <TextBox Style="{StaticResource MaterialDesignFilledTextBox}"
-                         materialDesign:HintAssist.Hint="New licence key"
+                         materialDesign:HintAssist.Hint="{DynamicResource ActivationViewTextBoxHint}"
                          Text="{Binding NewActivationKey, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Top"
                          AcceptsReturn="False"
