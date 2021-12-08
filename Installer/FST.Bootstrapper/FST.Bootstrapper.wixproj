@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>2427d1ab-535c-4548-8493-f91a9ce186bd</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>FST.Bootstrapper</OutputName>
+    <OutputName>QR Sharing App</OutputName>
     <OutputType>Bundle</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
@@ -28,6 +28,7 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icon.jpg" />
     <Content Include="License.rtf" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />

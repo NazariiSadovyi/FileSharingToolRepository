@@ -3,11 +3,11 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
      xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
   <?if $(var.Platform) = x64 ?>
-  <?define ProductName = "File Sharing Tool x64" ?>
+  <?define ProductName = "QR Sharing App x64" ?>
   <?define Win64 = "yes" ?>
   <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
   <?else ?>
-  <?define ProductName = "File Sharing Tool" ?>
+  <?define ProductName = "QR Sharing App" ?>
   <?define Win64 = "no" ?>
   <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
   <?endif ?>
@@ -16,7 +16,7 @@
            Name="$(var.ProductName)"
            Language="1033"
            Version="1.0.0.0"
-           Manufacturer="Sadovyi"
+           Manufacturer="Spinner 360"
            UpgradeCode="3c000a1a-5314-4560-85e5-bf5868f67892">
 		<Package InstallerVersion="200"
              Compressed="yes"
