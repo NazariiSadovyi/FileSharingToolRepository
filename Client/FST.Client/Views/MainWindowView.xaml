@@ -46,16 +46,12 @@
                        BasedOn="{StaticResource MainButtonWithIconStyle}">
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="Height" Value="50" />
-                    <Setter Property="Margin" Value="0 14 0 0" />
+                    <Setter Property="Margin" Value="0 10 0 0" />
                 </Style>
             </Grid.Resources>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
@@ -68,39 +64,26 @@
                         properties:ButtonProperties.Image="Folder"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="HotFoldersView" />
-            </StackPanel>
-            
-            <StackPanel Grid.Row="1"
-                        Margin="10 0 10 0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
                 <Button Content="{DynamicResource MainViewButtonWifiSetting}"
                         properties:ButtonProperties.Image="Wifi"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="WifiConfigurationView" />
-            </StackPanel>
-            
-            <StackPanel Grid.Row="2"
-                        Margin="10 0 10 0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
+                <Button Content="{DynamicResource MainViewButtonDesign}"
+                        properties:ButtonProperties.Image="Cube"
+                        Command="{Binding SwitchUserControl}"
+                        CommandParameter="DesignView" />
                 <Button Content="{DynamicResource MainViewButtonDownloadHistory}"
                         properties:ButtonProperties.Image="DatabaseClockOutline"
                         Command="{Binding SwitchUserControl}"
                         CommandParameter="DownloadHistoryView" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="3"
-                        Margin="10 0 10 0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
                 <Button Content="{DynamicResource MainViewButtonWebPreview}"
                         properties:ButtonProperties.Image="Web"
+                        Margin="0 10 0 10"
                         Command="{Binding OpenWebPreviewCmd}" />
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
-                        Grid.Row="4">
+                        Grid.Row="1">
                 <Button Width="200"
                         Height="70"
                         Background="#00657F"
@@ -108,20 +91,10 @@
                         Command="{Binding StartPreviewCmd}"
                         Style="{StaticResource MainButtonStyle}" />
             </StackPanel>
-
-            <Grid Grid.Row="5">
-                <Image VerticalAlignment="Stretch"
-                       HorizontalAlignment="Stretch"
-                       Source="/Resources/Img/ms2.png" />
-            </Grid>
             
             <StackPanel VerticalAlignment="Bottom"
-                        Grid.Row="6"
+                        Grid.Row="2"
                         Margin="10 0 10 10">
-                <Button Content="{DynamicResource MainViewButtonDesign}"
-                        properties:ButtonProperties.Image="Cube"
-                        Command="{Binding SwitchUserControl}"
-                        CommandParameter="DesignView" />
                 <Button Content="{DynamicResource MainViewButtonActivation}"
                         properties:ButtonProperties.Image="CurrencyUsd"
                         Command="{Binding SwitchUserControl}"

@@ -62,7 +62,7 @@
     <v:String x:Key="DownloadHistoryButtonClean">Очистить</v:String>
     
     <!--Wifi settings view-->
-    <v:String x:Key="WifiSettingsTextBoxSSIDHint">SSID(WI-FI name)</v:String>
+    <v:String x:Key="WifiSettingsTextBoxSSIDHint">SSID (WI-FI name)</v:String>
     <v:String x:Key="WifiSettingsTextBoxPasswordHint">Password</v:String>
     <v:String x:Key="WifiSettingsTextBoxSecurityHint">Security</v:String>
     <v:String x:Key="WifiSettingsIsHiddenTougleLabel">Is Hidden</v:String>
