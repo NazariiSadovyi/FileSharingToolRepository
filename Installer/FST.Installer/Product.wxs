@@ -42,8 +42,8 @@
       <Directory Id="DesktopFolder" Name="Desktop">
         <Component Id="ApplicationShortcutDesktop" Guid="BD8013FB-DAA3-450C-8430-9D898E0C17D0">
           <Shortcut Id="ApplicationDesktopShortcut"
-              Name="QR Sharing App.exe"
-              Description="QR Sharing App.exe"
+              Name="QR Sharing App"
+              Description="QR Sharing App"
               Target="[CLIENT_DIR]QRSharingApp.exe"
               WorkingDirectory="CLIENT_DIR"/>
           <RemoveFolder Id="DesktopFolder" On="uninstall"/>
