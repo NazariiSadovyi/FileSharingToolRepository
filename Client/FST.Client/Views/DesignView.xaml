@@ -33,6 +33,11 @@
                     Content="{DynamicResource DesignViewButtonLanguageEng}" />
             <Button Command="{Binding ChangeLanguageCmd}"
                     Width="200"
+                    Margin="0 0 30 0"
+                    CommandParameter="es-ES"
+                    Content="{DynamicResource DesignViewButtonLanguageES}" />
+            <Button Command="{Binding ChangeLanguageCmd}"
+                    Width="200"
                     Margin="30 0 0 0"
                     CommandParameter="ru-RU"
                     Content="{DynamicResource DesignViewButtonLanguageRu}" />

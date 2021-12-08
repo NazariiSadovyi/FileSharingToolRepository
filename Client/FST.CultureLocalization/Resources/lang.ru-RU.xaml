@@ -19,13 +19,13 @@
     <!-- Design view -->
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
+    <v:String x:Key="DesignViewButtonLanguageES">ИСПАНСКИЙ</v:String>
     <v:String x:Key="DesignViewTextBoxImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ПРОСМОТРА</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">ВЫБРАТЬ</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">ПОЛНОЭКРАННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">ОКОННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">ОТОБРАЖЕНИЕ ФАЙЛОВ: СНАЧАЛА НОВЫЕ</v:String>
     <v:String x:Key="DesignViewLabelDirectFileDownload">ДОБАВИТЬ ПОЛЯ ДАННЫХ ПОЛЬЗОВАТЕЛЯ</v:String>
-    <v:String x:Key="DesignViewEmailSendButtonImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ОТПРАВКИ</v:String>
     <v:String x:Key="PreviewFileAutoSwitchSeconds">АВТОМАТИЧЕСКОЕ ПЕРЕКЛЮЧЕНИЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА (СЕКУНДЫ)</v:String>
     <v:String x:Key="WebPreviewBackgroundPicture">ФОНОВАЯ КАРТИНКА В WEB ПРОСМОТРЕ</v:String>
     

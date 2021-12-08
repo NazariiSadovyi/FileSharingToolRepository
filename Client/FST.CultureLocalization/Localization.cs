@@ -17,6 +17,9 @@ namespace FST.CultureLocalization
                 case "ru-RU":
                     dict.Source = new Uri(string.Format("pack://application:,,,/FST.CultureLocalization;component/Resources/lang.{0}.xaml", cultureName));
                     break;
+                case "es-ES":
+                    dict.Source = new Uri(string.Format("pack://application:,,,/FST.CultureLocalization;component/Resources/lang.{0}.xaml", cultureName));
+                    break;
                 default:
                     dict.Source = new Uri("pack://application:,,,/FST.CultureLocalization;component/Resources/lang.xaml");
                     break;
@@ -44,6 +47,9 @@ namespace FST.CultureLocalization
                 switch (value.Name)
                 {
                     case "ru-RU":
+                        dict.Source = new Uri(string.Format("pack://application:,,,/FST.CultureLocalization;component/Resources/lang.{0}.xaml", value.Name));
+                        break;
+                    case "es-ES":
                         dict.Source = new Uri(string.Format("pack://application:,,,/FST.CultureLocalization;component/Resources/lang.{0}.xaml", value.Name));
                         break;
                     default:
