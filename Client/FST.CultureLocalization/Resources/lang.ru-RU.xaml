@@ -2,97 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!-- Main view -->
-    <v:String x:Key="TitleApp">File sharing tool</v:String>
+    <v:String x:Key="TitleApp">QR Sharing App</v:String>
     <v:String x:Key="MainViewButtonHotFolders">ГОРЯЧИЕ ПАПКИ</v:String>
-    <v:String x:Key="MainViewButtonCloudSettings">НАСТРОЙКА ОБЛАКА</v:String>
-    <v:String x:Key="MainViewButtonStatus">СТАТУС</v:String>
-    <v:String x:Key="MainViewButtonEmail">ПОЧТА</v:String>
-    <v:String x:Key="MainViewLabelUploading">ЗАГРУЗКА:</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">НАСТРОЙКА WI-FI</v:String>
+    <v:String x:Key="MainViewButtonDownloadHistory">ИСТОРИЯ ЗАГРУЗОК</v:String>
+    <v:String x:Key="MainViewButtonWebPreview">WEB ГАЛЕРЕЯ</v:String>
     <v:String x:Key="MainViewButtonStart">СТАРТ</v:String>
     <v:String x:Key="MainViewButtonDesign">ДИЗАЙН</v:String>
     <v:String x:Key="MainViewButtonActivation">АКТИВАЦИЯ</v:String>
-    <v:String x:Key="MainViewLabelProgress">{0} ИЗ {1} ФАЙЛОВ</v:String>
-    <v:String x:Key="MainViewLabelFreeSpace">СВОБОДНОЕ МЕСТО</v:String>
 
     <!-- Hot folders view -->
     <v:String x:Key="HotFolderButtonChooseFolder">ВЫБРАТЬ ПАПКУ</v:String>
     <v:String x:Key="HotFolderInformationDialog">Горячая папка с этим путем уже существует</v:String>
     <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Добавление текущих горячих папок и файлов...</v:String>
 
-    <!-- Dropbox Cloud settings view -->
-    <v:String x:Key="DropboxCloudTextBoxInsert">ВВЕДИТЕ TOKEN</v:String>
-    <v:String x:Key="DropboxCloudButtonInsert">ВСТАВИТЬ</v:String>
-    <v:String x:Key="DropboxCloudTextBoxCreateFolder">НАЗВАНИЕ ПАПКИ</v:String>
-    <v:String x:Key="DropboxCloudButtonCreateFolder">СОЗДАТЬ ПАПКУ</v:String>
-    <v:String x:Key="DropboxCloudTextBoxSelectFolder">НОВОЕ НАЗВАНИЕ ПАПКИ</v:String>
-    <v:String x:Key="DropboxCloudButtonSelectFolder">ВЫБРАТЬ ПАПКУ</v:String>
-
-    <!-- Mega Cloud settings view -->
-    <v:String x:Key="MegaCloudTextBoxLogin">ЛОГИН</v:String>
-    <v:String x:Key="MegaCloudTextBoxPassword">ПАРОЛЬ</v:String>
-    <v:String x:Key="MegaCloudButtonLogIn">ВОЙТИ</v:String>
-    <v:String x:Key="MegaCloudTextBoxCreateFolder">НАЗВАНИЕ ПАПКИ</v:String>
-    <v:String x:Key="MegaCloudButtonCreateFolder">СОЗДАТЬ ПАПКУ</v:String>
-    <v:String x:Key="MegaCloudTextBoxSelectFolder">НОВОЕ НАЗВАНИЕ ПАПКИ</v:String>
-    <v:String x:Key="MegaCloudButtonSelectFolder">ВЫБРАТЬ ПАПКУ</v:String>
-
-    <!-- Status view -->
-    <v:String x:Key="StatusLabelCloud">ОБЛАКО</v:String>
-    <v:String x:Key="StatusLabelUploading">ЗАГРУЗКА</v:String>
-    <v:String x:Key="StatusLabelTime">ВРЕМЯ</v:String>
-    <v:String x:Key="StatusLabelFileName">ИМЯ ФАЙЛА</v:String>
-    <v:String x:Key="StatusLabelStatus">СТАТУС</v:String>
-    <v:String x:Key="StatusButtonUploadUnloudedFiles">ОТПРАВИТЬ НЕЗАГРУЖЕННЫЕ</v:String>
-    <v:String x:Key="StatusButtonClearList">ОЧИСТИТЬ СПИСОК</v:String>
-
     <!-- Design view -->
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
+    <v:String x:Key="DesignViewButtonLanguageES">ИСПАНСКИЙ</v:String>
     <v:String x:Key="DesignViewTextBoxImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ПРОСМОТРА</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">ВЫБРАТЬ</v:String>
-    <v:String x:Key="DesignViewLabelLocationIcons">РАСПОЛОЖЕНИЕ ИКОНОК:</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">ПОЛНОЭКРАННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">ОКОННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">ОТОБРАЖЕНИЕ ФАЙЛОВ: СНАЧАЛА НОВЫЕ</v:String>
-    <v:String x:Key="DesignViewLabelDirectFileDownload">ПРЯМАЯ ЗАГРУЗКА ФАЙЛА</v:String>
-    <v:String x:Key="DesignViewEmailSendButtonImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ОТПРАВКИ</v:String>
-
+    <v:String x:Key="DesignViewLabelDirectFileDownload">ДОБАВИТЬ ПОЛЯ ДАННЫХ ПОЛЬЗОВАТЕЛЯ</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">АВТОМАТИЧЕСКОЕ ПЕРЕКЛЮЧЕНИЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА (СЕКУНДЫ)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">ФОНОВАЯ КАРТИНКА В WEB ПРОСМОТРЕ</v:String>
+    
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">ВВЕДИТЕ КЛЮЧ</v:String>
     <v:String x:Key="ActivationViewButtonInsert">ВСТАВИТЬ</v:String>
     <v:String x:Key="ActivationViewButtonActivation">АКТИВИРОВАТЬ</v:String>
+    <v:String x:Key="ActivationViewTextBoxHint">Новый лицензионный ключ</v:String>
     <v:String x:Key="DeactivationViewButtonActivation">ДЕАКТИВИРОВАТЬ</v:String>
-
-    <!-- Email setting view -->
-    <v:String x:Key="EmailSettingViewTurnOnEmailSending">ВКЛЮЧИТЬ ОТПРАВКУ ПОЧТОЙ</v:String>
-    <v:String x:Key="EmailSettingViewSendLinkToCloud">ОТПРАВЛЯТЬ ССЫЛКУ ИЗ ОБЛАКА</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailMail">ПОЧТА</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailPassword">ПАРОЛЬ</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailPort">ПОРТ</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailServerAdress">АДРЕС СЕРВЕРА</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailSSL">SSL</v:String>
-    <v:String x:Key="EmailSettingViewLetterSubject">ТЕМА ПИСЬМА</v:String>
-    <v:String x:Key="EmailSettingViewLetterBody">ТЕЛО ПИСЬМА</v:String>
-    <v:String x:Key="EmailSettingViewTestLetter">ЭЛЕКТРОННАЯ ПОЧТА ДЛЯ ТЕСТОВОГО ПИСЬМА</v:String>
-    <v:String x:Key="EmailSettingViewSendButton">ОТПРАВИТЬ</v:String>
-    <v:String x:Key="EmailSettingViewUpdateButton">Обновить</v:String>
-    <v:String x:Key="EmailSettingViewResetButton">Сбросить</v:String>
-    <v:String x:Key="EmailSettingViewConfigureButton">Настроить</v:String>
-    <v:String x:Key="EmailSettingViewSignInButton">Sign In</v:String>
-    <v:String x:Key="EmailSettingViewGoogleEmailConfiguration">Конфигурация электронной почты Google</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailConfiguration">Пользовательская конфигурация электронной почты</v:String>
-    <v:String x:Key="EmailSettingViewEmailMessageTemplateConfiguration">Конфигурация шаблона электронного письма</v:String>
-    <v:String x:Key="EmailSettingViewGoogleEmailSettingIsNotConfigured">Электронная почта Google не настроена</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailSettingIsNotConfigured">Пользовательская электронная почта не настроена</v:String>
-    <v:String x:Key="EmailSettingEmailWasSended">Электронное сообщение было успешно отправлено.</v:String>
-    <v:String x:Key="EmailSettingEmailWasNotSended">Электронное сообщение не было отправлено. Подробности сохранены.</v:String>
-
-    <!-- Additional view items -->
-    <v:String x:Key="EmailSendingMessage">Отправка электронного письма...</v:String>
-    <v:String x:Key="DialogTextFetching">Получение данных...</v:String>
-    <v:String x:Key="ToggleButtonOn">Вкл</v:String>
-    <v:String x:Key="ToggleButtonOff">Выкл</v:String>
-    <v:String x:Key="ExitButton">ВЫХОД</v:String>
 
     <!-- Activation messages -->
     <v:String x:Key="CantCheckActivationStatus">Не удается проверить статус активации, подробности сохранены</v:String>
@@ -107,5 +49,32 @@
     <v:String x:Key="ToolIsNotActivatedWarningMessage">Эта программа не активирована. Программа будет закрыта через 5 минут.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Программа была активирована</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Проверка активации...</v:String>
+
+    <!--Download history view-->
+    <v:String x:Key="DownloadHistoryTableFileName">File Name</v:String>
+    <v:String x:Key="DownloadHistoryTableFilePath">File Path</v:String>
+    <v:String x:Key="DownloadHistoryTableUserName">User Name</v:String>
+    <v:String x:Key="DownloadHistoryTableUserEmail">User Email</v:String>
+    <v:String x:Key="DownloadHistoryTableUserPhone">User Phone</v:String>
+    <v:String x:Key="DownloadHistoryTableDownloadTime">Download Time</v:String>
+    <v:String x:Key="DownloadHistoryButtonRefresh">Обновить</v:String>
+    <v:String x:Key="DownloadHistoryButtonExport">Экспорт</v:String>
+    <v:String x:Key="DownloadHistoryButtonClean">Очистить</v:String>
+
+    <!--Wifi settings view-->
+    <v:String x:Key="WifiSettingsTextBoxSSIDHint">SSID (WI-FI имя)</v:String>
+    <v:String x:Key="WifiSettingsTextBoxPasswordHint">Пароль</v:String>
+    <v:String x:Key="WifiSettingsTextBoxSecurityHint">Безопасность</v:String>
+    <v:String x:Key="WifiSettingsIsHiddenTougleLabel">Is Hidden</v:String>
+    <v:String x:Key="WifiSettingsButtonUpdate">Обновить</v:String>
+    <v:String x:Key="WifiSettingsButtonClean">Очистить</v:String>
+    
+    <!-- Other -->
+    <v:String x:Key="DialogTextFetching">Получение данных...</v:String>
+    <v:String x:Key="ToggleButtonOn">Вкл</v:String>
+    <v:String x:Key="ToggleButtonOff">Выкл</v:String>
+    <v:String x:Key="ExitButton">ВЫХОД</v:String>
+    <v:String x:Key="FetchingDownloadHistoryData">Получение данных истории загрузок...</v:String>
+    <v:String x:Key="AplicationIsStartingProcess">Приложение запускается...</v:String>
 
 </ResourceDictionary>

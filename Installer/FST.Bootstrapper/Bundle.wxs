@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
-	<Bundle Name="FST.Bootstrapper" Version="1.0.0.0" Manufacturer="Sadovyi" UpgradeCode="2427d1ab-535c-4548-8493-f91a9ce186bd" >
+	<Bundle Name="QR Sharing App" Version="1.0.0.0" Manufacturer="Spinner 360" UpgradeCode="2427d1ab-535c-4548-8493-f91a9ce186bd" >
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
-      <bal:WixStandardBootstrapperApplication SuppressOptionsUI="yes" LicenseFile="License.rtf"/>
+      <bal:WixStandardBootstrapperApplication SuppressOptionsUI="yes" LicenseFile="License.rtf" LogoFile="icon.jpg"/>
     </BootstrapperApplicationRef>
     
 		<Chain>

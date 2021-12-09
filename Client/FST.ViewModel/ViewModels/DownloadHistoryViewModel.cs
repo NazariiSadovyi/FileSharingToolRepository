@@ -91,7 +91,7 @@ namespace FST.ViewModel.ViewModels
                 var result = await ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
                 {
                     return DownloadHistoryService.GetAll();
-                }, "Fetching download history data...");
+                }, CultureLocalization.Localization.GetResource("FetchingDownloadHistoryData"));
 
                 Application.Current.Dispatcher.Invoke(() => 
                 {

@@ -2,97 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!-- Main view -->
-    <v:String x:Key="TitleApp">File sharing tool</v:String>
+    <v:String x:Key="TitleApp">QR Sharing App</v:String>
     <v:String x:Key="MainViewButtonHotFolders">HOT FOLDERS</v:String>
-    <v:String x:Key="MainViewButtonCloudSettings">CLOUD SETTINGS</v:String>
-    <v:String x:Key="MainViewButtonStatus">STATUS</v:String>
-    <v:String x:Key="MainViewButtonEmail">EMAIL</v:String>
-    <v:String x:Key="MainViewLabelUploading">UPLOADING:</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">WI-FI SETTINGS</v:String>
+    <v:String x:Key="MainViewButtonDownloadHistory">DOWNLOAD HISTORY</v:String>
+    <v:String x:Key="MainViewButtonWebPreview">WEB GALLERY</v:String>
     <v:String x:Key="MainViewButtonStart">START</v:String>
     <v:String x:Key="MainViewButtonDesign">DESIGN</v:String>
     <v:String x:Key="MainViewButtonActivation">ACTIVATION</v:String>
-    <v:String x:Key="MainViewLabelProgress">{0} OF {1} FILES</v:String>
-    <v:String x:Key="MainViewLabelFreeSpace">FREE SPACE</v:String>
 
     <!-- Hot folders view -->
     <v:String x:Key="HotFolderButtonChooseFolder">CHOOSE FOLDER</v:String>
     <v:String x:Key="HotFolderInformationDialog">Hot folder with this path already exist</v:String>
     <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Adding current hot folders and files...</v:String>
 
-    <!-- Dropbox Cloud settings view -->
-    <v:String x:Key="DropboxCloudTextBoxInsert">ENTER TOKEN</v:String>
-    <v:String x:Key="DropboxCloudButtonInsert">INSERT</v:String>
-    <v:String x:Key="DropboxCloudTextBoxCreateFolder">FOLDER NAME</v:String>
-    <v:String x:Key="DropboxCloudButtonCreateFolder">CREATE A FOLDER</v:String>
-    <v:String x:Key="DropboxCloudTextBoxSelectFolder">NEW FOLDER NAME</v:String>
-    <v:String x:Key="DropboxCloudButtonSelectFolder">SELECT A FOLDER</v:String>
-
-    <!-- Mega Cloud settings view -->
-    <v:String x:Key="MegaCloudTextBoxLogin">LOGIN</v:String>
-    <v:String x:Key="MegaCloudTextBoxPassword">PASSWORD</v:String>
-    <v:String x:Key="MegaCloudButtonLogIn">LOG IN</v:String>
-    <v:String x:Key="MegaCloudTextBoxCreateFolder">FOLDER NAME</v:String>
-    <v:String x:Key="MegaCloudButtonCreateFolder">CREATE A FOLDER</v:String>
-    <v:String x:Key="MegaCloudTextBoxSelectFolder">FOLDER NAME</v:String>
-    <v:String x:Key="MegaCloudButtonSelectFolder">SELECT A FOLDER</v:String>
-
-    <!-- Status view -->
-    <v:String x:Key="StatusLabelCloud">CLOUD</v:String>
-    <v:String x:Key="StatusLabelUploading">UPLOADING</v:String>
-    <v:String x:Key="StatusLabelTime">TIME</v:String>
-    <v:String x:Key="StatusLabelFileName">FILE NAME</v:String>
-    <v:String x:Key="StatusLabelStatus">STATUS</v:String>
-    <v:String x:Key="StatusButtonUploadUnloudedFiles">UPLOAD UNLOADED FILES</v:String>
-    <v:String x:Key="StatusButtonClearList">CLEAR LIST</v:String>
-
     <!-- Design view -->
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
+    <v:String x:Key="DesignViewButtonLanguageES">SPANISH</v:String>
     <v:String x:Key="DesignViewTextBoxImageChoosing">FILES PREVIEW BACKGROUND PICTURE</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">SELECT</v:String>
-    <v:String x:Key="DesignViewLabelLocationIcons">LOCATIONS ICONS:</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">FULL-SCREEN MODE</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">WINDOW MODE</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">SORTING DISPLAY FILES: NEWEST FIRST</v:String>
-    <v:String x:Key="DesignViewLabelDirectFileDownload">DIRECT FILE DOWNLOAD</v:String>
-    <v:String x:Key="DesignViewEmailSendButtonImageChoosing">EMAIL SEND BACKGROUND PICTURE</v:String>
-
+    <v:String x:Key="DesignViewLabelDirectFileDownload">ADD USER DATA FIELDS</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">PREVIEW FILE AUTO SWITCH (SECONDS)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">WEB PREVIEW BACKGROUND PICTURE</v:String>
+    
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">INSERT KEY</v:String>
     <v:String x:Key="ActivationViewButtonInsert">INSERT</v:String>
     <v:String x:Key="ActivationViewButtonActivation">ACTIVATE</v:String>
+    <v:String x:Key="ActivationViewTextBoxHint">New licence key</v:String>
     <v:String x:Key="DeactivationViewButtonActivation">DEACTIVATE</v:String>
-
-    <!-- Email setting view -->
-    <v:String x:Key="EmailSettingViewTurnOnEmailSending">TURN ON EMAIL SENDING</v:String>
-    <v:String x:Key="EmailSettingViewSendLinkToCloud">SEND A LINK TO CLOUD</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailMail">MAIL</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailPassword">PASSWORD</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailPort">PORT</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailServerAdress">SERVER ADRESS</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailSSL">SSL</v:String>
-    <v:String x:Key="EmailSettingViewLetterSubject">LETTER SUBJECT</v:String>
-    <v:String x:Key="EmailSettingViewLetterBody">LETTER BODY</v:String>
-    <v:String x:Key="EmailSettingViewTestLetter">EMAIL FOR TEST LETTER</v:String>
-    <v:String x:Key="EmailSettingViewSendButton">SEND</v:String>
-    <v:String x:Key="EmailSettingViewUpdateButton">Update</v:String>
-    <v:String x:Key="EmailSettingViewResetButton">Reset</v:String>
-    <v:String x:Key="EmailSettingViewConfigureButton">Configure</v:String>
-    <v:String x:Key="EmailSettingViewSignInButton">Sign In</v:String>
-    <v:String x:Key="EmailSettingViewGoogleEmailConfiguration">Google email configuration</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailConfiguration">Custom email configuration</v:String>
-    <v:String x:Key="EmailSettingViewEmailMessageTemplateConfiguration">Email message template configuration</v:String>
-    <v:String x:Key="EmailSettingViewGoogleEmailSettingIsNotConfigured">Google email setting is not configured</v:String>
-    <v:String x:Key="EmailSettingViewCustomEmailSettingIsNotConfigured">Custom email setting is not configured</v:String>
-    <v:String x:Key="EmailSettingEmailWasSended">Email message was successfully sended.</v:String>
-    <v:String x:Key="EmailSettingEmailWasNotSended">Email message wasn't sended. Details logged.</v:String>
-
-    <!-- Additional view items -->
-    <v:String x:Key="EmailSendingMessage">Sending email...</v:String>
-    <v:String x:Key="DialogTextFetching">Fetching data...</v:String>
-    <v:String x:Key="ToggleButtonOn">On</v:String>
-    <v:String x:Key="ToggleButtonOff">Off</v:String>
-    <v:String x:Key="ExitButton">EXIT</v:String>
 
     <!-- Activation messages -->
     <v:String x:Key="CantCheckActivationStatus">Can't check activation status, details logged</v:String>
@@ -108,4 +50,31 @@
     <v:String x:Key="ToolHasBeenActivated">Tool has been activated</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Checking activation...</v:String>
 
+    <!--Download history view-->
+    <v:String x:Key="DownloadHistoryTableFileName">File Name</v:String>
+    <v:String x:Key="DownloadHistoryTableFilePath">File Path</v:String>
+    <v:String x:Key="DownloadHistoryTableUserName">User Name</v:String>
+    <v:String x:Key="DownloadHistoryTableUserEmail">User Email</v:String>
+    <v:String x:Key="DownloadHistoryTableUserPhone">User Phone</v:String>
+    <v:String x:Key="DownloadHistoryTableDownloadTime">Download Time</v:String>
+    <v:String x:Key="DownloadHistoryButtonRefresh">Обновить</v:String>
+    <v:String x:Key="DownloadHistoryButtonExport">Экспорт</v:String>
+    <v:String x:Key="DownloadHistoryButtonClean">Очистить</v:String>
+    
+    <!--Wifi settings view-->
+    <v:String x:Key="WifiSettingsTextBoxSSIDHint">SSID (WI-FI name)</v:String>
+    <v:String x:Key="WifiSettingsTextBoxPasswordHint">Password</v:String>
+    <v:String x:Key="WifiSettingsTextBoxSecurityHint">Security</v:String>
+    <v:String x:Key="WifiSettingsIsHiddenTougleLabel">Is Hidden</v:String>
+    <v:String x:Key="WifiSettingsButtonUpdate">Update</v:String>
+    <v:String x:Key="WifiSettingsButtonClean">Clean</v:String>
+    
+    <!-- Other -->
+    <v:String x:Key="DialogTextFetching">Fetching data...</v:String>
+    <v:String x:Key="ToggleButtonOn">On</v:String>
+    <v:String x:Key="ToggleButtonOff">Off</v:String>
+    <v:String x:Key="ExitButton">EXIT</v:String>
+    <v:String x:Key="FetchingDownloadHistoryData">Fetching download history data...</v:String>
+    <v:String x:Key="AplicationIsStartingProcess">Aplication is starting...</v:String>
+    
 </ResourceDictionary>

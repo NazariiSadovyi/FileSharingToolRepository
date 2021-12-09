@@ -33,7 +33,12 @@
                     Content="{DynamicResource DesignViewButtonLanguageEng}" />
             <Button Command="{Binding ChangeLanguageCmd}"
                     Width="200"
-                    Margin="30 0 0 0"
+                    Margin="0 0 30 0"
+                    CommandParameter="es-ES"
+                    Content="{DynamicResource DesignViewButtonLanguageES}" />
+            <Button Command="{Binding ChangeLanguageCmd}"
+                    Width="200"
+                    Margin="0 0 30 0"
                     CommandParameter="ru-RU"
                     Content="{DynamicResource DesignViewButtonLanguageRu}" />
         </StackPanel>
@@ -72,7 +77,7 @@
                      Focusable="False"
                      materialDesign:TextFieldAssist.HasClearButton="True"
                      Style="{StaticResource MaterialDesignFilledTextBox}"
-                     materialDesign:HintAssist.Hint="WEB PREVIEW BACKGROUND PICTURE" />
+                     materialDesign:HintAssist.Hint="{DynamicResource WebPreviewBackgroundPicture}" />
             <Button Grid.Column="1"
                     Width="150"
                     Command="{Binding SelectWebBackgroundImageCmd}"
@@ -99,7 +104,7 @@
             <TextBox Grid.Column="0"
                      Text="{Binding AutoSwitchSeconds, UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource MaterialDesignFilledTextBox}" />
-            <Label Content="Preview file auto switch secconds"
+            <Label Content="{DynamicResource PreviewFileAutoSwitchSeconds}"
                    FontSize="14"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center" />

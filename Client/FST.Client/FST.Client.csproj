@@ -5,6 +5,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyName>QRSharingApp</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

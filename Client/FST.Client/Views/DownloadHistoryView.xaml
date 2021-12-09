@@ -48,7 +48,7 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FileName}"
-                                    Header="File Name"
+                                    Header="{DynamicResource DownloadHistoryTableFileName}"
                                     Width="0.15*"
                                     IsReadOnly="True">
                 <DataGridTextColumn.ElementStyle>
@@ -60,7 +60,7 @@
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding FilePath}"
-                                    Header="File Path"
+                                    Header="{DynamicResource DownloadHistoryTableFilePath}"
                                     Width="0.20*"
                                     IsReadOnly="True">
                 <DataGridTextColumn.ElementStyle>
@@ -72,7 +72,7 @@
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserName}"
-                                    Header="User Name"
+                                    Header="{DynamicResource DownloadHistoryTableUserName}"
                                     Width="0.15*"
                                     IsReadOnly="True">
                 <DataGridTextColumn.ElementStyle>
@@ -84,7 +84,7 @@
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserEmail}"
-                                    Header="User Email"
+                                    Header="{DynamicResource DownloadHistoryTableUserEmail}"
                                     Width="0.20*"
                                     IsReadOnly="True">
                 <DataGridTextColumn.ElementStyle>
@@ -96,7 +96,7 @@
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserPhone}"
-                                    Header="User Phone"
+                                    Header="{DynamicResource DownloadHistoryTableUserPhone}"
                                     Width="0.15*"
                                     IsReadOnly="True">
                 <DataGridTextColumn.ElementStyle>
@@ -107,34 +107,34 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Download time"
+                <DataGridTemplateColumn Header="{DynamicResource DownloadHistoryTableDownloadTime}"
                                         Width="0.15*"
                                         IsReadOnly="True">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Date}"
-                                   ToolTip="{Binding Date}"
-                                   TextTrimming="CharacterEllipsis"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Date}"
+                                       ToolTip="{Binding Date}"
+                                       TextTrimming="CharacterEllipsis"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
         <UniformGrid Grid.Row="1"
                      Margin="55 20 55 20"
                      Columns="3">
-            <Button Content="Refresh"
+            <Button Content="{DynamicResource DownloadHistoryButtonRefresh}"
                     Style="{StaticResource MainButtonStyle}"
                     HorizontalAlignment="Stretch"
                     Command="{Binding RefreshDownloadHistoryCmd}"/>
-            <Button Content="Export"
+            <Button Content="{DynamicResource DownloadHistoryButtonExport}"
                     Style="{StaticResource MainButtonStyle}"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ExportDownloadHistoryCmd}"/>
-            <Button Content="Clear"
+            <Button Content="{DynamicResource DownloadHistoryButtonClean}"
                     Style="{StaticResource MainButtonStyle}"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ClearDownloadHistoryCmd}"/>
