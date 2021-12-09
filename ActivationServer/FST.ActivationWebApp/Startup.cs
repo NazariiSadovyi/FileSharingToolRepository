@@ -45,8 +45,8 @@ namespace FST.ActivationWebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext applicationDbContext)
         {
-            applicationDbContext.Database.EnsureDeleted();
-            applicationDbContext.Database.EnsureCreated();
+            //applicationDbContext.Database.EnsureDeleted();
+            //applicationDbContext.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {

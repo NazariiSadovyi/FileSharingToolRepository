@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FST.ActivationWebApp.Data;
+using FST.ActivationWebApp.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using FST.ActivationWebApp.Data;
-using FST.ActivationWebApp.Data.Entities;
 
 namespace FST.ActivationWebApp.Controllers
 {
+    [Authorize]
     public class ProgramToolController : Controller
     {
         private readonly ApplicationDbContext _context;
