@@ -41,7 +41,8 @@ namespace FST.ActivationWebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext applicationDbContext)
         {
-            applicationDbContext.Database.Migrate();
+            applicationDbContext.Database.EnsureDeleted();
+            applicationDbContext.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {
@@ -66,7 +67,7 @@ namespace FST.ActivationWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=ProgramTool}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -12,7 +12,11 @@ namespace FST.ActivationWebApp.Data.EntityConfigurations
             builder
                 .HasOne(_ => _.ProgramUser)
                 .WithOne(_ => _.ActivationKey)
-                .HasForeignKey<ProgramUser>();
+                .HasForeignKey<ProgramUser>(_ => _.ActivationKeyId);
+            builder
+                .HasOne(_ => _.ProgramTool)
+                .WithMany(_ => _.ActivationKeys)
+                .HasForeignKey(_ => _.ProgramToolId);
         }
     }
 }

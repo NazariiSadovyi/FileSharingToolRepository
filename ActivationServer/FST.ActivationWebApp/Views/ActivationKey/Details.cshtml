@@ -19,30 +19,48 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreateDate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreateDate)
+        <dd class="col-sm-10">
+            @Model.CreateDate.ToString("MM/dd/yyyy")
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ActivationDate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActivationDate)
+        <dd class="col-sm-10" style="height: 24px">
+            @Model.ActivationDate?.ToString("MM/dd/yyyy")
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ExpirationDate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExpirationDate)
+        <dd class="col-sm-10">
+            @Model.ExpirationDate?.ToString("MM/dd/yyyy")
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgramUser)
+            @Html.DisplayNameFor(model => model.ExpirationDays)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExpirationDays)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgramUser.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProgramUser.Id)
+            @Html.DisplayFor(model => model.ProgramUser.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgramUser.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProgramUser.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgramUser.MachineId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProgramUser.MachineId)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-route-programToolId="@Model.ProgramToolId">Back to List</a>
 </div>

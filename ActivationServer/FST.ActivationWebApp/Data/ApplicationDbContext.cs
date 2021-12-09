@@ -13,6 +13,7 @@ namespace FST.ActivationWebApp.Data
     {
         public DbSet<ActivationKey> ActivationKey { get; set; }
         public DbSet<ProgramUser> ProgramUser { get; set; }
+        public DbSet<ProgramTool> ProgramTool { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -25,6 +26,7 @@ namespace FST.ActivationWebApp.Data
 
             builder.ApplyConfiguration(new ActivationKeyConfiguration());
             builder.ApplyConfiguration(new ProgramUserConfiguration());
+            builder.ApplyConfiguration(new ProgramToolConfiguration());
         }
     }
 }

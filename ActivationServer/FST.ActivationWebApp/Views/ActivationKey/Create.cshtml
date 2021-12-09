@@ -1,4 +1,4 @@
-﻿@model FST.ActivationWebApp.Models.CreateActivationViewModel
+﻿@model FST.ActivationWebApp.Models.CreateActivationKeyViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -9,9 +9,10 @@
 <h4>Activation</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-7">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(_ => _.ProgramToolId)
             <div class="form-group">
                 <label asp-for="Key" class="control-label"></label>
                 <input asp-for="Key" class="form-control" />
@@ -28,9 +29,14 @@
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpirationDate" class="control-label"></label>
-                <input asp-for="ExpirationDate" class="form-control" />
-                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                <label asp-for="ExpirationDays" class="control-label"></label>
+                <div style="display: flex; flex-direction: row; align-items: center;">
+                    <input style="margin-left: 10px" type="radio" value="30" id="ExpirationDays" name="ExpirationDays" checked />30 days<br />
+                    <input style="margin-left: 10px" type="radio" value="90" id="ExpirationDays" name="ExpirationDays" />90 days<br />
+                    <input style="margin-left: 10px" type="radio" value="180" id="ExpirationDays" name="ExpirationDays" />180 days<br />
+                    <input style="margin-left: 10px" type="radio" value="365" id="ExpirationDays" name="ExpirationDays" />365 days<br />
+                </div>
+                <span asp-validation-for="ExpirationDays" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -40,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-route-programToolId="@Model.ProgramToolId">Back to List</a>
 </div>
 
 @section Scripts {

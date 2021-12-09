@@ -20,14 +20,24 @@ namespace FST.ActivationWebApp.Controllers
             _context = context;
         }
 
-        // GET: ActivationKey
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(Guid programToolId)
         {
-            var applicationDbContext = _context.ActivationKey.Include(a => a.ProgramUser);
-            return View(await applicationDbContext.ToListAsync());
+            var programTool = await _context.ProgramTool
+                .Include(_ => _.ActivationKeys)
+                .ThenInclude(_ => _.ProgramUser)
+                .FirstOrDefaultAsync(_ => _.Id == programToolId);
+            var viewModel = new IndexActivationKeyViewModel()
+            {
+                ProgramToolId = programToolId,
+                ProgramToolName = (await _context.ProgramTool.FindAsync(programToolId)).Name,
+                ActivationKeys = programTool.ActivationKeys ?? new List<ActivationKey>()
+            };
+
+            return View(viewModel);
         }
 
-        // GET: ActivationKey/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -46,42 +56,49 @@ namespace FST.ActivationWebApp.Controllers
             return View(activationKey);
         }
 
-        // GET: ActivationKey/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(Guid programToolId)
         {
-            return View(new CreateActivationViewModel());
+            return View(new CreateActivationKeyViewModel()
+            { 
+                ProgramToolId = programToolId,
+                Key = Guid.NewGuid()
+            });
         }
 
-        // POST: ActivationKey/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateActivationViewModel viewModel)
+        public async Task<IActionResult> Create(CreateActivationKeyViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var newUserId = Guid.NewGuid();
                 var activationKey = new ActivationKey() 
                 {
                     Id = Guid.NewGuid(),
                     Key = viewModel.Key,
                     CreateDate = DateTime.Now,
-                    ExpirationDate = viewModel.ExpirationDate,
+                    ExpirationDays = viewModel.ExpirationDays,
+                    ProgramUserId = newUserId,
                     ProgramUser = new ProgramUser()
                     {
-                       Email = viewModel.UserEmail,
-                       Name = viewModel.UserName
-                    }
+                        Id = newUserId,
+                        Email = viewModel.UserEmail,
+                        Name = viewModel.UserName
+                    },
+                    ProgramToolId = viewModel.ProgramToolId,
+                    ProgramTool = _context.ProgramTool.Find(viewModel.ProgramToolId)
                 };
                 _context.Add(activationKey);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index), new { programToolId = viewModel.ProgramToolId });
             }
             
             return View(viewModel);
         }
 
-        // GET: ActivationKey/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -94,16 +111,13 @@ namespace FST.ActivationWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["Id"] = new SelectList(_context.ProgramUser, "Id", "Id", activationKey.Id);
+            
             return View(activationKey);
         }
 
-        // POST: ActivationKey/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Key,CreateDate,ActivationDate,ExpirationDate")] ActivationKey activationKey)
+        public async Task<IActionResult> Edit(Guid id, ActivationKey activationKey)
         {
             if (id != activationKey.Id)
             {
@@ -130,11 +144,11 @@ namespace FST.ActivationWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.ProgramUser, "Id", "Id", activationKey.Id);
+            
             return View(activationKey);
         }
 
-        // GET: ActivationKey/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -153,7 +167,6 @@ namespace FST.ActivationWebApp.Controllers
             return View(activationKey);
         }
 
-        // POST: ActivationKey/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

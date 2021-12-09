@@ -1,52 +1,70 @@
-﻿@model IEnumerable<FST.ActivationWebApp.Data.Entities.ActivationKey>
+﻿@model IndexActivationKeyViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Activation keys for tool "@Model.ProgramToolName"</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-programToolId="@Model.ProgramToolId">Create new</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Key)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].Key)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].CreateDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivationDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ActivationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpirationDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpirationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProgramUser)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpirationDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.MachineId)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model.ActivationKeys) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Key)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
+                @item.CreateDate.ToString("MM/dd/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ActivationDate)
+                @item.ActivationDate?.ToString("MM/dd/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
+                @item.ExpirationDate?.ToString("MM/dd/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProgramUser.Id)
+                @Html.DisplayFor(modelItem => item.ExpirationDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramUser.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramUser.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramUser.MachineId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -54,6 +72,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
