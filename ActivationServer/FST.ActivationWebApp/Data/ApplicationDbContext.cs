@@ -2,10 +2,6 @@
 using FST.ActivationWebApp.Data.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace FST.ActivationWebApp.Data
 {

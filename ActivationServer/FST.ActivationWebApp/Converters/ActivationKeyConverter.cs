@@ -75,7 +75,7 @@ namespace FST.ActivationWebApp.Converters
 
             if (entity.ActivationDate.HasValue)
             {
-                viewModel.ExpireAfter = (entity.ActivationDate.Value.AddDays(entity.ExpirationDays) - DateTime.Now).Days;
+                viewModel.ExpireAfter = (entity.ActivationDate.Value.AddDays(entity.ExpirationDays).Date - DateTime.Now.Date).Days;
             }
             else
             {

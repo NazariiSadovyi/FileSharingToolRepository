@@ -27,9 +27,9 @@ namespace FST.ActivationWebApp.Models
                 {
                     return ActivationKeyState.NotUsed;
                 }
-
+                
                 var isInUse = !string.IsNullOrEmpty(MachineId);
-                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays) < DateTime.Now;
+                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
 
                 if (isExpaired)
                 {
@@ -50,13 +50,13 @@ namespace FST.ActivationWebApp.Models
                     return ExpirationDays;
                 }
 
-                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays) < DateTime.Now;
+                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
                 if (isExpaired)
                 {
                     return 0;
                 }
 
-                return (ActivationDate.Value.AddDays(ExpirationDays) - DateTime.Now).Days;
+                return (ActivationDate.Value.AddDays(ExpirationDays).Date - DateTime.Now.Date).Days;
             }
         }
     }

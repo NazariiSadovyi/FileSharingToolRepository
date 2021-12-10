@@ -123,7 +123,7 @@ namespace FST.ActivationWebApp.Controllers
                     activationKey.ProgramUser.Email = viewModel.UserEmail;
                     if (activationKey.ActivationDate.HasValue)
                     {
-                        var needDays = (activationKey.ActivationDate.Value.AddDays(activationKey.ExpirationDays) - DateTime.Now).Days;
+                        var needDays = (activationKey.ActivationDate.Value.AddDays(activationKey.ExpirationDays).Date - DateTime.Now.Date).Days;
                         var pastDays = activationKey.ExpirationDays - needDays;
                         activationKey.ExpirationDays = pastDays + viewModel.ExpireAfter;
                     }
@@ -167,17 +167,17 @@ namespace FST.ActivationWebApp.Controllers
                 return NotFound();
             }
 
-            return View(activationKey);
+            return View(activationKey.ToDetailViewModel());
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, Guid programToolId)
         {
             var activationKey = await _context.ActivationKey.FindAsync(id);
             _context.ActivationKey.Remove(activationKey);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { programToolId = programToolId });
         }
 
         private bool ActivationKeyExists(Guid id)

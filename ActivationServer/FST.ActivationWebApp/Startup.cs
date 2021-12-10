@@ -29,7 +29,8 @@ namespace FST.ActivationWebApp
         {
             services.AddDbContext<ApplicationDbContext>(options => 
             {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -51,7 +52,7 @@ namespace FST.ActivationWebApp
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext applicationDbContext)
         {
             //applicationDbContext.Database.EnsureDeleted();
-            //applicationDbContext.Database.EnsureCreated();
+            applicationDbContext.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {

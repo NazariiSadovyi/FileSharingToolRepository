@@ -55,8 +55,8 @@ namespace FST.ActivationWebApp.Controllers
             }
             else
             {
-                var expirationDate = currentKey.ActivationDate.Value.AddDays(currentKey.ExpirationDays);
-                response.State = expirationDate > DateTime.Now ? ActivationKeyStateEnum.Correct : ActivationKeyStateEnum.Expaired;
+                var expirationDate = currentKey.ActivationDate.Value.AddDays(currentKey.ExpirationDays).Date;
+                response.State = expirationDate >= DateTime.Now.Date ? ActivationKeyStateEnum.Correct : ActivationKeyStateEnum.Expaired;
             }
 
             return new JsonResult(response);
