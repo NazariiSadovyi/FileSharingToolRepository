@@ -4,38 +4,36 @@
     ViewData["Title"] = "Index";
 }
 
+<style>
+    a.btn {
+        margin: 2px 5px;
+        max-height: 38px;
+    }
+</style>
+
 <h1>Activation keys for tool "@Model.ProgramToolName"</h1>
 
 <p>
-    <a asp-action="Create" asp-route-programToolId="@Model.ProgramToolId">Create new</a> |
-    <a asp-action="Index" asp-controller="ProgramTool">Back to program list</a>
+    <a class="btn btn-outline-info" asp-action="Create" asp-route-programToolId="@Model.ProgramToolId">Create new</a> |
+    <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="ProgramTool">Back to program list</a>
 </p>
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ActivationKeys[0].Key)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].CreateDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpireAfter)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ActivationDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpirationDate)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].UserEmail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpirationDays)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivationKeys[0].ProgramUser.MachineId)
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].State)
             </th>
             <th></th>
         </tr>
@@ -47,30 +45,34 @@
                 @Html.DisplayFor(modelItem => item.Key)
             </td>
             <td>
-                @item.CreateDate.ToString("MM/dd/yyyy")
+                @Html.DisplayFor(modelItem => item.ExpireAfter)
             </td>
             <td>
-                @item.ActivationDate?.ToString("MM/dd/yyyy")
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @item.ExpirationDate?.ToString("MM/dd/yyyy")
+                @Html.DisplayFor(modelItem => item.UserEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDays)
+                @switch (item.State)
+                {
+                    case ActivationKeyState.NotUsed:
+                        <div class="text-secondary">Not used</div>
+                        break;
+                    case ActivationKeyState.InUse:
+                        <div class="text-success">In use</div>
+                        break;
+                    case ActivationKeyState.Expired:
+                        <div class="text-danger">Expired</div>
+                        break;
+                    default:
+                        break;
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgramUser.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgramUser.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgramUser.MachineId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td style="text-align: center">
+                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

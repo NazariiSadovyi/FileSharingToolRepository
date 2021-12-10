@@ -8,11 +8,11 @@ namespace FST.ActivationWebApp.Models
     {
         public string ProgramToolName { get; set; }
         public Guid ProgramToolId { get; set; }
-        public List<ActivationKey> ActivationKeys { get; set; }
+        public List<ActivationKeyViewModel> ActivationKeys { get; set; }
 
         public IndexActivationKeyViewModel()
         {
-            ActivationKeys = new List<ActivationKey>();
+            ActivationKeys = new List<ActivationKeyViewModel>();
         }
     }
 }

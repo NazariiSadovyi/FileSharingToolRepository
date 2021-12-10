@@ -5,10 +5,11 @@ namespace FST.ActivationWebApp.Models
 {
     public class EditActivationKeyViewModel
     {
+        public Guid Id { get; set; }
         public Guid ProgramToolId { get; set; }
         public Guid Key { get; set; }
         [Required]
-        public DateTime? ExpirationDate { get; set; }
+        public int ExpireAfter { get; set; }
         [Required]
         public string UserEmail { get; set; }
         [Required]

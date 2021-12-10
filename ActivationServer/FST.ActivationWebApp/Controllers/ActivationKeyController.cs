@@ -1,4 +1,5 @@
-﻿using FST.ActivationWebApp.Data;
+﻿using FST.ActivationWebApp.Converters;
+using FST.ActivationWebApp.Data;
 using FST.ActivationWebApp.Data.Entities;
 using FST.ActivationWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -28,11 +29,12 @@ namespace FST.ActivationWebApp.Controllers
                 .Include(_ => _.ActivationKeys)
                 .ThenInclude(_ => _.ProgramUser)
                 .FirstOrDefaultAsync(_ => _.Id == programToolId);
+            var activationKeyViewModels = programTool.ActivationKeys?.Select(_ => _.ToViewModel()).ToList();
             var viewModel = new IndexActivationKeyViewModel()
             {
                 ProgramToolId = programToolId,
                 ProgramToolName = (await _context.ProgramTool.FindAsync(programToolId)).Name,
-                ActivationKeys = programTool.ActivationKeys ?? new List<ActivationKey>()
+                ActivationKeys = activationKeyViewModels ?? new List<ActivationKeyViewModel>()
             };
 
             return View(viewModel);
@@ -54,7 +56,7 @@ namespace FST.ActivationWebApp.Controllers
                 return NotFound();
             }
 
-            return View(activationKey);
+            return View(activationKey.ToDetailViewModel());
         }
 
         [HttpGet]
@@ -73,24 +75,7 @@ namespace FST.ActivationWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newUserId = Guid.NewGuid();
-                var activationKey = new ActivationKey() 
-                {
-                    Id = Guid.NewGuid(),
-                    Key = viewModel.Key,
-                    CreateDate = DateTime.Now,
-                    ExpirationDays = viewModel.ExpirationDays,
-                    ProgramUserId = newUserId,
-                    ProgramUser = new ProgramUser()
-                    {
-                        Id = newUserId,
-                        Email = viewModel.UserEmail,
-                        Name = viewModel.UserName
-                    },
-                    ProgramToolId = viewModel.ProgramToolId,
-                    ProgramTool = _context.ProgramTool.Find(viewModel.ProgramToolId)
-                };
-                _context.Add(activationKey);
+                _context.Add(viewModel.ToEntity());
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index), new { programToolId = viewModel.ProgramToolId });
@@ -107,20 +92,22 @@ namespace FST.ActivationWebApp.Controllers
                 return NotFound();
             }
 
-            var activationKey = await _context.ActivationKey.FindAsync(id);
+            var activationKey = await _context.ActivationKey
+                .Include(_ => _.ProgramUser)
+                .FirstOrDefaultAsync(_ => _.Id == id);
             if (activationKey == null)
             {
                 return NotFound();
             }
             
-            return View(activationKey);
+            return View(activationKey.ToEditViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ActivationKey activationKey)
+        public async Task<IActionResult> Edit(Guid id, EditActivationKeyViewModel viewModel)
         {
-            if (id != activationKey.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -129,12 +116,27 @@ namespace FST.ActivationWebApp.Controllers
             {
                 try
                 {
+                    var activationKey = await _context.ActivationKey
+                        .Include(a => a.ProgramUser)
+                        .FirstOrDefaultAsync(m => m.Id == id);
+                    activationKey.ProgramUser.Name = viewModel.UserName;
+                    activationKey.ProgramUser.Email = viewModel.UserEmail;
+                    if (activationKey.ActivationDate.HasValue)
+                    {
+                        var needDays = (activationKey.ActivationDate.Value.AddDays(activationKey.ExpirationDays) - DateTime.Now).Days;
+                        var pastDays = activationKey.ExpirationDays - needDays;
+                        activationKey.ExpirationDays = pastDays + viewModel.ExpireAfter;
+                    }
+                    else
+                    {
+                        activationKey.ExpirationDays = viewModel.ExpireAfter;
+                    }
                     _context.Update(activationKey);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivationKeyExists(activationKey.Id))
+                    if (!ActivationKeyExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -143,10 +145,10 @@ namespace FST.ActivationWebApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { programToolId = viewModel.ProgramToolId });
             }
             
-            return View(activationKey);
+            return View(viewModel);
         }
 
         [HttpGet]

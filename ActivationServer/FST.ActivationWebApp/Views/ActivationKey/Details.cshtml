@@ -1,4 +1,4 @@
-﻿@model FST.ActivationWebApp.Data.Entities.ActivationKey
+﻿@model FST.ActivationWebApp.Models.ActivationKeyDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -16,12 +16,6 @@
             @Html.DisplayFor(model => model.Key)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CreateDate.ToString("MM/dd/yyyy")
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ActivationDate)
         </dt>
         <dd class="col-sm-10" style="height: 24px">
@@ -31,35 +25,54 @@
             @Html.DisplayNameFor(model => model.ExpirationDate)
         </dt>
         <dd class="col-sm-10">
-            @Model.ExpirationDate?.ToString("MM/dd/yyyy")
+            @Model.ActivationDate?.AddDays(Model.ExpirationDays).ToString("MM/dd/yyyy")
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpirationDays)
+            @Html.DisplayNameFor(model => model.ExpireAfter)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ExpirationDays)
+            @Html.DisplayFor(model => model.ExpireAfter)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgramUser.Name)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgramUser.Name)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgramUser.Email)
+            @Html.DisplayNameFor(model => model.UserEmail)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgramUser.Email)
+            @Html.DisplayFor(model => model.UserEmail)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgramUser.MachineId)
+            @Html.DisplayNameFor(model => model.MachineId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgramUser.MachineId)
+            @Html.DisplayFor(model => model.MachineId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd class="col-sm-10">
+            @switch (Model.State)
+            {
+                case ActivationKeyState.NotUsed:
+                    <div class="text-secondary">Not used</div>
+                    break;
+                case ActivationKeyState.InUse:
+                    <div class="text-success">In use</div>
+                    break;
+                case ActivationKeyState.Expired:
+                    <div class="text-danger">Expired</div>
+                    break;
+                default:
+                    break;
+            }
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index" asp-route-programToolId="@Model.ProgramToolId">Back to List</a>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a class="btn btn-outline-secondary" asp-action="Index" asp-route-programToolId="@Model.ProgramToolId">Back to List</a>
 </div>

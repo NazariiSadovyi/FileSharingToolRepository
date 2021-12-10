@@ -1,4 +1,4 @@
-﻿@model FST.ActivationWebApp.Data.Entities.ActivationKey
+﻿@model FST.ActivationWebApp.Models.EditActivationKeyViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,36 +11,30 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            @Html.HiddenFor(_ => _.Id)
+            @Html.HiddenFor(_ => _.Key)
+            @Html.HiddenFor(_ => _.ProgramToolId)
             <div class="form-group">
-                <label asp-for="Key" class="control-label"></label>
-                <input asp-for="Key" class="form-control" />
-                <span asp-validation-for="Key" class="text-danger"></span>
+                <label asp-for="ExpireAfter" class="control-label"></label>
+                <input asp-for="ExpireAfter" class="form-control" />
+                <span asp-validation-for="ExpireAfter" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
+                <label asp-for="UserEmail" class="control-label"></label>
+                <input asp-for="UserEmail" class="form-control" />
+                <span asp-validation-for="UserEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActivationDate" class="control-label"></label>
-                <input asp-for="ActivationDate" class="form-control" />
-                <span asp-validation-for="ActivationDate" class="text-danger"></span>
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpirationDate" class="control-label"></label>
-                <input asp-for="ExpirationDate" class="form-control" />
-                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a class="btn btn-outline-secondary" asp-action="Index" asp-route-programToolId="@Model.ProgramToolId">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
