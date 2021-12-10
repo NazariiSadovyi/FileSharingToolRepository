@@ -18,7 +18,7 @@ namespace FST.ViewModel.Services
 
         public ActivationService(IApplicationTaskUtility applicationTaskUtility)
         {
-            _activationProvider = new ActivationViaDropbox();
+            _activationProvider = new ActivationProvider();
             _applicationTaskUtility = applicationTaskUtility;
         }
 
