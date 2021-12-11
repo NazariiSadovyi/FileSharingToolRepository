@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Unity;
+using FST.ViewModel.Models;
 
 namespace FST.ViewModel.Services
 {
@@ -173,7 +174,7 @@ namespace FST.ViewModel.Services
         {
             return true;
 
-            if (_sharedAppData.IsActivated)
+            if (_sharedAppData.ActivationStatus == ActivationStatus.Activated)
             {
                 return true;
             }

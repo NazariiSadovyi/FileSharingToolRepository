@@ -15,6 +15,7 @@ namespace FST.ViewModel.ViewModels
     public class ActivationViewModel : BaseNavigationViewModel
     {
         #region Private fields
+        private ISharedAppDataViewModel _sharedAppData;
         private string _newActivationKey;
         private string _currentActivationKey;
         #endregion
@@ -22,8 +23,6 @@ namespace FST.ViewModel.ViewModels
         #region Dependency
         [Dependency]
         public IActivationService ActivationService;
-        [Dependency]
-        public ISharedAppDataViewModel SharedAppData;
         [Dependency]
         public IApplicationTaskUtility ApplicationUtility;
         #endregion
@@ -36,7 +35,7 @@ namespace FST.ViewModel.ViewModels
                 {
                     await ApplicationUtility.ExecuteFetchDataAsync(async () =>
                     {
-                        var result = await ActivationService.UpdateActivation(NewActivationKey);
+                        var result = await ActivationService.UpdateActivationAsync(NewActivationKey);
                         if (!result.HasValue)
                         {
                             return;
@@ -46,7 +45,7 @@ namespace FST.ViewModel.ViewModels
                         {
                             CurrentActivationKey = NewActivationKey;
                             NewActivationKey = string.Empty;
-                            SharedAppData.IsActivated = true;
+                            SharedAppData.ActivationStatus = ActivationStatus.Activated;
 
                             ApplicationUtility.ShowInformationMessage(Localization.GetResource("ToolHasBeenActivated"), InformationKind.Success);
                         }
@@ -73,9 +72,13 @@ namespace FST.ViewModel.ViewModels
                 {
                     await ApplicationUtility.ExecuteFetchDataAsync(async () =>
                     {
-                        await ActivationService.DeactivateLicense();
+                        var result = await ActivationService.DeactivateLicenseAsync();
+                        if (!result)
+                        {
+                            return;
+                        }
                         
-                        SharedAppData.IsActivated = false;
+                        SharedAppData.ActivationStatus = ActivationStatus.NotActivated;
                         CurrentActivationKey = string.Empty;
 
                         RunTaskToCloseToolAfter5minutes();
@@ -92,6 +95,36 @@ namespace FST.ViewModel.ViewModels
             .ObservesProperty(() => NewActivationKey)
             .ObservesProperty(() => CurrentActivationKey);
         }
+
+        public ICommand RefreshActivationCmd
+        {
+            get => new DelegateCommand(
+                async () =>
+                {
+                    var activationStatus = await ApplicationUtility.ExecuteFetchDataAsync(
+                        () => ActivationService.IsActivatedAsync(),
+                        Localization.GetResource("CheckingActivationFetchMessage"));
+
+                    SharedAppData.ActivationStatus = activationStatus;
+                    switch (activationStatus)
+                    {
+                        case ActivationStatus.NotActivated:
+                            break;
+                        case ActivationStatus.Expired:
+                            ApplicationUtility.ShowInformationMessage(Localization.GetResource("ActivationViewThisActivationKeyIsExpired"), InformationKind.Warning);
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                () =>
+                {
+                    return SharedAppData.ActivationStatus != ActivationStatus.Activated
+                        || SharedAppData.ActivationStatus != ActivationStatus.NotActivated;
+                }
+            )
+            .ObservesProperty(() => SharedAppData.ActivationStatus);
+        }
         #endregion
 
         #region Properties
@@ -106,11 +139,19 @@ namespace FST.ViewModel.ViewModels
             get { return _newActivationKey; }
             set { SetProperty(ref _newActivationKey, value); }
         }
+
+        public ISharedAppDataViewModel SharedAppData
+        {
+            get { return _sharedAppData; }
+            set { SetProperty(ref _sharedAppData, value); }
+        }
         #endregion
 
-        public ActivationViewModel(IActivationService _activationService)
+        public ActivationViewModel(IActivationService activationService,
+            ISharedAppDataViewModel sharedAppData)
         {
-            CurrentActivationKey = _activationService.Key;
+            CurrentActivationKey = activationService.Key;
+            SharedAppData = sharedAppData;
         }
 
         public void RunTaskToCloseToolAfter5minutes()
@@ -118,7 +159,7 @@ namespace FST.ViewModel.ViewModels
             Task.Run(async () => 
             {
                 await Task.Delay(TimeSpan.FromMinutes(5));
-                if (!SharedAppData.IsActivated)
+                if (SharedAppData.ActivationStatus != ActivationStatus.Activated)
                 {
                     Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
                 }

@@ -152,24 +152,23 @@ namespace FST.Client
             var sharedAppData = Container.Resolve<ISharedAppDataViewModel>();
             var activationService = Container.Resolve<IActivationService>();
 
-            bool? isActivated = false;
-            await applicationUtility.ExecuteFetchDataAsync(
-                () =>
-                {
-                    return Task.Run(async () =>
-                    {
-                        isActivated = await activationService.IsActivated();
-                    });
-                },
-                Localization.GetResource("CheckingActivationFetchMessage")
-            );
+            var activationStatus = await applicationUtility.ExecuteFetchDataAsync(
+                () => activationService.IsActivatedAsync(),
+                Localization.GetResource("CheckingActivationFetchMessage"));
 
-            if (!isActivated.Value)
+            sharedAppData.ActivationStatus = activationStatus;
+            switch (activationStatus)
             {
-                RunTaskToCloseToolAfter5minutes();
-                applicationUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
+                case ActivationStatus.NotActivated:
+                    RunTaskToCloseToolAfter5minutes();
+                    break;
+                case ActivationStatus.Expired:
+                    applicationUtility.ShowInformationMessage("This activation key is expired, tool will be closed after 5 minutes.", InformationKind.Warning);
+                    RunTaskToCloseToolAfter5minutes();
+                    break;
+                default:
+                    break;
             }
-            sharedAppData.IsActivated = isActivated.Value;
         }
 
         public void RunTaskToCloseToolAfter5minutes()
@@ -177,7 +176,7 @@ namespace FST.Client
             Task.Run(async () =>
             {
                 await Task.Delay(TimeSpan.FromMinutes(5));
-                if (!Container.Resolve<ISharedAppDataViewModel>().IsActivated)
+                if (Container.Resolve<ISharedAppDataViewModel>().ActivationStatus != ActivationStatus.Activated)
                 {
                     Current.Dispatcher.Invoke(Current.Shutdown);
                 }

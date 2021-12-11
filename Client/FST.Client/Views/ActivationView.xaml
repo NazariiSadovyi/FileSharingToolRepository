@@ -10,7 +10,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2.6*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -23,7 +23,38 @@
                        Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
                        Margin="0 0 0 0">
                 <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text="{DynamicResource ThisToolIsActivated}"/>
+                           Text="Tool activation status"/>
+                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                           Text=": "/>
+                <TextBlock Text="{Binding SharedAppData.ActivationStatus}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle1TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Activated">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="NotActivated">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Expired">
+                                    <Setter Property="Foreground" Value="Orange"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Error">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </WrapPanel>
+
+            <WrapPanel HorizontalAlignment="Center"
+                       Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
+                       Margin="0 0 0 0">
+                <!--<TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                           Text="{DynamicResource ThisToolIsActivated}"/>-->
+                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                           Text="Current key"/>
                 <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                            Text=": "/>
                 <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
@@ -40,14 +71,30 @@
             </Grid>
 
             <WrapPanel HorizontalAlignment="Center">
-                  <Button Margin="0 0 10 0"
-                          Width="200"
-                          Command="{Binding RemoveActivationCmd}"
-                          Content="{DynamicResource DeactivationViewButtonActivation}" />
-                  <Button Margin="10 0 0 0"
-                          Width="200"
-                          Command="{Binding ActivateCmd}"
-                          Content="{DynamicResource ActivationViewButtonActivation}" />
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Activated">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="NotActivated">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </Style>
+                    </Grid.Style>
+                    <Button Margin="0 0 10 0"
+                            Command="{Binding RefreshActivationCmd}"
+                            Content="{DynamicResource RefreshViewButtonActivation}"/>
+                </Grid>
+                <Button Margin="10 0 10 0"
+                        Command="{Binding RemoveActivationCmd}"
+                        Content="{DynamicResource DeactivationViewButtonActivation}"/>
+                <Button Margin="10 0 0 0"
+                        Command="{Binding ActivateCmd}"
+                        Content="{DynamicResource ActivationViewButtonActivation}"/>
             </WrapPanel>
 
         </StackPanel>

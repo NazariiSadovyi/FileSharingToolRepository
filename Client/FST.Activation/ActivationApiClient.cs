@@ -10,8 +10,9 @@ namespace FST.Activation
 {
     internal class ActivationApiClient
     {
-        private const string _programToolId = "24518803-3abb-408d-9f3e-74789017240d";
-        private const string _serviceAdress = "https://localhost:5001/";
+        private const string _programToolId = "8614012d-aa2a-48cc-92bd-1c5ec7e55d30";
+        //private const string _serviceAdress = "https://localhost:5001/";
+        private const string _serviceAdress = "http://bogdansadoviy-001-site1.ctempurl.com/";
 
         private readonly HttpClient _client;
 
@@ -33,15 +34,15 @@ namespace FST.Activation
             return await GetAsync(key, "check");
         }
 
-        public async Task<ActivationStatusResponse> ResetAsync(string key)
+        public async Task ResetAsync(string key)
         {
-            return await GetAsync(key, "reset");
+            var requestUri = GetMethodAdress(key, "reset");
+            await _client.GetAsync(requestUri);
         }
         
         private async Task<ActivationStatusResponse> GetAsync(string key, string method)
         {
-            var requestUri = Path.Combine(GetBaseActionAdress(key), method);
-            requestUri = requestUri.Replace(@"\", @"/");
+            var requestUri = GetMethodAdress(key, method);
             var response = await _client.GetAsync(requestUri);
             if (response.IsSuccessStatusCode)
             {
@@ -57,6 +58,13 @@ namespace FST.Activation
                     Message = contentText
                 };
             }
+        }
+
+        private string GetMethodAdress(string key, string method)
+        {
+            var requestUri = Path.Combine(GetBaseActionAdress(key), method);
+            requestUri = requestUri.Replace(@"\", @"/");
+            return requestUri;
         }
 
         private string GetBaseActionAdress(string key)
@@ -75,7 +83,7 @@ namespace FST.Activation
         {
             return new DeviceIdBuilder()
                 .AddMachineName()
-                .AddMacAddress()
+                .AddSystemUUID()
                 .AddProcessorId()
                 .AddMotherboardSerialNumber()
                 .ToString();

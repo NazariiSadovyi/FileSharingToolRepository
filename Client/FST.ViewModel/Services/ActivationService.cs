@@ -22,22 +22,38 @@ namespace FST.ViewModel.Services
             _applicationTaskUtility = applicationTaskUtility;
         }
 
-        public async Task<bool?> IsActivated()
+        public async Task<ActivationStatus> IsActivatedAsync()
         {
             try
             {
-                return await _activationProvider.IsActivatedCheck();
+                if (string.IsNullOrEmpty(Key))
+                {
+                    return ActivationStatus.NotActivated;
+                }
+
+                var result = await _activationProvider.IsActivatedCheck();
+                switch (result)
+                {
+                    case true:
+                        return ActivationStatus.Activated;
+                    case false:
+                        return ActivationStatus.NotActivated;
+                    case null:
+                        return ActivationStatus.Expired;
+                    default:
+                        throw new ArgumentOutOfRangeException(result.ToString());
+                }
             }
             catch (Exception e)
             {
                 _logger.Warn(e, "Activation error: Can't check activation status");
                 _applicationTaskUtility.ShowInformationMessage(Localization.GetResource("CantCheckActivationStatus"), InformationKind.Error);
 
-                return null;
+                return ActivationStatus.Error;
             }
         }
 
-        public async Task<bool?> UpdateActivation(string key)
+        public async Task<bool?> UpdateActivationAsync(string key)
         {
             try
             {
@@ -52,20 +68,7 @@ namespace FST.ViewModel.Services
             }
         }
 
-        public async Task DeactivateLicense()
-        {
-            try
-            {
-                await _activationProvider.DeactivateLicense();
-            }
-            catch (Exception e)
-            {
-                _logger.Warn(e, "Deactivate License");
-                _applicationTaskUtility.ShowInformationMessage(Localization.GetResource("CantDeactivateLicense"), InformationKind.Error);
-            }
-        }
-
-        public async Task<bool> ResetCurrentActivation()
+        public async Task<bool> DeactivateLicenseAsync()
         {
             try
             {
@@ -74,8 +77,8 @@ namespace FST.ViewModel.Services
             }
             catch (Exception e)
             {
-                _logger.Warn(e, "Reset Activation");
-                _applicationTaskUtility.ShowInformationMessage(Localization.GetResource("CantResetLicense"), InformationKind.Error);
+                _logger.Warn(e, "Deactivate License");
+                _applicationTaskUtility.ShowInformationMessage(Localization.GetResource("CantDeactivateLicense"), InformationKind.Error);
 
                 return false;
             }

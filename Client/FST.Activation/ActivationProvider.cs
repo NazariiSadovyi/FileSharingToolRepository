@@ -22,7 +22,7 @@ namespace FST.Activation
                 return false;
             }
             
-            throw new Exception("Sorry, but this key is expaired.");
+            throw new Exception("Sorry, but this key is expired.");
         }
 
         public string GetSavedLicenseKey()
@@ -30,7 +30,7 @@ namespace FST.Activation
             return _licenseKeyProvider.Key;
         }
 
-        public async Task<bool> IsActivatedCheck()
+        public async Task<bool?> IsActivatedCheck()
         {
             var currentKey = _licenseKeyProvider.Key;
             if (string.IsNullOrEmpty(currentKey))
@@ -39,28 +39,23 @@ namespace FST.Activation
             }
 
             var response = await _activationApiClient.CheckAsync(currentKey);
-            if (response.State == ActivationKeyStateEnum.Correct)
+            switch (response.State)
             {
-                return true;
+                case ActivationKeyStateEnum.Correct:
+                    return true; 
+                case ActivationKeyStateEnum.Incorrect:
+                    return false;
+                case ActivationKeyStateEnum.Expired:
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(response.State.ToString());
             }
-            else if (response.State == ActivationKeyStateEnum.Incorrect)
-            {
-                return false;
-            }
-
-            throw new Exception("Sorry, but this key is expaired.");
         }
 
         public async Task DeactivateLicense()
         {
-            var response = await _activationApiClient.ResetAsync(_licenseKeyProvider.Key);
-            if (response.State == ActivationKeyStateEnum.Reset)
-            {
-                await Task.Run(() => _licenseKeyProvider.Key = string.Empty);
-                return;
-            }
-
-            throw new Exception($"Activation key wasn't reset. Server result: {response?.State}");
+            await _activationApiClient.ResetAsync(_licenseKeyProvider.Key);
+            await Task.Run(() => _licenseKeyProvider.Key = string.Empty);
         }
 
         private async Task LicenceUpdate(string key)

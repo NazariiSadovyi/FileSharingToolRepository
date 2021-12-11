@@ -4,7 +4,6 @@
     {
         Correct,
         Incorrect,
-        Expaired,
-        Reset
+        Expired
     }
 }

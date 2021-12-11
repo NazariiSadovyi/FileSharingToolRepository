@@ -35,6 +35,8 @@
     <v:String x:Key="ActivationViewButtonActivation">ACTIVAR</v:String>
     <v:String x:Key="ActivationViewTextBoxHint">Nueva clave de licencia</v:String>
     <v:String x:Key="DeactivationViewButtonActivation">DESACTIVAR</v:String>
+    <v:String x:Key="RefreshViewButtonActivation">ACTUALIZAR</v:String>
+    <v:String x:Key="ActivationViewThisActivationKeyIsExpired">Esta clave de activación está caducada</v:String>
 
     <!-- Activation messages -->
     <v:String x:Key="CantCheckActivationStatus">No se puede verificar el estado de activación, los detalles se guardaron</v:String>

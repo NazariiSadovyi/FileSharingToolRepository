@@ -1,4 +1,5 @@
-﻿using FST.ViewModel.ViewModels.Interfaces;
+﻿using FST.ViewModel.Models;
+using FST.ViewModel.ViewModels.Interfaces;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
 
@@ -6,12 +7,12 @@ namespace FST.ViewModel.ViewModels
 {
     public class SharedAppDataViewModel : BindableBase, ISharedAppDataViewModel
     {
-        private bool _isActivated;
+        private ActivationStatus _activationStatus;
 
-        public bool IsActivated
+        public ActivationStatus ActivationStatus
         {
-            get { return _isActivated; }
-            set { SetProperty(ref _isActivated, value); }
+            get { return _activationStatus; }
+            set { SetProperty(ref _activationStatus, value); }
         }
 
         private bool _isPreviewVisible;
