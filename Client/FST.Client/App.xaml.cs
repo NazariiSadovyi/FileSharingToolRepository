@@ -160,10 +160,11 @@ namespace FST.Client
             switch (activationStatus)
             {
                 case ActivationStatus.NotActivated:
+                    applicationUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
                     RunTaskToCloseToolAfter5minutes();
                     break;
                 case ActivationStatus.Expired:
-                    applicationUtility.ShowInformationMessage("This activation key is expired, tool will be closed after 5 minutes.", InformationKind.Warning);
+                    applicationUtility.ShowInformationMessage(Localization.GetResource("ToolKeyIsExpiredWarningMessage"), InformationKind.Warning);
                     RunTaskToCloseToolAfter5minutes();
                     break;
                 default:

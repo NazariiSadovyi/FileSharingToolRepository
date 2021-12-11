@@ -1,5 +1,6 @@
 ﻿using FST.ActivationWebApp.ApiResponses;
 using FST.ActivationWebApp.Data;
+using FST.ActivationWebApp.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,10 +33,17 @@ namespace FST.ActivationWebApp.Controllers
             }
             else
             {
-                currentKey.ProgramUser.MachineId = machineId;
-                currentKey.ActivationDate = DateTime.Now;
-                await _applicationDbContext.SaveChangesAsync();
-                response.State = ActivationKeyStateEnum.Correct;
+                if (IsActivationKeyExpired(currentKey))
+                {
+                    response.State = ActivationKeyStateEnum.Expired;
+                }
+                else
+                {
+                    currentKey.ProgramUser.MachineId = machineId;
+                    currentKey.ActivationDate = DateTime.Now;
+                    await _applicationDbContext.SaveChangesAsync();
+                    response.State = ActivationKeyStateEnum.Correct;
+                }
             }
 
             return new JsonResult(response);
@@ -55,8 +63,7 @@ namespace FST.ActivationWebApp.Controllers
             }
             else
             {
-                var expirationDate = currentKey.ActivationDate.Value.AddDays(currentKey.ExpirationDays).Date;
-                response.State = expirationDate > DateTime.Now.Date ? ActivationKeyStateEnum.Correct : ActivationKeyStateEnum.Expired;
+                response.State = IsActivationKeyExpired(currentKey) ? ActivationKeyStateEnum.Expired : ActivationKeyStateEnum.Correct;
             }
             
             return new JsonResult(response);
@@ -77,6 +84,11 @@ namespace FST.ActivationWebApp.Controllers
             }
 
             return Ok();
+        }
+
+        private bool IsActivationKeyExpired(ActivationKey key)
+        {
+            return key.ActivationDate.Value.AddDays(key.ExpirationDays).Date >= DateTime.Now.Date;
         }
     }
 }

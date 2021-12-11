@@ -9,20 +9,21 @@ namespace FST.Activation
         private readonly ActivationApiClient _activationApiClient = new();
         private readonly LicenseKeyProvider _licenseKeyProvider = new();
 
-        public async Task<bool> CheckAndSaveLicense(string key)
+        public async Task<bool?> CheckAndSaveLicense(string key)
         {
             var response = await _activationApiClient.ActivateToolAsync(key);
-            if (response.State == ActivationKeyStateEnum.Correct)
+            switch (response.State)
             {
-                await LicenceUpdate(key);
-                return true;
+                case ActivationKeyStateEnum.Correct:
+                    await LicenceUpdate(key);
+                    return true;
+                case ActivationKeyStateEnum.Incorrect:
+                    return false;
+                case ActivationKeyStateEnum.Expired:
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(response.State.ToString());
             }
-            else if (response.State == ActivationKeyStateEnum.Incorrect)
-            {
-                return false;
-            }
-            
-            throw new Exception("Sorry, but this key is expired.");
         }
 
         public string GetSavedLicenseKey()

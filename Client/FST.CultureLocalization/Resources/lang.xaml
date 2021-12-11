@@ -44,11 +44,13 @@
     <v:String x:Key="CantDeactivateLicense">Can't deactivate license, details logged</v:String>
     <v:String x:Key="CantResetLicense">Can't reset license, details logged</v:String>
     <v:String x:Key="LicenseKeyIsNotValid">This license key is not valid</v:String>
+    <v:String x:Key="LicenseKeyIsExpired">This license key is expired</v:String>
     <v:String x:Key="UpdatingActivationKeyFetchMessage">Updating activation key...</v:String>
     <v:String x:Key="RemovingActivationFetchMessage">Removing activation...</v:String>
     <v:String x:Key="LicenseKeyIsResetStatusFormat">Current license key is reset. Tool will be closed after 5 minutes.</v:String>
     <v:String x:Key="ThisToolIsActivated">This tool is Activated</v:String>
     <v:String x:Key="ToolIsNotActivatedWarningMessage">This tool is not activated. Tool will be closed after 5 minutes.</v:String>
+    <v:String x:Key="ToolKeyIsExpiredWarningMessage">This activation key is expired, tool will be closed after 5 minutes.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Tool has been activated</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Checking activation...</v:String>
 

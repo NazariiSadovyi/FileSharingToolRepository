@@ -36,22 +36,22 @@ namespace FST.ViewModel.ViewModels
                     await ApplicationUtility.ExecuteFetchDataAsync(async () =>
                     {
                         var result = await ActivationService.UpdateActivationAsync(NewActivationKey);
-                        if (!result.HasValue)
+                        switch (result)
                         {
-                            return;
-                        }
-
-                        if (result.Value)
-                        {
-                            CurrentActivationKey = NewActivationKey;
-                            NewActivationKey = string.Empty;
-                            SharedAppData.ActivationStatus = ActivationStatus.Activated;
-
-                            ApplicationUtility.ShowInformationMessage(Localization.GetResource("ToolHasBeenActivated"), InformationKind.Success);
-                        }
-                        else
-                        {
-                            ApplicationUtility.ShowInformationMessage(Localization.GetResource("LicenseKeyIsNotValid"), InformationKind.Error);
+                            case true:
+                                CurrentActivationKey = NewActivationKey;
+                                NewActivationKey = string.Empty;
+                                SharedAppData.ActivationStatus = ActivationStatus.Activated;
+                                ApplicationUtility.ShowInformationMessage(Localization.GetResource("ToolHasBeenActivated"), InformationKind.Success);
+                                break;
+                            case false:
+                                ApplicationUtility.ShowInformationMessage(Localization.GetResource("LicenseKeyIsNotValid"), InformationKind.Error);
+                                break;
+                            case null:
+                                ApplicationUtility.ShowInformationMessage(Localization.GetResource("LicenseKeyIsExpired"), InformationKind.Error);
+                                return;
+                            default:
+                                throw new ArgumentOutOfRangeException(result.ToString());
                         }
                     },
                     Localization.GetResource("UpdatingActivationKeyFetchMessage"));

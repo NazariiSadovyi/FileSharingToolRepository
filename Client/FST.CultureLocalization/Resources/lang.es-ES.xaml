@@ -44,11 +44,13 @@
     <v:String x:Key="CantDeactivateLicense">No se puede desactivar la licencia, los detalles se guardaron</v:String>
     <v:String x:Key="CantResetLicense">No se pudo restablecer la licencia, los detalles se guardaron</v:String>
     <v:String x:Key="LicenseKeyIsNotValid">Esta clave de licencia no es válida</v:String>
+    <v:String x:Key="LicenseKeyIsExpired">Esta clave de licencia ha caducado</v:String>
     <v:String x:Key="UpdatingActivationKeyFetchMessage">Actualizando la clave de activación...</v:String>
     <v:String x:Key="RemovingActivationFetchMessage">Eliminando activación...</v:String>
     <v:String x:Key="LicenseKeyIsResetStatusFormat">Se restablece la clave de licencia actual. La herramienta se cerrará después de 5 minutos.</v:String>
     <v:String x:Key="ThisToolIsActivated">Esta herramienta está activada</v:String>
     <v:String x:Key="ToolIsNotActivatedWarningMessage">Este programa no está activado. El programa se cerrará en 5 minutos.</v:String>
+    <v:String x:Key="ToolKeyIsExpiredWarningMessage">Esta clave de activación está vencida, la herramienta se cerrará después de 5 minutos..</v:String>
     <v:String x:Key="ToolHasBeenActivated">La herramienta ha sido activada</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Cheque de activación...</v:String>
 

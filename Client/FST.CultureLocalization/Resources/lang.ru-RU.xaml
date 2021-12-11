@@ -44,11 +44,13 @@
     <v:String x:Key="CantDeactivateLicense">Невозможно деактивировать лицензию, подробности сохранены</v:String>
     <v:String x:Key="CantResetLicense">Не удается сбросить лицензию, подробности сохранены</v:String>
     <v:String x:Key="LicenseKeyIsNotValid">Этот лицензионный ключ недействителен</v:String>
+    <v:String x:Key="LicenseKeyIsExpired">Срок действия этого лицензионного ключа истек</v:String>
     <v:String x:Key="UpdatingActivationKeyFetchMessage">Обновление ключа активации...</v:String>
     <v:String x:Key="RemovingActivationFetchMessage">Удаление активации...</v:String>
     <v:String x:Key="LicenseKeyIsResetStatusFormat">Текущий лицензионный ключ сброшен. Программа будет закрыта через 5 минут.</v:String>
     <v:String x:Key="ThisToolIsActivated">Эта программа активирована</v:String>
     <v:String x:Key="ToolIsNotActivatedWarningMessage">Эта программа не активирована. Программа будет закрыта через 5 минут.</v:String>
+    <v:String x:Key="ToolKeyIsExpiredWarningMessage">Срок действия этого ключа активации истек, инструмент будет закрыт через 5 минут.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Программа была активирована</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Проверка активации...</v:String>
 
