@@ -23,7 +23,7 @@ namespace FST.ActivationWebApp.Controllers
             var response = new ActivationStatusResponse();
             var currentKey = await _applicationDbContext.ActivationKey
                 .Include(_ => _.ProgramUser)
-                .FirstOrDefaultAsync(_ => _.ProgramToolId == programToolId && _.Key == key 
+                .FirstOrDefaultAsync(_ => _.ProgramToolId == programToolId && _.Key == key
                     && string.IsNullOrEmpty(_.ProgramUser.MachineId));
 
             if (currentKey == null)
@@ -56,33 +56,27 @@ namespace FST.ActivationWebApp.Controllers
             else
             {
                 var expirationDate = currentKey.ActivationDate.Value.AddDays(currentKey.ExpirationDays).Date;
-                response.State = expirationDate >= DateTime.Now.Date ? ActivationKeyStateEnum.Correct : ActivationKeyStateEnum.Expaired;
+                response.State = expirationDate > DateTime.Now.Date ? ActivationKeyStateEnum.Correct : ActivationKeyStateEnum.Expaired;
             }
-
+            
             return new JsonResult(response);
         }
 
         [HttpGet("api/activation/programTool/{programToolId}/key/{key}/machine/{machineId}/reset")]
         public async Task<IActionResult> Reset(Guid programToolId, Guid key, string machineId)
         {
-            var response = new ActivationStatusResponse();
             var currentKey = await _applicationDbContext.ActivationKey
                 .Include(_ => _.ProgramUser)
                 .FirstOrDefaultAsync(_ => _.ProgramToolId == programToolId && _.Key == key
                     && _.ProgramUser.MachineId == machineId && _.ActivationDate != null);
-            if (currentKey == null)
+
+            if (currentKey != null)
             {
-                response.State = ActivationKeyStateEnum.Incorrect;
-            }
-            else
-            {
-                currentKey.CreateDate = DateTime.Now;
                 currentKey.ProgramUser.MachineId = string.Empty;
                 await _applicationDbContext.SaveChangesAsync();
-                response.State = ActivationKeyStateEnum.Reset;
             }
 
-            return new JsonResult(response);
+            return Ok();
         }
     }
 }
