@@ -1,7 +1,7 @@
 ﻿@model IndexActivationKeyViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Activation keys";
 }
 
 <style>
@@ -24,6 +24,9 @@
                 @Html.DisplayNameFor(model => model.ActivationKeys[0].Key)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ActivationKeys[0].ActivationDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ActivationKeys[0].ExpireAfter)
             </th>
             <th>
@@ -43,6 +46,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @item.ActivationDate?.ToString("MM/dd/yyyy")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExpireAfter)
