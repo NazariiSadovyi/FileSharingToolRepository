@@ -29,9 +29,9 @@ namespace FST.ActivationWebApp.Models
                 }
                 
                 var isInUse = !string.IsNullOrEmpty(MachineId);
-                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
+                var isExpired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
 
-                if (isExpaired)
+                if (isExpired)
                 {
                     return ActivationKeyState.Expired;
                 }
@@ -50,8 +50,8 @@ namespace FST.ActivationWebApp.Models
                     return ExpirationDays;
                 }
 
-                var isExpaired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
-                if (isExpaired)
+                var isExpired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
+                if (isExpired)
                 {
                     return 0;
                 }
