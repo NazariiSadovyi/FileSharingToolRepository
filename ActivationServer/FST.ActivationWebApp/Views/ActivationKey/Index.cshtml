@@ -17,7 +17,7 @@
     <a class="btn btn-outline-info" asp-action="Create" asp-route-programToolId="@Model.ProgramToolId">Create new</a> |
     <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="ProgramTool">Back to program list</a>
 </p>
-<table class="table table-bordered">
+<table id="activation-keys-table" class="table table-bordered">
     <thead>
         <tr>
             <th>
@@ -78,3 +78,9 @@
     }
     </tbody>
 </table>
+
+<script>
+    $(document).ready( function () {
+        $('#activation-keys-table').DataTable();
+    } );
+</script>
