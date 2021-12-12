@@ -88,6 +88,11 @@ namespace FST.ActivationWebApp.Controllers
 
         private bool IsActivationKeyExpired(ActivationKey key)
         {
+            if (!key.ActivationDate.HasValue)
+            {
+                return false;
+            }
+
             return key.ActivationDate.Value.AddDays(key.ExpirationDays).Date >= DateTime.Now.Date;
         }
     }
