@@ -1,6 +1,6 @@
 ﻿using FST.ActivationWebApp.ApiResponses;
 using FST.ActivationWebApp.Data;
-using FST.ActivationWebApp.Data.Entities;
+using FST.ActivationWebApp.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +11,7 @@ namespace FST.ActivationWebApp.Controllers
     [ApiController]
     public class ActivationApiController : ControllerBase
     {
-        private ApplicationDbContext _applicationDbContext { get; set; }
+        private readonly ApplicationDbContext _applicationDbContext;
 
         public ActivationApiController(ApplicationDbContext applicationDbContext)
         {
@@ -30,20 +30,19 @@ namespace FST.ActivationWebApp.Controllers
             if (currentKey == null)
             {
                 response.State = ActivationKeyStateEnum.Incorrect;
+                return new JsonResult(response);
+            }
+            
+            if (currentKey.IsExpired())
+            {
+                response.State = ActivationKeyStateEnum.Expired;
             }
             else
             {
-                if (IsActivationKeyExpired(currentKey))
-                {
-                    response.State = ActivationKeyStateEnum.Expired;
-                }
-                else
-                {
-                    currentKey.ProgramUser.MachineId = machineId;
-                    currentKey.ActivationDate = DateTime.Now;
-                    await _applicationDbContext.SaveChangesAsync();
-                    response.State = ActivationKeyStateEnum.Correct;
-                }
+                currentKey.ProgramUser.MachineId = machineId;
+                currentKey.ActivationDate = DateTime.Now;
+                await _applicationDbContext.SaveChangesAsync();
+                response.State = ActivationKeyStateEnum.Correct;
             }
 
             return new JsonResult(response);
@@ -63,7 +62,7 @@ namespace FST.ActivationWebApp.Controllers
             }
             else
             {
-                response.State = IsActivationKeyExpired(currentKey) ? ActivationKeyStateEnum.Expired : ActivationKeyStateEnum.Correct;
+                response.State = currentKey.IsExpired() ? ActivationKeyStateEnum.Expired : ActivationKeyStateEnum.Correct;
             }
             
             return new JsonResult(response);
@@ -84,16 +83,6 @@ namespace FST.ActivationWebApp.Controllers
             }
 
             return Ok();
-        }
-
-        private bool IsActivationKeyExpired(ActivationKey key)
-        {
-            if (!key.ActivationDate.HasValue)
-            {
-                return false;
-            }
-
-            return key.ActivationDate.Value.AddDays(key.ExpirationDays).Date >= DateTime.Now.Date;
         }
     }
 }

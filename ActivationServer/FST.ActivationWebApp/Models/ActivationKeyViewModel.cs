@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FST.ActivationWebApp.Helpers;
+using System;
 using System.ComponentModel;
 
 namespace FST.ActivationWebApp.Models
@@ -28,14 +29,12 @@ namespace FST.ActivationWebApp.Models
                     return ActivationKeyState.NotUsed;
                 }
                 
-                var isInUse = !string.IsNullOrEmpty(MachineId);
-                var isExpired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
-
-                if (isExpired)
+                if (this.IsExpired())
                 {
                     return ActivationKeyState.Expired;
                 }
 
+                var isInUse = !string.IsNullOrEmpty(MachineId);
                 return isInUse ? ActivationKeyState.InUse : ActivationKeyState.NotUsed;
             }
         }
@@ -50,8 +49,7 @@ namespace FST.ActivationWebApp.Models
                     return ExpirationDays;
                 }
 
-                var isExpired = ActivationDate.Value.AddDays(ExpirationDays).Date <= DateTime.Now.Date;
-                if (isExpired)
+                if (this.IsExpired())
                 {
                     return 0;
                 }
