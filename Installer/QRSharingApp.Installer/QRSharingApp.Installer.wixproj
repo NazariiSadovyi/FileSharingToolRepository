@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>88658453-505b-42dd-b7a7-c37de43e03c0</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>QRSharingApp.Installer</OutputName>
+    <OutputType>Package</OutputType>
+    <Name>QRSharingApp.Installer</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ClientDynamic.wxs" />
+    <Compile Include="CustomActions.wxs" />
+    <Compile Include="CustomDialog.wxs" />
+    <Compile Include="CustomUI.wxs" />
+    <Compile Include="Product.wxs" />
+    <Compile Include="Runtime.wxs" />
+    <Compile Include="ServerDynamic.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixIIsExtension">
+      <HintPath>$(WixExtDir)\WixIIsExtension.dll</HintPath>
+      <Name>WixIIsExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QRSharingApp.Installer.CustomAction\QRSharingApp.Installer.CustomAction.csproj">
+      <Name>QRSharingApp.Installer.CustomAction</Name>
+      <Project>{fa981e04-b0ad-433d-8c62-55d6ac09abcd}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if $(PlatformName) == x64 (
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\QRSharingApp.Client\bin\x64\Release\net5.0-windows" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ClientDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Client\QRSharingApp.Client\bin\x64\Release\net5.0-windows%27 | Out-File -encoding ASCII %27$(ProjectDir)ClientDynamic.wxs%27"
+  
+  dotnet publish "$(SolutionDir)\Server\QRSharingApp.WebApplication\QRSharingApp.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\QRSharingApp.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
+  
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
+) ELSE (
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\QRSharingApp.Client\bin\x86\Release\net5.0-windows" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ClientDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Client\QRSharingApp.Client\bin\x86\Release\net5.0-windows%27 | Out-File -encoding ASCII %27$(ProjectDir)ClientDynamic.wxs%27"
+  
+  dotnet publish "$(SolutionDir)\Server\QRSharingApp.WebApplication\QRSharingApp.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\QRSharingApp.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
+  
+  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
+  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
+)</PreBuildEvent>
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>
