@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!-- Main view -->
+    <v:String x:Key="TitleApp">QR Sharing App</v:String>
+    <v:String x:Key="MainViewButtonHotFolders">ГОРЯЧИЕ ПАПКИ</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">НАСТРОЙКА WI-FI</v:String>
+    <v:String x:Key="MainViewButtonDownloadHistory">ИСТОРИЯ ЗАГРУЗОК</v:String>
+    <v:String x:Key="MainViewButtonWebPreview">WEB ГАЛЕРЕЯ</v:String>
+    <v:String x:Key="MainViewButtonStart">СТАРТ</v:String>
+    <v:String x:Key="MainViewButtonDesign">ДИЗАЙН</v:String>
+    <v:String x:Key="MainViewButtonActivation">АКТИВАЦИЯ</v:String>
+
+    <!-- Hot folders view -->
+    <v:String x:Key="HotFolderButtonChooseFolder">ВЫБРАТЬ ПАПКУ</v:String>
+    <v:String x:Key="HotFolderInformationDialog">Горячая папка с этим путем уже существует</v:String>
+    <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Добавление текущих горячих папок и файлов...</v:String>
+
+    <!-- Design view -->
+    <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
+    <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
+    <v:String x:Key="DesignViewButtonLanguageES">ИСПАНСКИЙ</v:String>
+    <v:String x:Key="DesignViewTextBoxImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ПРОСМОТРА</v:String>
+    <v:String x:Key="DesignViewButtonImageChoosing">ВЫБРАТЬ</v:String>
+    <v:String x:Key="DesignViewButtonFullScreenMode">ПОЛНОЭКРАННЫЙ РЕЖИМ</v:String>
+    <v:String x:Key="DesignViewButtonWindowMode">ОКОННЫЙ РЕЖИМ</v:String>
+    <v:String x:Key="DesignViewLabelSortingFiles">ОТОБРАЖЕНИЕ ФАЙЛОВ: СНАЧАЛА НОВЫЕ</v:String>
+    <v:String x:Key="DesignViewLabelDirectFileDownload">ДОБАВИТЬ ПОЛЯ ДАННЫХ ПОЛЬЗОВАТЕЛЯ</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">АВТОМАТИЧЕСКОЕ ПЕРЕКЛЮЧЕНИЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА (СЕКУНДЫ)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">ФОНОВАЯ КАРТИНКА В WEB ПРОСМОТРЕ</v:String>
+    
+    <!-- Activation view -->
+    <v:String x:Key="ActivationViewTextBoxInsert">ВВЕДИТЕ КЛЮЧ</v:String>
+    <v:String x:Key="ActivationViewButtonInsert">ВСТАВИТЬ</v:String>
+    <v:String x:Key="ActivationViewButtonActivation">АКТИВИРОВАТЬ</v:String>
+    <v:String x:Key="ActivationViewTextBoxHint">Новый лицензионный ключ</v:String>
+    <v:String x:Key="DeactivationViewButtonActivation">ДЕАКТИВИРОВАТЬ</v:String>
+    <v:String x:Key="RefreshViewButtonActivation">ОБНОВИТЬ</v:String>
+    <v:String x:Key="ActivationViewThisActivationKeyIsExpired">Срок действия этого ключа активации истек</v:String>
+
+    <!-- Activation messages -->
+    <v:String x:Key="CantCheckActivationStatus">Не удается проверить статус активации, подробности сохранены</v:String>
+    <v:String x:Key="CantUpdateActivation">Не удается обновить активацию, подробности сохранены</v:String>
+    <v:String x:Key="CantDeactivateLicense">Невозможно деактивировать лицензию, подробности сохранены</v:String>
+    <v:String x:Key="CantResetLicense">Не удается сбросить лицензию, подробности сохранены</v:String>
+    <v:String x:Key="LicenseKeyIsNotValid">Этот лицензионный ключ недействителен</v:String>
+    <v:String x:Key="LicenseKeyIsExpired">Срок действия этого лицензионного ключа истек</v:String>
+    <v:String x:Key="UpdatingActivationKeyFetchMessage">Обновление ключа активации...</v:String>
+    <v:String x:Key="RemovingActivationFetchMessage">Удаление активации...</v:String>
+    <v:String x:Key="LicenseKeyIsResetStatusFormat">Текущий лицензионный ключ сброшен. Программа будет закрыта через 5 минут.</v:String>
+    <v:String x:Key="ThisToolIsActivated">Эта программа активирована</v:String>
+    <v:String x:Key="ToolIsNotActivatedWarningMessage">Эта программа не активирована. Программа будет закрыта через 5 минут.</v:String>
+    <v:String x:Key="ToolKeyIsExpiredWarningMessage">Срок действия этого ключа активации истек, инструмент будет закрыт через 5 минут.</v:String>
+    <v:String x:Key="ToolHasBeenActivated">Программа была активирована</v:String>
+    <v:String x:Key="CheckingActivationFetchMessage">Проверка активации...</v:String>
+
+    <!--Download history view-->
+    <v:String x:Key="DownloadHistoryTableFileName">File Name</v:String>
+    <v:String x:Key="DownloadHistoryTableFilePath">File Path</v:String>
+    <v:String x:Key="DownloadHistoryTableUserName">User Name</v:String>
+    <v:String x:Key="DownloadHistoryTableUserEmail">User Email</v:String>
+    <v:String x:Key="DownloadHistoryTableUserPhone">User Phone</v:String>
+    <v:String x:Key="DownloadHistoryTableDownloadTime">Download Time</v:String>
+    <v:String x:Key="DownloadHistoryButtonRefresh">Обновить</v:String>
+    <v:String x:Key="DownloadHistoryButtonExport">Экспорт</v:String>
+    <v:String x:Key="DownloadHistoryButtonClean">Очистить</v:String>
+
+    <!--Wifi settings view-->
+    <v:String x:Key="WifiSettingsTextBoxSSIDHint">SSID (WI-FI имя)</v:String>
+    <v:String x:Key="WifiSettingsTextBoxPasswordHint">Пароль</v:String>
+    <v:String x:Key="WifiSettingsTextBoxSecurityHint">Безопасность</v:String>
+    <v:String x:Key="WifiSettingsIsHiddenTougleLabel">Is Hidden</v:String>
+    <v:String x:Key="WifiSettingsButtonUpdate">Обновить</v:String>
+    <v:String x:Key="WifiSettingsButtonClean">Очистить</v:String>
+    
+    <!-- Other -->
+    <v:String x:Key="DialogTextFetching">Получение данных...</v:String>
+    <v:String x:Key="ToggleButtonOn">Вкл</v:String>
+    <v:String x:Key="ToggleButtonOff">Выкл</v:String>
+    <v:String x:Key="ExitButton">ВЫХОД</v:String>
+    <v:String x:Key="FetchingDownloadHistoryData">Получение данных истории загрузок...</v:String>
+    <v:String x:Key="AplicationIsStartingProcess">Приложение запускается...</v:String>
+
+</ResourceDictionary>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+  <?if $(var.Platform) = x64 ?>
+  <?define ProductName = "QR Sharing App x64" ?>
+  <?define Win64 = "yes" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+  <?define ProductName = "QR Sharing App" ?>
+  <?define Win64 = "no" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+
+  <Product Id="*"
+           Name="$(var.ProductName)"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="Spinner 360"
+           UpgradeCode="3c000a1a-5314-4560-85e5-bf5868f67892">
+		<Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine" />
+
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+                Schedule="afterInstallInitialize"
+                DowngradeErrorMessage="A newer version of File Sharing Tool is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_DIR" />
+	
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALL_DIR" Name="File Sharing Tool">
+          <Directory Id="CLIENT_DIR" Name="Client" />
+          <Directory Id="SERVER_DIR" Name="Server" />
+          <Directory Id="COMMON_DIR" Name="Common" />
+        </Directory>
+      </Directory>
+    
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="ApplicationShortcutDesktop" Guid="BD8013FB-DAA3-450C-8430-9D898E0C17D0">
+          <Shortcut Id="ApplicationDesktopShortcut"
+              Name="QR Sharing App"
+              Description="QR Sharing App"
+              Target="[CLIENT_DIR]QRSharingApp.exe"
+              WorkingDirectory="CLIENT_DIR"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue
+              Root="HKCU"
+              Key="Software\QRSharingApp\QRSharingApp"
+              Name="installed"
+              Type="integer"
+              Value="1"
+              KeyPath="yes"/>
+        </Component>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="QRSharingApp.Installer" Level="1">
+      <ComponentGroupRef Id="ClientDynamic" />
+      <ComponentGroupRef Id="ServerDynamic" />
+      <!--<ComponentGroupRef Id="RuntimeComponent" />-->
+      <ComponentRef Id="SetPermissionComponent"/>
+      <ComponentRef Id="CommonDirComponent"/>
+      <ComponentRef Id="C_IISWebsite"/>
+      <ComponentRef Id="ApplicationShortcutDesktop"/>
+    </Feature>
+
+    <DirectoryRef Id="INSTALL_DIR">
+      <Component DiskId="1" Id="SetPermissionComponent" Guid="{7CDC3F9E-F2A6-4C34-A328-D13F5290D6B8}">
+        <CreateFolder>
+          <util:PermissionEx GenericRead="yes"
+                             GenericAll="yes"
+                             GenericWrite="yes"
+                             User="Users" />    
+        </CreateFolder>
+      </Component>
+    </DirectoryRef>
+    
+    <DirectoryRef Id="COMMON_DIR">
+      <Component DiskId="1" Id="CommonDirComponent" Guid="{BD5DAA9F-9DC9-4EB3-99A9-0BA8243DCD70}">
+        <CreateFolder />
+      </Component>
+    </DirectoryRef>
+
+    <UIRef Id="CustomUI" />
+
+	  <!-- Schedule custom actions -->
+	  <InstallExecuteSequence>
+		  <Custom Action="InstallIISSetProperty" After="CostFinalize">
+			  <![CDATA[NOT Installed AND NOT IISMAJORVERSION]]>
+		  </Custom>
+		  <Custom Action="InstallIIS" Before="WriteRegistryValues">
+			  <![CDATA[NOT Installed AND NOT IISMAJORVERSION]]>
+		  </Custom>
+	    <Custom Action="UpdateFirewallRule" After="InstallFiles">
+			  <![CDATA[NOT Installed AND NOT REMOVED]]>
+		  </Custom>
+	    <!--<Custom Action="InstallDotnetRuntime" Before="InstallFinalize">
+			  NOT WIX_UPGRATE_DETECTED
+		  </Custom>
+	    <Custom Action="InstallDotnetHosting" Before="InstallFinalize">
+			  NOT WIX_UPGRATE_DETECTED
+		  </Custom>-->
+	  </InstallExecuteSequence>
+
+	</Product>
+
+  <Fragment>
+    <DirectoryRef Id="SERVER_DIR">
+      <Component Id="C_IISWebsite" Guid="{E45FBE0E-4C65-4D07-A236-55A16F172920}" KeyPath="yes">
+        <!--<util:User Id="WebAppPoolUser"
+                   CreateUser="no"
+                   Name="[WEB_APP_POOL_IDENTITY_NAME]"
+                   Password="[WEB_APP_POOL_IDENTITY_PWD]"/>
+
+        <iis:WebAppPool Id="WebAppPool" Name="QRSharingAppWebAppPool" Identity="other" User="WebAppPoolUser"/>-->
+        <iis:WebAppPool Id="WebAppPool" Name="QRSharingAppWebAppPool" Identity="localSystem"/>
+
+        <iis:WebSite Id="QRSharingAppWebApp" Description="File Sharing Tool Web App" Directory="SERVER_DIR" >
+          <iis:WebAddress Id="AllUnassigned" Port="5666"/>
+		      <iis:WebApplication Id="Application" Name="QRSharingApp" WebAppPool="WebAppPool"/>
+        </iis:WebSite>
+	  
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  
+</Wix>

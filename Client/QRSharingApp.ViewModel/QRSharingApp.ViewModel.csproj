@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="QRCoder" Version="1.4.1" />
+    <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj" />
+    <ProjectReference Include="..\QRSharingApp.Activation\QRSharingApp.Activation.csproj" />
+    <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj" />
+    <ProjectReference Include="..\QRSharingApp.Infrastructure\QRSharingApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
