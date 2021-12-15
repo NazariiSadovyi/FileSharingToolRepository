@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
@@ -21,23 +22,27 @@ namespace QRSharingApp.WebApplication.Controllers
         private readonly IQRCodeGeneratorService _qrCodeGeneratorService;
         private readonly IFileThumbnailService _fileThumbnailService;
         private readonly ISharedSettingService _sharedSettingService;
+        private readonly IHotFolderRepository _hotFolderRepository;
         private readonly ILocalFileRepository _localFileRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWebServerService _webServerService;
 
-        public FileController(ILogger<FileController> logger,
+        public FileController(
+            ILogger<FileController> logger,
             IDownloadHistoryRepository downloadHistoryRepository,
             IQRCodeGeneratorService qrCodeGeneratorService,
             IFileThumbnailService fileThumbnailService,
             ISharedSettingService sharedSettingService,
             ILocalFileRepository localFileRepository,
             IWebServerService webServerService,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IHotFolderRepository hotFolderRepository)
         {
             _downloadHistoryRepository = downloadHistoryRepository;
             _qrCodeGeneratorService = qrCodeGeneratorService;
             _sharedSettingService = sharedSettingService;
             _fileThumbnailService = fileThumbnailService;
+            _hotFolderRepository = hotFolderRepository;
             _localFileRepository = localFileRepository;
             _webHostEnvironment = webHostEnvironment;
             _webServerService = webServerService;
@@ -51,10 +56,15 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var result = new List<FilePreviewViewModel>();
 
+            var hotFolderPathes = (await _localFileRepository.GetAll()).Select(_ => _.Path).ToList();
             var localFiles = await _localFileRepository.GetAll();
             foreach (var localFile in localFiles)
             {
-                result.Add(ComposeFilePreviewViewModel(localFile));
+                var fileExist = System.IO.File.Exists(Path.Combine(localFile.Path, localFile.Name));
+                if (fileExist && hotFolderPathes.Contains(localFile.Path))
+                {
+                    result.Add(ComposeFilePreviewViewModel(localFile));
+                }
             }
 
             return View(result);

@@ -24,7 +24,7 @@
 
     <MajorUpgrade AllowSameVersionUpgrades="yes"
                 Schedule="afterInstallInitialize"
-                DowngradeErrorMessage="A newer version of File Sharing Tool is already installed." />
+                DowngradeErrorMessage="A newer version of QR Sharing App is already installed." />
 		<MediaTemplate EmbedCab="yes"/>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_DIR" />

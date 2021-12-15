@@ -29,6 +29,7 @@ namespace QRSharingApp.WebApplication
 
             services.AddScoped<ApplicationDBContext>();
             services.AddScoped<ISettingRepository, SettingRepository>();
+            services.AddScoped<IHotFolderRepository, HotFolderRepository>();
             services.AddScoped<ILocalFileRepository, LocalFileRepository>();
             services.AddScoped<IDownloadHistoryRepository, DownloadHistoryRepository>();
             services.AddScoped<ISharedSettingService, SharedSettingService>();
