@@ -44,7 +44,7 @@
           <Shortcut Id="ApplicationDesktopShortcut"
               Name="QR Sharing App"
               Description="QR Sharing App"
-              Target="[CLIENT_DIR]QRSharingApp.exe"
+              Target="[CLIENT_DIR]QRSharingApp.Client.exe"
               WorkingDirectory="CLIENT_DIR"/>
           <RemoveFolder Id="DesktopFolder" On="uninstall"/>
           <RegistryValue

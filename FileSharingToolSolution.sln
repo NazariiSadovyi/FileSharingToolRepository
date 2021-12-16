@@ -34,6 +34,9 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "QRSharingApp.Bootstrapper", "Installer\QRSharingApp.Bootstrapper\QRSharingApp.Bootstrapper.wixproj", "{2427D1AB-535C-4548-8493-F91A9CE186BD}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "QRSharingApp.Installer", "Installer\QRSharingApp.Installer\QRSharingApp.Installer.wixproj", "{88658453-505B-42DD-B7A7-C37DE43E03C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0859358F-81D2-4A97-8E14-E840AD395B23} = {0859358F-81D2-4A97-8E14-E840AD395B23}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QRSharingApp.Installer.CustomAction", "Installer\QRSharingApp.Installer.CustomAction\QRSharingApp.Installer.CustomAction.csproj", "{FA981E04-B0AD-433D-8C62-55D6AC09ABCD}"
 EndProject
