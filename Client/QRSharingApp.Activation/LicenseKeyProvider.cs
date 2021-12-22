@@ -16,6 +16,11 @@ namespace QRSharingApp.Activation
             {
                 try
                 {
+                    if (!File.Exists(_licenseFileName))
+                    {
+                        return string.Empty;
+                    }
+
                     return File.ReadLines(_licenseFileName).FirstOrDefault();
                 }
                 catch (Exception ex)

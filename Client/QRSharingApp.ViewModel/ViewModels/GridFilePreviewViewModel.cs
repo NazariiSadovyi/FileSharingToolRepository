@@ -270,17 +270,16 @@ namespace QRSharingApp.ViewModel.ViewModels
             file.QRImage = ToBitmapImage(bitMap);
         }
 
-        private void WebServerService_NetworkChanged(object sender, bool e)
+        private void WebServerService_NetworkChanged(object sender, bool isValid)
         {
             Task.Run(async () => 
             {
-                await LocalFileRepository.RemoveAll();
                 foreach (var file in Files)
                 {
                     file.QRImage = null;
                 }
 
-                if (e)
+                if (isValid)
                 {
                     foreach (var file in Files)
                     {

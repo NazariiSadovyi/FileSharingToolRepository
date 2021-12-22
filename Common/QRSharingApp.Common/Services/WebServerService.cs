@@ -52,7 +52,7 @@ namespace QRSharingApp.Common.Services
 
         private string BuildFilePath(string localIp, string fileId)
         {
-            return $@"http://{localIp}:5666/file/preview/{fileId}";
+            return $@"http://{localIp}:{_port}/file/preview/{fileId}";
         }
 
         private string GetLocalAdress()
