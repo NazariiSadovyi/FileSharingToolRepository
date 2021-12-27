@@ -56,7 +56,7 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var result = new List<FilePreviewViewModel>();
 
-            var hotFolderPathes = (await _localFileRepository.GetAll()).Select(_ => _.Path).ToList();
+            var hotFolderPathes = (await _hotFolderRepository.GetAll()).Select(_ => _.FolderPath).ToList();
             var localFiles = await _localFileRepository.GetAll();
             foreach (var localFile in localFiles)
             {

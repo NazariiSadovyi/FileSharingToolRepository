@@ -25,7 +25,7 @@ namespace QRSharingApp.ActivationWebApp.Controllers
             var currentKey = await _applicationDbContext.ActivationKey
                 .Include(_ => _.ProgramUser)
                 .FirstOrDefaultAsync(_ => _.ProgramToolId == programToolId && _.Key == key
-                    && string.IsNullOrEmpty(_.ProgramUser.MachineId));
+                    && (string.IsNullOrEmpty(_.ProgramUser.MachineId) || _.ProgramUser.MachineId == machineId));
 
             if (currentKey == null)
             {
