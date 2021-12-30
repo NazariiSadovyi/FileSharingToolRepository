@@ -19,7 +19,12 @@ namespace QRSharingApp.ActivationWebApp.Models
         public string UserEmail { get; set; }
         [DisplayName("Machine Id")]
         public string MachineId { get; set; }
-        
+        [DisplayName("Create Date")]
+        public DateTime CreateDate { get; set; }
+
+        [DisplayName("Expire After")]
+        public int ExpireAfter => this.GetExpiredAfter();
+
         public ActivationKeyState State
         {
             get
@@ -36,25 +41,6 @@ namespace QRSharingApp.ActivationWebApp.Models
 
                 var isInUse = !string.IsNullOrEmpty(MachineId);
                 return isInUse ? ActivationKeyState.InUse : ActivationKeyState.NotUsed;
-            }
-        }
-
-        [DisplayName("Expire After")]
-        public int ExpireAfter
-        {
-            get
-            {
-                if (!ActivationDate.HasValue)
-                {
-                    return ExpirationDays;
-                }
-
-                if (this.IsExpired())
-                {
-                    return 0;
-                }
-
-                return (ActivationDate.Value.AddDays(ExpirationDays).Date - DateTime.Now.Date).Days;
             }
         }
     }

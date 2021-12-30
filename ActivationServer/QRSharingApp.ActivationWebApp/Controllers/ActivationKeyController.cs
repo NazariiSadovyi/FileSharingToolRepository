@@ -121,16 +121,11 @@ namespace QRSharingApp.ActivationWebApp.Controllers
                         .FirstOrDefaultAsync(m => m.Id == id);
                     activationKey.ProgramUser.Name = viewModel.UserName;
                     activationKey.ProgramUser.Email = viewModel.UserEmail;
-                    if (activationKey.ActivationDate.HasValue)
-                    {
-                        var needDays = (activationKey.ActivationDate.Value.AddDays(activationKey.ExpirationDays).Date - DateTime.Now.Date).Days;
-                        var pastDays = activationKey.ExpirationDays - needDays;
-                        activationKey.ExpirationDays = pastDays + viewModel.ExpireAfter;
-                    }
-                    else
-                    {
-                        activationKey.ExpirationDays = viewModel.ExpireAfter;
-                    }
+                    
+                    var needDays = (activationKey.CreateDate.AddDays(activationKey.ExpirationDays).Date - DateTime.Now.Date).Days;
+                    var pastDays = activationKey.ExpirationDays - needDays;
+                    activationKey.ExpirationDays = pastDays + viewModel.ExpireAfter;
+                    
                     _context.Update(activationKey);
                     await _context.SaveChangesAsync();
                 }
@@ -178,6 +173,29 @@ namespace QRSharingApp.ActivationWebApp.Controllers
             _context.ActivationKey.Remove(activationKey);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { programToolId = programToolId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Reset(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activationKey = await _context.ActivationKey
+                .Include(a => a.ProgramUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (activationKey == null)
+            {
+                return NotFound();
+            }
+
+            activationKey.ProgramUser.MachineId = string.Empty;
+            activationKey.ActivationDate = null;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index), new { programToolId = activationKey.ProgramToolId });
         }
 
         private bool ActivationKeyExists(Guid id)

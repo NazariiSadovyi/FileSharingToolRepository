@@ -8,22 +8,42 @@ namespace QRSharingApp.ActivationWebApp.Helpers
     {
         public static bool IsExpired(this ActivationKey entityKey)
         {
-            return IsExpiredPrivate(entityKey.ActivationDate, entityKey.ExpirationDays);
+            return IsExpiredPrivate(entityKey.CreateDate, entityKey.ExpirationDays);
         }
 
         public static bool IsExpired(this ActivationKeyViewModel viewModel)
         {
-            return IsExpiredPrivate(viewModel.ActivationDate, viewModel.ExpirationDays);
+            return IsExpiredPrivate(viewModel.CreateDate, viewModel.ExpirationDays);
         }
 
-        private static bool IsExpiredPrivate(DateTime? activationDate, int expirationDays)
+        private static bool IsExpiredPrivate(DateTime createDate, int expirationDays)
         {
-            if (!activationDate.HasValue)
+            return createDate.AddDays(expirationDays).Date <= DateTime.Now.Date;
+        }
+
+        public static int GetExpiredAfter(this ActivationKey entityKey)
+        {
+            if (entityKey.IsExpired())
             {
-                return false;
+                return 0;
             }
 
-            return activationDate.Value.AddDays(expirationDays).Date <= DateTime.Now.Date;
+            return GetExpiredAfterPrivate(entityKey.CreateDate, entityKey.ExpirationDays);
+        }
+
+        public static int GetExpiredAfter(this ActivationKeyViewModel viewModel)
+        {
+            if (viewModel.IsExpired())
+            {
+                return 0;
+            }
+
+            return GetExpiredAfterPrivate(viewModel.CreateDate, viewModel.ExpirationDays);
+        }
+
+        private static int GetExpiredAfterPrivate(DateTime createDate, int expirationDays)
+        {
+            return (createDate.AddDays(expirationDays).Date - DateTime.Now.Date).Days;
         }
     }
 }

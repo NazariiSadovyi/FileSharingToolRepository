@@ -1,9 +1,7 @@
 ﻿using QRSharingApp.ActivationWebApp.Data.Entities;
+using QRSharingApp.ActivationWebApp.Helpers;
 using QRSharingApp.ActivationWebApp.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QRSharingApp.ActivationWebApp.Converters
 {
@@ -43,6 +41,7 @@ namespace QRSharingApp.ActivationWebApp.Converters
                 UserEmail = entity.ProgramUser.Email,
                 UserName = entity.ProgramUser.Name,
                 MachineId = entity.ProgramUser.MachineId,
+                CreateDate = entity.CreateDate,
                 ProgramToolId = entity.ProgramToolId
             };
         }
@@ -58,31 +57,22 @@ namespace QRSharingApp.ActivationWebApp.Converters
                 ExpirationDays = entity.ExpirationDays,
                 UserEmail = entity.ProgramUser.Email,
                 UserName = entity.ProgramUser.Name,
-                MachineId = entity.ProgramUser.MachineId
+                MachineId = entity.ProgramUser.MachineId,
+                CreateDate = entity.CreateDate,
             };
         }
 
         public static EditActivationKeyViewModel ToEditViewModel(this ActivationKey entity)
         {
-            var viewModel = new EditActivationKeyViewModel()
+            return new EditActivationKeyViewModel()
             {
                 Id = entity.Id,
                 Key = entity.Key,
                 ProgramToolId = entity.ProgramToolId,
                 UserEmail = entity.ProgramUser.Email,
-                UserName = entity.ProgramUser.Name
+                UserName = entity.ProgramUser.Name,
+                ExpireAfter = entity.GetExpiredAfter()
             };
-
-            if (entity.ActivationDate.HasValue)
-            {
-                viewModel.ExpireAfter = (entity.ActivationDate.Value.AddDays(entity.ExpirationDays).Date - DateTime.Now.Date).Days;
-            }
-            else
-            {
-                viewModel.ExpireAfter = entity.ExpirationDays;
-            }
-
-            return viewModel;
         }
     }
 }
