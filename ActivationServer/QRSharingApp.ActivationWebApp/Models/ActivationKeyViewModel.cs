@@ -10,8 +10,6 @@ namespace QRSharingApp.ActivationWebApp.Models
         public Guid Key { get; set; }
         [DisplayName("Activation Date")]
         public DateTime? ActivationDate { get; set; }
-        [DisplayName("Expiration Date")]
-        public DateTime? ExpirationDate { get; set; }
         public int ExpirationDays { get; set; }
         [DisplayName("User Name")]
         public string UserName { get; set; }
@@ -22,6 +20,8 @@ namespace QRSharingApp.ActivationWebApp.Models
         [DisplayName("Create Date")]
         public DateTime CreateDate { get; set; }
 
+        [DisplayName("Expiration Date")]
+        public DateTime ExpirationDate => CreateDate.AddDays(ExpirationDays).Date;
         [DisplayName("Expire After")]
         public int ExpireAfter => this.GetExpiredAfter();
 

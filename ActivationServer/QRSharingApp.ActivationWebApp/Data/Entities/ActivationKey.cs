@@ -8,7 +8,6 @@ namespace QRSharingApp.ActivationWebApp.Data.Entities
         public Guid Key { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? ActivationDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }
         public int ExpirationDays { get; set; }
 
         public Guid ProgramUserId { get; set; }
