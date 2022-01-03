@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QRSharingApp.ActivationWebApp.Services;
 
 namespace QRSharingApp.ActivationWebApp
 {
@@ -26,6 +27,8 @@ namespace QRSharingApp.ActivationWebApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddDefaultIdentity<IdentityUser>(options => 
             {
