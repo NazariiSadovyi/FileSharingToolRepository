@@ -19,6 +19,8 @@ namespace QRSharingApp.ActivationWebApp.Services
 
         public async Task SendAsync(MailAddress toAddress, string subject, string htmlMessage)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var fromAddress = new MailAddress(_emailConfigurationOption.Email);
             var smtp = new SmtpClient
             {
