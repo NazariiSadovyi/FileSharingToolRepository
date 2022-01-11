@@ -93,9 +93,21 @@ namespace QRSharingApp.ActivationWebApp.Areas.Identity.Pages.Account.Manage
             {
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
                 var result = await _userManager.ChangeEmailAsync(user, Input.NewEmail, code);
-
+                
                 if (result.Succeeded)
                 {
+                    var updateUserNameResult = await _userManager.SetUserNameAsync(user, Input.NewEmail);
+                    if (!updateUserNameResult.Succeeded)
+                    {
+                        foreach (var error in updateUserNameResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return RedirectToPage();
+                    }
+
+                    await _signInManager.RefreshSignInAsync(user);
+
                     StatusMessage = "Your email is changed.";
                     return RedirectToPage();
                 }
