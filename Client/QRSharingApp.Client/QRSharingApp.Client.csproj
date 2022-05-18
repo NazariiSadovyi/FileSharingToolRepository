@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj" />
-    <ProjectReference Include="..\FST.ViewModel\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj" />
+    <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj" />
     <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj" />
     <ProjectReference Include="..\QRSharingApp.ViewModel\QRSharingApp.ViewModel.csproj" />
   </ItemGroup>

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\QRSharingApp.Contract\QRSharingApp.Contract.csproj" />
+    <ProjectReference Include="..\..\Common\QRSharingApp.Contract\QRSharingApp.Contract.csproj" />
   </ItemGroup>
 
 </Project>
