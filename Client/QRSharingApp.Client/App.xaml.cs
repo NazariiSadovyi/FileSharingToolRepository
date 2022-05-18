@@ -1,16 +1,18 @@
 ﻿using FFmpeg.AutoGen;
+using NLog;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Mvvm;
 using QRSharingApp.Client.Views;
+using QRSharingApp.ClientApi;
 using QRSharingApp.Infrastructure;
 using QRSharingApp.Infrastructure.Services.Interfaces;
+using QRSharingApp.Shared;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using NLog;
-using Prism.Ioc;
-using Prism.Modularity;
-using Prism.Mvvm;
 using System;
 using System.IO;
 using System.Reflection;
@@ -18,7 +20,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Unosquare.FFME;
 using Localization = QRSharingApp.CultureLocalization.Localization;
-using QRSharingApp.ClientApi;
 
 namespace QRSharingApp.Client
 {
@@ -82,7 +83,7 @@ namespace QRSharingApp.Client
             RegisterViewModels(containerRegistry);
 
             InfrastructureDependencies.Register(containerRegistry);
-            ClientApiDependencies.Register(containerRegistry, "http://localhost:5666/");
+            ClientApiDependencies.Register(containerRegistry, SharedConstants.LocalhostPath);
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

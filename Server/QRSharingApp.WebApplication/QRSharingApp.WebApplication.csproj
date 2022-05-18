@@ -33,4 +33,6 @@
     </Content>
   </ItemGroup>
 
+  <Import Project="..\..\Common\QRSharingApp.Shared\QRSharingApp.Shared.projitems" Label="Shared" />
+
 </Project>

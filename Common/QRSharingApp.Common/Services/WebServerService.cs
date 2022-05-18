@@ -1,4 +1,5 @@
 ﻿using QRSharingApp.Common.Services.Interfaces;
+using QRSharingApp.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,9 @@ namespace QRSharingApp.Common.Services
 {
     public class WebServerService : IWebServerService
     {
-        private readonly int _port = 5666;
+        public string WebLocalhostUrl => SharedConstants.LocalhostPath;
 
         public event EventHandler<bool> NetworkChanged;
-        public string WebLocalhostUrl => $"http://localhost:{_port}";
 
         public WebServerService()
         {
@@ -52,7 +52,7 @@ namespace QRSharingApp.Common.Services
 
         private string BuildFilePath(string localIp, string fileId)
         {
-            return $@"http://{localIp}:{_port}/file/preview/{fileId}";
+            return $@"http://{localIp}:{SharedConstants.Port}/file/preview/{fileId}";
         }
 
         private string GetLocalAdress()

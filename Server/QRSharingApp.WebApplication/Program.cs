@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
+using QRSharingApp.Shared;
 
 namespace QRSharingApp.WebApplication
 {
@@ -32,7 +33,7 @@ namespace QRSharingApp.WebApplication
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseUrls("http://localhost:5666")
+                        .UseUrls(SharedConstants.LocalhostPath)
                         .UseStartup<Startup>();
                 });
     }

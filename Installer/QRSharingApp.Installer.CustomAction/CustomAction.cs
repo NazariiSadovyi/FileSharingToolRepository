@@ -1,5 +1,6 @@
 using Microsoft.Deployment.WindowsInstaller;
 using NetFwTypeLib;
+using QRSharingApp.Shared;
 using System;
 using System.DirectoryServices.AccountManagement;
 using System.Windows.Forms;
@@ -44,7 +45,7 @@ namespace QRSharingApp.Installer.CustomAction
         {
             try
             {
-                var port = 5666;
+                var port = SharedConstants.Port;
                 var newRuleName = $"FileSharingTool for port {port}";
 
                 Type tNetFwPolicy2 = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
@@ -69,7 +70,7 @@ namespace QRSharingApp.Installer.CustomAction
                 inboundRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
                 //Using protocol TCP
                 inboundRule.Protocol = 6; // TCP
-                inboundRule.LocalPorts = port.ToString(); //Port 5666
+                inboundRule.LocalPorts = port.ToString();
                 //Name of rule
                 inboundRule.Name = newRuleName;
                 // ...//
