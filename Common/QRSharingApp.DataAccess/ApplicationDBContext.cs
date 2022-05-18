@@ -16,11 +16,6 @@ namespace QRSharingApp.DataAccess
         {
             var library = Assembly.GetExecutingAssembly().Location;
             var libraryPath = Path.GetDirectoryName(library);
-#if (!DEBUG)
-            libraryPath = BuildReleaseDbPath(libraryPath);
-#else
-            libraryPath = BuildDebugDbPath(libraryPath);
-#endif
             DbPath = Path.Combine(libraryPath, "FileSharingTool.db");
         }
 
@@ -34,37 +29,5 @@ namespace QRSharingApp.DataAccess
         public DbSet<LocalFile> LocalFile { get; set; }
         public DbSet<HotFolder> HotFolder { get; set; }
         public DbSet<Setting> Setting { get; set; }
-
-        private string BuildReleaseDbPath(string libraryPath)
-        {
-            if (libraryPath.EndsWith("Client"))
-            {
-                return ReplaceLastOccurrence(libraryPath, "Client", "Server");
-            }
-            return libraryPath;
-        }
-
-        private string BuildDebugDbPath(string libraryPath)
-        {
-            if (libraryPath.Contains(@"Server\QRSharingApp.WebApplication"))
-            {
-                return ReplaceLastOccurrence(
-                    libraryPath,
-                    @"Server\QRSharingApp.WebApplication",
-                    @"Client\QRSharingApp.Client");
-            }
-            return libraryPath;
-        }
-
-        public static string ReplaceLastOccurrence(string source, string find, string replace)
-        {
-            int place = source.LastIndexOf(find);
-
-            if (place == -1)
-                return source;
-
-            string result = source.Remove(place, find.Length).Insert(place, replace);
-            return result;
-        }
     }
 }

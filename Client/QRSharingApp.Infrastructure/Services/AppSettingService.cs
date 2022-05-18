@@ -1,11 +1,11 @@
-﻿using QRSharingApp.DataAccess.Repositories.Interfaces;
+﻿using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 
 namespace QRSharingApp.Infrastructure.Services
 {
     public class AppSettingService : IAppSettingService
     {
-        private readonly ISettingRepository _settingRepository;
+        private readonly ISettingApi _settingApi;
 
         private readonly string _localizationKey = "Localization";
         private readonly string _backgroundImagePathKey = "BackgroundImagePath";
@@ -15,58 +15,107 @@ namespace QRSharingApp.Infrastructure.Services
         private readonly string _wifiAuthenticationType = "wifiAuthenticationType";
         private readonly string _wifiIsHidden = "wifiIsHidden";
         private readonly string _autoSwitchSeconds = "AutoSwitchSeconds";
+        private readonly string _webBackgroundImagePath = "WebBackgroundImagePath";
+        private readonly string _downloadViaForm = "DownloadViaForm";
+
+        public bool DownloadViaForm
+        {
+            get
+            {
+                var value = _settingApi.GetSetting(_downloadViaForm);
+                if (string.IsNullOrEmpty(value))
+                    return false;
+
+                return bool.Parse(value);
+            }
+            set { _settingApi.SetSetting(_downloadViaForm, value.ToString()); }
+        }
+
+        public string WebBackgroundImagePath
+        {
+            get { return _settingApi.GetSetting(_webBackgroundImagePath); }
+            set { _settingApi.SetSetting(_webBackgroundImagePath, value); }
+        }
 
         public string CultureName
         {
-            get { return _settingRepository.GetStringSetting(_localizationKey) ?? string.Empty; }
-            set { _settingRepository.SetSetting(_localizationKey, value); }
+            get { return _settingApi.GetSetting(_localizationKey) ?? string.Empty; }
+            set { _settingApi.SetSetting(_localizationKey, value); }
         }
 
         public string BackgroundImagePath
         {
-            get { return _settingRepository.GetStringSetting(_backgroundImagePathKey) ?? string.Empty; }
-            set { _settingRepository.SetSetting(_backgroundImagePathKey, value); }
+            get { return _settingApi.GetSetting(_backgroundImagePathKey) ?? string.Empty; }
+            set { _settingApi.SetSetting(_backgroundImagePathKey, value); }
         }
 
         public string WifiLogin
         {
-            get { return _settingRepository.GetStringSetting(_wifiLogin) ?? string.Empty; }
-            set { _settingRepository.SetSetting(_wifiLogin, value); }
+            get { return _settingApi.GetSetting(_wifiLogin) ?? string.Empty; }
+            set { _settingApi.SetSetting(_wifiLogin, value); }
         }
 
         public string WifiPassword
         {
-            get { return _settingRepository.GetStringSetting(_wifiPassword) ?? string.Empty; }
-            set { _settingRepository.SetSetting(_wifiPassword, value); }
+            get { return _settingApi.GetSetting(_wifiPassword) ?? string.Empty; }
+            set { _settingApi.SetSetting(_wifiPassword, value); }
         }
 
         public int WifiAuthenticationType
         {
-            get { return _settingRepository.GetIntSetting(_wifiAuthenticationType); }
-            set { _settingRepository.SetSetting(_wifiAuthenticationType, value); }
+            get
+            {
+                var value = _settingApi.GetSetting(_wifiAuthenticationType);
+                if (string.IsNullOrEmpty(value))
+                    return default;
+
+                return int.Parse(value);
+            }
+            set { _settingApi.SetSetting(_wifiAuthenticationType, value.ToString()); }
         }
 
         public bool WifiIsHidden
         {
-            get { return _settingRepository.GetBoolSetting(_wifiIsHidden, false); }
-            set { _settingRepository.SetSetting(_wifiIsHidden, value); }
+            get
+            {
+                var value = _settingApi.GetSetting(_wifiIsHidden);
+                if (string.IsNullOrEmpty(value))
+                    return default;
+
+                return bool.Parse(value);
+            }
+            set { _settingApi.SetSetting(_wifiIsHidden, value.ToString()); }
         }
 
         public bool SortingDisplayFiles 
         {
-            get { return _settingRepository.GetBoolSetting(_sortingDisplayFilesKey, true); }
-            set { _settingRepository.SetSetting(_sortingDisplayFilesKey, value); }
+            get
+            {
+                var value = _settingApi.GetSetting(_sortingDisplayFilesKey);
+                if (string.IsNullOrEmpty(value))
+                    return true;
+
+                return bool.Parse(value);
+            }
+            set { _settingApi.SetSetting(_sortingDisplayFilesKey, value.ToString()); }
         }
 
         public int AutoSwitchSeconds
         {
-            get { return _settingRepository.GetIntSetting(_autoSwitchSeconds, 15); }
-            set { _settingRepository.SetSetting(_autoSwitchSeconds, value); }
+            get
+            {
+                var value = _settingApi.GetSetting(_autoSwitchSeconds);
+                if (string.IsNullOrEmpty(value))
+                    return 15;
+
+                return int.Parse(value);
+            }
+            set { _settingApi.SetSetting(_autoSwitchSeconds, value.ToString()); }
         }
 
-        public AppSettingService(ISettingRepository settingRepository)
+        public AppSettingService(ISettingApi settingApi)
         {
-           _settingRepository = settingRepository;
+            _settingApi = settingApi;
         }
     }
 }

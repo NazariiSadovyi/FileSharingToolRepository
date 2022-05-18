@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using Unity;
 using Localization = QRSharingApp.CultureLocalization.Localization;
+using QRSharingApp.ClientApi.Interfaces;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -148,10 +149,13 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         public ActivationViewModel(IActivationService activationService,
-            ISharedAppDataViewModel sharedAppData)
+            ISharedAppDataViewModel sharedAppData,
+            ILocalFileApi localFileApi)
         {
             CurrentActivationKey = activationService.Key;
             SharedAppData = sharedAppData;
+
+            Task.Run(localFileApi.GetFiles);
         }
 
         public void RunTaskToCloseToolAfter5minutes()

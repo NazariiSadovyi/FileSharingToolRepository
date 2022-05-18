@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj" />
+    <ProjectReference Include="..\..\Common\QRSharingApp.Contract\QRSharingApp.Contract.csproj" />
     <ProjectReference Include="..\..\Common\QRSharingApp.DataAccess\QRSharingApp.DataAccess.csproj" />
   </ItemGroup>
 

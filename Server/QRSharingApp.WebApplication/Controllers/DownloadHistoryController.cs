@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class DownloadHistoryController : Controller
     {
         private readonly ILogger<DownloadHistoryController> _logger;
@@ -40,6 +42,23 @@ namespace QRSharingApp.WebApplication.Controllers
             await _downloadHistoryRepository.Add(downloadHistory);
 
             return RedirectToAction(nameof(FileController.Preview), "File", new { model.Id });
+        }
+
+        [HttpGet("api/getAll")]
+        public async Task<IActionResult> Get()
+        {
+            var entities = await _downloadHistoryRepository.GetAll();
+            var contracts = entities.ToContracts();
+
+            return Ok(contracts);
+        }
+
+        [HttpDelete("api/delete")]
+        public async Task<IActionResult> Delete()
+        {
+            await _downloadHistoryRepository.ClearAsync();
+
+            return Ok();
         }
     }
 }

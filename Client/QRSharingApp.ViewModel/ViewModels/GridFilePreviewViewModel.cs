@@ -1,5 +1,4 @@
 ﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.Infrastructure.Models;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Helpers;
@@ -25,6 +24,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
+using QRSharingApp.ClientApi.Interfaces;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -46,9 +46,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         [Dependency]
         public ILocalFilesService LocalFilesService;
         [Dependency]
-        public ILocalFileRepository LocalFileRepository;
-        [Dependency]
-        public ILocalFileCacheService LocalFileCacheService;
+        public ILocalFileApi LocalFileApi;
         [Dependency]
         public IApplicationTaskUtility ApplicationTaskUtility;
         [Dependency]
@@ -248,10 +246,10 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         private async Task<string> GetOrCreateFileId(FilePreviewBaseViewModel viewModel)
         {
-            var localFile = await LocalFileRepository.GetByFullPath(viewModel.FullLocalPath);
+            var localFile = await LocalFileApi.GetFile(viewModel.FullLocalPath);
             if (localFile == null)
             {
-                localFile = await LocalFileRepository.Add(viewModel.FullLocalPath);
+                localFile = await LocalFileApi.CreateFile(viewModel.FullLocalPath);
             }
 
             return localFile.Id;

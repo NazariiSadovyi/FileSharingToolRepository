@@ -1,5 +1,4 @@
-﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.Infrastructure.Services.Interfaces;
+﻿using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using Prism.Commands;
@@ -25,8 +24,6 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IAppSettingService AppSettingService;
         [Dependency]
         public IFileExplorerService FileExplorerService;
-        [Dependency]
-        public ISharedSettingService SharedSettingService;
         [Dependency]
         public IMainWindowViewModel MainWindowViewModel;
         #endregion
@@ -129,12 +126,12 @@ namespace QRSharingApp.ViewModel.ViewModels
         }
         #endregion
 
-        public DesignViewModel(IAppSettingService appSettingService, ISharedSettingService sharedSettingService)
+        public DesignViewModel(IAppSettingService appSettingService)
         {
-            WebBackgroundImagePath = sharedSettingService.WebBackgroundImagePath;
+            WebBackgroundImagePath = appSettingService.WebBackgroundImagePath;
             BackgroundImagePath = appSettingService.BackgroundImagePath;
             SortingDisplayFiles = appSettingService.SortingDisplayFiles;
-            DownloadViaForm = sharedSettingService.DownloadViaForm;
+            DownloadViaForm = appSettingService.DownloadViaForm;
             AutoSwitchSeconds = appSettingService.AutoSwitchSeconds;
 
             PropertyChanged += (e, args) => 
@@ -151,10 +148,10 @@ namespace QRSharingApp.ViewModel.ViewModels
                         AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
                         break;
                     case nameof(DownloadViaForm):
-                        SharedSettingService.DownloadViaForm = DownloadViaForm;
+                        AppSettingService.DownloadViaForm = DownloadViaForm;
                         break;
                     case nameof(WebBackgroundImagePath):
-                        SharedSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
+                        AppSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
                         break;
                     default:
                         break;

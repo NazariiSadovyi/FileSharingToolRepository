@@ -1,6 +1,5 @@
 ﻿using QRSharingApp.Common.Services;
 using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.DataAccess;
 using QRSharingApp.Infrastructure.Services;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using Prism.Ioc;
@@ -17,13 +16,10 @@ namespace QRSharingApp.Infrastructure
             containerRegistry.RegisterSingleton<IFileThumbnailService, FileThumbnailService>();
             containerRegistry.RegisterSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             containerRegistry.RegisterSingleton<IDownloadHistoryService, DownloadHistoryService>();
-            containerRegistry.Register<ISharedSettingService, SharedSettingService>();
             containerRegistry.Register<IAppSettingService, AppSettingService>();
             containerRegistry.Register<IFileExplorerService, FileExplorerService>();
             containerRegistry.Register<IExcelExportService, ExcelExportService>();
             containerRegistry.Register<IWifiService, WifiService>();
-
-            DataAccessDependencies.Register(containerRegistry);
         }
     }
 }

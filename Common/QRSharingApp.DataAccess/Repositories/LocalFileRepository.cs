@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace QRSharingApp.DataAccess.Repositories
 {
@@ -27,6 +28,24 @@ namespace QRSharingApp.DataAccess.Repositories
                 await Context.SaveChangesAsync();
 
                 return localfile;
+            });
+        }
+
+        public async Task<List<LocalFile>> Add(IEnumerable<string> localFilePathes)
+        {
+            return await ThreadSafeTaskExecute(async () => 
+            {
+                var localFiles = localFilePathes.Select(_ => new LocalFile
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = Path.GetFileName(_),
+                    Path = Path.GetDirectoryName(_)
+                }).ToList();
+
+                await Context.LocalFile.AddRangeAsync(localFiles);
+                await Context.SaveChangesAsync();
+
+                return localFiles;
             });
         }
 

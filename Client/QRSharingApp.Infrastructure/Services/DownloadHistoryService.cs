@@ -1,4 +1,4 @@
-﻿using QRSharingApp.DataAccess.Repositories.Interfaces;
+﻿using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Infrastructure.Models;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using System;
@@ -10,16 +10,16 @@ namespace QRSharingApp.Infrastructure.Services
 {
     public class DownloadHistoryService : IDownloadHistoryService
     {
-        private readonly IDownloadHistoryRepository _downloadHistoryRepository;
+        private readonly IDownloadHistoryApi _downloadHistoryApi;
 
-        public DownloadHistoryService(IDownloadHistoryRepository downloadHistoryRepository)
+        public DownloadHistoryService(IDownloadHistoryApi downloadHistoryApi)
         {
-            _downloadHistoryRepository = downloadHistoryRepository;
+            _downloadHistoryApi = downloadHistoryApi;
         }
 
         public async Task<IList<DownloadHistoryModel>> GetAll()
         {
-            var entities = await _downloadHistoryRepository.GetAll();
+            var entities = await _downloadHistoryApi.GetAllAsync();
             return entities.Select(_ => new DownloadHistoryModel()
             {
                 Id = _.Id,
@@ -35,7 +35,7 @@ namespace QRSharingApp.Infrastructure.Services
 
         public async Task ClearAsync()
         {
-            await _downloadHistoryRepository.ClearAsync();
+            await _downloadHistoryApi.ClearAsync();
         }
     }
 }

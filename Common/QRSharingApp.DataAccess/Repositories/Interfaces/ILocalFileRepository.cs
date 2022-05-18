@@ -7,6 +7,7 @@ namespace QRSharingApp.DataAccess.Repositories.Interfaces
     public interface ILocalFileRepository
     {
         Task<LocalFile> Add(string localFilePath);
+        Task<List<LocalFile>> Add(IEnumerable<string> localFilePathes);
         Task<IEnumerable<LocalFile>> GetAll();
         Task<LocalFile> GetByFullPath(string fileFullPath);
         Task<LocalFile> GetById(string fileId);

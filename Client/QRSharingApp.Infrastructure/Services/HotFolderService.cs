@@ -1,4 +1,4 @@
-﻿using QRSharingApp.DataAccess.Repositories.Interfaces;
+﻿using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Infrastructure.Enums;
 using QRSharingApp.Infrastructure.EventArgs;
 using QRSharingApp.Infrastructure.Models;
@@ -7,31 +7,30 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Threading.Tasks;
 
 namespace QRSharingApp.Infrastructure.Services
 {
     public class HotFolderService : IHotFolderService
     {
-        private readonly IHotFolderRepository _hotFolderRepository;
+        private readonly IHotFolderApi _hotFolderApi;
 
         public event EventHandler<HotFolderEventArgs> HotFolderUpdateEvent;
 
-        public HotFolderService(IHotFolderRepository hotFolderRepository)
+        public HotFolderService(IHotFolderApi hotFolderApi)
         {
-            _hotFolderRepository = hotFolderRepository;
+            _hotFolderApi = hotFolderApi;
         }
 
         public async Task<bool> AddNew(string folderPath)
         {
-            var folderPathAlreadyExist = (await _hotFolderRepository.GetByPath(folderPath)) != null;
+            var folderPathAlreadyExist = (await _hotFolderApi.GetByPath(folderPath)) != null;
             if (folderPathAlreadyExist)
             {
                 return false;
             }
 
-            var newFolder = await _hotFolderRepository.Add(folderPath);
+            var newFolder = await _hotFolderApi.Create(folderPath);
 
             HotFolderUpdateEvent?.Invoke(this, new HotFolderEventArgs()
             {
@@ -49,7 +48,7 @@ namespace QRSharingApp.Infrastructure.Services
 
         public async Task<IEnumerable<HotFolder>> GetAll()
         {
-            var dbHotFolders = await _hotFolderRepository.GetAll();
+            var dbHotFolders = await _hotFolderApi.GetAll();
             return dbHotFolders.Select(_ => new HotFolder() 
             {
                 Id = _.Id,
@@ -60,17 +59,15 @@ namespace QRSharingApp.Infrastructure.Services
 
         public async Task Remove(int folderId)
         {
-            var folderToRemove = await _hotFolderRepository.GetById(folderId);
-
-            await _hotFolderRepository.Remove(folderId);
+            var removedFolder = await _hotFolderApi.Delete(folderId);
 
             HotFolderUpdateEvent?.Invoke(this, new HotFolderEventArgs() 
             {
                 Folder = new HotFolder()
                 {
-                    Id = folderToRemove.Id,
-                    FolderPath = folderToRemove.FolderPath,
-                    IsAvailable = CanRead(folderToRemove.FolderPath)
+                    Id = removedFolder.Id,
+                    FolderPath = removedFolder.FolderPath,
+                    IsAvailable = CanRead(removedFolder.FolderPath)
                 },
                 UpdateKind = HotFolderUpdateKind.Removed
             });

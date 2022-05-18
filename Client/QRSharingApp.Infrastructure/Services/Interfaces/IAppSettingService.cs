@@ -10,5 +10,7 @@
         bool WifiIsHidden { get; set; }
         int WifiAuthenticationType { get; set; }
         int AutoSwitchSeconds { get; set; }
+        bool DownloadViaForm { get; set; }
+        string WebBackgroundImagePath { get; set; }
     }
 }

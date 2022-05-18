@@ -1,4 +1,4 @@
-﻿namespace QRSharingApp.Common.Services.Interfaces
+﻿namespace QRSharingApp.WebApplication
 {
     public interface ISharedSettingService
     {

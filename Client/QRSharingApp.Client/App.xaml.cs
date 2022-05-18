@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Unosquare.FFME;
 using Localization = QRSharingApp.CultureLocalization.Localization;
+using QRSharingApp.ClientApi;
 
 namespace QRSharingApp.Client
 {
@@ -81,6 +82,7 @@ namespace QRSharingApp.Client
             RegisterViewModels(containerRegistry);
 
             InfrastructureDependencies.Register(containerRegistry);
+            ClientApiDependencies.Register(containerRegistry, "http://localhost:5666/");
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

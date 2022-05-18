@@ -10,9 +10,9 @@ namespace QRSharingApp.Activation
 {
     internal class ActivationApiClient
     {
-        private const string _programToolId = "d64607db-429c-4ffb-ad09-44599fe79e9b";
+        private const string _programToolId = "c7b65598-f0a2-4285-8d9e-6372188ec1f8";
         //private const string _serviceAdress = "https://localhost:5001/";
-        private const string _serviceAdress = "http://spinner360-001-site1.btempurl.com/";
+        private const string _serviceAdress = "http://sadoviybogdan-001-site1.htempurl.com/";
 
         private readonly HttpClient _client;
 

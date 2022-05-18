@@ -1,7 +1,7 @@
 ﻿using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 
-namespace QRSharingApp.Common.Services
+namespace QRSharingApp.WebApplication
 {
     public class SharedSettingService : ISharedSettingService
     {
