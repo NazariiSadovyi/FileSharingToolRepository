@@ -81,8 +81,9 @@ namespace QRSharingApp.WebApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PhysicalFile(string id)
+        public async Task<IActionResult> PhysicalFile(string idWithExtension)
         {
+            var id = Path.GetFileNameWithoutExtension(idWithExtension);
             var localFile = await _localFileRepository.GetById(id);
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
 
@@ -107,8 +108,9 @@ namespace QRSharingApp.WebApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Thumbnail(string id)
+        public async Task<IActionResult> Thumbnail(string idWithExtension)
         {
+            var id = Path.GetFileNameWithoutExtension(idWithExtension);
             var localFile = await _localFileRepository.GetById(id);
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
             var fileThumbnailStream = new MemoryStream();
@@ -149,13 +151,16 @@ namespace QRSharingApp.WebApplication.Controllers
 
         private FilePreviewViewModel ComposeFilePreviewViewModel(LocalFile localFile)
         {
+            var extension = Path.GetExtension(localFile.Name);
+            var idWithExtension = localFile.Id + extension;
             var viewModel = new FilePreviewViewModel()
             {
                 Id = localFile.Id,
                 Name = localFile.Name,
-                Adress = Url.Action(nameof(PhysicalFile), new { localFile.Id }),
+                Extension = extension.Replace(".", ""),
+                Adress = Url.Action(nameof(PhysicalFile), new { idWithExtension }),
                 QRCodeAdress = Url.Action(nameof(QRCode), new { localFile.Id }),
-                ThumbnailAdress = Url.Action(nameof(Thumbnail), new { localFile.Id })
+                ThumbnailAdress = Url.Action(nameof(Thumbnail), new { idWithExtension })
             };
 
             if (FileNameHelper.IsPhoto(localFile.Name))

@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - QR Gallery App</title>
-    <link href="~/lib/lightboxed/lightboxed.css" rel="stylesheet" />
+    @*<link href="~/lib/lightboxed/lightboxed.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
@@ -15,7 +15,15 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/lightboxed/lightboxed.js"></script>
+
+    <link rel="stylesheet" href="~/lib/lightgallery/css/lightgallery.min.css" />
+    <link rel="stylesheet" href="~/lib/lightgallery/css/lg-thumbnail.min.css" />
+    <link rel="stylesheet" href="~/lib/lightgallery/css/lg-video.min.css" />
+    <script src="~/lib/lightgallery/lightgallery.umd.js"></script>
+    <script src="~/lib/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+    <script src="~/lib/lightgallery/plugins/video/lg-video.umd.js"></script>
+
+    @*<script src="~/lib/lightboxed/lightboxed.js"></script>*@
 
     <style>
         body {

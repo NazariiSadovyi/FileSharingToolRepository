@@ -3,6 +3,7 @@
     public class FilePreviewViewModel
     {
         public string Id { get; set; }
+        public string Extension { get; set; }
         public string Name { get; set; }
         public string Adress { get; set; }
         public bool IsPhoto { get; set; }
