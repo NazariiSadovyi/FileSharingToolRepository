@@ -9,6 +9,11 @@
     {
       "library": "lightgallery@2.4.0",
       "destination": "wwwroot/lib/lightgallery/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/lib/microsoft/signalr/"
     }
   ]
 }

@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.SignalR;
+using QRSharingApp.WebApplication.Services;
 
 namespace QRSharingApp.WebApplication
 {
@@ -38,6 +40,12 @@ namespace QRSharingApp.WebApplication
             services.AddScoped<IFileThumbnailService, FileThumbnailService>();
             services.AddScoped<IQRCodeGeneratorService, QRCodeGeneratorService>();
 
+            services.AddScoped<IFileHubService, FileHubService>();
+            services.AddSignalR(option =>
+            {
+                option.MaximumReceiveMessageSize = 102400000;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -58,8 +66,7 @@ namespace QRSharingApp.WebApplication
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(@"C:\"),
-                RequestPath = "/test"
+                FileProvider = new PhysicalFileProvider(@"C:\")
             });
 
             app.UseRouting();
@@ -71,6 +78,8 @@ namespace QRSharingApp.WebApplication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=File}/{action=Index}/{id?}");
+
+                endpoints.MapHub<FileHub>("/fileHub");
             });
         }
     }

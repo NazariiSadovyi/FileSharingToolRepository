@@ -3,65 +3,99 @@
     ViewData["Title"] = "Web Gallery";
 }
 
-@*<div  style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly;">
-    @foreach (var viewModel in Model.Where(_ => _.IsPhoto || _.IsVideo))
-    {
-        <div class="border border-4" 
-             style="width: 308px; height: 350px; position: relative; display: flex; 
-                    align-content: center; flex-wrap: wrap; margin:5px;">
-            <img class="lightboxed"
-                 style="width: 300px; margin:0px"
-                 rel="group1"
-                 src="@viewModel.ThumbnailAdress"
-                 data-link="@viewModel.Adress"
-                 data-type="@(viewModel.IsVideo ? "video" : "photo")"
-                 alt="Image Alt 1"/>
-            <img style="width: 150px; height: 150px; position: absolute; bottom: 0%; right: 0%;"
-                 src="@viewModel.QRCodeAdress" />
-        </div>
+<style type="text/css">
+    .video-thumbnail-item {
+        width: 308px;
+        height: 350px;
+        position: relative;
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        margin:5px;
+        cursor:pointer
     }
-</div>*@
+    
+    .photo-thumbnail-item {
+        width: 308px;
+        height: 350px;
+        position: relative;
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        margin:5px;
+        cursor:pointer
+    }
+    
+    .thumbnail-img {
+        object-fit:contain;
+        height:342px;
+        width: 300px;
+        margin:0px;
+    }
+    
+    .thumbnail-qrcode-img {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+    }
+</style>
 
 <div id="lightgallery" style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly;">
     @foreach (var viewModel in Model.Where(_ => _.IsPhoto || _.IsVideo))
     {
         @if (viewModel.IsVideo)
         {
-            <div class="border border-4"
-                 style="width: 308px; height: 350px; position: relative; display: flex; align-content: center; flex-wrap: wrap; margin:5px; cursor:pointer"
+            <div class="border border-4 photo-thumbnail-item"
                  data-video='{"source": [{"src":"@viewModel.Adress", "type":"video/@viewModel.Extension"}], "attributes": {"preload": true, "playsinline": true, "controls": true, "autoplay": true}}'
                  data-poster="@viewModel.ThumbnailAdress"
-                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>"
-                 >
-                <img
-                    style="object-fit:contain; height:342px; width: 300px; margin:0px;"
-                    src="@viewModel.ThumbnailAdress" />
-                <img style="width: 150px; height: 150px; position: absolute; bottom: 0%; right: 0%;"
-                     src="@viewModel.QRCodeAdress" />
+                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>">
+                <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
+                <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
             </div>
         }
         else
         {
-            <div class="border border-4"
-                 style="width: 308px; height: 350px; position: relative; display: flex; align-content: center; flex-wrap: wrap; margin:5px; cursor:pointer"
+            <div class="border border-4 video-thumbnail-item"
                  data-src='@viewModel.Adress'
-                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>"
-                 >
-                <img
-                    style="object-fit:contain; height:342px; width: 300px; margin:0px;"
-                    src="@viewModel.ThumbnailAdress" />
-                <img style="width: 150px; height: 150px; position: absolute; bottom: 0%; right: 0%;"
-                     src="@viewModel.QRCodeAdress" />
+                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>">
+                <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
+                <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
             </div>
         }
     }
 </div>
 
 <script type="text/javascript">
-    lightGallery(document.getElementById('lightgallery'), {
+    const lgDemoUpdateSlides = document.getElementById(
+      "lightgallery"
+    );
+    var slidesUpdated = false;
+    
+    lgDemoUpdateSlides.addEventListener("lgAfterClose", (event) => {
+      if (slidesUpdated) {
+        setTimeout(() => {
+          event.detail.instance.destroy();
+        }, 100);
+        setTimeout(() => {
+          lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
+              plugins: [lgThumbnail, lgVideo],
+              thumbnail: true,
+              videojs: false,
+              autoplayVideoOnSlide: true,
+              autoplayFirstVideo: false
+          });
+          slidesUpdated = false;
+        }, 200);
+      }
+    });
+
+    var lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
         plugins: [lgThumbnail, lgVideo],
         thumbnail: true,
         videojs: false,
-        autoplayVideoOnSlide: true
+        autoplayVideoOnSlide: true,
+        autoplayFirstVideo: false
     });
 </script>

@@ -1,8 +1,6 @@
 ﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.DataAccess.Entities;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
-using QRSharingApp.WebApplication.Helpers;
 using QRSharingApp.WebApplication.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using QRSharingApp.WebApplication.Services;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
@@ -63,7 +62,7 @@ namespace QRSharingApp.WebApplication.Controllers
                 var fileExist = System.IO.File.Exists(Path.Combine(localFile.Path, localFile.Name));
                 if (fileExist && hotFolderPathes.Contains(localFile.Path))
                 {
-                    result.Add(ComposeFilePreviewViewModel(localFile));
+                    result.Add(LocalFileConverter.ComposeFilePreviewViewModel(localFile, this));
                 }
             }
 
@@ -74,7 +73,7 @@ namespace QRSharingApp.WebApplication.Controllers
         public async Task<IActionResult> Preview(string id)
         {
             var localFile = await _localFileRepository.GetById(id);
-            var viewModel = ComposeFilePreviewViewModel(localFile);
+            var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFile, this);
             viewModel.DownloadViaForm = _sharedSettingService.DownloadViaForm;
 
             return View(viewModel);
@@ -147,32 +146,6 @@ namespace QRSharingApp.WebApplication.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private FilePreviewViewModel ComposeFilePreviewViewModel(LocalFile localFile)
-        {
-            var extension = Path.GetExtension(localFile.Name);
-            var idWithExtension = localFile.Id + extension;
-            var viewModel = new FilePreviewViewModel()
-            {
-                Id = localFile.Id,
-                Name = localFile.Name,
-                Extension = extension.Replace(".", ""),
-                Adress = Url.Action(nameof(PhysicalFile), new { idWithExtension }),
-                QRCodeAdress = Url.Action(nameof(QRCode), new { localFile.Id }),
-                ThumbnailAdress = Url.Action(nameof(Thumbnail), new { idWithExtension })
-            };
-
-            if (FileNameHelper.IsPhoto(localFile.Name))
-            {
-                viewModel.IsPhoto = true;
-            }
-            else if (FileNameHelper.IsVideo(localFile.Name))
-            {
-                viewModel.IsVideo = true;
-            }
-
-            return viewModel;
         }
 
         private void InitBackgroundImage()

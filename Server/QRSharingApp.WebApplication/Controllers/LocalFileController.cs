@@ -2,6 +2,7 @@
 using QRSharingApp.Contract.LocalFile;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
+using QRSharingApp.WebApplication.Services;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -12,10 +13,13 @@ namespace QRSharingApp.WebApplication.Controllers
     public class LocalFileController : ControllerBase
     {
         private readonly ILocalFileRepository _localFileRepository;
+        private readonly IFileHubService _fileHubService;
 
-        public LocalFileController(ILocalFileRepository localFileRepository)
+        public LocalFileController(ILocalFileRepository localFileRepository,
+            IFileHubService fileHubService)
         {
             _localFileRepository = localFileRepository;
+            _fileHubService = fileHubService;
         }
 
         [HttpGet]
@@ -42,6 +46,9 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var localFiles = await _localFileRepository.Add(filePathes.Pathes);
             var contracts = localFiles.ToContracts();
+            var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFiles[0], this);
+
+            await _fileHubService.SendFileAddedAsync(viewModel);
 
             return Ok(contracts);
         }

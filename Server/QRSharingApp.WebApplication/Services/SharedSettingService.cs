@@ -1,8 +1,13 @@
-﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.DataAccess.Repositories.Interfaces;
+﻿using QRSharingApp.DataAccess.Repositories.Interfaces;
 
-namespace QRSharingApp.WebApplication
+namespace QRSharingApp.WebApplication.Services
 {
+    public interface ISharedSettingService
+    {
+        bool DownloadViaForm { get; set; }
+        string WebBackgroundImagePath { get; set; }
+    }
+
     public class SharedSettingService : ISharedSettingService
     {
         private readonly ISettingRepository _settingRepository;
