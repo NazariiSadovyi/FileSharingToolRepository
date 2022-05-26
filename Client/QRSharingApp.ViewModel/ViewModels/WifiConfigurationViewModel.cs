@@ -15,19 +15,6 @@ namespace QRSharingApp.ViewModel.ViewModels
 {
     public class WifiConfigurationViewModel : BaseNavigationViewModel
     {
-        #region Private fields
-        private ObservableCollection<WifiAuthenticationType> _wifiAuthenticationTypes;
-        private ISharedAppDataViewModel _sharedAppDataViewModel;
-        private WifiAuthenticationType _wifiAuthenticationType;
-        private string _password;
-        private string _ssid;
-        private bool _isHidden;
-        private WifiAuthenticationType _currentWifiAuthenticationType;
-        private string _currentPassword;
-        private string _currentssid;
-        private bool _currentIsHidden;
-        #endregion
-
         #region Dependencies
         [Dependency]
         public IWifiService WifiService;
@@ -99,65 +86,25 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public string CurrentSSID
-        {
-            get { return _currentssid; }
-            set { SetProperty(ref _currentssid, value); }
-        }
+        public string CurrentSSID { get; set; }
 
-        public string CurrentPassword
-        {
-            get { return _currentPassword; }
-            set { SetProperty(ref _currentPassword, value); }
-        }
+        public string CurrentPassword { get; set; }
 
-        public bool CurrentIsHidden
-        {
-            get { return _currentIsHidden; }
-            set { SetProperty(ref _currentIsHidden, value); }
-        }
+        public bool CurrentIsHidden { get; set; }
 
-        public WifiAuthenticationType CurrentWifiAuthenticationType
-        {
-            get { return _currentWifiAuthenticationType; }
-            set { SetProperty(ref _currentWifiAuthenticationType, value); }
-        }
+        public WifiAuthenticationType CurrentWifiAuthenticationType { get; set; }
 
-        public string SSID
-        {
-            get { return _ssid; }
-            set { SetProperty(ref _ssid, value); }
-        }
+        public string SSID { get; set; }
 
-        public string Password
-        {
-            get { return _password; }
-            set { SetProperty(ref _password, value); }
-        }
+        public string Password { get; set; }
 
-        public bool IsHidden
-        {
-            get { return _isHidden; }
-            set { SetProperty(ref _isHidden, value); }
-        }
+        public bool IsHidden { get; set; }
 
-        public WifiAuthenticationType WifiAuthenticationType
-        {
-            get { return _wifiAuthenticationType; }
-            set { SetProperty(ref _wifiAuthenticationType, value); }
-        }
+        public WifiAuthenticationType WifiAuthenticationType { get; set; }
 
-        public ISharedAppDataViewModel SharedAppDataViewModel
-        {
-            get { return _sharedAppDataViewModel; }
-            set { SetProperty(ref _sharedAppDataViewModel, value); }
-        }
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
 
-        public ObservableCollection<WifiAuthenticationType> WifiAuthenticationTypes
-        {
-            get { return _wifiAuthenticationTypes; }
-            set { SetProperty(ref _wifiAuthenticationTypes, value); }
-        }
+        public ObservableCollection<WifiAuthenticationType> WifiAuthenticationTypes { get; set; }
         #endregion
 
         public WifiConfigurationViewModel(IAppSettingService appSettingService,

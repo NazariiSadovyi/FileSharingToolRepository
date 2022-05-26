@@ -15,10 +15,6 @@ namespace QRSharingApp.ViewModel.ViewModels
 {
     public class DownloadHistoryViewModel : BaseNavigationViewModel
     {
-        #region Private fields
-        private ObservableCollection<DownloadHistoryModel> _historyItems;
-        #endregion
-
         #region Dependencies
         [Dependency]
         public IDataExportService DataExportService;
@@ -29,11 +25,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public ObservableCollection<DownloadHistoryModel> HistoryItems
-        {
-            get { return _historyItems; }
-            set { SetProperty(ref _historyItems, value); }
-        }
+        public ObservableCollection<DownloadHistoryModel> HistoryItems { get; set; }
         #endregion
 
         #region Commands

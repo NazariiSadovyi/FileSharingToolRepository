@@ -1,5 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodels="clr-namespace:QRSharingApp.Client.ViewModel.ViewModels;assembly=QRSharingApp.Client.ViewModel"
+                    xmlns:viewmodels="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
                     xmlns:views="clr-namespace:QRSharingApp.Client.Views">
+    <!--<DataTemplate DataType="{x:Type viewmodels:HotFoldersViewModel}">
+        <views:HotFoldersView/>
+    </DataTemplate>-->
 </ResourceDictionary>

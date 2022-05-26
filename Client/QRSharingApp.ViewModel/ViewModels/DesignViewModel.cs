@@ -12,11 +12,6 @@ namespace QRSharingApp.ViewModel.ViewModels
     {
         #region Private fields
         private WindowState _previousWindowState;
-        private string _webBackgroundImagePath;
-        private string _backgroundImagePath;
-        private bool _sortingDisplayFiles;
-        private bool _downloadViaForm;
-        private int _autoSwitchSeconds;
         #endregion
 
         #region Dependencies
@@ -29,35 +24,15 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public string BackgroundImagePath
-        {
-            get { return _backgroundImagePath; }
-            set { SetProperty(ref _backgroundImagePath, value); }
-        }
+        public string BackgroundImagePath { get; set; }
 
-        public string WebBackgroundImagePath
-        {
-            get { return _webBackgroundImagePath; }
-            set { SetProperty(ref _webBackgroundImagePath, value); }
-        }
+        public string WebBackgroundImagePath { get; set; }
 
-        public bool SortingDisplayFiles
-        {
-            get { return _sortingDisplayFiles; }
-            set { SetProperty(ref _sortingDisplayFiles, value); }
-        }
+        public bool SortingDisplayFiles { get; set; }
 
-        public bool DownloadViaForm
-        {
-            get { return _downloadViaForm; }
-            set { SetProperty(ref _downloadViaForm, value); }
-        }
+        public bool DownloadViaForm { get; set; }
 
-        public int AutoSwitchSeconds
-        {
-            get { return _autoSwitchSeconds; }
-            set { SetProperty(ref _autoSwitchSeconds, value); }
-        }
+        public int AutoSwitchSeconds { get; set; }
         #endregion
 
         #region Commands

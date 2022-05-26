@@ -13,8 +13,14 @@ namespace QRSharingApp.Infrastructure.Services
              * For example, if an SSID was literally "foo;bar\baz" (with double quotes part of the SSID name itself)
              * then it would be encoded like: WIFI:S:\"foo\;bar\\baz\";;
              */
-            ssid = ssid.Replace(@"""", @"\""").Replace(";", @"\;").Replace(",", @"\,").Replace(":", @"\:");
-            password = password.Replace(@"""", @"\""").Replace(";", @"\;").Replace(",", @"\,").Replace(":", @"\:");
+            if (!string.IsNullOrEmpty(password))
+            {
+                ssid = ssid.Replace(@"""", @"\""").Replace(";", @"\;").Replace(",", @"\,").Replace(":", @"\:");
+            }
+            if (!string.IsNullOrEmpty(password))
+            {
+                password = password.Replace(@"""", @"\""").Replace(";", @"\;").Replace(",", @"\,").Replace(":", @"\:");
+            }
 
             /*
              * Generate Wi-Fi Network config.

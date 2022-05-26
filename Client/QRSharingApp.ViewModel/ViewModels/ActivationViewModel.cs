@@ -15,12 +15,6 @@ namespace QRSharingApp.ViewModel.ViewModels
 {
     public class ActivationViewModel : BaseNavigationViewModel
     {
-        #region Private fields
-        private ISharedAppDataViewModel _sharedAppData;
-        private string _newActivationKey;
-        private string _currentActivationKey;
-        #endregion
-
         #region Dependency
         [Dependency]
         public IActivationService ActivationService;
@@ -129,23 +123,11 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public string CurrentActivationKey
-        {
-            get { return _currentActivationKey; }
-            set { SetProperty(ref _currentActivationKey, value); }
-        }
+        public string CurrentActivationKey { get; set; }
 
-        public string NewActivationKey
-        {
-            get { return _newActivationKey; }
-            set { SetProperty(ref _newActivationKey, value); }
-        }
+        public string NewActivationKey { get; set; }
 
-        public ISharedAppDataViewModel SharedAppData
-        {
-            get { return _sharedAppData; }
-            set { SetProperty(ref _sharedAppData, value); }
-        }
+        public ISharedAppDataViewModel SharedAppData { get; set; }
         #endregion
 
         public ActivationViewModel(IActivationService activationService,

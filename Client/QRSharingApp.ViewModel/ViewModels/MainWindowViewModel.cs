@@ -17,20 +17,6 @@ namespace QRSharingApp.ViewModel.ViewModels
 {
     public class MainWindowViewModel : BindableBase, IMainWindowViewModel
     {
-        #region Private fields
-        private ISharedAppDataViewModel _sharedAppDataViewModel;
-        private WindowStyle _windowStyle = WindowStyle.SingleBorderWindow;
-        private WindowState _windowState = WindowState.Normal;
-        private ResizeMode _resizeMode = ResizeMode.CanResize;
-        private string _fetchDataMessage;
-        private bool _isTaskControlShown;
-        private string _informationMessage;
-        private bool _showInformationMessage;
-        private InformationKind _informationKind;
-        private string _spaceUsageMessage;
-        private int _spaceUsagePercentage;
-        #endregion
-
         #region Dependencies
         [Dependency]
         public IRegionManager RegionManager { get; set; }
@@ -43,65 +29,19 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public string FetchDataMessage
-        {
-            get { return _fetchDataMessage; }
-            set { SetProperty(ref _fetchDataMessage, value); }
-        }
-        public string SpaceUsageMessage
-        {
-            get { return _spaceUsageMessage; }
-            set { SetProperty(ref _spaceUsageMessage, value); }
-        }
-        public int SpaceUsagePercentage
-        {
-            get { return _spaceUsagePercentage; }
-            set { SetProperty(ref _spaceUsagePercentage, value); }
-        }
-        public WindowStyle WindowStyle
-        {
-            get { return _windowStyle; }
-            set { SetProperty(ref _windowStyle, value); }
-        }
-        public ResizeMode ResizeMode
-        {
-            get { return _resizeMode; }
-            set { SetProperty(ref _resizeMode, value); }
-        }
-        public WindowState WindowState
-        {
-            get { return _windowState; }
-            set { SetProperty(ref _windowState, value); }
-        }
-        public bool IsTaskControlShown
-        {
-            get { return _isTaskControlShown; }
-            set { SetProperty(ref _isTaskControlShown, value); }
-        }
+        public string FetchDataMessage { get; set; }
+        public string SpaceUsageMessage { get; set; }
+        public int SpaceUsagePercentage { get; set; }
+        public WindowStyle WindowStyle { get; set; } = WindowStyle.SingleBorderWindow;
+        public ResizeMode ResizeMode { get; set; } = ResizeMode.CanResize;
+        public WindowState WindowState { get; set; } = WindowState.Normal;
+        public bool IsTaskControlShown { get; set; }
 
-        public ISharedAppDataViewModel SharedAppDataViewModel
-        {
-            get { return _sharedAppDataViewModel; }
-            set { SetProperty(ref _sharedAppDataViewModel, value); }
-        }
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
 
-        public string InformationMessage
-        {
-            get { return _informationMessage; }
-            set { SetProperty(ref _informationMessage, value); }
-        }
-
-        public InformationKind InformationKind
-        {
-            get { return _informationKind; }
-            set { SetProperty(ref _informationKind, value); }
-        }
-
-        public bool ShowInformationMessage
-        {
-            get { return _showInformationMessage; }
-            set { SetProperty(ref _showInformationMessage, value); }
-        }
+        public string InformationMessage { get; set; }
+        public InformationKind InformationKind { get; set; }
+        public bool ShowInformationMessage { get; set; }
         #endregion
 
         #region Commands

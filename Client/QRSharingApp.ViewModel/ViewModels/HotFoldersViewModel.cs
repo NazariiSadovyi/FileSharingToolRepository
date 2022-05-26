@@ -17,8 +17,6 @@ namespace QRSharingApp.ViewModel.ViewModels
         private ICommand _selectFolderCmd;
         private ICommand _removeFolderCmd;
         private ICommand _onloadCmd;
-        private ObservableCollection<HotFolder> _hotFolders;
-        private ISharedAppDataViewModel _sharedAppDataViewModel;
 
         [Dependency]
         public IHotFolderService _hotFolderService;
@@ -81,17 +79,8 @@ namespace QRSharingApp.ViewModel.ViewModels
             }
         }
 
-        public ObservableCollection<HotFolder> HotFolders
-        {
-            get { return _hotFolders; }
-            set { SetProperty(ref _hotFolders, value); }
-        }
-
-        public ISharedAppDataViewModel SharedAppDataViewModel
-        {
-            get { return _sharedAppDataViewModel; }
-            set { SetProperty(ref _sharedAppDataViewModel, value); }
-        }
+        public ObservableCollection<HotFolder> HotFolders { get; set; }
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
 
         public HotFoldersViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
         {

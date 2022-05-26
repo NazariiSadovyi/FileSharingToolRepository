@@ -32,10 +32,6 @@ namespace QRSharingApp.ViewModel.ViewModels
     {
         #region Private fields
         private readonly Timer _autoSwitchTimer;
-        private ObservableCollection<FilePreviewBaseViewModel> _files;
-        private ISharedAppDataViewModel _sharedAppDataViewModel;
-        private string _backgroundImagePath;
-        private int _currentPage;
         #endregion
 
         #region Dependencies
@@ -102,29 +98,10 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Properties
-        public string BackgroundImagePath
-        {
-            get { return _backgroundImagePath; }
-            set { SetProperty(ref _backgroundImagePath, value); }
-        }
-
-        public int CurrentPage
-        {
-            get { return _currentPage; }
-            set { SetProperty(ref _currentPage, value); }
-        }
-
-        public ISharedAppDataViewModel SharedAppDataViewModel
-        {
-            get { return _sharedAppDataViewModel; }
-            set { SetProperty(ref _sharedAppDataViewModel, value); }
-        }
-
-        public ObservableCollection<FilePreviewBaseViewModel> Files
-        {
-            get { return _files; }
-            set { SetProperty(ref _files, value); }
-        }
+        public string BackgroundImagePath { get; set; }
+        public int CurrentPage { get; set; }
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
+        public ObservableCollection<FilePreviewBaseViewModel> Files { get; set; }
         #endregion
 
         public GridFilePreviewViewModel(ISharedAppDataViewModel sharedAppDataViewModel,
