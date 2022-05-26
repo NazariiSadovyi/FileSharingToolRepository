@@ -1,7 +1,8 @@
 ﻿using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
-using Prism.Commands;
+using ReactiveUI;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
@@ -36,18 +37,14 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Commands
-        public ICommand ChangeLanguageCmd
-        {
-            get => new DelegateCommand<string>(
+        public ICommand ChangeLanguageCmd => ReactiveCommand.Create<string>(
             cultureName => {
                 CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
                 AppSettingService.CultureName = cultureName;
-            });
-        }
+            }
+        );
 
-        public ICommand SelectGridPreviewBackgroundImageCmd
-        {
-            get => new DelegateCommand(
+        public ICommand SelectGridPreviewBackgroundImageCmd => ReactiveCommand.Create(
             () => {
                 var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
                 if (string.IsNullOrEmpty(filePath))
@@ -56,12 +53,10 @@ namespace QRSharingApp.ViewModel.ViewModels
                 }
 
                 BackgroundImagePath = filePath;
-            });
-        }
+            }
+        );
 
-        public ICommand SelectWebBackgroundImageCmd
-        {
-            get => new DelegateCommand(
+        public ICommand SelectWebBackgroundImageCmd => ReactiveCommand.Create(
             () => {
                 var filePath = FileExplorerService.SelectFile("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png");
                 if (string.IsNullOrEmpty(filePath))
@@ -70,12 +65,10 @@ namespace QRSharingApp.ViewModel.ViewModels
                 }
 
                 WebBackgroundImagePath = filePath;
-            });
-        }
+            }
+        );
 
-        public ICommand ChangeWindowModeCmd
-        {
-            get => new DelegateCommand<string>(
+        public ICommand ChangeWindowModeCmd => ReactiveCommand.Create<string>(
             mode => {
                 switch (mode)
                 {
@@ -97,18 +90,12 @@ namespace QRSharingApp.ViewModel.ViewModels
                 Application.Current.MainWindow.Hide();
                 Application.Current.MainWindow.Show();
                 Application.Current.MainWindow.BringIntoView();
-            });
-        }
+            }
+        );
         #endregion
 
         public DesignViewModel(IAppSettingService appSettingService)
         {
-            WebBackgroundImagePath = appSettingService.WebBackgroundImagePath;
-            BackgroundImagePath = appSettingService.BackgroundImagePath;
-            SortingDisplayFiles = appSettingService.SortingDisplayFiles;
-            DownloadViaForm = appSettingService.DownloadViaForm;
-            AutoSwitchSeconds = appSettingService.AutoSwitchSeconds;
-
             PropertyChanged += (e, args) => 
             {
                 switch (args.PropertyName)
@@ -132,6 +119,17 @@ namespace QRSharingApp.ViewModel.ViewModels
                         break;
                 }
             };
+        }
+
+        public override Task OnLoadAsync()
+        {
+            WebBackgroundImagePath = AppSettingService.WebBackgroundImagePath;
+            BackgroundImagePath = AppSettingService.BackgroundImagePath;
+            SortingDisplayFiles = AppSettingService.SortingDisplayFiles;
+            DownloadViaForm = AppSettingService.DownloadViaForm;
+            AutoSwitchSeconds = AppSettingService.AutoSwitchSeconds;
+
+            return Task.CompletedTask;
         }
     }
 }

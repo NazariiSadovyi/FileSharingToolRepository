@@ -2,28 +2,36 @@
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.Services;
+using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
+using ReactiveUI;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Unity;
+using Localization = QRSharingApp.CultureLocalization.Localization;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
-    public class MainWindowViewModel : BindableBase, IMainWindowViewModel
+    public class MainWindowViewModel : ReactiveObject, IMainWindowViewModel
     {
+        private IDictionary<PageType, BaseNavigationViewModel> _pageDictionary;
+
         #region Dependencies
-        [Dependency]
-        public IRegionManager RegionManager { get; set; }
         [Dependency]
         public IWebServerService WebServerService { get; set; }
         [Dependency]
         public ILocalFilesService LocalFilesService { get; set; }
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+        [Dependency]
+        public IApplicationTaskUtility ApplicationTaskUtility { get; set; }
+        [Dependency]
+        public IActivationService ActivationService { get; set; }
         [Dependency]
         public IGridFilePreviewViewModel GridFilePreviewViewModel { get; set; }
         #endregion
@@ -38,113 +46,171 @@ namespace QRSharingApp.ViewModel.ViewModels
         public bool IsTaskControlShown { get; set; }
 
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
+        public IGridFilePreviewViewModel CurrentGridFilePreviewViewModel { get; set; }
 
         public string InformationMessage { get; set; }
         public InformationKind InformationKind { get; set; }
         public bool ShowInformationMessage { get; set; }
+
+        public BaseNavigationViewModel CurrentPage { get; set; }
         #endregion
 
         #region Commands
-        public ICommand SwitchUserControl
-        {
-            get => new DelegateCommand<string>(userControlName =>
+        public ICommand SwitchUserControl => ReactiveCommand.Create<string>(
+            intPageType =>
             {
-                NavigateToPage(userControlName);
-            });
-        }
+                var pageType = (PageType)int.Parse(intPageType);
+                CurrentPage = _pageDictionary[pageType];
+            }
+        );
 
-        public ICommand StartPreviewCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand StartPreviewCmd => ReactiveCommand.Create(() =>
             {
-                RegionManager.RequestNavigate("PreviewContentRegion", "GridFilePreviewView");
                 SharedAppDataViewModel.IsPreviewVisible = true;
+                CurrentGridFilePreviewViewModel = GridFilePreviewViewModel;
                 GridFilePreviewViewModel.StartAutoSwitchTimer();
-            });
-        }
+            }
+        );
 
-        public ICommand ClosePreviewCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand ClosePreviewCmd => ReactiveCommand.Create(() =>
             {
                 if (Keyboard.IsKeyDown(Key.Escape))
                 {
-                    var isFileFullPreviewView = RegionManager.Regions["PreviewContentRegion"]
-                              .ActiveViews
-                              .Select(_ => _ as UserControl)
-                              .FirstOrDefault(_ => !(_.DataContext is GridFilePreviewViewModel));
-                    if (isFileFullPreviewView == null)
-                    {
-                        SharedAppDataViewModel.IsPreviewVisible = false;
-                        GridFilePreviewViewModel.StopAutoSwitchTimer();
-                    }
+                    CurrentGridFilePreviewViewModel = null;
+                    SharedAppDataViewModel.IsPreviewVisible = false;
+                    GridFilePreviewViewModel.StopAutoSwitchTimer();
                 }
-            });
-        }
+            }
+        );
 
-        public ICommand ShutdownApplicationCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand ShutdownApplicationCmd => ReactiveCommand.Create(() =>
             {
                 Application.Current.Shutdown();
-            });
-        }
+            }
+        );
 
-        public ICommand CloseInformationMessageCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand CloseInformationMessageCmd => ReactiveCommand.Create(() =>
             {
                 ShowInformationMessage = false;
                 InformationMessage = string.Empty;
-            });
-        }
+            }
+        );
 
-        public ICommand OpenWebPreviewCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand OpenWebPreviewCmd => ReactiveCommand.Create(() =>
             {
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = WebServerService.WebLocalhostUrl,
                     UseShellExecute = true
                 });
-            });
-        }
+            }
+        );
         #endregion
 
         public MainWindowViewModel(IApplicationTaskUtility applicationTaskUtility,
             ISharedAppDataViewModel sharedAppDataViewModel)
         {
+            _pageDictionary = new Dictionary<PageType, BaseNavigationViewModel>();
             IsTaskControlShown = true;
-            FetchDataMessage = CultureLocalization.Localization.GetResource("AplicationIsStartingProcess");
+            FetchDataMessage = Localization.GetResource("AplicationIsStartingProcess");
 
             SharedAppDataViewModel = sharedAppDataViewModel;
-            applicationTaskUtility.FetchDataCommand.RegisterCommand(
-                new DelegateCommand<FetchDataInfo>((obj) =>
+            applicationTaskUtility.FetchDataSubject
+                .Subscribe((fetchDataInfo) =>
+            {
+                IsTaskControlShown = fetchDataInfo.ShowControl;
+                FetchDataMessage = fetchDataInfo.Message;
+            });
+            applicationTaskUtility.InformationMessageSubject
+                .Subscribe((infoMessage) =>
+            {
+                InformationMessage = infoMessage.Message;
+                InformationKind = infoMessage.Kind;
+                ShowInformationMessage = true;
+            });
+        }
+
+        public async Task OnLoadAsync()
+        {
+            await LoadPagesAsync();
+            await CheckActivationAsync();
+            await InitCurrentFilesAsync();
+        }
+
+        private async Task LoadPagesAsync()
+        {
+            await ApplicationTaskUtility.ExecuteFetchDataAsync(
+                () =>
                 {
-                    IsTaskControlShown = obj.ShowControl;
-                    FetchDataMessage = obj.Message;
-                })
+                    return Task.Run(async () =>
+                    {
+                        _pageDictionary = new Dictionary<PageType, BaseNavigationViewModel>()
+                        {
+                            { PageType.HotFolder, UnityContainer.Resolve<HotFoldersViewModel>() },
+                            { PageType.WifiSetting, UnityContainer.Resolve<WifiConfigurationViewModel>() },
+                            { PageType.Design, UnityContainer.Resolve<DesignViewModel>() },
+                            { PageType.DownloadHistory, UnityContainer.Resolve<DownloadHistoryViewModel>() },
+                            { PageType.Activation, UnityContainer.Resolve<ActivationViewModel>() }
+                        };
+
+                        await Task.WhenAll(_pageDictionary.Values.Select(_ => _.OnLoadAsync()).ToArray());
+                        CurrentPage = _pageDictionary[PageType.HotFolder];
+                    });
+                },
+                Localization.GetResource("AplicationIsStartingProcess"),
+                false,
+                false);
+        }
+
+        private async Task InitCurrentFilesAsync()
+        {
+            await ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
                 {
-                    IsActive = true
-                }
-            );
-            applicationTaskUtility.InformationMessageCommand.RegisterCommand(
-                new DelegateCommand<InformationMessageInfo>((obj) =>
-                {
-                    InformationMessage = obj.Message;
-                    InformationKind = obj.Kind;
-                    ShowInformationMessage = true;
-                })
-                {
-                    IsActive = true
-                }
+                    return Task.Run(async () =>
+                    {
+                        await LocalFilesService.InitCurrentFiles();
+                        await GridFilePreviewViewModel.LoadDataAsync();
+                    });
+                },
+                Localization.GetResource("AddingCurrentHotFoldersAndFilesFetchMessage"),
+                false
             );
         }
 
-        private void NavigateToPage(string userControlName, NavigationParameters valuePairs = default)
+        private async Task CheckActivationAsync()
         {
-            RegionManager.RequestNavigate("MainContentRegion", userControlName, valuePairs);
+            var activationStatus = await ApplicationTaskUtility.ExecuteFetchDataAsync(
+                () => ActivationService.IsActivatedAsync(),
+                Localization.GetResource("CheckingActivationFetchMessage"),
+                false,
+                false);
+
+            SharedAppDataViewModel.ActivationStatus = activationStatus;
+            switch (activationStatus)
+            {
+                case ActivationStatus.NotActivated:
+                    ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
+                    RunTaskToCloseToolAfter5minutes();
+                    break;
+                case ActivationStatus.Expired:
+                    ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolKeyIsExpiredWarningMessage"), InformationKind.Warning);
+                    RunTaskToCloseToolAfter5minutes();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void RunTaskToCloseToolAfter5minutes()
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(TimeSpan.FromMinutes(5));
+                if (SharedAppDataViewModel.ActivationStatus != ActivationStatus.Activated)
+                {
+                    Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+                }
+            });
         }
     }
 }

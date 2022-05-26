@@ -1,35 +1,26 @@
 ﻿using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Models;
-using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 
 namespace QRSharingApp.ViewModel.Services
 {
     public class ApplicationTaskUtility : IApplicationTaskUtility
     {
-        private readonly CompositeCommand _fetchDataCommand = new CompositeCommand(true);
-        public CompositeCommand FetchDataCommand
+        public ISubject<FetchDataInfo> FetchDataSubject { get; set; } = new Subject<FetchDataInfo>();
+        public ISubject<InformationMessageInfo> InformationMessageSubject { get; set; } = new Subject<InformationMessageInfo>();
+
+        public async Task ExecuteFetchDataAsync(Func<Task> action, string message = default, bool showAtLeastSecond = true, bool hideLoader = true)
         {
-            get { return _fetchDataCommand; }
+            await ExecuteFetchDataInternalAsync(action(), message, showAtLeastSecond, hideLoader);
         }
 
-        private readonly CompositeCommand _informationMessageCommand = new CompositeCommand(true);
-        public CompositeCommand InformationMessageCommand
-        {
-            get { return _informationMessageCommand; }
-        }
-
-        public async Task ExecuteFetchDataAsync(Func<Task> action, string message = default, bool showAtLeastSecond = true)
-        {
-            await ExecuteFetchDataInternalAsync(action(), message, showAtLeastSecond);
-        }
-
-        public async Task<T> ExecuteFetchDataAsync<T>(Func<Task<T>> action, string message = default, bool showAtLeastSecond = true)
+        public async Task<T> ExecuteFetchDataAsync<T>(Func<Task<T>> action, string message = default, bool showAtLeastSecond = true, bool hideLoader = true)
         {
             var mainActionTask = action();
-            await ExecuteFetchDataInternalAsync(mainActionTask, message, showAtLeastSecond);
+            await ExecuteFetchDataInternalAsync(mainActionTask, message, showAtLeastSecond, hideLoader);
 
             return mainActionTask.Result;
         }
@@ -42,10 +33,10 @@ namespace QRSharingApp.ViewModel.Services
                 Kind = kind
             };
 
-            InformationMessageCommand.Execute(informationMessageInfo);
+            InformationMessageSubject.OnNext(informationMessageInfo);
         }
 
-        private async Task ExecuteFetchDataInternalAsync(Task action, string message = default, bool showAtLeastSecond = true)
+        private async Task ExecuteFetchDataInternalAsync(Task action, string message = default, bool showAtLeastSecond = true, bool hideLoader = true)
         {
             var fetchDataInfo = new FetchDataInfo()
             {
@@ -53,7 +44,7 @@ namespace QRSharingApp.ViewModel.Services
                 Message = string.IsNullOrEmpty(message) ? CultureLocalization.Localization.GetResource("DialogTextFetching") : message
             };
 
-            FetchDataCommand.Execute(fetchDataInfo);
+            FetchDataSubject.OnNext(fetchDataInfo);
 
             var oneSecondTask = Task.Delay(1000);
 
@@ -69,8 +60,13 @@ namespace QRSharingApp.ViewModel.Services
 
             await Task.WhenAll(tasksToWait);
 
+            if (!hideLoader)
+            {
+                return;
+            }
+
             fetchDataInfo.ShowControl = false;
-            FetchDataCommand.Execute(fetchDataInfo);
+            FetchDataSubject.OnNext(fetchDataInfo);
         }
     }
 

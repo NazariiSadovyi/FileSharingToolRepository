@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Unity;
 
 namespace QRSharingApp.Client.Views
 {
@@ -7,7 +8,7 @@ namespace QRSharingApp.Client.Views
     /// </summary>
     public partial class MainWindowView : Window
     {
-        public MainWindowView()
+        public MainWindowView(IUnityContainer unityContainer)
         {
             InitializeComponent();
         }

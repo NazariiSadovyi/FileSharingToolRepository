@@ -1,15 +1,11 @@
 ﻿using FFmpeg.AutoGen;
 using NLog;
-using Prism.Ioc;
-using Prism.Modularity;
-using Prism.Mvvm;
 using QRSharingApp.Client.Views;
 using QRSharingApp.ClientApi;
 using QRSharingApp.Infrastructure;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.Shared;
 using QRSharingApp.ViewModel.Interfaces;
-using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
@@ -18,6 +14,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Unity;
 using Unosquare.FFME;
 using Localization = QRSharingApp.CultureLocalization.Localization;
 
@@ -26,165 +23,71 @@ namespace QRSharingApp.Client
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public partial class App : Application
     {
         private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly static IUnityContainer Container = new UnityContainer();
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _logger.Info("Application started");
-            SetupExceptionHandling();
-
-            base.OnStartup(e);
-
-            Task.Run(async () =>
+            _logger.Info("Application initialization started");
+            try
             {
-                await InitFFMPEG();
-                await CheckActivation();
-                await InitCurrentFiles();
-                await InitPreviewFiles();
-            });
-
-            var localFileCacheService = Container.Resolve<ILocalFileCacheService>();
-            localFileCacheService.ClearTemporary();
-            _logger.Info("Temp folder was cleaned up");
-        }
-
-        protected override void ConfigureViewModelLocator()
-        {
-            base.ConfigureViewModelLocator();
-
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
+                SetupExceptionHandling();
+                RegisterTypes();
+                Task.Run(InitFFMPEG);
+                CreateShell();
+            }
+            catch (Exception ex)
             {
-                var viewName = viewType.FullName.Replace(".Client.Views.", ".ViewModel.ViewModels.");
-                var viewAssemblyName = "QRSharingApp.ViewModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                var viewModelName = $"{viewName}Model, {viewAssemblyName}";
-                return Type.GetType(viewModelName);
-            });
-        }
+                _logger.Error(ex, "Application initialization exception");
+            }
 
-        protected override Window CreateShell()
-        {
-            var appSettingService = Container.Resolve<IAppSettingService>();
-            Localization.Language = new System.Globalization.CultureInfo(appSettingService.CultureName ?? string.Empty);
-
-            return Container.Resolve<MainWindowView>();
-        }
-
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterSingleton<IApplicationTaskUtility, ApplicationTaskUtility>();
-            containerRegistry.RegisterSingleton<ISharedAppDataViewModel, SharedAppDataViewModel>();
-            containerRegistry.RegisterSingleton<IActivationService, ActivationService>();
-            containerRegistry.RegisterSingleton<ILocalFilesService, LocalFilesService>();
-            containerRegistry.RegisterSingleton<IDataExportService, DataExportService>();
-
-            RegisterForNavigation(containerRegistry);
-            RegisterViewModels(containerRegistry);
-
-            InfrastructureDependencies.Register(containerRegistry);
-            ClientApiDependencies.Register(containerRegistry, SharedConstants.LocalhostPath);
-        }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            moduleCatalog.AddModule<MainModule>();
+            _logger.Info("Application initialization ended");
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             _logger.Info("Application shouted down");
 
-            var localFileCacheService = Container.Resolve<ILocalFileCacheService>();
-            localFileCacheService.ClearTemporary();
-            _logger.Info("Temp folder was cleaned up");
-
             GC.Collect();
             GC.WaitForPendingFinalizers();
             _logger.Info("All resources were released");
-
-            base.OnExit(e);
-        }
-        private void RegisterForNavigation(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterForNavigation<DesignView>();
-            containerRegistry.RegisterForNavigation<HotFoldersView>();
-            containerRegistry.RegisterForNavigation<ActivationView>();
-            containerRegistry.RegisterForNavigation<GridFilePreviewView>();
-            containerRegistry.RegisterForNavigation<WifiConfigurationView>();
-            containerRegistry.RegisterForNavigation<DownloadHistoryView>();
         }
 
-        private void RegisterViewModels(IContainerRegistry containerRegistry)
+        private void CreateShell()
         {
-            containerRegistry.RegisterSingleton<MainWindowViewModel>();
-            containerRegistry.RegisterSingleton<IMainWindowViewModel, MainWindowViewModel>();
-            containerRegistry.RegisterSingleton<GridFilePreviewViewModel>();
-            containerRegistry.RegisterSingleton<IGridFilePreviewViewModel, GridFilePreviewViewModel>();
-            containerRegistry.RegisterSingleton<WifiConfigurationViewModel>();
+            var appSettingService = Container.Resolve<IAppSettingService>();
+            Localization.Language = new System.Globalization.CultureInfo(appSettingService.CultureName ?? string.Empty);
+
+            var window = Container.Resolve<MainWindowView>();
+            var mainWindowViewModel = Container.Resolve<IMainWindowViewModel>();
+            window.DataContext = mainWindowViewModel;
+            window.Show();
+            Task.Run(async () => await mainWindowViewModel.OnLoadAsync());
         }
 
-        private async Task InitCurrentFiles()
+        private void RegisterTypes()
         {
-            var applicationUtility = Container.Resolve<IApplicationTaskUtility>();
-            var localFilesService = Container.Resolve<ILocalFilesService>();
-            await applicationUtility.ExecuteFetchDataAsync(() =>
-                {
-                    return localFilesService.InitCurrentFiles();
-                },
-                Localization.GetResource("AddingCurrentHotFoldersAndFilesFetchMessage"),
-                false
-            );
+            Container.RegisterSingleton<IApplicationTaskUtility, ApplicationTaskUtility>();
+            Container.RegisterSingleton<ISharedAppDataViewModel, SharedAppDataViewModel>();
+            Container.RegisterSingleton<IActivationService, ActivationService>();
+            Container.RegisterSingleton<ILocalFilesService, LocalFilesService>();
+            Container.RegisterSingleton<IDataExportService, DataExportService>();
+
+            RegisterViewModels();
+
+            InfrastructureDependencies.Register(Container);
+            ClientApiDependencies.Register(Container, SharedConstants.LocalhostPath);
         }
 
-        private async Task InitPreviewFiles()
+        private void RegisterViewModels()
         {
-            var gridFilePreviewViewModel = Container.Resolve<IGridFilePreviewViewModel>();
-            await gridFilePreviewViewModel.LoadDataAsync();
-
-            var wifiConfigurationViewModel = Container.Resolve<WifiConfigurationViewModel>();
-            if (!string.IsNullOrEmpty(wifiConfigurationViewModel.SSID))
-            {
-                wifiConfigurationViewModel.UpdateQRCodeCmd.Execute(null);
-            }
-        }
-
-        private async Task CheckActivation()
-        {
-            var applicationUtility = Container.Resolve<IApplicationTaskUtility>();
-            var sharedAppData = Container.Resolve<ISharedAppDataViewModel>();
-            var activationService = Container.Resolve<IActivationService>();
-
-            var activationStatus = await applicationUtility.ExecuteFetchDataAsync(
-                () => activationService.IsActivatedAsync(),
-                Localization.GetResource("CheckingActivationFetchMessage"));
-
-            sharedAppData.ActivationStatus = activationStatus;
-            switch (activationStatus)
-            {
-                case ActivationStatus.NotActivated:
-                    applicationUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
-                    RunTaskToCloseToolAfter5minutes();
-                    break;
-                case ActivationStatus.Expired:
-                    applicationUtility.ShowInformationMessage(Localization.GetResource("ToolKeyIsExpiredWarningMessage"), InformationKind.Warning);
-                    RunTaskToCloseToolAfter5minutes();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void RunTaskToCloseToolAfter5minutes()
-        {
-            Task.Run(async () =>
-            {
-                await Task.Delay(TimeSpan.FromMinutes(5));
-                if (Container.Resolve<ISharedAppDataViewModel>().ActivationStatus != ActivationStatus.Activated)
-                {
-                    Current.Dispatcher.Invoke(Current.Shutdown);
-                }
-            });
+            Container.RegisterSingleton<MainWindowViewModel>();
+            Container.RegisterSingleton<IMainWindowViewModel, MainWindowViewModel>();
+            Container.RegisterSingleton<GridFilePreviewViewModel>();
+            Container.RegisterSingleton<IGridFilePreviewViewModel, GridFilePreviewViewModel>();
+            Container.RegisterSingleton<WifiConfigurationViewModel>();
         }
 
         private async Task InitFFMPEG()

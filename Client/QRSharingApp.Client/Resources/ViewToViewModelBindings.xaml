@@ -2,7 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodels="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
                     xmlns:views="clr-namespace:QRSharingApp.Client.Views">
-    <!--<DataTemplate DataType="{x:Type viewmodels:HotFoldersViewModel}">
+    <DataTemplate DataType="{x:Type viewmodels:HotFoldersViewModel}">
         <views:HotFoldersView/>
-    </DataTemplate>-->
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:WifiConfigurationViewModel}">
+        <views:WifiConfigurationView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:DesignViewModel}">
+        <views:DesignView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:DownloadHistoryViewModel}">
+        <views:DownloadHistoryView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:ActivationViewModel}">
+        <views:ActivationView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:GridFilePreviewViewModel}">
+        <views:GridFilePreviewView/>
+    </DataTemplate>
 </ResourceDictionary>

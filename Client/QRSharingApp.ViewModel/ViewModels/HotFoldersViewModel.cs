@@ -4,7 +4,7 @@ using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using Prism.Commands;
+using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,70 +14,40 @@ namespace QRSharingApp.ViewModel.ViewModels
 {
     public class HotFoldersViewModel : BaseNavigationViewModel
     {
-        private ICommand _selectFolderCmd;
-        private ICommand _removeFolderCmd;
-        private ICommand _onloadCmd;
-
         [Dependency]
-        public IHotFolderService _hotFolderService;
+        public IHotFolderService HotFolderService;
         [Dependency]
-        public IFileExplorerService _fileExplorerService;
+        public IFileExplorerService FileExplorerService;
         [Dependency]
         public IApplicationTaskUtility ApplicationTaskUtility;
 
-        public ICommand SelectFolderCmd
-        {
-            get
+        public ICommand SelectFolderCmd => ReactiveCommand.CreateFromTask(
+            async () =>
             {
-                return _selectFolderCmd ??
-                  (_selectFolderCmd = new DelegateCommand(
-                      async () => {
-                          var newFolderPath = _fileExplorerService.SelectFolder();
-                          if (string.IsNullOrEmpty(newFolderPath))
-                          {
-                              return;
-                          }
+                var newFolderPath = FileExplorerService.SelectFolder();
+                if (string.IsNullOrEmpty(newFolderPath))
+                {
+                    return;
+                }
 
-                          var result = await _hotFolderService.AddNew(newFolderPath);
-                          if (result)
-                          {
-                              await RefreshFolders();
-                          }
-                          else
-                          {
-                              ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("HotFolderInformationDialog"), Models.InformationKind.Error);
-                          }
-                      }
-                  ));
+                var result = await HotFolderService.AddNew(newFolderPath);
+                if (result)
+                {
+                    await RefreshFolders();
+                }
+                else
+                {
+                    ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("HotFolderInformationDialog"), Models.InformationKind.Error);
+                }
             }
-        }
+        );
 
-        public ICommand RemoveFolderCmd
-        {
-            get
-            {
-                return _removeFolderCmd ??
-                  (_removeFolderCmd = new DelegateCommand<int?>(
-                      async folderId => {
-                          await _hotFolderService.Remove(folderId.Value);
-                          await RefreshFolders();
-                      }
-                  ));
+        public ICommand RemoveFolderCmd => ReactiveCommand.Create<int?>(
+            async folderId => {
+                await HotFolderService.Remove(folderId.Value);
+                await RefreshFolders();
             }
-        }
-
-        public ICommand OnLoadCmd
-        {
-            get
-            {
-                return _onloadCmd??
-                  (_onloadCmd = new DelegateCommand(
-                      () => {
-                          Task.Run(RefreshFolders);
-                      }
-                  ));
-            }
-        }
+        );
 
         public ObservableCollection<HotFolder> HotFolders { get; set; }
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
@@ -85,12 +55,22 @@ namespace QRSharingApp.ViewModel.ViewModels
         public HotFoldersViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
+            HotFolders = new ObservableCollection<HotFolder>();
+        }
+
+        public override async Task OnLoadAsync()
+        {
+            await RefreshFolders();
         }
 
         private async Task RefreshFolders()
         {
-            var hotFolders = await _hotFolderService.GetAll();
-            HotFolders = new ObservableCollection<HotFolder>(hotFolders);
+            HotFolders.Clear();
+            var hotFolders = await HotFolderService.GetAll();
+            foreach (var hotFolder in hotFolders)
+            {
+                HotFolders.Add(hotFolder);
+            }
         }
     }
 }

@@ -4,9 +4,8 @@ using System.Windows.Media.Imaging;
 
 namespace QRSharingApp.ViewModel.ViewModels.Interfaces
 {
-    public interface ISharedAppDataViewModel
+    public interface ISharedAppDataViewModel : INotifyPropertyChanged
     {
-        event PropertyChangedEventHandler PropertyChanged;
         ActivationStatus ActivationStatus { get; set; }
         bool IsPreviewVisible { get; set; }
         BitmapImage WifiQRImage { get; set; }

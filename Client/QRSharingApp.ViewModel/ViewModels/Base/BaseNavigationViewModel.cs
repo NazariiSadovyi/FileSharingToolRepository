@@ -1,14 +1,10 @@
-﻿using Prism.Mvvm;
-using Prism.Regions;
+﻿using ReactiveUI;
+using System.Threading.Tasks;
 
 namespace QRSharingApp.ViewModel.ViewModels.Base
 {
-    public class BaseNavigationViewModel : BindableBase, INavigationAware
+    public abstract class BaseNavigationViewModel : ReactiveObject
     {
-        public virtual bool IsNavigationTarget(NavigationContext navigationContext) => true;
-
-        public virtual void OnNavigatedFrom(NavigationContext navigationContext) { }
-
-        public virtual void OnNavigatedTo(NavigationContext navigationContext) { }
+        public abstract Task OnLoadAsync();
     }
 }

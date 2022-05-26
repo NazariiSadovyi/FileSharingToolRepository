@@ -1,11 +1,11 @@
 ﻿using QRSharingApp.Infrastructure.Models;
-using Prism.Mvvm;
 using System.IO;
 using System.Windows.Media.Imaging;
+using ReactiveUI;
 
 namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
 {
-    public abstract class FilePreviewBaseViewModel : BindableBase
+    public abstract class FilePreviewBaseViewModel : ReactiveObject
     {
         public string Id { get; set; }
         public string Name { get; set; }

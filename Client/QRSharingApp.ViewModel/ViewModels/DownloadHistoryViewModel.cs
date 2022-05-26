@@ -2,10 +2,10 @@
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
-using Prism.Commands;
-using Prism.Regions;
+using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,41 +29,27 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Commands
-        public ICommand ExportDownloadHistoryCmd
-        {
-            get => new DelegateCommand(
-                async () => {
-                    await DataExportService.Export(HistoryItems);
-                },
-                () => {
-                    return HistoryItems.Any();
-                }
-            )
-            .ObservesProperty(() => HistoryItems.Count);
-        }
+        public ICommand ExportDownloadHistoryCmd => ReactiveCommand.CreateFromTask(
+            async () => {
+                await DataExportService.Export(HistoryItems);
+            },
+            HistoryItems.WhenAnyValue(_ => _.Count).Select(_ => _ > 0)
+        );
 
-        public ICommand ClearDownloadHistoryCmd
-        {
-            get => new DelegateCommand(
-                async () => {
-                    await DownloadHistoryService.ClearAsync();
-                    HistoryItems.Clear();
-                },
-                () => {
-                    return HistoryItems.Any();
-                }
-            )
-            .ObservesProperty(() => HistoryItems.Count);
-        }
+        public ICommand ClearDownloadHistoryCmd => ReactiveCommand.CreateFromTask(
+            async () =>
+            {
+                await DownloadHistoryService.ClearAsync();
+                HistoryItems.Clear();
+            },
+            HistoryItems.WhenAnyValue(_ => _.Count).Select(_ => _ > 0)
+        );
 
-        public ICommand RefreshDownloadHistoryCmd
-        {
-            get => new DelegateCommand(
-                () => {
-                    RefreshDownloadHistoryData();
-                }
-            );
-        }
+        public ICommand RefreshDownloadHistoryCmd => ReactiveCommand.CreateFromTask(
+            async () => {
+                await RefreshDownloadHistoryData();
+            }
+        );
         #endregion
 
         public DownloadHistoryViewModel()
@@ -71,24 +57,33 @@ namespace QRSharingApp.ViewModel.ViewModels
             HistoryItems = new ObservableCollection<DownloadHistoryModel>();
         }
 
-        public override void OnNavigatedTo(NavigationContext navigationContext)
+        public override async Task OnLoadAsync()
         {
-            RefreshDownloadHistoryData();
+            var result = await DownloadHistoryService.GetAll();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                HistoryItems.Clear();
+                foreach (var item in result)
+                {
+                    HistoryItems.Add(item);
+                }
+            });
         }
 
-        private void RefreshDownloadHistoryData()
+        private async Task RefreshDownloadHistoryData()
         {
-            Task.Run(async () =>
+            var result = await ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
             {
-                var result = await ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
-                {
-                    return DownloadHistoryService.GetAll();
-                }, CultureLocalization.Localization.GetResource("FetchingDownloadHistoryData"));
+                return DownloadHistoryService.GetAll();
+            }, CultureLocalization.Localization.GetResource("FetchingDownloadHistoryData"));
 
-                Application.Current.Dispatcher.Invoke(() => 
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                HistoryItems.Clear();
+                foreach (var item in result)
                 {
-                    HistoryItems = new ObservableCollection<DownloadHistoryModel>(result);
-                });
+                    HistoryItems.Add(item);
+                }
             });
         }
     }

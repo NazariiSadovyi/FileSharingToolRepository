@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace QRSharingApp.ViewModel.Interfaces
 {
@@ -7,5 +8,6 @@ namespace QRSharingApp.ViewModel.Interfaces
         WindowStyle WindowStyle { get; set; }
         WindowState WindowState { get; set; }
         ResizeMode ResizeMode { get; set; }
+        Task OnLoadAsync();
     }
 }

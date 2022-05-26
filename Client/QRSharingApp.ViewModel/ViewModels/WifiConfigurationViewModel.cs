@@ -3,10 +3,12 @@ using QRSharingApp.Infrastructure.Enums;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using Prism.Commands;
+using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
@@ -25,49 +27,37 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Commands
-        public ICommand UpdateQRCodeCmd
-        {
-            get => new DelegateCommand(() =>
+        public ICommand UpdateQRCodeCmd => ReactiveCommand.Create(() =>
             {
-                var wifiConnectionString = WifiService.GenerateConfigString(SSID, WifiAuthenticationType, Password, IsHidden);
-                var bitmap = new BitmapImage();
-                using (var stream = new MemoryStream())
-                {
-                    QRCodeGeneratorService.SaveToStream(wifiConnectionString, stream);
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = stream;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    bitmap.Freeze();
-                }
-                SharedAppDataViewModel.WifiQRImage = bitmap;
+                SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
 
                 CurrentSSID = SSID;
                 CurrentWifiAuthenticationType = WifiAuthenticationType;
                 CurrentPassword = Password;
                 CurrentIsHidden = IsHidden;
             },
-            () => {
-                if (string.IsNullOrEmpty(SSID))
+            Observable.CombineLatest(
+                this.WhenAnyValue(_ => _.SSID),
+                this.WhenAnyValue(_ => _.Password),
+                this.WhenAnyValue(_ => _.WifiAuthenticationType),
+                this.WhenAnyValue(_ => _.IsHidden),
+                this.WhenAnyValue(_ => _.CurrentSSID),
+                this.WhenAnyValue(_ => _.CurrentPassword),
+                this.WhenAnyValue(_ => _.CurrentWifiAuthenticationType),
+                this.WhenAnyValue(_ => _.CurrentIsHidden),
+                (ssid, password, wifiAuthenticationType, isHidden, currentSSID, currentPassword, currentWifiAuthenticationType, currentIsHidden) =>
                 {
-                    return true;
-                }
-                return SSID != CurrentSSID || Password != CurrentPassword
-                    || WifiAuthenticationType != CurrentWifiAuthenticationType || IsHidden != CurrentIsHidden;
-            })
-            .ObservesProperty(() => SSID)
-            .ObservesProperty(() => Password)
-            .ObservesProperty(() => WifiAuthenticationType)
-            .ObservesProperty(() => IsHidden)
-            .ObservesProperty(() => CurrentSSID)
-            .ObservesProperty(() => CurrentPassword)
-            .ObservesProperty(() => CurrentWifiAuthenticationType)
-            .ObservesProperty(() => CurrentIsHidden);
-        }
+                    if (string.IsNullOrEmpty(ssid))
+                    {
+                        return true;
+                    }
 
-        public ICommand ClearQRCodeCmd
-        {
-            get => new DelegateCommand(() =>
+                    return ssid != currentSSID || password != currentPassword
+                        || wifiAuthenticationType != currentWifiAuthenticationType | isHidden != currentIsHidden;
+                })
+        );
+
+        public ICommand ClearQRCodeCmd => ReactiveCommand.Create(() =>
             {
                 SharedAppDataViewModel.WifiQRImage = null;
                 CurrentSSID = string.Empty;
@@ -77,39 +67,28 @@ namespace QRSharingApp.ViewModel.ViewModels
                 Password = string.Empty;
                 WifiAuthenticationType = WifiAuthenticationType.Nopass;
             },
-            () =>
-            {
-                return !string.IsNullOrEmpty(CurrentSSID);
-            })
-            .ObservesProperty(() => CurrentSSID);
-        }
+            this.WhenAnyValue(x => x.CurrentSSID).Select(_ => !string.IsNullOrEmpty(_))
+        );
         #endregion
 
         #region Properties
         public string CurrentSSID { get; set; }
-
         public string CurrentPassword { get; set; }
-
         public bool CurrentIsHidden { get; set; }
-
         public WifiAuthenticationType CurrentWifiAuthenticationType { get; set; }
 
         public string SSID { get; set; }
-
         public string Password { get; set; }
-
         public bool IsHidden { get; set; }
-
         public WifiAuthenticationType WifiAuthenticationType { get; set; }
 
-        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
-
         public ObservableCollection<WifiAuthenticationType> WifiAuthenticationTypes { get; set; }
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
         #endregion
 
-        public WifiConfigurationViewModel(IAppSettingService appSettingService,
-            ISharedAppDataViewModel sharedAppDataViewModel)
+        public WifiConfigurationViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
         {
+            SharedAppDataViewModel = sharedAppDataViewModel;
             WifiAuthenticationTypes = new ObservableCollection<WifiAuthenticationType>()
             {
                 WifiAuthenticationType.Nopass,
@@ -118,17 +97,40 @@ namespace QRSharingApp.ViewModel.ViewModels
                 WifiAuthenticationType.WPA2,
             };
 
-            SharedAppDataViewModel = sharedAppDataViewModel;
-            SSID = appSettingService.WifiLogin;
+            PropertyChanged += WifiConfigurationViewModel_PropertyChanged;
+        }
+
+        public override Task OnLoadAsync()
+        {
+            SSID = AppSettingService.WifiLogin;
             CurrentSSID = SSID;
-            Password = appSettingService.WifiPassword;
+            Password = AppSettingService.WifiPassword;
             CurrentPassword = Password;
-            WifiAuthenticationType = (WifiAuthenticationType)appSettingService.WifiAuthenticationType;
+            WifiAuthenticationType = (WifiAuthenticationType)AppSettingService.WifiAuthenticationType;
             CurrentWifiAuthenticationType = WifiAuthenticationType;
-            IsHidden = appSettingService.WifiIsHidden;
+            IsHidden = AppSettingService.WifiIsHidden;
             CurrentIsHidden = IsHidden;
 
-            PropertyChanged += WifiConfigurationViewModel_PropertyChanged;
+            SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
+
+            return Task.CompletedTask;
+        }
+
+        private BitmapImage GenerateWifiBitmapImage()
+        {
+            var wifiConnectionString = WifiService.GenerateConfigString(SSID, WifiAuthenticationType, Password, IsHidden);
+            var bitmap = new BitmapImage();
+            using (var stream = new MemoryStream())
+            {
+                QRCodeGeneratorService.SaveToStream(wifiConnectionString, stream);
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+            }
+
+            return bitmap;
         }
 
         private void WifiConfigurationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

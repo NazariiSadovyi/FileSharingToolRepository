@@ -8,8 +8,6 @@ using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using Microsoft.WindowsAPICodePack.Shell;
-using Prism.Commands;
-using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +23,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
 using QRSharingApp.ClientApi.Interfaces;
+using ReactiveUI;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -50,25 +49,21 @@ namespace QRSharingApp.ViewModel.ViewModels
         #endregion
 
         #region Commands
-        public ICommand ClosePreviewCmd
-        {
-            get => new DelegateCommand(() => 
+        public ICommand ClosePreviewCmd => ReactiveCommand.Create(() => 
             {
                 SharedAppDataViewModel.IsPreviewVisible = false;
-            });
-        }
+            }
+        );
 
-        public ICommand ChangeFilePageCmd
-        {
-            get => new DelegateCommand<int?>(pageNumber =>
+        public ICommand ChangeFilePageCmd => ReactiveCommand.Create<int?>(
+            pageNumber =>
             {
                 CurrentPage = pageNumber.Value;
-            });
-        }
+            }
+        );
 
-        public ICommand SwitchFilePageCmd
-        {
-            get => new DelegateCommand<string>(action =>
+        public ICommand SwitchFilePageCmd => ReactiveCommand.Create<string>(
+            action =>
             {
                 switch (action)
                 {
@@ -93,8 +88,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                     default:
                         break;
                 }
-            });
-        }
+            }
+        );
         #endregion
 
         #region Properties
@@ -115,14 +110,9 @@ namespace QRSharingApp.ViewModel.ViewModels
             _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
         }
 
-        public override void OnNavigatedTo(NavigationContext navigationContext)
+        public override Task OnLoadAsync()
         {
-            if (navigationContext.Parameters.TryGetValue<bool>("FromPreview", out _))
-            {
-                return;
-            }
-
-            BackgroundImagePath = AppSettingService.BackgroundImagePath;
+            return Task.CompletedTask;
         }
 
         public async Task LoadDataAsync()

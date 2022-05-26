@@ -1,5 +1,4 @@
 ﻿using QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;
-using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -9,7 +8,6 @@ namespace QRSharingApp.ViewModel.ViewModels.Interfaces
     {
         ObservableCollection<FilePreviewBaseViewModel> Files { get; set; }
         Task LoadDataAsync();
-        void OnNavigatedFrom(NavigationContext navigationContext);
         void StartAutoSwitchTimer();
         void StopAutoSwitchTimer();
     }

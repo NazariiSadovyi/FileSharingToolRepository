@@ -2,13 +2,13 @@
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Infrastructure.Services;
 using QRSharingApp.Infrastructure.Services.Interfaces;
-using Prism.Ioc;
+using Unity;
 
 namespace QRSharingApp.Infrastructure
 {
     public static class InfrastructureDependencies
     {
-        public static void Register(IContainerRegistry containerRegistry)
+        public static void Register(IUnityContainer containerRegistry)
         {
             containerRegistry.RegisterSingleton<ILocalFileCacheService, LocalFileCacheService>();
             containerRegistry.RegisterSingleton<IHotFolderService, HotFolderService>();
@@ -16,10 +16,10 @@ namespace QRSharingApp.Infrastructure
             containerRegistry.RegisterSingleton<IFileThumbnailService, FileThumbnailService>();
             containerRegistry.RegisterSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             containerRegistry.RegisterSingleton<IDownloadHistoryService, DownloadHistoryService>();
-            containerRegistry.Register<IAppSettingService, AppSettingService>();
-            containerRegistry.Register<IFileExplorerService, FileExplorerService>();
-            containerRegistry.Register<IExcelExportService, ExcelExportService>();
-            containerRegistry.Register<IWifiService, WifiService>();
+            containerRegistry.RegisterType<IAppSettingService, AppSettingService>();
+            containerRegistry.RegisterType<IFileExplorerService, FileExplorerService>();
+            containerRegistry.RegisterType<IExcelExportService, ExcelExportService>();
+            containerRegistry.RegisterType<IWifiService, WifiService>();
         }
     }
 }
