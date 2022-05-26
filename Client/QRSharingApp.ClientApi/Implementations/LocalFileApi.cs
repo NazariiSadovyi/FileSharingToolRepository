@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http;
 using QRSharingApp.Contract.LocalFile;
 using QRSharingApp.ClientApi.Interfaces;
 using System.Web;
@@ -26,22 +23,16 @@ namespace QRSharingApp.ClientApi.Implementations
 
         public async Task<LocalFileContract> CreateFile(string filePath)
         {
-            var createLocalFile = new CreateLocalFiles()
+            var createLocalFile = new CreateLocalFile()
             {
-                Pathes = new List<string>() { filePath }
+                Path = filePath
             };
-            var response = await _clientProvider.PostWithResponseAsync<CreateLocalFiles, List<LocalFileContract>>("api/localFile", createLocalFile);
-
-            return response[0];
+            return await _clientProvider.PostWithResponseAsync<CreateLocalFile, LocalFileContract>("api/localFile", createLocalFile);
         }
 
-        public async Task<List<LocalFileContract>> CreateFiles(List<string> filePathes)
+        public Task<List<LocalFileContract>> CreateFiles(List<string> filePathes)
         {
-            var createLocalFile = new CreateLocalFiles()
-            {
-                Pathes = new List<string>(filePathes)
-            };
-            return await _clientProvider.PostWithResponseAsync<CreateLocalFiles, List<LocalFileContract>>("api/localFile", createLocalFile);
+            throw new NotImplementedException();
         }
 
         public async Task<LocalFileContract> GetFile(string filePath)

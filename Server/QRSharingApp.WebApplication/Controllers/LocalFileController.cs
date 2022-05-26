@@ -42,15 +42,15 @@ namespace QRSharingApp.WebApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateLocalFiles filePathes)
+        public async Task<IActionResult> Post([FromBody] CreateLocalFile createLocalFile)
         {
-            var localFiles = await _localFileRepository.Add(filePathes.Pathes);
-            var contracts = localFiles.ToContracts();
-            var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFiles[0], this);
+            var localFile = await _localFileRepository.Add(createLocalFile.Path);
+            var contract = localFile.ToContract();
+            var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFile, this);
 
             await _fileHubService.SendFileAddedAsync(viewModel);
 
-            return Ok(contracts);
+            return Ok(contract);
         }
     }
 }
