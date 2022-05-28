@@ -19,6 +19,11 @@ namespace QRSharingApp.Client.Views
         {
             InitializeComponent();
 
+            DataContextChanged += GridFilePreviewView_DataContextChanged;
+        }
+
+        private void GridFilePreviewView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
             var viewModel = DataContext as GridFilePreviewViewModel;
             viewModel.SharedAppDataViewModel.PropertyChanged += SharedAppDataViewModel_PropertyChanged;
         }

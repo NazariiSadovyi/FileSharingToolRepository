@@ -9,6 +9,7 @@
              xmlns:filePreviewVM="clr-namespace:QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;assembly=QRSharingApp.ViewModel"
              xmlns:local="clr-namespace:QRSharingApp.Client.Views"
              xmlns:gu="https://github.com/GuOrg/Gu.Wpf.FlipView"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d"
              d:DesignHeight="450"
@@ -93,22 +94,32 @@
                                            TextAlignment="Center"
                                            FontSize="15"/>
                                 <Grid>
-                                    <!--<materialDesign:PackIcon Kind="Cancel"
-                                                             Visibility="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                                                             Opacity="0.1"
-                                                             VerticalAlignment="Stretch"
-                                                             HorizontalAlignment="Stretch"
-                                                             Width="100"
-                                                             Height="100"/>-->
+                                    <Image
+                                        Visibility="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                                        Opacity="0.1"
+                                        Margin="0 20 0 0"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Width="100"
+                                        Height="100">
+                                        <Image.Source>
+                                            <DrawingImage>
+                                                <DrawingImage.Drawing>
+                                                    <GeometryDrawing
+                                                        Geometry="{DynamicResource CancelGeometry}"
+                                                        Brush="Gray"/>
+                                                </DrawingImage.Drawing>
+                                            </DrawingImage>
+                                        </Image.Source>
+                                    </Image>
                                     <Image Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage}" />
                                 </Grid>
                             </StackPanel>
 
                             <Grid Grid.Column="1">
-                                <ProgressBar Width="50"
-                                             Height="50"
-                                             IsIndeterminate="{Binding IsLoading}"
-                                             Value="0" />
+                                <hc:LoadingCircle
+                                    Width="50"
+                                    Height="50"/>
                                 <ContentControl x:Name="PreviewContentControl" Content="{Binding}"/>
                             </Grid>
 
@@ -120,13 +131,24 @@
                                            TextAlignment="Center"
                                            FontSize="15"/>
                                 <Grid>
-                                    <!--<materialDesign:PackIcon Kind="Cancel"
-                                                             Visibility="{Binding QRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                                                             Opacity="0.1"
-                                                             VerticalAlignment="Stretch"
-                                                             HorizontalAlignment="Stretch"
-                                                             Width="100"
-                                                             Height="100"/>-->
+                                    <Image
+                                        Visibility="{Binding QRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                                        Opacity="0.1"
+                                        Margin="0 20 0 0"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Width="100"
+                                        Height="100">
+                                        <Image.Source>
+                                            <DrawingImage>
+                                                <DrawingImage.Drawing>
+                                                    <GeometryDrawing
+                                                        Geometry="{DynamicResource CancelGeometry}"
+                                                        Brush="Gray"/>
+                                                </DrawingImage.Drawing>
+                                            </DrawingImage>
+                                        </Image.Source>
+                                    </Image>
                                     <Image Source="{Binding QRImage}" />
                                 </Grid>
                             </StackPanel>
@@ -140,19 +162,25 @@
         <Grid Grid.Row="0"
               Grid.Column="0">
             <Button
+                BorderThickness="0"
+                Style="{DynamicResource ButtonDefault}"
                 Command="{Binding SwitchFilePageCmd}"
-                CommandParameter="left">
-                <!--<materialDesign:PackIcon Kind="ArrowLeft" />-->
-            </Button>
+                hc:IconElement.Geometry="{DynamicResource LeftGeometry}"
+                hc:IconElement.Height="30"
+                Height="50"
+                CommandParameter="left"/>
         </Grid>
         
         <Grid Grid.Row="0"
               Grid.Column="2">
             <Button
+                BorderThickness="0"
+                Style="{DynamicResource ButtonDefault}"
                 Command="{Binding SwitchFilePageCmd}"
-                CommandParameter="right">
-                <!--<materialDesign:PackIcon Kind="ArrowRight" />-->
-            </Button>
+                hc:IconElement.Geometry="{DynamicResource RightGeometry}"
+                hc:IconElement.Height="30"
+                Height="50"
+                CommandParameter="right"/>
         </Grid>
 
         <Grid Grid.Row="1"
@@ -160,13 +188,11 @@
             <Button Height="100"
                     Grid.Row="1"
                     Style="{StaticResource EmptyButtonStyle}">
-                
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
                         <i:InvokeCommandAction Command="{Binding ClosePreviewCmd}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
             </Button>
         </Grid>
 
