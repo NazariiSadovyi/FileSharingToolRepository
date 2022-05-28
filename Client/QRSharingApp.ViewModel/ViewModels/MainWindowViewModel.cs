@@ -137,9 +137,9 @@ namespace QRSharingApp.ViewModel.ViewModels
             await InitCurrentFilesAsync();
         }
 
-        private async Task LoadPagesAsync()
+        private Task LoadPagesAsync()
         {
-            await ApplicationTaskUtility.ExecuteFetchDataAsync(
+            return ApplicationTaskUtility.ExecuteFetchDataAsync(
                 () =>
                 {
                     return Task.Run(async () =>
@@ -162,9 +162,9 @@ namespace QRSharingApp.ViewModel.ViewModels
                 false);
         }
 
-        private async Task InitCurrentFilesAsync()
+        private Task InitCurrentFilesAsync()
         {
-            await ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
+            return ApplicationTaskUtility.ExecuteFetchDataAsync(() =>
                 {
                     return Task.Run(async () =>
                     {
@@ -177,28 +177,31 @@ namespace QRSharingApp.ViewModel.ViewModels
             );
         }
 
-        private async Task CheckActivationAsync()
+        private Task CheckActivationAsync()
         {
-            var activationStatus = await ApplicationTaskUtility.ExecuteFetchDataAsync(
-                () => ActivationService.IsActivatedAsync(),
-                Localization.GetResource("CheckingActivationFetchMessage"),
-                false,
-                false);
-
-            SharedAppDataViewModel.ActivationStatus = activationStatus;
-            switch (activationStatus)
+            return Task.Run(async () =>
             {
-                case ActivationStatus.NotActivated:
-                    ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
-                    RunTaskToCloseToolAfter5minutes();
-                    break;
-                case ActivationStatus.Expired:
-                    ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolKeyIsExpiredWarningMessage"), InformationKind.Warning);
-                    RunTaskToCloseToolAfter5minutes();
-                    break;
-                default:
-                    break;
-            }
+                var activationStatus = await ApplicationTaskUtility.ExecuteFetchDataAsync(
+                    () => ActivationService.IsActivatedAsync(),
+                    Localization.GetResource("CheckingActivationFetchMessage"),
+                    false,
+                    false);
+
+                SharedAppDataViewModel.ActivationStatus = activationStatus;
+                switch (activationStatus)
+                {
+                    case ActivationStatus.NotActivated:
+                        ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolIsNotActivatedWarningMessage"), InformationKind.Warning);
+                        RunTaskToCloseToolAfter5minutes();
+                        break;
+                    case ActivationStatus.Expired:
+                        ApplicationTaskUtility.ShowInformationMessage(Localization.GetResource("ToolKeyIsExpiredWarningMessage"), InformationKind.Warning);
+                        RunTaskToCloseToolAfter5minutes();
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
 
         private void RunTaskToCloseToolAfter5minutes()

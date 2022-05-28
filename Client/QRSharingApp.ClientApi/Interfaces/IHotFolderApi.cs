@@ -9,6 +9,6 @@ namespace QRSharingApp.ClientApi.Interfaces
         Task<HotFolderContract> Create(string folderPath);
         Task<HotFolderContract> Delete(int folderId);
         Task<List<HotFolderContract>> GetAll();
-        Task<List<HotFolderContract>> GetByPath(string folderPath);
+        Task<HotFolderContract> GetByPath(string folderPath);
     }
 }
