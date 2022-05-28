@@ -22,7 +22,8 @@ namespace QRSharingApp.DataAccess.Repositories
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = Path.GetFileName(localFilePath),
-                    Path = Path.GetDirectoryName(localFilePath)
+                    Path = Path.GetDirectoryName(localFilePath),
+                    AddedDate = DateTime.Now.ToString()
                 };
                 Context.LocalFile.Add(localfile);
                 await Context.SaveChangesAsync();

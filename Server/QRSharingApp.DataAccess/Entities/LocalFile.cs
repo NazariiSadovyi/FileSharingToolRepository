@@ -8,5 +8,6 @@ namespace QRSharingApp.DataAccess.Entities
         public string Id { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
+        public string AddedDate { get; set; }
     }
 }
