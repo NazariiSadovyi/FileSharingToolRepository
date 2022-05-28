@@ -5,7 +5,6 @@ using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using ReactiveUI;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -35,6 +34,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                 CurrentWifiAuthenticationType = WifiAuthenticationType;
                 CurrentPassword = Password;
                 CurrentIsHidden = IsHidden;
+
+                SaveWifiConfiguration();
             },
             Observable.CombineLatest(
                 this.WhenAnyValue(_ => _.SSID),
@@ -49,7 +50,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                 {
                     if (string.IsNullOrEmpty(ssid))
                     {
-                        return true;
+                        return false;
                     }
 
                     return ssid != currentSSID || password != currentPassword
@@ -96,8 +97,6 @@ namespace QRSharingApp.ViewModel.ViewModels
                 WifiAuthenticationType.WPA,
                 WifiAuthenticationType.WPA2,
             };
-
-            PropertyChanged += WifiConfigurationViewModel_PropertyChanged;
         }
 
         public override Task OnLoadAsync()
@@ -133,25 +132,12 @@ namespace QRSharingApp.ViewModel.ViewModels
             return bitmap;
         }
 
-        private void WifiConfigurationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SaveWifiConfiguration()
         {
-            switch (e.PropertyName)
-            {
-                case nameof(CurrentSSID):
-                    AppSettingService.WifiLogin = CurrentSSID;
-                    break;
-                case nameof(CurrentWifiAuthenticationType):
-                    AppSettingService.WifiAuthenticationType = (int)CurrentWifiAuthenticationType;
-                    break;
-                case nameof(CurrentPassword):
-                    AppSettingService.WifiPassword = CurrentPassword;
-                    break;
-                case nameof(CurrentIsHidden):
-                    AppSettingService.WifiIsHidden = CurrentIsHidden;
-                    break;
-                default:
-                    break;
-            }
+            AppSettingService.WifiLogin = CurrentSSID;
+            AppSettingService.WifiPassword = CurrentPassword;
+            AppSettingService.WifiAuthenticationType = (int)CurrentWifiAuthenticationType;
+            AppSettingService.WifiIsHidden = CurrentIsHidden;
         }
     }
 }

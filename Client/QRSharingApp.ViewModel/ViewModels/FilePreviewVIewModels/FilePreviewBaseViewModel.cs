@@ -2,10 +2,11 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 using ReactiveUI;
+using QRSharingApp.ViewModel.ViewModels.Base;
 
 namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
 {
-    public abstract class FilePreviewBaseViewModel : ReactiveObject
+    public abstract class FilePreviewBaseViewModel : ViewModelBase
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -1,11 +1,11 @@
 ﻿using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using System.Windows.Media.Imaging;
-using ReactiveUI;
+using QRSharingApp.ViewModel.ViewModels.Base;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
-    public class SharedAppDataViewModel : ReactiveObject, ISharedAppDataViewModel
+    public class SharedAppDataViewModel : ViewModelBase, ISharedAppDataViewModel
     {
         public ActivationStatus ActivationStatus { get; set; }
         public bool IsPreviewVisible { get; set; }

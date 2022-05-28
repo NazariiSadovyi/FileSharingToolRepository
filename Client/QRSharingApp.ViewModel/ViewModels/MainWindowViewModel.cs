@@ -17,7 +17,7 @@ using Localization = QRSharingApp.CultureLocalization.Localization;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
-    public class MainWindowViewModel : ReactiveObject, IMainWindowViewModel
+    public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
         private IDictionary<PageType, BaseNavigationViewModel> _pageDictionary;
 
