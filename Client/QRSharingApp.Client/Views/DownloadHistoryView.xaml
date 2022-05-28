@@ -2,15 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
-             xmlns:properties="clr-namespace:QRSharingApp.Client.Controls.Properties"
              xmlns:vm="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
-             xmlns:filePreviewVM="clr-namespace:QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;assembly=QRSharingApp.ViewModel"
              xmlns:local="clr-namespace:QRSharingApp.Client.Views"
              mc:Ignorable="d" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:DownloadHistoryViewModel}">
     <Grid>
@@ -21,23 +17,25 @@
         
         <DataGrid ItemsSource="{Binding HistoryItems}"
                   AutoGenerateColumns="False"
-                  GridLinesVisibility="All"
                   CanUserAddRows="False"
+                  GridLinesVisibility="Vertical"
+                  Background="White"
+                  SelectionUnit="FullRow"
                   Grid.Row="0">
             <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource DataGridRowCustomStyle}">
                     <Setter Property="IsHitTestVisible" Value="True" />
+                    <Setter Property="Background" Value="{DynamicResource DarkDefaultBrush}" />
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="Background" Value="LightGray"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.CellStyle>
-                <Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
+                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellCustomStyle}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="VerticalAlignment" Value="Center" />
@@ -49,75 +47,75 @@
                                     Header="{DynamicResource DownloadHistoryTableFileName}"
                                     Width="0.15*"
                                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding FilePath}"
                                     Header="{DynamicResource DownloadHistoryTableFilePath}"
                                     Width="0.20*"
                                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserName}"
                                     Header="{DynamicResource DownloadHistoryTableUserName}"
                                     Width="0.15*"
                                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserEmail}"
                                     Header="{DynamicResource DownloadHistoryTableUserEmail}"
                                     Width="0.20*"
                                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding UserPhone}"
                                     Header="{DynamicResource DownloadHistoryTableUserPhone}"
                                     Width="0.15*"
                                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
-                <DataGridTemplateColumn Header="{DynamicResource DownloadHistoryTableDownloadTime}"
-                                        Width="0.15*"
-                                        IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Date}"
-                                       ToolTip="{Binding Date}"
-                                       TextTrimming="CharacterEllipsis"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Date}"
+                                    Header="{DynamicResource DownloadHistoryTableDownloadTime}"
+                                    Width="0.15*"
+                                    IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -125,15 +123,20 @@
                      Margin="55 20 55 20"
                      Columns="3">
             <Button Content="{DynamicResource DownloadHistoryButtonRefresh}"
-                    Style="{StaticResource MainButtonStyle}"
+                    Style="{StaticResource ButtonPrimary}"
                     HorizontalAlignment="Stretch"
+                    Margin="0 0 10 0"
+                    FontSize="14"
                     Command="{Binding RefreshDownloadHistoryCmd}"/>
             <Button Content="{DynamicResource DownloadHistoryButtonExport}"
-                    Style="{StaticResource MainButtonStyle}"
+                    Style="{StaticResource ButtonSuccess}"
+                    Margin="0 0 10 0"
+                    FontSize="14"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ExportDownloadHistoryCmd}"/>
             <Button Content="{DynamicResource DownloadHistoryButtonClean}"
-                    Style="{StaticResource MainButtonStyle}"
+                    Style="{StaticResource ButtonDefault}"
+                    FontSize="14"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ClearDownloadHistoryCmd}"/>
         </UniformGrid>

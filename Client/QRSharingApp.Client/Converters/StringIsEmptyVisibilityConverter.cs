@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace QRSharingApp.Client.Converters
 {
-    public class ReversBoolConverter : IValueConverter
+    public class StringIsEmptyVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var _value = (bool)value;
-            if (_value)
+            var _value = (string)value;
+            if (string.IsNullOrEmpty(_value))
             {
-                return false;
+                return Visibility.Hidden;
             }
             else
             {
-                return true;
+                return Visibility.Visible;
             }
         }
 

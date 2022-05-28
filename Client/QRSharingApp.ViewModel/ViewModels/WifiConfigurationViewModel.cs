@@ -35,7 +35,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                 CurrentPassword = Password;
                 CurrentIsHidden = IsHidden;
 
-                SaveWifiConfiguration();
+                UpdateWifiConfiguration();
             },
             Observable.CombineLatest(
                 this.WhenAnyValue(_ => _.SSID),
@@ -67,6 +67,9 @@ namespace QRSharingApp.ViewModel.ViewModels
                 SSID = string.Empty;
                 Password = string.Empty;
                 WifiAuthenticationType = WifiAuthenticationType.Nopass;
+                IsHidden = false;
+
+                ClearWifiConfiguration();
             },
             this.WhenAnyValue(x => x.CurrentSSID).Select(_ => !string.IsNullOrEmpty(_))
         );
@@ -110,7 +113,10 @@ namespace QRSharingApp.ViewModel.ViewModels
             IsHidden = AppSettingService.WifiIsHidden;
             CurrentIsHidden = IsHidden;
 
-            SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
+            if (!string.IsNullOrEmpty(SSID))
+            {
+                SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
+            }
 
             return Task.CompletedTask;
         }
@@ -132,12 +138,20 @@ namespace QRSharingApp.ViewModel.ViewModels
             return bitmap;
         }
 
-        private void SaveWifiConfiguration()
+        private void UpdateWifiConfiguration()
         {
             AppSettingService.WifiLogin = CurrentSSID;
             AppSettingService.WifiPassword = CurrentPassword;
             AppSettingService.WifiAuthenticationType = (int)CurrentWifiAuthenticationType;
             AppSettingService.WifiIsHidden = CurrentIsHidden;
+        }
+
+        private void ClearWifiConfiguration()
+        {
+            AppSettingService.WifiLogin = string.Empty;
+            AppSettingService.WifiPassword = string.Empty;
+            AppSettingService.WifiAuthenticationType = 0;
+            AppSettingService.WifiIsHidden = false;
         }
     }
 }

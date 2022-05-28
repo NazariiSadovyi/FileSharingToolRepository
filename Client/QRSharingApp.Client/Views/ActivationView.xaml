@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:QRSharingApp.Client.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -22,13 +22,11 @@
             <WrapPanel HorizontalAlignment="Center"
                        Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
                        Margin="0 0 0 0">
-                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text="Tool activation status"/>
-                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text=": "/>
-                <TextBlock Text="{Binding SharedAppData.ActivationStatus}">
+                <TextBlock FontSize="14" Text="Tool activation status"/>
+                <TextBlock FontSize="14" Text=": "/>
+                <TextBlock FontSize="14" Text="{Binding SharedAppData.ActivationStatus}">
                     <TextBlock.Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle1TextBlock}">
+                        <Style TargetType="TextBlock">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Activated">
                                     <Setter Property="Foreground" Value="Green"/>
@@ -51,23 +49,20 @@
             <WrapPanel HorizontalAlignment="Center"
                        Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
                        Margin="0 0 0 0">
-                <!--<TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text="{DynamicResource ThisToolIsActivated}"/>-->
-                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text="Current key"/>
-                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text=": "/>
-                <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                           Text="{Binding CurrentActivationKey}"/>
+                <TextBlock FontSize="14" Text="Current key"/>
+                <TextBlock FontSize="14" Text=": "/>
+                <TextBlock FontSize="14" Text="{Binding CurrentActivationKey}"/>
             </WrapPanel>
 
             <Grid Margin="20 20 20 10">
-                <TextBox Style="{StaticResource MaterialDesignFilledTextBox}"
-                         materialDesign:HintAssist.Hint="{DynamicResource ActivationViewTextBoxHint}"
-                         Text="{Binding NewActivationKey, UpdateSourceTrigger=PropertyChanged}"
-                         VerticalAlignment="Top"
-                         AcceptsReturn="False"
-                         TextWrapping="Wrap" />
+                <hc:TextBox
+                    hc:InfoElement.Placeholder="{DynamicResource ActivationViewTextBoxHint}"
+                    Text="{Binding NewActivationKey, UpdateSourceTrigger=PropertyChanged}"
+                    VerticalAlignment="Top"
+                    AcceptsReturn="False"
+                    TextWrapping="Wrap"
+                    Height="35"
+                    FontSize="14"/>
             </Grid>
 
             <WrapPanel HorizontalAlignment="Center">
@@ -86,13 +81,19 @@
                         </Style>
                     </Grid.Style>
                     <Button Margin="0 0 10 0"
+                            Style="{DynamicResource ButtonPrimary}"
+                            Width="150"
                             Command="{Binding RefreshActivationCmd}"
                             Content="{DynamicResource RefreshViewButtonActivation}"/>
                 </Grid>
                 <Button Margin="10 0 10 0"
+                        Style="{DynamicResource ButtonDefault}"
+                        Width="150"
                         Command="{Binding RemoveActivationCmd}"
                         Content="{DynamicResource DeactivationViewButtonActivation}"/>
                 <Button Margin="10 0 0 0"
+                        Style="{DynamicResource ButtonSuccess}"
+                        Width="150"
                         Command="{Binding ActivateCmd}"
                         Content="{DynamicResource ActivationViewButtonActivation}"/>
             </WrapPanel>

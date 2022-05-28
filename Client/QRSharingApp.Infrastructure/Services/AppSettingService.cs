@@ -26,9 +26,9 @@ namespace QRSharingApp.Infrastructure.Services
                 if (string.IsNullOrEmpty(value))
                     return false;
 
-                return bool.Parse(value);
+                return value == "1";
             }
-            set { _settingApi.SetSetting(_downloadViaForm, value.ToString()); }
+            set { _settingApi.SetSetting(_downloadViaForm, value ? "1" : "0"); }
         }
 
         public string WebBackgroundImagePath
