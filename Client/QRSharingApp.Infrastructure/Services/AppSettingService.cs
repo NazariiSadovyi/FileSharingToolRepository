@@ -1,5 +1,6 @@
 ﻿using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
+using System.Linq;
 
 namespace QRSharingApp.Infrastructure.Services
 {
@@ -17,6 +18,20 @@ namespace QRSharingApp.Infrastructure.Services
         private readonly string _autoSwitchSeconds = "AutoSwitchSeconds";
         private readonly string _webBackgroundImagePath = "WebBackgroundImagePath";
         private readonly string _downloadViaForm = "DownloadViaForm";
+        private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
+
+        public int[] RequiredFieldsForDownload
+        {
+            get
+            {
+                var value = _settingApi.GetSetting(_requiredFieldsForDownload);
+                if (string.IsNullOrEmpty(value))
+                    return new int[0];
+
+                return value.Split(",").Select(_ => int.Parse(_)).ToArray();
+            }
+            set { _settingApi.SetSetting(_requiredFieldsForDownload, string.Join(",", value)); }
+        }
 
         public bool DownloadViaForm
         {
@@ -106,7 +121,7 @@ namespace QRSharingApp.Infrastructure.Services
             {
                 var value = _settingApi.GetSetting(_autoSwitchSeconds);
                 if (string.IsNullOrEmpty(value))
-                    return 15;
+                    return 0;
 
                 return int.Parse(value);
             }

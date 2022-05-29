@@ -10,134 +10,257 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:DesignViewModel}">
-    <StackPanel Width="auto"
-                Margin="50">
-        <StackPanel.Resources>
-            <Style TargetType="StackPanel">
-                <Setter Property="Margin"
-                        Value="0 30 0 30" />
-            </Style>
-        </StackPanel.Resources>
+    <ScrollViewer Width="auto" Margin="5 5 0 5">
+        <StackPanel Margin="0 0 10 0" MaxWidth="600">
+            <!--General settings-->
+            <Expander Header="General" IsExpanded="True" Margin="0 5 0 5">
+                <Border
+                    BorderThickness="1,0,1,1"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="0,0,4,4">
+                    <StackPanel Margin="10">
+                        <StackPanel.Resources>
+                            <Style TargetType="WrapPanel">
+                                <Setter Property="Margin" Value="0 5 0 5"/>
+                                <Style.Resources>
+                                    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                        <Setter Property="Width" Value="370"/>
+                                    </Style>
+                                    <Style TargetType="hc:ButtonGroup" BasedOn="{StaticResource ButtonGroupBaseStyle}">
+                                        <Setter Property="Width" Value="370"/>
+                                        <Setter Property="Orientation" Value="Horizontal"/>
+                                    </Style>
+                                </Style.Resources>
+                            </Style>
+                        </StackPanel.Resources>
+                        
+                        <WrapPanel>
+                            <Label Content="Language"/>
+                            <hc:ButtonGroup>
+                                <RadioButton
+                                    Command="{Binding ChangeLanguageCmd}"
+                                    Content="{DynamicResource DesignViewButtonLanguageEng}"
+                                    CommandParameter="en-US"
+                                    IsChecked="True"/>
+                                <RadioButton
+                                    Command="{Binding ChangeLanguageCmd}"
+                                    CommandParameter="es-ES"
+                                    Content="{DynamicResource DesignViewButtonLanguageES}"/>
+                                <RadioButton
+                                    Command="{Binding ChangeLanguageCmd}"
+                                    CommandParameter="ru-RU"
+                                    Content="{DynamicResource DesignViewButtonLanguageRu}"/>
+                            </hc:ButtonGroup>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Window screen mode"/>
+                            <hc:ButtonGroup>
+                                <RadioButton
+                                    Command="{Binding ChangeWindowModeCmd}"
+                                    CommandParameter="full"
+                                    Content="{DynamicResource DesignViewButtonFullScreenMode}"/>
+                                <RadioButton
+                                    Command="{Binding ChangeWindowModeCmd}"
+                                    CommandParameter="normal"
+                                    Content="{DynamicResource DesignViewButtonWindowMode}"/>
+                            </hc:ButtonGroup>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Window style"/>
+                            <hc:ButtonGroup Width="auto">
+                                <RadioButton
+                                    Background="White"
+                                    CommandParameter="full"
+                                    IsChecked="True"
+                                    Width="50"/>
+                                <RadioButton
+                                    Background="Black"
+                                    CommandParameter="full"
+                                    Width="50"/>
+                                <RadioButton
+                                    Background="Purple"
+                                    CommandParameter="full"
+                                    Width="50"/>
+                            </hc:ButtonGroup>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </Expander>
+            
+            <!--Desktop app settings-->
+            <Expander Header="Desktop app settings" IsExpanded="True" Margin="0 5 0 5">
+                <Border
+                    BorderThickness="1,0,1,1"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="0,0,4,4">
+                    <StackPanel Margin="10">
+                        <StackPanel.Resources>
+                            <Style TargetType="WrapPanel">
+                                <Setter Property="Margin" Value="0 5 0 5"/>
+                                <Style.Resources>
+                                    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                        <Setter Property="Width" Value="370"/>
+                                    </Style>
+                                    <Style TargetType="hc:ButtonGroup" BasedOn="{StaticResource ButtonGroupBaseStyle}">
+                                        <Setter Property="Width" Value="370"/>
+                                        <Setter Property="Orientation" Value="Horizontal"/>
+                                    </Style>
+                                </Style.Resources>
+                            </Style>
+                        </StackPanel.Resources>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button Command="{Binding ChangeLanguageCmd}"
-                    Width="200"
-                    Margin="0 0 30 0"
-                    CommandParameter="en-US"
-                    Content="{DynamicResource DesignViewButtonLanguageEng}" />
-            <Button Command="{Binding ChangeLanguageCmd}"
-                    Width="200"
-                    Margin="0 0 30 0"
-                    CommandParameter="es-ES"
-                    Content="{DynamicResource DesignViewButtonLanguageES}" />
-            <Button Command="{Binding ChangeLanguageCmd}"
-                    Width="200"
-                    Margin="0 0 30 0"
-                    CommandParameter="ru-RU"
-                    Content="{DynamicResource DesignViewButtonLanguageRu}" />
+                        <WrapPanel>
+                            <Label Content="Preview background image"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <hc:TextBox
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    Text="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    ToolTip="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    hc:BorderElement.CornerRadius="5 0 0 5"
+                                    FontSize="14"
+                                    IsReadOnly="True"
+                                    Focusable="False"
+                                    ShowClearButton="True"
+                                    hc:InfoElement.Placeholder="{DynamicResource WebPreviewBackgroundPicture}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Width="60"
+                                    hc:BorderElement.CornerRadius="0 5 5 0"
+                                    Style="{DynamicResource ButtonSuccess}"
+                                    Command="{Binding SelectWebBackgroundImageCmd}"
+                                    HorizontalAlignment="Left"
+                                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
+                            </Grid>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="{DynamicResource DesignViewLabelSortingFiles}"/>
+                            <ToggleButton
+                                IsChecked="{Binding SortingDisplayFiles}"
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ToggleButtonSwitch}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="{DynamicResource PreviewFileAutoSwitchSeconds}"/>
+                            <hc:NumericUpDown
+                                Minimum="0"
+                                Width="120"
+                                Value="{Binding AutoSwitchSeconds, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </Expander>
+            
+            <!--Web settings-->
+            <Expander Header="Web settings" IsExpanded="True" Margin="0 5 0 5">
+                <Border
+                    BorderThickness="1,0,1,1"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="0,0,4,4">
+                    <StackPanel Margin="10">
+                        <StackPanel.Resources>
+                            <Style TargetType="WrapPanel">
+                                <Setter Property="Margin" Value="0 5 0 5"/>
+                                <Style.Resources>
+                                    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                        <Setter Property="Width" Value="370"/>
+                                    </Style>
+                                    <Style TargetType="hc:ButtonGroup" BasedOn="{StaticResource ButtonGroupBaseStyle}">
+                                        <Setter Property="Width" Value="370"/>
+                                        <Setter Property="Orientation" Value="Horizontal"/>
+                                    </Style>
+                                </Style.Resources>
+                            </Style>
+                        </StackPanel.Resources>
+                        <WrapPanel>
+                            <Label Content="Background image"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <hc:TextBox
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    Text="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    ToolTip="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    hc:BorderElement.CornerRadius="5 0 0 5"
+                                    FontSize="14"
+                                    IsReadOnly="True"
+                                    Focusable="False"
+                                    ShowClearButton="True"
+                                    hc:InfoElement.Placeholder="{DynamicResource DesignViewTextBoxImageChoosing}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Width="60"
+                                    hc:BorderElement.CornerRadius="0 5 5 0"
+                                    Style="{DynamicResource ButtonSuccess}"
+                                    Command="{Binding SelectGridPreviewBackgroundImageCmd}"
+                                    HorizontalAlignment="Left"
+                                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
+                            </Grid>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="{DynamicResource DesignViewLabelDirectFileDownload}"/>
+                            <ToggleButton
+                                IsChecked="{Binding DownloadViaForm}"
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ToggleButtonSwitch}"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <Label Content="Required fields"/>
+                            <hc:CheckComboBox
+                                Width="370"
+                                ShowClearButton="True"
+                                HorizontalAlignment="Stretch"
+                                DisplayMemberPath="DisplayText"
+                                ShowSelectAllButton="False"
+                                ItemsSource="{Binding FormRequiredFields}"
+                                SelectionMode="Multiple"
+                                VirtualizingStackPanel.IsVirtualizing="False"
+                                DataContextChanged="CheckComboBox_DataContextChanged">
+                                <hc:CheckComboBox.ItemContainerStyle>
+                                    <Style TargetType="hc:CheckComboBoxItem" BasedOn="{StaticResource CheckComboBoxItemBaseStyle}">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    </Style>
+                                </hc:CheckComboBox.ItemContainerStyle>
+                            </hc:CheckComboBox>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </Expander>
         </StackPanel>
-
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="200" />
-            </Grid.ColumnDefinitions>
-
-            <hc:TextBox
-                Grid.Column="0"
-                Margin="50 0 10 0"
-                Text="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
-                IsReadOnly="True"
-                FontSize="14"
-                Focusable="False"
-                ShowClearButton="True"
-                hc:InfoElement.Placeholder="{DynamicResource DesignViewTextBoxImageChoosing}" />
-            <Button Grid.Column="1"
-                    Width="150"
-                    Style="{DynamicResource ButtonSuccess}"
-                    Command="{Binding SelectGridPreviewBackgroundImageCmd}"
-                    HorizontalAlignment="Left"
-                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
-        </Grid>
-
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="200" />
-            </Grid.ColumnDefinitions>
-
-            <hc:TextBox
-                Grid.Column="0"
-                Margin="50 10 10 0"
-                Text="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
-                FontSize="14"
-                IsReadOnly="True"
-                Focusable="False"
-                ShowClearButton="True"
-                hc:InfoElement.Placeholder="{DynamicResource WebPreviewBackgroundPicture}" />
-            <Button Grid.Column="1"
-                    Margin="0 10 0 0"
-                    Width="150"
-                    Style="{DynamicResource ButtonSuccess}"
-                    Command="{Binding SelectWebBackgroundImageCmd}"
-                    HorizontalAlignment="Left"
-                    Content="{DynamicResource DesignViewButtonImageChoosing}" />
-        </Grid>
-
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button Command="{Binding ChangeWindowModeCmd}"
-                    CommandParameter="full"
-                    Width="220"
-                    Margin="0 0 30 0"
-                    Content="{DynamicResource DesignViewButtonFullScreenMode}" />
-            <Button Command="{Binding ChangeWindowModeCmd}"
-                    Width="220"
-                    Margin="30 0 0 0"
-                    CommandParameter="normal"
-                    Content="{DynamicResource DesignViewButtonWindowMode}" />
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <hc:TextBox Text="{Binding AutoSwitchSeconds, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Content="{DynamicResource PreviewFileAutoSwitchSeconds}"
-                   FontSize="14"
-                   BorderThickness="0"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <ToggleButton
-                IsChecked="{Binding SortingDisplayFiles}"
-                Height="25"
-                Margin="0,0,0,10"
-                HorizontalAlignment="Left"
-                Style="{StaticResource ToggleButtonSwitch}"/>
-            <Label Content="{DynamicResource DesignViewLabelSortingFiles}"
-                   BorderThickness="0"
-                   FontSize="14"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Center" />
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <ToggleButton
-                IsChecked="{Binding DownloadViaForm}"
-                Height="25"
-                Margin="0,0,0,10"
-                HorizontalAlignment="Left"
-                Style="{StaticResource ToggleButtonSwitch}"/>
-            <Label Content="{DynamicResource DesignViewLabelDirectFileDownload}"
-                   BorderThickness="0"
-                   FontSize="14"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Center" />
-        </StackPanel>
-
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>

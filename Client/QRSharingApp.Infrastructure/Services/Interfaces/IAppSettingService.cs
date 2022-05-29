@@ -12,5 +12,6 @@
         int AutoSwitchSeconds { get; set; }
         bool DownloadViaForm { get; set; }
         string WebBackgroundImagePath { get; set; }
+        int[] RequiredFieldsForDownload { get; set; }
     }
 }

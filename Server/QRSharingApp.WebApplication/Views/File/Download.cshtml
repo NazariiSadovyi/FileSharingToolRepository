@@ -1,9 +1,13 @@
 ﻿@using QRSharingApp.WebApplication.Controllers
 @using QRSharingApp.WebApplication.Helpers
+@using QRSharingApp.WebApplication.Services
 @model DownloadDataViewModel
+
+@inject ISharedSettingService sharedSettingService
 
 @{
     var currentCountryCode = System.Globalization.RegionInfo.CurrentRegion.TwoLetterISORegionName;
+    var requiredFields = sharedSettingService.RequiredFieldsForDownload;
 }
 
 <style>
@@ -19,30 +23,77 @@
     </div>
     <div class="card-body">
         <div style="position: relative;">
+            <div style="margin: 0px 14px;">
+                @if (!requiredFields.Contains(1))
+                {
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input id="name" name="name" type="text" class="form-control" onkeyup="OnFormInputChanged(event)">
+                    </div>
+                }
+
+                @if (!requiredFields.Contains(2))
+                {
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="email" class="form-control" onkeyup="OnFormInputChanged(event)">
+                    </div>
+                }
+
+                @if (!requiredFields.Contains(3))
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">Country</label>
+                            @Html.DropDownList(
+                                "country-code-dropdown",
+                                CountriesHelper.GetAll().OrderBy(_ => _.Code).Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
+                                new { @class = "form-select" })
+                        </div>
+                        <div class="col-6">
+                            <label for="phone" class="form-label">Phone number</label>
+                            <input id="phone" name="phone" type="tel" class="form-control" pattern="^\d{2}-\d{3}-\d{2}-\d{2}" onkeyup="OnFormInputChanged(event)">
+                        </div>
+                    </div>
+                }
+            </div>
             <form id="download-file-form" class="was-validated card-body" onsubmit="OnDownloadFormSubmit(event)"
-                  method="post" action="/DownloadHistory/@nameof(DownloadHistoryController.Save)">
+                  method="post" action="/DownloadHistory/@nameof(DownloadHistoryController.Save)"
+                  style="padding: 1rem 1rem 1rem 1rem;">
                 @Html.HiddenFor(_ => _.Id)
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input id="name" name="name" type="text" class="form-control" required onkeyup="OnFormInputChanged(event)">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" name="email" type="email" class="form-control" required onkeyup="OnFormInputChanged(event)">
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <label class="form-label">Country</label>
-                        @Html.DropDownList(
-                            "country-code-dropdown",
-                            CountriesHelper.GetAll().OrderBy(_ => _.Code).Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
-                            new { @class = "form-select" })
+                @if (requiredFields.Contains(1))
+                {
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input id="name" name="name" type="text" class="form-control" required onkeyup="OnFormInputChanged(event)">
                     </div>
-                    <div class="col-6">
-                        <label for="phone" class="form-label">Phone number</label>
-                        <input id="phone" name="phone" type="tel" class="form-control" pattern="^\d{2}-\d{3}-\d{2}-\d{2}" required onkeyup="OnFormInputChanged(event)">
+                }
+
+                @if (requiredFields.Contains(2))
+                {
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="email" class="form-control" required onkeyup="OnFormInputChanged(event)">
                     </div>
-                </div>
+                }
+
+                @if (requiredFields.Contains(3))
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">Country</label>
+                            @Html.DropDownList(
+                                "country-code-dropdown",
+                                CountriesHelper.GetAll().OrderBy(_ => _.Code).Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
+                                new { @class = "form-select" })
+                        </div>
+                        <div class="col-6">
+                            <label for="phone" class="form-label">Phone number</label>
+                            <input id="phone" name="phone" type="tel" class="form-control" pattern="^\d{2}-\d{3}-\d{2}-\d{2}" required onkeyup="OnFormInputChanged(event)">
+                        </div>
+                    </div>
+                }
+                
                 <div class="mb-3" style="margin-top: 30px">
                     <a class="btn btn-outline-primary" href="@($"/File/{nameof(FileController.Preview)}/{Model.Id}")">
                         Back
@@ -63,7 +114,8 @@
     function OnFormInputChanged(e) {
         if (document.getElementById("name").checkValidity()
             && document.getElementById("email").checkValidity()
-            && !document.getElementById("phone").value.includes('_')) {
+            && (!document.getElementById("phone").value.includes('_') || !document.getElementById("phone").hasAttribute("required")))
+        {
             var element = document.getElementById("download-file-link");
             element.classList.remove("disabled");
 
@@ -73,7 +125,8 @@
                 + "&email=" + encodeURIComponent(document.getElementById("email").value)
                 + "&phone=" + encodeURIComponent("+" + document.getElementById("country-code-dropdown").value + "-" + document.getElementById("phone").value);
         }
-        else {
+        else
+        {
             var element = document.getElementById("download-file-link");
             element.classList.add("disabled");
         }
@@ -85,5 +138,7 @@
                 mask: '00-000-00-00',
                 lazy: false,
         });
+
+        OnFormInputChanged(null);
     })();
 </script>

@@ -1,4 +1,5 @@
 ﻿using QRSharingApp.DataAccess.Repositories.Interfaces;
+using System.Linq;
 
 namespace QRSharingApp.WebApplication.Services
 {
@@ -6,6 +7,7 @@ namespace QRSharingApp.WebApplication.Services
     {
         bool DownloadViaForm { get; set; }
         string WebBackgroundImagePath { get; set; }
+        int[] RequiredFieldsForDownload { get; set; }
     }
 
     public class SharedSettingService : ISharedSettingService
@@ -14,6 +16,20 @@ namespace QRSharingApp.WebApplication.Services
 
         private readonly string _webBackgroundImagePath = "WebBackgroundImagePath";
         private readonly string _downloadViaForm = "DownloadViaForm";
+        private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
+
+        public int[] RequiredFieldsForDownload
+        {
+            get
+            {
+                var value = _settingRepository.GetStringSetting(_requiredFieldsForDownload);
+                if (string.IsNullOrEmpty(value))
+                    return new int[0];
+
+                return value.Split(",").Select(_ => int.Parse(_)).ToArray();
+            }
+            set { _settingRepository.SetSetting(_requiredFieldsForDownload, string.Join(",", value)); }
+        }
 
         public bool DownloadViaForm
         {

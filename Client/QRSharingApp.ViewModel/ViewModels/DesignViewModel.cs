@@ -1,7 +1,14 @@
-﻿using QRSharingApp.Infrastructure.Services.Interfaces;
+﻿using DynamicData;
+using DynamicData.Binding;
+using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -26,19 +33,23 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         #region Properties
         public string BackgroundImagePath { get; set; }
-
         public string WebBackgroundImagePath { get; set; }
-
         public bool SortingDisplayFiles { get; set; }
-
         public bool DownloadViaForm { get; set; }
-
         public int AutoSwitchSeconds { get; set; }
+
+        public ObservableCollection<ListBoxItemViewModel> FormRequiredFields { get; set; }
+        public bool AllFieldsWereRequired { get; set; }
         #endregion
 
         #region Commands
         public ICommand ChangeLanguageCmd => ReactiveCommand.Create<string>(
             cultureName => {
+                var newCultureInfo = new System.Globalization.CultureInfo(cultureName);
+                if (CultureLocalization.Localization.Language.Name == newCultureInfo.Name)
+                {
+                    return;
+                }
                 CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
                 AppSettingService.CultureName = cultureName;
             }
@@ -73,12 +84,20 @@ namespace QRSharingApp.ViewModel.ViewModels
                 switch (mode)
                 {
                     case "full":
+                        if (MainWindowViewModel.WindowStyle == WindowStyle.None)
+                        {
+                            return;
+                        }
                         _previousWindowState = MainWindowViewModel.WindowState;
                         MainWindowViewModel.WindowState = WindowState.Maximized;
                         MainWindowViewModel.WindowStyle = WindowStyle.None;
                         MainWindowViewModel.ResizeMode = ResizeMode.NoResize;
                         break;
                     case "normal":
+                        if (MainWindowViewModel.WindowStyle == WindowStyle.SingleBorderWindow)
+                        {
+                            return;
+                        }
                         MainWindowViewModel.WindowState = _previousWindowState;
                         MainWindowViewModel.WindowStyle = WindowStyle.SingleBorderWindow;
                         MainWindowViewModel.ResizeMode = ResizeMode.CanResize;
@@ -128,6 +147,25 @@ namespace QRSharingApp.ViewModel.ViewModels
             SortingDisplayFiles = AppSettingService.SortingDisplayFiles;
             DownloadViaForm = AppSettingService.DownloadViaForm;
             AutoSwitchSeconds = AppSettingService.AutoSwitchSeconds;
+
+            var selectedRequiredFields = AppSettingService.RequiredFieldsForDownload;
+            FormRequiredFields = new ObservableCollection<ListBoxItemViewModel>
+            {
+               new ListBoxItemViewModel(1, "Name", selectedRequiredFields.Contains(1)),
+               new ListBoxItemViewModel(2, "Email", selectedRequiredFields.Contains(2)),
+               new ListBoxItemViewModel(3, "Phone", selectedRequiredFields.Contains(3))
+            };
+            AllFieldsWereRequired = FormRequiredFields.All(_ => _.IsSelected);
+            FormRequiredFields
+                .ToObservableChangeSet()
+                .WhenAnyPropertyChanged()
+                .Subscribe(_ =>
+                {
+                    AppSettingService.RequiredFieldsForDownload = FormRequiredFields
+                        .Where(_ => _.IsSelected)
+                        .Select(_ => _.Id)
+                        .ToArray();
+                });
 
             return Task.CompletedTask;
         }
