@@ -53,7 +53,7 @@
         @if (viewModel.IsVideo)
         {
             <div class="border border-4 photo-thumbnail-item"
-                 data-video='{"source": [{"src":"@viewModel.Adress", "type":"video/@viewModel.Extension"}], "attributes": {"preload": true, "playsinline": true, "controls": true, "autoplay": true}}'
+                 data-video='{"source": [{"src":"@viewModel.Adress", "type":"video/@viewModel.Extension"}], "attributes": {"preload": true, "playsinline": true, "controls": true, "autoplay": true, "loop": true}}'
                  data-poster="@viewModel.ThumbnailAdress">
                 <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
                 <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
@@ -99,6 +99,7 @@
         thumbnail: true,
         videojs: false,
         autoplayVideoOnSlide: true,
-        autoplayFirstVideo: true
+        autoplayFirstVideo: true,
+        gotoNextSlideOnVideoEnd: false
     });
 </script>

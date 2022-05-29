@@ -7,7 +7,7 @@ connection.on("FileAdded", function (id, fileName, adress, thumbnailAdress, qRCo
     var htmlContent = "";
     if (isVideo) {
         htmlContent = "<div class=\"border border-4 photo-thumbnail-item\" data-video=\'{\"source\": [{\"src\":\"" + adress + "\", \"type\":\"video/"
-            + extension + "\"}], \"attributes\": {\"preload\": true, \"playsinline\": true, \"controls\": true, \"autoplay\": true}}\' data-poster=\""
+            + extension + "\"}], \"attributes\": {\"preload\": true, \"playsinline\": true, \"controls\": true, \"autoplay\": true, \"loop\": true}}\' data-poster=\""
             + thumbnailAdress + "\" data-sub-html=\" \"> <img class=\"thumbnail-img\" src=\""
             + thumbnailAdress + "\" /> <img class=\"thumbnail-qrcode-img\" src=\"" + qRCodeAdress + "\" /> </div>";
     }
