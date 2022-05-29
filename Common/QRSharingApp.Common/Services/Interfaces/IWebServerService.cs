@@ -6,6 +6,7 @@ namespace QRSharingApp.Common.Services.Interfaces
     public interface IWebServerService
     {
         string WebLocalhostUrl { get; }
+        string WebUrl { get; }
 
         event EventHandler<bool> NetworkChanged;
 

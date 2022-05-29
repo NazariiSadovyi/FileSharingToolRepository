@@ -11,6 +11,7 @@ namespace QRSharingApp.Common.Services
     public class WebServerService : IWebServerService
     {
         public string WebLocalhostUrl => SharedConstants.LocalhostPath;
+        public string WebUrl => GetLocalAdress() != null ? $@"http://{GetLocalAdress()}:{SharedConstants.Port}" : null;
 
         public event EventHandler<bool> NetworkChanged;
 

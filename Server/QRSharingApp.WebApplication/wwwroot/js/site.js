@@ -8,12 +8,12 @@ connection.on("FileAdded", function (id, fileName, adress, thumbnailAdress, qRCo
     if (isVideo) {
         htmlContent = "<div class=\"border border-4 photo-thumbnail-item\" data-video=\'{\"source\": [{\"src\":\"" + adress + "\", \"type\":\"video/"
             + extension + "\"}], \"attributes\": {\"preload\": true, \"playsinline\": true, \"controls\": true, \"autoplay\": true}}\' data-poster=\""
-            + thumbnailAdress + "\" data-sub-html=\"<h4>\'Peck Pocketed\' by Kevin Herron | Disney Favorite</h4>\"> <img class=\"thumbnail-img\" src=\""
+            + thumbnailAdress + "\" data-sub-html=\" \"> <img class=\"thumbnail-img\" src=\""
             + thumbnailAdress + "\" /> <img class=\"thumbnail-qrcode-img\" src=\"" + qRCodeAdress + "\" /> </div>";
     }
     else {
         htmlContent = "<div class=\"border border-4 video-thumbnail-item\" data-src=\'"
-            + adress + "\' data-sub-html=\"<h4>\'Peck Pocketed\' by Kevin Herron | Disney Favorite</h4>\"> <img class=\"thumbnail-img\" src=\""
+            + adress + "\' data-sub-html=\" \"> <img class=\"thumbnail-img\" src=\""
             + thumbnailAdress + "\" /> <img class=\"thumbnail-qrcode-img\" src=\"" + qRCodeAdress + "\" /> </div>";
     }
 

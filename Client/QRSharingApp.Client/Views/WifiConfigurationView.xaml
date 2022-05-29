@@ -9,7 +9,7 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:WifiConfigurationViewModel}">
-    <Grid Margin="20">
+    <Grid Margin="20 20 20 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="0.4*"/>
@@ -72,10 +72,17 @@
         </StackPanel>
         
         <StackPanel Grid.Column="1">
+            <!--Wifi QR link-->
+            <Label
+                Content="Wifi QR link"
+                BorderThickness="0"
+                Panel.ZIndex="1"
+                FontSize="14"
+                HorizontalAlignment="Center"/>
             <Image
                 Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
                 HorizontalAlignment="Center"
-                Margin="0 10 0 0"
+                Margin="0 10 0 64"
                 Width="200"
                 Height="200">
                 <Image.Source>
@@ -87,8 +94,38 @@
                 </Image.Source>
             </Image>
             <Image
+                Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}}"
                 Source="{Binding SharedAppDataViewModel.WifiQRImage}"
-                Margin="0 -30 0 0"
+                VerticalAlignment="Top"
+                Margin="0 -20 0 0"
+                Height="300" />
+            
+            <!--Web gallery QR link-->
+            <Label
+                Content="Web gallery QR link"
+                BorderThickness="0"
+                Panel.ZIndex="1"
+                FontSize="14"
+                HorizontalAlignment="Center"/>
+            <Image
+                Visibility="{Binding SharedAppDataViewModel.WebUrlQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                HorizontalAlignment="Center"
+                Margin="0 10 0 0"
+                Width="150"
+                Height="200">
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <GeometryDrawing Geometry="{DynamicResource CancelGeometry}" Brush="LightGray"/>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+            </Image>
+            <Image
+                Margin="0 -20 0 0"
+                Panel.ZIndex="0"
+                Source="{Binding SharedAppDataViewModel.WebUrlQRImage}"
+                VerticalAlignment="Top"
                 Height="300" />
         </StackPanel>
     </Grid>

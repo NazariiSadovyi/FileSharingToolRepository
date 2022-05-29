@@ -23,6 +23,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IAppSettingService AppSettingService;
         [Dependency]
         public IQRCodeGeneratorService QRCodeGeneratorService;
+        [Dependency]
+        public IWebServerService WebServerService;
         #endregion
 
         #region Commands
@@ -118,7 +120,25 @@ namespace QRSharingApp.ViewModel.ViewModels
                 SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
             }
 
+            if (!string.IsNullOrEmpty(WebServerService.WebUrl))
+            {
+                SharedAppDataViewModel.WebUrlQRImage = GenerateWebUrlImage();
+            }
+            WebServerService.NetworkChanged += WebServerService_NetworkChanged;
+
             return Task.CompletedTask;
+        }
+
+        private void WebServerService_NetworkChanged(object sender, bool isAvailable)
+        {
+            if (isAvailable)
+            {
+                SharedAppDataViewModel.WebUrlQRImage = GenerateWebUrlImage();
+            }
+            else
+            {
+                SharedAppDataViewModel.WebUrlQRImage = null;
+            }
         }
 
         private BitmapImage GenerateWifiBitmapImage()
@@ -128,6 +148,22 @@ namespace QRSharingApp.ViewModel.ViewModels
             using (var stream = new MemoryStream())
             {
                 QRCodeGeneratorService.SaveToStream(wifiConnectionString, stream);
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+            }
+
+            return bitmap;
+        }
+
+        private BitmapImage GenerateWebUrlImage()
+        {
+            var bitmap = new BitmapImage();
+            using (var stream = new MemoryStream())
+            {
+                QRCodeGeneratorService.SaveToStream(WebServerService.WebUrl, stream);
                 bitmap.BeginInit();
                 bitmap.StreamSource = stream;
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;

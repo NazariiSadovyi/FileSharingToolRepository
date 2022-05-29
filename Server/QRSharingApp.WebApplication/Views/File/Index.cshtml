@@ -40,6 +40,11 @@
         bottom: 0%;
         right: 0%;
     }
+
+    #lg-download-1
+    {
+        display: none
+    }
 </style>
 
 <div id="lightgallery" style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly;">
@@ -49,8 +54,7 @@
         {
             <div class="border border-4 photo-thumbnail-item"
                  data-video='{"source": [{"src":"@viewModel.Adress", "type":"video/@viewModel.Extension"}], "attributes": {"preload": true, "playsinline": true, "controls": true, "autoplay": true}}'
-                 data-poster="@viewModel.ThumbnailAdress"
-                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>">
+                 data-poster="@viewModel.ThumbnailAdress">
                 <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
                 <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
             </div>
@@ -58,8 +62,7 @@
         else
         {
             <div class="border border-4 video-thumbnail-item"
-                 data-src='@viewModel.Adress'
-                 data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>">
+                 data-src='@viewModel.Adress'>
                 <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
                 <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
             </div>

@@ -9,5 +9,6 @@ namespace QRSharingApp.ViewModel.ViewModels.Interfaces
         ActivationStatus ActivationStatus { get; set; }
         bool IsPreviewVisible { get; set; }
         BitmapImage WifiQRImage { get; set; }
+        BitmapImage WebUrlQRImage { get; set; }
     }
 }
