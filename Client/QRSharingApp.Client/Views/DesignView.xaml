@@ -29,6 +29,8 @@
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Padding" Value="5 3.5 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
                                     </Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -65,12 +67,13 @@
                             <hc:ButtonGroup>
                                 <RadioButton
                                     Command="{Binding ChangeWindowModeCmd}"
-                                    CommandParameter="full"
-                                    Content="{DynamicResource DesignViewButtonFullScreenMode}"/>
+                                    CommandParameter="normal"
+                                    Content="{DynamicResource DesignViewButtonWindowMode}"
+                                    IsChecked="true"/>
                                 <RadioButton
                                     Command="{Binding ChangeWindowModeCmd}"
-                                    CommandParameter="normal"
-                                    Content="{DynamicResource DesignViewButtonWindowMode}"/>
+                                    CommandParameter="full"
+                                    Content="{DynamicResource DesignViewButtonFullScreenMode}"/>
                             </hc:ButtonGroup>
                         </WrapPanel>
                         <WrapPanel>
@@ -112,6 +115,8 @@
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Padding" Value="5 3.5 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
                                     </Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -169,6 +174,61 @@
                                 Width="120"
                                 Value="{Binding AutoSwitchSeconds, UpdateSourceTrigger=PropertyChanged}"/>
                         </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="{DynamicResource PreviewFileAutoSwitchSeconds}"/>
+                            <hc:ButtonGroup>
+                                <RadioButton
+                                    Height="40"
+                                    Padding="0"
+                                    Command="{Binding ChangeItemsInGridCommand}"
+                                    CommandParameter="1"
+                                    IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=1}">
+                                    <RadioButton.Content>
+                                        <Image Source="/QRSharingApp.Client;component/Resources/Img/1x1.png" />
+                                    </RadioButton.Content>
+                                </RadioButton>
+                                <RadioButton
+                                    Height="40"
+                                    Padding="0"
+                                    Command="{Binding ChangeItemsInGridCommand}"
+                                    CommandParameter="4"
+                                    IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=4}">
+                                    <RadioButton.Content>
+                                        <Image Source="/QRSharingApp.Client;component/Resources/Img/2x2.png" />
+                                    </RadioButton.Content>
+                                </RadioButton>
+                                <RadioButton
+                                    Height="40"
+                                    Padding="0"
+                                    Command="{Binding ChangeItemsInGridCommand}"
+                                    CommandParameter="9"
+                                    IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=9}">
+                                    <RadioButton.Content>
+                                        <Image Source="/QRSharingApp.Client;component/Resources/Img/3x3.png" />
+                                    </RadioButton.Content>
+                                </RadioButton>
+                                <RadioButton
+                                    Height="40"
+                                    Padding="0"
+                                    Command="{Binding ChangeItemsInGridCommand}"
+                                    CommandParameter="12"
+                                    IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=12}">
+                                    <RadioButton.Content>
+                                        <Image Source="/QRSharingApp.Client;component/Resources/Img/4x3.png" />
+                                    </RadioButton.Content>
+                                </RadioButton>
+                                <RadioButton
+                                    Height="40"
+                                    Padding="0"
+                                    Command="{Binding ChangeItemsInGridCommand}"
+                                    CommandParameter="20"
+                                    IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=20}">
+                                    <RadioButton.Content>
+                                        <Image Source="/QRSharingApp.Client;component/Resources/Img/5x4.png" />
+                                    </RadioButton.Content>
+                                </RadioButton>
+                            </hc:ButtonGroup>
+                        </WrapPanel>
                     </StackPanel>
                 </Border>
             </Expander>
@@ -190,6 +250,8 @@
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Padding" Value="5 3.5 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
                                     </Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -230,6 +292,14 @@
                                     HorizontalAlignment="Left"
                                     Content="{DynamicResource DesignViewButtonImageChoosing}" />
                             </Grid>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="ShowWifiQrCodeInWeb"/>
+                            <ToggleButton
+                                IsChecked="{Binding ShowWifiQrCodeInWeb}"
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ToggleButtonSwitch}"/>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Content="{DynamicResource DesignViewLabelDirectFileDownload}"/>

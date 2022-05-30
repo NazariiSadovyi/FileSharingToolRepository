@@ -17,6 +17,20 @@ namespace QRSharingApp.WebApplication.Services
         private readonly string _webBackgroundImagePath = "WebBackgroundImagePath";
         private readonly string _downloadViaForm = "DownloadViaForm";
         private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
+        private readonly string _showWifiQrCodeInWeb = "ShowWifiQrCodeInWeb";
+
+        public bool ShowWifiQrCodeInWeb
+        {
+            get
+            {
+                var value = _settingRepository.GetStringSetting(_showWifiQrCodeInWeb);
+                if (string.IsNullOrEmpty(value))
+                    return default;
+
+                return bool.Parse(value);
+            }
+            set { _settingRepository.SetSetting(_showWifiQrCodeInWeb, value.ToString()); }
+        }
 
         public int[] RequiredFieldsForDownload
         {

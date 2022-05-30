@@ -15,10 +15,26 @@ namespace QRSharingApp.Infrastructure.Services
         private readonly string _wifiPassword = "WifiPassword";
         private readonly string _wifiAuthenticationType = "wifiAuthenticationType";
         private readonly string _wifiIsHidden = "wifiIsHidden";
+        private readonly string _showWifiQrCodeInWeb = "ShowWifiQrCodeInWeb";
         private readonly string _autoSwitchSeconds = "AutoSwitchSeconds";
         private readonly string _webBackgroundImagePath = "WebBackgroundImagePath";
         private readonly string _downloadViaForm = "DownloadViaForm";
         private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
+        private readonly string _itemsInGridKey = "ItemsInGrid";
+
+        public int ItemsInGrid
+        {
+            get
+            {
+                var itemsInGrid = _settingApi.GetSetting(_itemsInGridKey);
+                if (string.IsNullOrEmpty(itemsInGrid))
+                {
+                    return 9;
+                }
+                return int.Parse(itemsInGrid);
+            }
+            set { _settingApi.SetSetting(_itemsInGridKey, value.ToString()); }
+        }
 
         public int[] RequiredFieldsForDownload
         {
@@ -100,6 +116,19 @@ namespace QRSharingApp.Infrastructure.Services
                 return bool.Parse(value);
             }
             set { _settingApi.SetSetting(_wifiIsHidden, value.ToString()); }
+        }
+
+        public bool ShowWifiQrCodeInWeb
+        {
+            get
+            {
+                var value = _settingApi.GetSetting(_showWifiQrCodeInWeb);
+                if (string.IsNullOrEmpty(value))
+                    return default;
+
+                return bool.Parse(value);
+            }
+            set { _settingApi.SetSetting(_showWifiQrCodeInWeb, value.ToString()); }
         }
 
         public bool SortingDisplayFiles 

@@ -13,5 +13,7 @@
         bool DownloadViaForm { get; set; }
         string WebBackgroundImagePath { get; set; }
         int[] RequiredFieldsForDownload { get; set; }
+        int ItemsInGrid { get; set; }
+        bool ShowWifiQrCodeInWeb { get; set; }
     }
 }

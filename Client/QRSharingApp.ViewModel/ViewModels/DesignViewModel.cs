@@ -4,7 +4,6 @@ using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using ReactiveUI;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
@@ -36,13 +35,22 @@ namespace QRSharingApp.ViewModel.ViewModels
         public string WebBackgroundImagePath { get; set; }
         public bool SortingDisplayFiles { get; set; }
         public bool DownloadViaForm { get; set; }
+        public bool ShowWifiQrCodeInWeb { get; set; }
         public int AutoSwitchSeconds { get; set; }
+        public int ItemsInGrid { get; set; }
 
         public ObservableCollection<ListBoxItemViewModel> FormRequiredFields { get; set; }
         public bool AllFieldsWereRequired { get; set; }
         #endregion
 
         #region Commands
+        public ICommand ChangeItemsInGridCommand => ReactiveCommand.Create<string>(
+            itemsInGrid => {
+                var itemsInGridInt = int.Parse(itemsInGrid);
+                ItemsInGrid = itemsInGridInt;
+            }
+        );
+
         public ICommand ChangeLanguageCmd => ReactiveCommand.Create<string>(
             cultureName => {
                 var newCultureInfo = new System.Globalization.CultureInfo(cultureName);
@@ -134,6 +142,12 @@ namespace QRSharingApp.ViewModel.ViewModels
                     case nameof(WebBackgroundImagePath):
                         AppSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
                         break;
+                    case nameof(ItemsInGrid):
+                        AppSettingService.ItemsInGrid = ItemsInGrid;
+                        break;
+                    case nameof(ShowWifiQrCodeInWeb):
+                        AppSettingService.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
+                        break;
                     default:
                         break;
                 }
@@ -147,6 +161,8 @@ namespace QRSharingApp.ViewModel.ViewModels
             SortingDisplayFiles = AppSettingService.SortingDisplayFiles;
             DownloadViaForm = AppSettingService.DownloadViaForm;
             AutoSwitchSeconds = AppSettingService.AutoSwitchSeconds;
+            ItemsInGrid = AppSettingService.ItemsInGrid;
+            ShowWifiQrCodeInWeb = AppSettingService.ShowWifiQrCodeInWeb;
 
             var selectedRequiredFields = AppSettingService.RequiredFieldsForDownload;
             FormRequiredFields = new ObservableCollection<ListBoxItemViewModel>

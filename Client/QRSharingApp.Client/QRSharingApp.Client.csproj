@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <None Remove="C:\Users\nazarii.sadovyi\.nuget\packages\nlog.schema\4.7.11\contentFiles\any\any\NLog.xsd" />
+    <None Remove="Resources\Img\1x1.png" />
+    <None Remove="Resources\Img\2x2.png" />
+    <None Remove="Resources\Img\3x3.png" />
+    <None Remove="Resources\Img\4x3.png" />
+    <None Remove="Resources\Img\5x4.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +35,14 @@
     <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj" />
     <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj" />
     <ProjectReference Include="..\QRSharingApp.ViewModel\QRSharingApp.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Img\1x1.png" />
+    <Resource Include="Resources\Img\2x2.png" />
+    <Resource Include="Resources\Img\3x3.png" />
+    <Resource Include="Resources\Img\4x3.png" />
+    <Resource Include="Resources\Img\5x4.png" />
   </ItemGroup>
 
   <ItemGroup>
