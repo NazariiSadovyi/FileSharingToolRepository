@@ -13,7 +13,7 @@
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:GridFilePreviewViewModel}">
 
-    <Grid Background="White">
+    <Grid Background="{DynamicResource RegionBrush}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="100" />
@@ -80,9 +80,10 @@
                             Margin="0 0 20 0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                    <TextBlock Text="Wifif QR Code"
-                               TextAlignment="Center"
-                               FontSize="15"/>
+                    <Label
+                        Content="Wifif QR Code"
+                        BorderThickness="0"
+                        FontSize="15"/>
                     <Grid>
                         <Image
                             Visibility="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"

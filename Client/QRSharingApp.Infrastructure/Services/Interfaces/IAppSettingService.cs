@@ -15,5 +15,6 @@
         int[] RequiredFieldsForDownload { get; set; }
         int ItemsInGrid { get; set; }
         bool ShowWifiQrCodeInWeb { get; set; }
+        string SkinType { get; set; }
     }
 }

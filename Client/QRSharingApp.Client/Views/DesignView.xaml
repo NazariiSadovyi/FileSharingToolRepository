@@ -83,18 +83,16 @@
                             <Label Content="{DynamicResource DesignViewButtonApplicationStyleLabel}"/>
                             <hc:ButtonGroup Width="auto">
                                 <RadioButton
+                                    Name="WhiteApplicationStyleRadioButton"
                                     Background="White"
-                                    CommandParameter="full"
                                     IsChecked="True"
-                                    Width="50"/>
+                                    Click="RadioButton_Click"
+                                    Width="60"/>
                                 <RadioButton
+                                    Name="BlackApplicationStyleRadioButton"
                                     Background="Black"
-                                    CommandParameter="full"
-                                    Width="50"/>
-                                <RadioButton
-                                    Background="Purple"
-                                    CommandParameter="full"
-                                    Width="50"/>
+                                    Click="RadioButton_Click"
+                                    Width="60"/>
                             </hc:ButtonGroup>
                         </WrapPanel>
                     </StackPanel>

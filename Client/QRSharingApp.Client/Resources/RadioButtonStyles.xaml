@@ -5,7 +5,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualRadius0}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
-        <Setter Property="Background" Value="#F0F0F0" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="hc:BorderElement.CornerRadius" Value="0" />
         <Setter Property="hc:VisualElement.HighlightBrush" Value="{DynamicResource PrimaryBrush}" />
@@ -30,7 +30,7 @@
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderBrush" Value="{Binding Path=(hc:VisualElement.HighlightBrush),RelativeSource={RelativeSource TemplatedParent}}" TargetName="BorderHighlight" />
-                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

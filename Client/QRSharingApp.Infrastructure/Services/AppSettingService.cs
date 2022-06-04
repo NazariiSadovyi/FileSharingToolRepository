@@ -21,6 +21,22 @@ namespace QRSharingApp.Infrastructure.Services
         private readonly string _downloadViaForm = "DownloadViaForm";
         private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
         private readonly string _itemsInGridKey = "ItemsInGrid";
+        private readonly string _skinType = "SkinType";
+
+        public string SkinType
+        {
+            get
+            {
+                var skinType = _settingApi.GetSetting(_skinType);
+                if (string.IsNullOrEmpty(skinType))
+                {
+                    return "white";
+                }
+
+                return skinType;
+            }
+            set { _settingApi.SetSetting(_skinType, value); }
+        }
 
         public int ItemsInGrid
         {

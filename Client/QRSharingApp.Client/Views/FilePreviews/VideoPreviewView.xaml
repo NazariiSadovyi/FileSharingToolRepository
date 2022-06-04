@@ -13,7 +13,7 @@
              DataContextChanged="UserControl_DataContextChanged"
              d:DataContext="{d:DesignInstance Type=vm:VideoFilePreviewViewModel}">
     <Grid Margin="0"
-          Background="White">
+          Background="{DynamicResource RegionBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition />

@@ -1,4 +1,6 @@
 ﻿using FFmpeg.AutoGen;
+using HandyControl.Data;
+using HandyControl.Tools;
 using NLog;
 using QRSharingApp.Client.Views;
 using QRSharingApp.ClientApi;
@@ -36,6 +38,10 @@ namespace QRSharingApp.Client
                 SetupExceptionHandling();
                 RegisterTypes();
                 InitFFMPEG();
+
+                var appSettingService = Container.Resolve<IAppSettingService>();
+                UpdateSkin(appSettingService.SkinType == "white" ? SkinType.Default : SkinType.Dark);
+                
                 CreateShell();
             }
             catch (Exception ex)
@@ -53,6 +59,22 @@ namespace QRSharingApp.Client
             GC.Collect();
             GC.WaitForPendingFinalizers();
             _logger.Info("All resources were released");
+        }
+
+        public void UpdateSkin(SkinType skin)
+        {
+            var skins0 = Resources.MergedDictionaries[0];
+            skins0.MergedDictionaries.Clear();
+            skins0.MergedDictionaries.Add(ResourceHelper.GetSkin(skin));
+
+            var skins1 = Resources.MergedDictionaries[1];
+            skins1.MergedDictionaries.Clear();
+            skins1.MergedDictionaries.Add(new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
+            });
+
+            Current.MainWindow?.OnApplyTemplate();
         }
 
         private void CreateShell()

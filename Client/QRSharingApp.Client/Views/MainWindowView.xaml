@@ -21,7 +21,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
+    <Grid Background="{DynamicResource RegionBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="300" MinWidth="300" />
             <ColumnDefinition Width="*" />
@@ -35,7 +35,7 @@
               Grid.Column="0"
               IsEnabled="{Binding SharedAppDataViewModel.IsPreviewVisible, Converter={StaticResource ReversBoolConverter}}"
               Grid.Row="0"
-              Background="#F0F0F0">
+              Background="{DynamicResource SecondaryRegionBrush}">
 
             <Grid.Resources>
                 <Style TargetType="RadioButton" BasedOn="{StaticResource RadioButtonIconCustomStyle}">
@@ -47,7 +47,7 @@
                     <Setter Property="FontSize" Value="15" />
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="Background" Value="{DynamicResource BorderBrush}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -92,6 +92,7 @@
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
+                        Background="{DynamicResource SecondaryRegionBrush}"
                         Grid.Row="1">
                 <Button Width="200"
                         Height="70"
@@ -139,7 +140,7 @@
               Visibility="{Binding ShowInformationMessage, Converter={StaticResource BoolToVisibilityConverterWhereFalseIsHidden}}">
             <Grid Height="190"
                   Width="540"
-                  Background="White">
+                  Background="{DynamicResource RegionBrush}">
                 <Grid Height="150"
                       Width="500">
                     <Grid.ColumnDefinitions>
@@ -222,8 +223,8 @@
                     <Grid Grid.Row="0"
                           Grid.Column="1">
                         <TextBlock VerticalAlignment="Center"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
                                    FontSize="14"
-                                   Foreground="Black"
                                    Text="{Binding InformationMessage}"
                                    TextWrapping="Wrap" />
                     </Grid>

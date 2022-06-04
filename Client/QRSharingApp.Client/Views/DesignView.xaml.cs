@@ -1,5 +1,8 @@
 ﻿using HandyControl.Controls;
+using HandyControl.Data;
+using HandyControl.Tools;
 using QRSharingApp.ViewModel.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -51,7 +54,6 @@ namespace QRSharingApp.Client.Views
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var checkComboBox = sender as CheckComboBox;
             var dataContext = e.NewValue as DesignViewModel;
             if (dataContext == null)
             {
@@ -69,6 +71,36 @@ namespace QRSharingApp.Client.Views
                 //case "es-ES":
                 //    ESLanguageRadioButton.IsChecked = true;
                 //    break;
+                default:
+                    break;
+            }
+
+            switch (dataContext.AppSettingService.SkinType)
+            {
+                case "white":
+                    WhiteApplicationStyleRadioButton.IsChecked = true;
+                    break;
+                case "dark":
+                    BlackApplicationStyleRadioButton.IsChecked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            switch (radioButton.Name)
+            {
+                case "WhiteApplicationStyleRadioButton":
+                    ((App)Application.Current).UpdateSkin(SkinType.Default);
+                    ((DesignViewModel)DataContext).AppSettingService.SkinType = "white";
+                    break;
+                case "BlackApplicationStyleRadioButton":
+                    ((App)Application.Current).UpdateSkin(SkinType.Dark);
+                    ((DesignViewModel)DataContext).AppSettingService.SkinType = "dark";
+                    break;
                 default:
                     break;
             }

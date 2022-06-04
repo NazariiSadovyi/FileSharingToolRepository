@@ -6,31 +6,30 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
 
                 <ResourceDictionary Source="pack://application:,,,/QRSharingApp.CultureLocalization;component/Resources/lang.xaml"/>
                 <ResourceDictionary Source="Resources/ButtonStyles.xaml" />
                 <ResourceDictionary Source="Resources/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="Resources/Geometries.xaml" />
                 <ResourceDictionary Source="Resources/DataGridStyles.xaml" />
-                <!--<ResourceDictionary Source="Resources/WindowStyles.xaml" />-->
-
                 <ResourceDictionary Source="Resources/ViewToViewModelBindings.xaml" />
+                <!--<ResourceDictionary Source="Resources/WindowStyles.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
-                                                  FalseValue="Visible"
-                                                  TrueValue="Hidden" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsCollapsed"
-                                                  FalseValue="Collapsed"
-                                                  TrueValue="Visible" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsHidden"
-                                                  FalseValue="Hidden"
-                                                  TrueValue="Visible" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsVisible"
-                                                  FalseValue="Visible"
-                                                  TrueValue="Collapsed" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" FalseValue="Visible" TrueValue="Hidden" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsCollapsed" FalseValue="Collapsed" TrueValue="Visible" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsHidden" FalseValue="Hidden" TrueValue="Visible" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterWhereFalseIsVisible" FalseValue="Visible" TrueValue="Collapsed" />
             <converters:ReversBoolConverter x:Key="ReversBoolConverter"/>
             <converters:EnumToStringConverter x:Key="EnumToStringConverter"/>
             <converters:StringToStarsConverter x:Key="StringToStarsConverter"/>

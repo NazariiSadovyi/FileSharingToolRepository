@@ -9,17 +9,17 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:DownloadHistoryViewModel}">
-    <Grid>
+    <Grid Background="{DynamicResource RegionBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         
         <DataGrid ItemsSource="{Binding HistoryItems}"
+                  Background="{DynamicResource RegionBrush}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   GridLinesVisibility="Vertical"
-                  Background="White"
                   SelectionUnit="FullRow"
                   Grid.Row="0">
             <DataGrid.RowStyle>
