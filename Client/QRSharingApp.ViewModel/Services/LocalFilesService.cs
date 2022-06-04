@@ -152,7 +152,8 @@ namespace QRSharingApp.ViewModel.Services
                 Path = Path.GetDirectoryName(e.FullPath),
                 Name = e.Name,
                 IsPhoto = LocalFileHelper.IsPhoto(e.Name),
-                IsVideo = LocalFileHelper.IsVideo(e.Name)
+                IsVideo = LocalFileHelper.IsVideo(e.Name),
+                CreationDate = System.DateTime.Now
             };
 
             Application.Current.Dispatcher.Invoke(() => LocalFiles.Add(localFile));

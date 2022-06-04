@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
+using QRSharingApp.ViewModel.ViewModels.Interfaces;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -28,6 +29,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IFileExplorerService FileExplorerService;
         [Dependency]
         public IMainWindowViewModel MainWindowViewModel;
+        [Dependency]
+        public IGridFilePreviewViewModel GridFilePreviewViewModel;
         #endregion
 
         #region Properties
@@ -123,35 +126,6 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public DesignViewModel(IAppSettingService appSettingService)
         {
-            PropertyChanged += (e, args) => 
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(SortingDisplayFiles):
-                        AppSettingService.SortingDisplayFiles = SortingDisplayFiles;
-                        break;
-                    case nameof(BackgroundImagePath):
-                        AppSettingService.BackgroundImagePath = BackgroundImagePath;
-                        break;
-                    case nameof(AutoSwitchSeconds):
-                        AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
-                        break;
-                    case nameof(DownloadViaForm):
-                        AppSettingService.DownloadViaForm = DownloadViaForm;
-                        break;
-                    case nameof(WebBackgroundImagePath):
-                        AppSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
-                        break;
-                    case nameof(ItemsInGrid):
-                        AppSettingService.ItemsInGrid = ItemsInGrid;
-                        break;
-                    case nameof(ShowWifiQrCodeInWeb):
-                        AppSettingService.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
-                        break;
-                    default:
-                        break;
-                }
-            };
         }
 
         public override Task OnLoadAsync()
@@ -182,6 +156,38 @@ namespace QRSharingApp.ViewModel.ViewModels
                         .Select(_ => _.Id)
                         .ToArray();
                 });
+
+            PropertyChanged += (e, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(SortingDisplayFiles):
+                        AppSettingService.SortingDisplayFiles = SortingDisplayFiles;
+                        GridFilePreviewViewModel.UpdateSorting(SortingDisplayFiles);
+                        break;
+                    case nameof(BackgroundImagePath):
+                        AppSettingService.BackgroundImagePath = BackgroundImagePath;
+                        break;
+                    case nameof(AutoSwitchSeconds):
+                        AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
+                        break;
+                    case nameof(DownloadViaForm):
+                        AppSettingService.DownloadViaForm = DownloadViaForm;
+                        break;
+                    case nameof(WebBackgroundImagePath):
+                        AppSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
+                        break;
+                    case nameof(ItemsInGrid) when ItemsInGrid != 0:
+                        AppSettingService.ItemsInGrid = ItemsInGrid;
+                        GridFilePreviewViewModel.PageRequestViewModel.Size = ItemsInGrid;
+                        break;
+                    case nameof(ShowWifiQrCodeInWeb):
+                        AppSettingService.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
+                        break;
+                    default:
+                        break;
+                }
+            };
 
             return Task.CompletedTask;
         }

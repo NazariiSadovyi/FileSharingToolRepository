@@ -1,5 +1,8 @@
-﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.Infrastructure.Models;
+﻿using DynamicData;
+using DynamicData.Binding;
+using Microsoft.WindowsAPICodePack.Shell;
+using QRSharingApp.ClientApi.Interfaces;
+using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.ViewModel.Helpers;
 using QRSharingApp.ViewModel.Interfaces;
@@ -7,23 +10,20 @@ using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using Microsoft.WindowsAPICodePack.Shell;
+using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
-using QRSharingApp.ClientApi.Interfaces;
-using ReactiveUI;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -51,99 +51,119 @@ namespace QRSharingApp.ViewModel.ViewModels
         #region Commands
         public ICommand ClosePreviewCmd => ReactiveCommand.Create(() => 
             {
+                StopAutoSwitchTimer();
                 SharedAppDataViewModel.IsPreviewVisible = false;
-            }
-        );
-
-        public ICommand ChangeFilePageCmd => ReactiveCommand.Create<int?>(
-            pageNumber =>
-            {
-                CurrentPage = pageNumber.Value;
-            }
-        );
-
-        public ICommand SwitchFilePageCmd => ReactiveCommand.Create<string>(
-            action =>
-            {
-                switch (action)
-                {
-                    case "left":
-                        if (CurrentPage - 1 < 0)
-                        {
-                            CurrentPage = Files.Count - 1;
-                            return;
-                        }
-
-                        CurrentPage--;
-                        break;
-                    case "right":
-                        if (CurrentPage + 1 >= Files.Count)
-                        {
-                            CurrentPage = 0;
-                            return;
-                        }
-
-                        CurrentPage++;
-                        break;
-                    default:
-                        break;
-                }
             }
         );
         #endregion
 
         #region Properties
         public string BackgroundImagePath { get; set; }
-        public int CurrentPage { get; set; }
+        public PageRequestViewModel PageRequestViewModel { get; set; }
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
-        public ObservableCollection<FilePreviewBaseViewModel> Files { get; set; }
+        public ReadOnlyObservableCollection<FilePreviewBaseViewModel> CurrentPageFiles { get; set; }
+        public ReadOnlyObservableCollection<FilePreviewBaseViewModel> AllFiles { get; set; }
+        public ObservableCollection<ObservableCollection<int>> GroupedPages { get; set; }
+        public bool ShowNewestFilesInTheBeginning { get; set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
         #endregion
 
-        public GridFilePreviewViewModel(ISharedAppDataViewModel sharedAppDataViewModel,
+        public GridFilePreviewViewModel(
+            ISharedAppDataViewModel sharedAppDataViewModel,
             ILocalFilesService localFilesService,
-            IWebServerService webServerService)
+            IWebServerService webServerService,
+            IAppSettingService appSettingService)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
-            Files = new ObservableCollection<FilePreviewBaseViewModel>();
-            localFilesService.LocalFiles.CollectionChanged += LocalFiles_CollectionChanged;
+            ShowNewestFilesInTheBeginning = appSettingService.SortingDisplayFiles;
+
             webServerService.NetworkChanged += WebServerService_NetworkChanged;
             _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
+            
+            PageRequestViewModel = new PageRequestViewModel(1, appSettingService.ItemsInGrid, localFilesService.LocalFiles);
+            PageRequestViewModel
+                .WhenAnyValueChanged()
+                .Subscribe(_ => RaisePropertyChanged(nameof(PageRequestViewModel)));
+
+            this.WhenAnyValue(_ => _.PageRequestViewModel.Size)
+                .Subscribe(UpdateGridStructure);
         }
 
         public override Task OnLoadAsync()
         {
+            LocalFilesService.LocalFiles
+                .ToObservableChangeSet()
+                .Filter(_ => _.IsPhoto || _.IsVideo)
+                .Transform(_ => _.ToFilePreviewViewModel())
+                .Transform(_ => LoadFilePreviewData(_))
+                .Bind(out ReadOnlyObservableCollection<FilePreviewBaseViewModel> allFiles)
+                .Sort(this.WhenAnyValue(_ => _.ShowNewestFilesInTheBeginning).Select(_ => GetSortFilesComparer()))
+                .Page(this.WhenAnyValue(_ => _.PageRequestViewModel))
+                .Bind(out ReadOnlyObservableCollection<FilePreviewBaseViewModel> currentPageFiles)
+                .Subscribe();
+
+            CurrentPageFiles = currentPageFiles;
+            AllFiles = allFiles;
+
+            Observable.CombineLatest(
+                this.WhenAnyValue(_ => _.LocalFilesService.LocalFiles.Count).DistinctUntilChanged(),
+                this.WhenAnyValue(_ => _.PageRequestViewModel.Size).DistinctUntilChanged())
+                .Subscribe(list =>
+                {
+                    var itemsCount = list[0];
+                    var pageSize = list[1];
+                    var pagesCount = itemsCount == itemsCount / pageSize * pageSize
+                        ? itemsCount / pageSize
+                        : itemsCount / pageSize + 1;
+                    var chunkSize = 8;
+                    var pages = Enumerable.Range(1, pagesCount);
+                    var groupedPages = pages
+                        .Select((x, i) => new { Index = i, Value = x })
+                        .GroupBy(x => x.Index / chunkSize)
+                        .Select(x => new ObservableCollection<int>(x.Select(v => v.Value)));
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        GroupedPages = new ObservableCollection<ObservableCollection<int>>(groupedPages);
+                    });
+                });
+
             return Task.CompletedTask;
         }
 
-        public async Task LoadDataAsync()
+        public void UpdateSorting(bool showNewestFilesInTheBeginning)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            var currentPage = PageRequestViewModel.Page;
+            var currentSize = PageRequestViewModel.Size;
+
+            PageRequestViewModel.Page = 1;
+            PageRequestViewModel.Size = AllFiles.Count + 1;
+
+            ShowNewestFilesInTheBeginning = showNewestFilesInTheBeginning;
+
+            PageRequestViewModel.Size = currentSize;
+            PageRequestViewModel.Page = currentPage;
+        }
+
+        private FilePreviewBaseViewModel LoadFilePreviewData(FilePreviewBaseViewModel filePreview)
+        {
+            Task.Run(async () =>
             {
-                Files = new ObservableCollection<FilePreviewBaseViewModel>(LocalFilesService
-                    .LocalFiles
-                    .OrderBy(_ => _.CreationDate)
-                    .Where(_ => _.IsPhoto || _.IsVideo)
-                    .Select(_ => _.ToFilePreviewViewModel()));
+                filePreview.IsLoading = true;
+                await FetchThumbnailImage(filePreview);
+                await FetchQRCodeImage(filePreview);
+                filePreview.IsLoading = false;
             });
 
-            IEnumerable<FilePreviewBaseViewModel> files = Files;
-            if (AppSettingService.SortingDisplayFiles)
-            {
-                files = Files.Reverse();
-            }
-
-            foreach (var file in files)
-            {
-                file.IsLoading = true;
-                await FetchThumbnailImage(file);
-                await FetchQRCodeImage(file);
-                file.IsLoading = false;
-            }
+            return filePreview;
         }
 
         public void StartAutoSwitchTimer()
         {
             var milliseconds = (int)TimeSpan.FromSeconds(AppSettingService.AutoSwitchSeconds).TotalMilliseconds;
+            if (milliseconds == 0)
+                return;
+
             _autoSwitchTimer.Change(milliseconds, milliseconds);
         }
 
@@ -159,56 +179,24 @@ namespace QRSharingApp.ViewModel.ViewModels
                 return;
             }
 
-            if (CurrentPage + 1 == Files.Count)
-            {
-                CurrentPage = 0;
-                return;
-            }
-
-            CurrentPage++;
+            PageRequestViewModel.NextPage();
         }
 
-        private async Task FetchThumbnailImage(FilePreviewBaseViewModel file)
+        private async Task FetchThumbnailImage(FilePreviewBaseViewModel file, bool checkFileCanRead = true)
         {
-            var photoPreview = file as PhotoFilePreviewViewModel;
-            if (photoPreview == null)
+            file.IsLoading = true;
+            if (checkFileCanRead)
             {
-                return;
+                await WaitUntilFileIsReadable(file.FullLocalPath);
             }
 
-            photoPreview.IsLoading = true;
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
-                var shellFile = ShellFile.FromFilePath(photoPreview.FullLocalPath);
+                var shellFile = ShellFile.FromFilePath(file.FullLocalPath);
                 Application.Current.Dispatcher.Invoke(() =>
-                    photoPreview.Image = shellFile.Thumbnail.ExtraLargeBitmapSource);
+                    file.Thumbnail = shellFile.Thumbnail.LargeBitmapSource);
             });
-            photoPreview.IsLoading = false;
-        }
-
-        private void LocalFiles_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    var newLocalFile = e.NewItems[0] as LocalFile;
-                    var filePreviewViewModel = newLocalFile.ToFilePreviewViewModel();
-                    Files.Add(filePreviewViewModel);
-                    Task.Run(async () => await FetchThumbnailImage(filePreviewViewModel));
-                    Task.Run(async () => await FetchQRCodeImage(filePreviewViewModel));
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    var locaFileToRemove = e.OldItems[0] as LocalFile;
-                    var fileToRemove = Files.FirstOrDefault(_ => _.Name == locaFileToRemove.Name && _.LocalPath == locaFileToRemove.Path);
-                    if (fileToRemove == null)
-                    {
-                        return;
-                    }
-                    Files.Remove(fileToRemove);
-                    break;
-                default:
-                    break;
-            }
+            file.IsLoading = false;
         }
 
         private async Task<string> GetOrCreateFileId(FilePreviewBaseViewModel viewModel)
@@ -237,16 +225,16 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         private void WebServerService_NetworkChanged(object sender, bool isValid)
         {
-            Task.Run(async () => 
+            Task.Run(async () =>
             {
-                foreach (var file in Files)
+                foreach (var file in AllFiles)
                 {
                     file.QRImage = null;
                 }
 
                 if (isValid)
                 {
-                    foreach (var file in Files)
+                    foreach (var file in AllFiles)
                     {
                         await FetchQRCodeImage(file);
                     }
@@ -254,7 +242,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             });
         }
 
-        public BitmapImage ToBitmapImage(Bitmap bitmap)
+        private BitmapImage ToBitmapImage(Bitmap bitmap)
         {
             using (var memory = new MemoryStream())
             {
@@ -269,6 +257,42 @@ namespace QRSharingApp.ViewModel.ViewModels
                 bitmapImage.Freeze();
 
                 return bitmapImage;
+            }
+        }
+
+        private SortExpressionComparer<FilePreviewBaseViewModel> GetSortFilesComparer()
+        {
+            if (ShowNewestFilesInTheBeginning)
+            {
+                return SortExpressionComparer<FilePreviewBaseViewModel>.Descending(t => t.CreationDate);
+            }
+
+            return SortExpressionComparer<FilePreviewBaseViewModel>.Ascending(t => t.CreationDate);
+        }
+
+        private void UpdateGridStructure(int size)
+        {
+            switch (size)
+            {
+                case 20: Rows = 4; Columns = 5; break;
+                case 12: Rows = 3; Columns = 4; break;
+                case 9: Rows = 3; Columns = 3; break;
+                case 4: Rows = 2; Columns = 2; break;
+                default: Rows = 1; Columns = 1; break;
+            }
+        }
+
+        private async Task WaitUntilFileIsReadable(string fullLocalPath)
+        {
+            try
+            {
+                using (File.OpenRead(fullLocalPath))
+                { }
+            }
+            catch (IOException)
+            {
+                await Task.Delay(200);
+                await WaitUntilFileIsReadable(fullLocalPath);
             }
         }
     }

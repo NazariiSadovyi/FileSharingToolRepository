@@ -169,7 +169,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                     return Task.Run(async () =>
                     {
                         await LocalFilesService.InitCurrentFiles();
-                        await GridFilePreviewViewModel.LoadDataAsync();
+                        await GridFilePreviewViewModel.OnLoadAsync();
                     });
                 },
                 Localization.GetResource("AddingCurrentHotFoldersAndFilesFetchMessage"),
@@ -187,7 +187,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                     false,
                     false);
 
-                SharedAppDataViewModel.ActivationStatus = activationStatus;
+                SharedAppDataViewModel.ActivationStatus = ActivationStatus.Activated;
+                //SharedAppDataViewModel.ActivationStatus = activationStatus;
                 switch (activationStatus)
                 {
                     case ActivationStatus.NotActivated:

@@ -17,7 +17,7 @@
              d:DataContext="{d:DesignInstance Type=vm:GridFilePreviewViewModel}">
 
     <Grid Background="White">
-        <Grid.Resources>
+        <!--<Grid.Resources>
             <DataTemplate DataType="{x:Type filePreviewVM:PhotoFilePreviewViewModel}">
                 <Image Source="{Binding Image}"
                        Stretch="Uniform"
@@ -30,7 +30,7 @@
                               UnloadedBehavior="Manual"
                               MouseDown="MediaElement_MouseDown"/>
             </DataTemplate>
-        </Grid.Resources>
+        </Grid.Resources>-->
         
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -70,93 +70,105 @@
                     </gu:TouchGestureTracker>
                 </gu:CompositeGestureTracker>
             </gu:GesturePanel.GestureTracker>
-           
-            <gu:FlipView ItemsSource="{Binding Files}"
-                         SelectedIndex="{Binding CurrentPage}"
-                         Name="FlipViewControl"
-                         ShowArrows="False">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Grid.Row="0"
-                              Margin="0 5 0 0">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.6*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                            </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0"
-                                        Margin="0 0 20 0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="Wi-Fi QR code"
-                                           TextAlignment="Center"
-                                           FontSize="15"/>
-                                <Grid>
-                                    <Image
-                                        Visibility="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                                        Opacity="0.1"
-                                        Margin="0 20 0 0"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalAlignment="Stretch"
-                                        Width="100"
-                                        Height="100">
-                                        <Image.Source>
-                                            <DrawingImage>
-                                                <DrawingImage.Drawing>
-                                                    <GeometryDrawing
-                                                        Geometry="{DynamicResource CancelGeometry}"
-                                                        Brush="Gray"/>
-                                                </DrawingImage.Drawing>
-                                            </DrawingImage>
-                                        </Image.Source>
-                                    </Image>
-                                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            Margin="0 0 20 0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="Wifif QR Code"
+                               TextAlignment="Center"
+                               FontSize="15"/>
+                    <Grid>
+                        <Image
+                            Visibility="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                            Opacity="0.1"
+                            Margin="0 20 0 0"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Width="100"
+                            Height="100">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <GeometryDrawing
+                                            Geometry="{DynamicResource CancelGeometry}"
+                                            Brush="Gray"/>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                        <Image Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SharedAppDataViewModel.WifiQRImage}" />
+                    </Grid>
+                </StackPanel>
+
+                <ItemsControl
+                    Grid.Column="1"
+                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.CurrentPageFiles}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid
+                                Rows="{Binding DataContext.Rows, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Columns="{Binding DataContext.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="5,0,5,5">
+                                <Grid Cursor="Hand">
+
+                                    <!--<i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseUp">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenFullPreviewCmd, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                   CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>-->
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0"
+                                          Margin="0 5 0 0">
+
+                                        <Image Source="{Binding Thumbnail}"
+                                               Stretch="UniformToFill"
+                                               VerticalAlignment="Center" />
+                                        
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="1.5*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   HorizontalAlignment="Right"
+                                                   VerticalAlignment="Bottom"
+                                                   Source="{Binding QRImage}" />
+                                        </Grid>
+                                    </Grid>
+
+                                    <hc:LoadingCircle
+                                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverterWhereFalseIsCollapsed}}"
+                                        Width="50"
+                                        Height="50"/>
                                 </Grid>
-                            </StackPanel>
-
-                            <Grid Grid.Column="1">
-                                <hc:LoadingCircle
-                                    Width="50"
-                                    Height="50"/>
-                                <ContentControl x:Name="PreviewContentControl" Content="{Binding}"/>
-                            </Grid>
-
-                            <StackPanel Grid.Column="2"
-                                        Margin="20 0 0 0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="File QR code"
-                                           TextAlignment="Center"
-                                           FontSize="15"/>
-                                <Grid>
-                                    <Image
-                                        Visibility="{Binding QRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                                        Opacity="0.1"
-                                        Margin="0 20 0 0"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalAlignment="Stretch"
-                                        Width="100"
-                                        Height="100">
-                                        <Image.Source>
-                                            <DrawingImage>
-                                                <DrawingImage.Drawing>
-                                                    <GeometryDrawing
-                                                        Geometry="{DynamicResource CancelGeometry}"
-                                                        Brush="Gray"/>
-                                                </DrawingImage.Drawing>
-                                            </DrawingImage>
-                                        </Image.Source>
-                                    </Image>
-                                    <Image Source="{Binding QRImage}" />
-                                </Grid>
-                            </StackPanel>
-                            
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </gu:FlipView>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
         </gu:GesturePanel>
 
         <Grid Grid.Row="0"
@@ -164,7 +176,7 @@
             <Button
                 BorderThickness="0"
                 Style="{DynamicResource ButtonDefault}"
-                Command="{Binding SwitchFilePageCmd}"
+                Command="{Binding PageRequestViewModel.SwitchFilePageCommand}"
                 hc:IconElement.Geometry="{DynamicResource LeftGeometry}"
                 hc:IconElement.Height="30"
                 Height="50"
@@ -176,7 +188,7 @@
             <Button
                 BorderThickness="0"
                 Style="{DynamicResource ButtonDefault}"
-                Command="{Binding SwitchFilePageCmd}"
+                Command="{Binding PageRequestViewModel.SwitchFilePageCommand}"
                 hc:IconElement.Geometry="{DynamicResource RightGeometry}"
                 hc:IconElement.Height="30"
                 Height="50"
@@ -195,6 +207,56 @@
                 </i:Interaction.Triggers>
             </Button>
         </Grid>
+
+        <gu:FlipView
+            Grid.Row="1"
+            Grid.Column="1"
+            ShowIndex="False"
+            ItemsSource="{Binding GroupedPages}">
+            <gu:FlipView.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10 0 10 0">
+                                    <Button
+                                        Width="20"
+                                        Height="20"
+                                        Focusable="False"
+                                        hc:BorderElement.CornerRadius="25"
+                                        Command="{Binding DataContext.PageRequestViewModel.ChangePageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Value="True">
+                                                        <DataTrigger.Binding>
+                                                            <MultiBinding Converter="{StaticResource IsValuesEqualsToBoolMultiConverter}">
+                                                                <Binding Path="DataContext.PageRequestViewModel.Page" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                                                <Binding Path="" />
+                                                            </MultiBinding>
+                                                        </DataTrigger.Binding>
+                                                        <Setter Property="Background" Value="#59b1c5" />
+                                                        <Setter Property="BorderThickness" Value="0" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="Background" Value="#eceeef" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </gu:FlipView.ItemTemplate>
+        </gu:FlipView>
 
     </Grid>
 </UserControl>
