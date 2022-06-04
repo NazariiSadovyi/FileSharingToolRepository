@@ -85,6 +85,11 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var id = Path.GetFileNameWithoutExtension(idWithExtension);
             var localFile = await _localFileRepository.GetById(id);
+            if (localFile == null)
+            {
+                return Ok();
+            }
+
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
 
             return PhysicalFile(fullPath, "application/octet-stream", enableRangeProcessing: true);
@@ -112,6 +117,11 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var id = Path.GetFileNameWithoutExtension(idWithExtension);
             var localFile = await _localFileRepository.GetById(id);
+            if (localFile == null)
+            {
+                return Ok();
+            }
+
             var fullPath = Path.Combine(localFile.Path, localFile.Name);
             var fileThumbnailStream = new MemoryStream();
             await _fileThumbnailService.SaveToStreamAsync(fullPath, fileThumbnailStream);

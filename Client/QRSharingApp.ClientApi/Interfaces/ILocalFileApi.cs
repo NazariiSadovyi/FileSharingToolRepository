@@ -10,5 +10,6 @@ namespace QRSharingApp.ClientApi.Interfaces
         Task<LocalFileContract> CreateFile(string filePath);
         Task<List<LocalFileContract>> CreateFiles(List<string> filePathes);
         Task<List<LocalFileContract>> GetFiles();
+        Task DeleteFile(string filePath);
     }
 }

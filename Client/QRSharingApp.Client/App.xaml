@@ -40,6 +40,8 @@
             <converters:IsValuesEqualsToBoolConverter x:Key="IsValuesEqualsToBoolConverter"/>
             <converters:IsValuesEqualsToBoolMultiConverter x:Key="IsValuesEqualsToBoolMultiConverter"/>
             <converters:StringIsEmptyVisibilityConverter x:Key="StringIsEmptyVisibilityConverter"/>
+            <converters:IsStringsNotEqualToVisibilityConverter x:Key="IsStringsNotEqualToVisibilityConverter"/>
+            <converters:IsStringsNotEqualToVisibilityConverterInvert x:Key="IsStringsNotEqualToVisibilityConverterInvert"/>
 
         </ResourceDictionary>
     </Application.Resources>

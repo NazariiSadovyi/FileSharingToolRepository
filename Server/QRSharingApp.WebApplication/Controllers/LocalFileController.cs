@@ -52,5 +52,17 @@ namespace QRSharingApp.WebApplication.Controllers
 
             return Ok(contract);
         }
+
+        [HttpDelete("{filePath}")]
+        public async Task<IActionResult> Delete(string filePath)
+        {
+            var decodedPath = HttpUtility.UrlDecode(filePath);
+            var localFile = await _localFileRepository.GetByFullPath(decodedPath);
+
+            await _localFileRepository.Remove(localFile.Id);
+            await _fileHubService.SendFileRemovedAsync(localFile.Id);
+
+            return Ok();
+        }
     }
 }

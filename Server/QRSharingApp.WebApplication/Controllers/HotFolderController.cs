@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
+using QRSharingApp.WebApplication.Services;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -11,10 +13,17 @@ namespace QRSharingApp.WebApplication.Controllers
     public class HotFolderController : ControllerBase
     {
         private readonly IHotFolderRepository _hotFolderRepository;
+        private readonly ILocalFileRepository _localFileRepository;
+        private readonly IFileHubService _fileHubService;
 
-        public HotFolderController(IHotFolderRepository hotFolderRepository)
+        public HotFolderController(
+            IHotFolderRepository hotFolderRepository,
+            ILocalFileRepository localFileRepository,
+            IFileHubService fileHubService)
         {
             _hotFolderRepository = hotFolderRepository;
+            _localFileRepository = localFileRepository;
+            _fileHubService = fileHubService;
         }
 
         [HttpGet]

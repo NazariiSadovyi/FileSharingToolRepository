@@ -7,6 +7,7 @@ namespace QRSharingApp.WebApplication.Services
     public interface IFileHubService
     {
         Task SendFileAddedAsync(FilePreviewViewModel viewModel);
+        Task SendFileRemovedAsync(string id);
     }
 
     public class FileHubService : IFileHubService
@@ -29,6 +30,11 @@ namespace QRSharingApp.WebApplication.Services
                 viewModel.QRCodeAdress,
                 viewModel.Extension,
                 viewModel.IsVideo);
+        }
+
+        public async Task SendFileRemovedAsync(string id)
+        {
+            await _fileHub.Clients.All.SendAsync("FileRemoved", id);
         }
     }
 }

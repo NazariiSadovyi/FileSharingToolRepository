@@ -52,7 +52,9 @@
     {
         @if (viewModel.IsVideo)
         {
-            <div class="border border-4 photo-thumbnail-item"
+            <div id="@viewModel.Id"
+                 class="border border-4 photo-thumbnail-item"
+                 onclick="ThumbnaiClick(this)"
                  data-video='{"source": [{"src":"@viewModel.Adress", "type":"video/@viewModel.Extension"}], "attributes": {"preload": true, "playsinline": true, "controls": true, "autoplay": true, "loop": true}}'
                  data-poster="@viewModel.ThumbnailAdress">
                 <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
@@ -61,7 +63,9 @@
         }
         else
         {
-            <div class="border border-4 video-thumbnail-item"
+            <div id="@viewModel.Id"
+                 class="border border-4 video-thumbnail-item"
+                 onclick="ThumbnaiClick(this)"
                  data-src='@viewModel.Adress'>
                 <img class="thumbnail-img" src="@viewModel.ThumbnailAdress" />
                 <img class="thumbnail-qrcode-img" src="@viewModel.QRCodeAdress" />
@@ -74,32 +78,21 @@
     const lgDemoUpdateSlides = document.getElementById(
       "lightgallery"
     );
-    var slidesUpdated = false;
+    var lightGalleryInstance = null;
     
     lgDemoUpdateSlides.addEventListener("lgAfterClose", (event) => {
-      if (slidesUpdated) {
-        setTimeout(() => {
-          event.detail.instance.destroy();
-        }, 100);
-        setTimeout(() => {
-          lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
-              plugins: [lgThumbnail, lgVideo],
-              thumbnail: true,
-              videojs: false,
-              autoplayVideoOnSlide: true,
-              autoplayFirstVideo: false
-          });
-          slidesUpdated = false;
-        }, 200);
-      }
+        event.detail.instance.destroy();
     });
 
-    var lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
-        plugins: [lgThumbnail, lgVideo],
-        thumbnail: true,
-        videojs: false,
-        autoplayVideoOnSlide: true,
-        autoplayFirstVideo: true,
-        gotoNextSlideOnVideoEnd: false
-    });
+    function ThumbnaiClick(element) {
+        lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
+                plugins: [lgThumbnail, lgVideo],
+                thumbnail: true,
+                videojs: false,
+                autoplayVideoOnSlide: true,
+                zoomFromOrigin: false,
+                autoplayFirstVideo: false
+            });
+        lightGalleryInstance.openGallery(Array.prototype.indexOf.call(element.parentNode.children, element));
+    }
 </script>

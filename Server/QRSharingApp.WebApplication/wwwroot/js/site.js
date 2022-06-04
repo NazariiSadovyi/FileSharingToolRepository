@@ -3,41 +3,24 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/fileHub").build();
 
 connection.on("FileAdded", function (id, fileName, adress, thumbnailAdress, qRCodeAdress, extension, isVideo) {
-    console.log(id, fileName, adress, thumbnailAdress, qRCodeAdress, extension, isVideo);
     var htmlContent = "";
     if (isVideo) {
-        htmlContent = "<div class=\"border border-4 photo-thumbnail-item\" data-video=\'{\"source\": [{\"src\":\"" + adress + "\", \"type\":\"video/"
-            + extension + "\"}], \"attributes\": {\"preload\": true, \"playsinline\": true, \"controls\": true, \"autoplay\": true, \"loop\": true}}\' data-poster=\""
+        htmlContent = "<div id=\"" + id + "\" class=\"border border-4 photo-thumbnail-item\" onclick=\"ThumbnaiClick(this)\" data-video=\'{\"source\": [{\"src\":\"" + adress + "\", \"type\":\"video/"
+            + extension + "\"}], \"attributes\": {\"preload\": true, \"playsinline\": true, \"controls\": true, \"autoplay\": false, \"loop\": true}}\' data-poster=\""
             + thumbnailAdress + "\" data-sub-html=\" \"> <img class=\"thumbnail-img\" src=\""
             + thumbnailAdress + "\" /> <img class=\"thumbnail-qrcode-img\" src=\"" + qRCodeAdress + "\" /> </div>";
     }
     else {
-        htmlContent = "<div class=\"border border-4 video-thumbnail-item\" data-src=\'"
+        htmlContent = "<div id=\"" + id + "\" class=\"border border-4 video-thumbnail-item\" onclick=\"ThumbnaiClick(this)\" data-src=\'"
             + adress + "\' data-sub-html=\" \"> <img class=\"thumbnail-img\" src=\""
             + thumbnailAdress + "\" /> <img class=\"thumbnail-qrcode-img\" src=\"" + qRCodeAdress + "\" /> </div>";
     }
 
-    try {
-        var element = $(htmlContent);
-        $("#lightgallery").append(element);
-    } catch (e) {
-        console.error(e);
-    }
+    var element = $(htmlContent);
+    $("#lightgallery").append(element);
 
     try {
-        if (!lightGalleryInstance.lgOpened) {
-            setTimeout(() => {
-                lightGalleryInstance.destroy();
-            }, 100);
-            setTimeout(() => {
-                lightGalleryInstance = lightGallery(lgDemoUpdateSlides, {
-                    plugins: [lgThumbnail, lgVideo],
-                    thumbnail: true,
-                    videojs: false,
-                    autoplayVideoOnSlide: true,
-                    autoplayFirstVideo: false
-                });
-            }, 200);
+        if (lightGalleryInstance == null || !lightGalleryInstance.lgOpened) {
             return;
         }
 
@@ -68,7 +51,24 @@ connection.on("FileAdded", function (id, fileName, adress, thumbnailAdress, qRCo
 
         lightGalleryInstance.updateSlides(galleryItems, lightGalleryInstance.index);
         lightGalleryInstance.slide(galleryItems.length - 1);
-        slidesUpdated = true;
+    } catch (e) {
+        console.error(e);
+    }
+});
+
+connection.on("FileRemoved", function (id) {
+    try {
+        removeElement(id);
+
+        if (lightGalleryInstance == null || !lightGalleryInstance.lgOpened) {
+            return;
+        }
+
+        var itemToRemove = lightGalleryInstance.galleryItems.find(o => o.thumb.includes(id));
+        var newGalleryItems = arrayRemove(lightGalleryInstance.galleryItems, itemToRemove);
+
+        lightGalleryInstance.updateSlides(newGalleryItems, lightGalleryInstance.index);
+        lightGalleryInstance.slide(lightGalleryInstance.index);
     } catch (e) {
         console.error(e);
     }
@@ -79,3 +79,14 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+function removeElement(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+}
+
+function arrayRemove(arr, value) {
+    return arr.filter(function (ele) {
+        return ele != value;
+    });
+}

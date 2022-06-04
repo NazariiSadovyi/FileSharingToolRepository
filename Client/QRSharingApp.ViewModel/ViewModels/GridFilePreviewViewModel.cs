@@ -96,7 +96,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                 .ToObservableChangeSet()
                 .Filter(_ => _.IsPhoto || _.IsVideo)
                 .Transform(_ => _.ToFilePreviewViewModel())
-                .Transform(_ => LoadFilePreviewData(_))
+                .Transform(LoadFilePreviewData)
+                .OnItemRemoved(OnFileRemoved)
                 .Bind(out ReadOnlyObservableCollection<FilePreviewBaseViewModel> allFiles)
                 .Sort(this.WhenAnyValue(_ => _.ShowNewestFilesInTheBeginning).Select(_ => GetSortFilesComparer()))
                 .Page(this.WhenAnyValue(_ => _.PageRequestViewModel))
@@ -294,6 +295,14 @@ namespace QRSharingApp.ViewModel.ViewModels
                 await Task.Delay(200);
                 await WaitUntilFileIsReadable(fullLocalPath);
             }
+        }
+
+        private void OnFileRemoved(FilePreviewBaseViewModel file)
+        {
+            Task.Run(async () =>
+            {
+                await LocalFileApi.DeleteFile(file.FullLocalPath);
+            });
         }
     }
 }

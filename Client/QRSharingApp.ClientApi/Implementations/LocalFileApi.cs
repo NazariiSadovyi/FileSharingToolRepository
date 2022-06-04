@@ -39,5 +39,10 @@ namespace QRSharingApp.ClientApi.Implementations
         {
             return await _clientProvider.GetAsync<LocalFileContract>($"api/localFile/{HttpUtility.UrlEncodeUnicode(filePath)}");
         }
+
+        public async Task DeleteFile(string filePath)
+        {
+            await _clientProvider.DeleteAsync($"api/localFile/{HttpUtility.UrlEncodeUnicode(filePath)}");
+        }
     }
 }
