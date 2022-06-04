@@ -17,18 +17,28 @@
     <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Adición de archivos y carpetas de proceso actuales...</v:String>
 
     <!-- Design view -->
+    <v:String x:Key="DesignViewButtonGeneralSettingsLabel">General settings</v:String>
+    <v:String x:Key="DesignViewButtonFilePreviewSettingsLabel">File preview settings</v:String>
+    <v:String x:Key="DesignViewButtonWebSettingsLabel">Web settings</v:String>
+    <v:String x:Key="DesignViewButtonApplicationStyleLabel">Application style</v:String>
+    <v:String x:Key="DesignViewButtonLanguageLabel">Language</v:String>
+    <v:String x:Key="DesignViewButtonWindowScreenModeLabel">Window screen mode</v:String>
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
     <v:String x:Key="DesignViewButtonLanguageES">ESPAÑOL</v:String>
     <v:String x:Key="DesignViewTextBoxImageChoosing">VISTA PREVIA DE ARCHIVOS IMAGEN DE FONDO</v:String>
+    <v:String x:Key="DesignViewTextBoxBackgroundImageLabel">Preview background</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">SELECCIONE</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">MODO DE PANTALLA COMPLETA</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">MODO VENTANA</v:String>
     <v:String x:Key="DesignViewLabelSortingFiles">CLASIFICACIÓN DE ARCHIVOS DE VISUALIZACIÓN: EL MÁS RECIENTE PRIMERO</v:String>
     <v:String x:Key="DesignViewLabelDirectFileDownload">AÑADIR CAMPOS DE DATOS DE USUARIO</v:String>
+    <v:String x:Key="DesignViewLabelFilesOnPage">Files on page</v:String>
     <v:String x:Key="PreviewFileAutoSwitchSeconds">INTERRUPTOR AUTOMÁTICO DE ARCHIVO DE VISTA PREVIA (SEG.)</v:String>
     <v:String x:Key="WebPreviewBackgroundPicture">IMAGEN DE FONDO DE LA GALERÍA WEB</v:String>
-    
+    <v:String x:Key="WebPreviewShowQrCodeLabel">Show QR code</v:String>
+    <v:String x:Key="WebPreviewRequiredFieldsLabel">Required fields</v:String>
+
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">INTRODUCIR CLAVE</v:String>
     <v:String x:Key="ActivationViewButtonInsert">INSERTAR</v:String>

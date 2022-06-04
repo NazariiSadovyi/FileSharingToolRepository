@@ -17,18 +17,28 @@
     <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Adding current hot folders and files...</v:String>
 
     <!-- Design view -->
+    <v:String x:Key="DesignViewButtonGeneralSettingsLabel">General settings</v:String>
+    <v:String x:Key="DesignViewButtonFilePreviewSettingsLabel">File preview settings</v:String>
+    <v:String x:Key="DesignViewButtonWebSettingsLabel">Web settings</v:String>
+    <v:String x:Key="DesignViewButtonApplicationStyleLabel">Application style</v:String>
+    <v:String x:Key="DesignViewButtonLanguageLabel">Language</v:String>
+    <v:String x:Key="DesignViewButtonWindowScreenModeLabel">Window screen mode</v:String>
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
     <v:String x:Key="DesignViewButtonLanguageES">SPANISH</v:String>
-    <v:String x:Key="DesignViewTextBoxImageChoosing">FILES PREVIEW BACKGROUND PICTURE</v:String>
+    <v:String x:Key="DesignViewTextBoxImageChoosing">Files preview background picture</v:String>
+    <v:String x:Key="DesignViewTextBoxBackgroundImageLabel">Preview background image</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">SELECT</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">FULL-SCREEN MODE</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">WINDOW MODE</v:String>
-    <v:String x:Key="DesignViewLabelSortingFiles">SORTING DISPLAY FILES: NEWEST FIRST</v:String>
-    <v:String x:Key="DesignViewLabelDirectFileDownload">ADD USER DATA FIELDS</v:String>
-    <v:String x:Key="PreviewFileAutoSwitchSeconds">PREVIEW FILE AUTO SWITCH (SECONDS)</v:String>
-    <v:String x:Key="WebPreviewBackgroundPicture">WEB PREVIEW BACKGROUND PICTURE</v:String>
-    
+    <v:String x:Key="DesignViewLabelSortingFiles">Sorting files: newest first</v:String>
+    <v:String x:Key="DesignViewLabelDirectFileDownload">Add user data fields</v:String>
+    <v:String x:Key="DesignViewLabelFilesOnPage">Files on page</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">File auto switch (seconds)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">Web preview background picture</v:String>
+    <v:String x:Key="WebPreviewShowQrCodeLabel">Show QR code</v:String>
+    <v:String x:Key="WebPreviewRequiredFieldsLabel">Required fields</v:String>
+
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">INSERT KEY</v:String>
     <v:String x:Key="ActivationViewButtonInsert">INSERT</v:String>

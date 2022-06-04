@@ -30,7 +30,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         [Dependency]
         public IMainWindowViewModel MainWindowViewModel;
         [Dependency]
-        public IGridFilePreviewViewModel GridFilePreviewViewModel;
+        public GridFilePreviewViewModel GridFilePreviewViewModel;
         #endregion
 
         #region Properties
@@ -167,6 +167,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                         break;
                     case nameof(BackgroundImagePath):
                         AppSettingService.BackgroundImagePath = BackgroundImagePath;
+                        GridFilePreviewViewModel.BackgroundImagePath = BackgroundImagePath;
                         break;
                     case nameof(AutoSwitchSeconds):
                         AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;

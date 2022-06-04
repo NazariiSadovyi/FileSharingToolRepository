@@ -48,5 +48,30 @@ namespace QRSharingApp.Client.Views
                 }
             }
         }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var checkComboBox = sender as CheckComboBox;
+            var dataContext = e.NewValue as DesignViewModel;
+            if (dataContext == null)
+            {
+                return;
+            }
+
+            switch (dataContext.AppSettingService.CultureName)
+            {
+                case "en-US":
+                    USLanguageRadioButton.IsChecked = true;
+                    break;
+                case "ru-RU":
+                    RULanguageRadioButton.IsChecked = true;
+                    break;
+                //case "es-ES":
+                //    ESLanguageRadioButton.IsChecked = true;
+                //    break;
+                default:
+                    break;
+            }
+        }
     }
 }

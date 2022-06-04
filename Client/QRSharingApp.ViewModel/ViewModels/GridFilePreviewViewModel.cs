@@ -90,6 +90,8 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public override Task OnLoadAsync()
         {
+            BackgroundImagePath = AppSettingService.BackgroundImagePath;
+
             LocalFilesService.LocalFiles
                 .ToObservableChangeSet()
                 .Filter(_ => _.IsPhoto || _.IsVideo)

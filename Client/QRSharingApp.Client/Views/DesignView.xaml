@@ -9,11 +9,12 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
+             DataContextChanged="UserControl_DataContextChanged"
              d:DataContext="{d:DesignInstance Type=vm:DesignViewModel}">
     <ScrollViewer Width="auto" Margin="5 5 0 5">
-        <StackPanel Margin="0 0 10 0" MaxWidth="600">
+        <StackPanel Margin="0 0 10 0" MaxWidth="650">
             <!--General settings-->
-            <Expander Header="General" IsExpanded="True" Margin="0 5 0 5">
+            <Expander Header="{DynamicResource DesignViewButtonGeneralSettingsLabel}" IsExpanded="True" Margin="0 5 0 5">
                 <Border
                     BorderThickness="1,0,1,1"
                     BorderBrush="{DynamicResource BorderBrush}"
@@ -25,7 +26,7 @@
                                 <Setter Property="Margin" Value="0 5 0 5"/>
                                 <Style.Resources>
                                     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="Width" Value="250"/>
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
@@ -45,25 +46,27 @@
                         </StackPanel.Resources>
                         
                         <WrapPanel>
-                            <Label Content="Language"/>
+                            <Label Content="{DynamicResource DesignViewButtonLanguageLabel}"/>
                             <hc:ButtonGroup>
                                 <RadioButton
+                                    Name="USLanguageRadioButton"
                                     Command="{Binding ChangeLanguageCmd}"
                                     Content="{DynamicResource DesignViewButtonLanguageEng}"
-                                    CommandParameter="en-US"
-                                    IsChecked="True"/>
-                                <RadioButton
+                                    CommandParameter="en-US"/>
+                                <!--<RadioButton
+                                    Name="ESLanguageRadioButton"
                                     Command="{Binding ChangeLanguageCmd}"
                                     CommandParameter="es-ES"
-                                    Content="{DynamicResource DesignViewButtonLanguageES}"/>
+                                    Content="{DynamicResource DesignViewButtonLanguageES}"/>-->
                                 <RadioButton
+                                    Name="RULanguageRadioButton"
                                     Command="{Binding ChangeLanguageCmd}"
                                     CommandParameter="ru-RU"
                                     Content="{DynamicResource DesignViewButtonLanguageRu}"/>
                             </hc:ButtonGroup>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label Content="Window screen mode"/>
+                            <Label Content="{DynamicResource DesignViewButtonWindowScreenModeLabel}"/>
                             <hc:ButtonGroup>
                                 <RadioButton
                                     Command="{Binding ChangeWindowModeCmd}"
@@ -77,7 +80,7 @@
                             </hc:ButtonGroup>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label Content="Window style"/>
+                            <Label Content="{DynamicResource DesignViewButtonApplicationStyleLabel}"/>
                             <hc:ButtonGroup Width="auto">
                                 <RadioButton
                                     Background="White"
@@ -98,8 +101,8 @@
                 </Border>
             </Expander>
             
-            <!--Desktop app settings-->
-            <Expander Header="Desktop app settings" IsExpanded="True" Margin="0 5 0 5">
+            <!--Desktop preview settings-->
+            <Expander Header="{DynamicResource DesignViewButtonFilePreviewSettingsLabel}" IsExpanded="True" Margin="0 5 0 5">
                 <Border
                     BorderThickness="1,0,1,1"
                     BorderBrush="{DynamicResource BorderBrush}"
@@ -111,7 +114,7 @@
                                 <Setter Property="Margin" Value="0 5 0 5"/>
                                 <Style.Resources>
                                     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="Width" Value="250"/>
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
@@ -131,7 +134,7 @@
                         </StackPanel.Resources>
 
                         <WrapPanel>
-                            <Label Content="Preview background image"/>
+                            <Label Content="{DynamicResource DesignViewTextBoxBackgroundImageLabel}"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -141,20 +144,21 @@
                                     Grid.Column="0"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
-                                    Text="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
-                                    ToolTip="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    ToolTip="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
                                     hc:BorderElement.CornerRadius="5 0 0 5"
                                     FontSize="14"
                                     IsReadOnly="True"
                                     Focusable="False"
                                     ShowClearButton="True"
-                                    hc:InfoElement.Placeholder="{DynamicResource WebPreviewBackgroundPicture}" />
+                                    hc:InfoElement.Placeholder="{DynamicResource DesignViewTextBoxImageChoosing}" />
                                 <Button
                                     Grid.Column="1"
                                     Width="60"
+                                    Padding="-2 0 -2 0"
                                     hc:BorderElement.CornerRadius="0 5 5 0"
                                     Style="{DynamicResource ButtonSuccess}"
-                                    Command="{Binding SelectWebBackgroundImageCmd}"
+                                    Command="{Binding SelectGridPreviewBackgroundImageCmd}"
                                     HorizontalAlignment="Left"
                                     Content="{DynamicResource DesignViewButtonImageChoosing}" />
                             </Grid>
@@ -175,7 +179,7 @@
                                 Value="{Binding AutoSwitchSeconds, UpdateSourceTrigger=PropertyChanged}"/>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label Content="{DynamicResource PreviewFileAutoSwitchSeconds}"/>
+                            <Label Content="{DynamicResource DesignViewLabelFilesOnPage}"/>
                             <hc:ButtonGroup >
                                 <RadioButton
                                     Height="40"
@@ -235,7 +239,7 @@
             </Expander>
             
             <!--Web settings-->
-            <Expander Header="Web settings" IsExpanded="True" Margin="0 5 0 5">
+            <Expander Header="{DynamicResource DesignViewButtonWebSettingsLabel}" IsExpanded="True" Margin="0 5 0 5">
                 <Border
                     BorderThickness="1,0,1,1"
                     BorderBrush="{DynamicResource BorderBrush}"
@@ -247,7 +251,7 @@
                                 <Setter Property="Margin" Value="0 5 0 5"/>
                                 <Style.Resources>
                                     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-                                        <Setter Property="Width" Value="200"/>
+                                        <Setter Property="Width" Value="250"/>
                                         <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                         <Setter Property="BorderThickness" Value="0"/>
@@ -266,7 +270,7 @@
                             </Style>
                         </StackPanel.Resources>
                         <WrapPanel>
-                            <Label Content="Background image"/>
+                            <Label Content="{DynamicResource DesignViewTextBoxBackgroundImageLabel}"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -276,26 +280,27 @@
                                     Grid.Column="0"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
-                                    Text="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
-                                    ToolTip="{Binding BackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                    ToolTip="{Binding WebBackgroundImagePath, UpdateSourceTrigger=PropertyChanged}"
                                     hc:BorderElement.CornerRadius="5 0 0 5"
                                     FontSize="14"
                                     IsReadOnly="True"
                                     Focusable="False"
                                     ShowClearButton="True"
-                                    hc:InfoElement.Placeholder="{DynamicResource DesignViewTextBoxImageChoosing}" />
+                                    hc:InfoElement.Placeholder="{DynamicResource WebPreviewBackgroundPicture}" />
                                 <Button
                                     Grid.Column="1"
                                     Width="60"
+                                    Padding="-2 0 -2 0"
                                     hc:BorderElement.CornerRadius="0 5 5 0"
                                     Style="{DynamicResource ButtonSuccess}"
-                                    Command="{Binding SelectGridPreviewBackgroundImageCmd}"
+                                    Command="{Binding SelectWebBackgroundImageCmd}"
                                     HorizontalAlignment="Left"
                                     Content="{DynamicResource DesignViewButtonImageChoosing}" />
                             </Grid>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label Content="ShowWifiQrCodeInWeb"/>
+                            <Label Content="{DynamicResource WebPreviewShowQrCodeLabel}"/>
                             <ToggleButton
                                 IsChecked="{Binding ShowWifiQrCodeInWeb}"
                                 Height="25"
@@ -311,7 +316,7 @@
                                 Style="{StaticResource ToggleButtonSwitch}"/>
                         </WrapPanel>
                         <WrapPanel >
-                            <Label Content="Required fields"/>
+                            <Label Content="{DynamicResource WebPreviewRequiredFieldsLabel}"/>
                             <hc:CheckComboBox
                                 Width="370"
                                 ShowClearButton="True"

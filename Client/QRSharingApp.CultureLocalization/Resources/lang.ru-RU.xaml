@@ -17,18 +17,28 @@
     <v:String x:Key="AddingCurrentHotFoldersAndFilesFetchMessage">Добавление текущих горячих папок и файлов...</v:String>
 
     <!-- Design view -->
+    <v:String x:Key="DesignViewButtonGeneralSettingsLabel">Общие настройки</v:String>
+    <v:String x:Key="DesignViewButtonFilePreviewSettingsLabel">Настройки просмотра файлов</v:String>
+    <v:String x:Key="DesignViewButtonWebSettingsLabel">Веб-настройки</v:String>
+    <v:String x:Key="DesignViewButtonApplicationStyleLabel">Стиль приложения</v:String>
+    <v:String x:Key="DesignViewButtonLanguageLabel">Язык</v:String>
+    <v:String x:Key="DesignViewButtonWindowScreenModeLabel">Режим окна</v:String>
     <v:String x:Key="DesignViewButtonLanguageEng">ENGLISH</v:String>
     <v:String x:Key="DesignViewButtonLanguageRu">РУССКИЙ</v:String>
     <v:String x:Key="DesignViewButtonLanguageES">ИСПАНСКИЙ</v:String>
-    <v:String x:Key="DesignViewTextBoxImageChoosing">ФОНОВАЯ КАРТИНКА В РЕЖИМЕ ПРОСМОТРА</v:String>
+    <v:String x:Key="DesignViewTextBoxImageChoosing">Фоновая картинка в режиме просмотра</v:String>
+    <v:String x:Key="DesignViewTextBoxBackgroundImageLabel">Фоновая картинка</v:String>
     <v:String x:Key="DesignViewButtonImageChoosing">ВЫБРАТЬ</v:String>
     <v:String x:Key="DesignViewButtonFullScreenMode">ПОЛНОЭКРАННЫЙ РЕЖИМ</v:String>
     <v:String x:Key="DesignViewButtonWindowMode">ОКОННЫЙ РЕЖИМ</v:String>
-    <v:String x:Key="DesignViewLabelSortingFiles">ОТОБРАЖЕНИЕ ФАЙЛОВ: СНАЧАЛА НОВЫЕ</v:String>
-    <v:String x:Key="DesignViewLabelDirectFileDownload">ДОБАВИТЬ ПОЛЯ ДАННЫХ ПОЛЬЗОВАТЕЛЯ</v:String>
-    <v:String x:Key="PreviewFileAutoSwitchSeconds">АВТОМАТИЧЕСКОЕ ПЕРЕКЛЮЧЕНИЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА (СЕКУНДЫ)</v:String>
-    <v:String x:Key="WebPreviewBackgroundPicture">ФОНОВАЯ КАРТИНКА В WEB ПРОСМОТРЕ</v:String>
-    
+    <v:String x:Key="DesignViewLabelSortingFiles">Отображение: сначала новые</v:String>
+    <v:String x:Key="DesignViewLabelDirectFileDownload">Добавить поля данных пользователя</v:String>
+    <v:String x:Key="DesignViewLabelFilesOnPage">Файлов на странице</v:String>
+    <v:String x:Key="PreviewFileAutoSwitchSeconds">Автоматическое переключение (сек.)</v:String>
+    <v:String x:Key="WebPreviewBackgroundPicture">Фоновая картинка в web просмотре</v:String>
+    <v:String x:Key="WebPreviewShowQrCodeLabel">Показать QR-код</v:String>
+    <v:String x:Key="WebPreviewRequiredFieldsLabel">Обязательные поля</v:String>
+
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">ВВЕДИТЕ КЛЮЧ</v:String>
     <v:String x:Key="ActivationViewButtonInsert">ВСТАВИТЬ</v:String>
