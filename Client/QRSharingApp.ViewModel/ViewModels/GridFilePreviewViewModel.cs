@@ -4,11 +4,9 @@ using Microsoft.WindowsAPICodePack.Shell;
 using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
-using QRSharingApp.ViewModel.Helpers;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels.Base;
-using QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using ReactiveUI;
 using System;
@@ -61,8 +59,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public string BackgroundImagePath { get; set; }
         public PageRequestViewModel PageRequestViewModel { get; set; }
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
-        public ReadOnlyObservableCollection<FilePreviewBaseViewModel> CurrentPageFiles { get; set; }
-        public ReadOnlyObservableCollection<FilePreviewBaseViewModel> AllFiles { get; set; }
+        public ReadOnlyObservableCollection<ThumbnailViewModel> CurrentPageFiles { get; set; }
+        public ReadOnlyObservableCollection<ThumbnailViewModel> AllFiles { get; set; }
         public ObservableCollection<ObservableCollection<int>> GroupedPages { get; set; }
         public bool ShowNewestFilesInTheBeginning { get; set; }
         public int Rows { get; set; }
@@ -83,7 +81,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             
             PageRequestViewModel = new PageRequestViewModel(1, appSettingService.ItemsInGrid, localFilesService.LocalFiles);
             PageRequestViewModel
-                .WhenAnyValueChanged()
+                .WhenPageOrSizeChanged()
                 .Subscribe(_ => RaisePropertyChanged(nameof(PageRequestViewModel)));
 
             this.WhenAnyValue(_ => _.PageRequestViewModel.Size)
@@ -95,13 +93,13 @@ namespace QRSharingApp.ViewModel.ViewModels
             LocalFilesService.LocalFiles
                 .ToObservableChangeSet()
                 .Filter(_ => _.IsPhoto || _.IsVideo)
-                .Transform(_ => _.ToFilePreviewViewModel())
-                .Transform(LoadFilePreviewData)
+                .Transform(ThumbnailViewModel.Compose)
+                .Transform(LoadThumbnailData)
                 .OnItemRemoved(OnFileRemoved)
-                .Bind(out ReadOnlyObservableCollection<FilePreviewBaseViewModel> allFiles)
+                .Bind(out ReadOnlyObservableCollection<ThumbnailViewModel> allFiles)
                 .Sort(this.WhenAnyValue(_ => _.ShowNewestFilesInTheBeginning).Select(_ => GetSortFilesComparer()))
                 .Page(this.WhenAnyValue(_ => _.PageRequestViewModel))
-                .Bind(out ReadOnlyObservableCollection<FilePreviewBaseViewModel> currentPageFiles)
+                .Bind(out ReadOnlyObservableCollection<ThumbnailViewModel> currentPageFiles)
                 .Subscribe();
 
             CurrentPageFiles = currentPageFiles;
@@ -112,11 +110,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                 this.WhenAnyValue(_ => _.PageRequestViewModel.Size).DistinctUntilChanged())
                 .Subscribe(list =>
                 {
-                    var itemsCount = list[0];
-                    var pageSize = list[1];
-                    var pagesCount = itemsCount == itemsCount / pageSize * pageSize
-                        ? itemsCount / pageSize
-                        : itemsCount / pageSize + 1;
+                    var pagesCount = PageRequestViewModel.PageCount();
                     var chunkSize = 8;
                     var pages = Enumerable.Range(1, pagesCount);
                     var groupedPages = pages
@@ -146,7 +140,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             PageRequestViewModel.Page = currentPage;
         }
 
-        private FilePreviewBaseViewModel LoadFilePreviewData(FilePreviewBaseViewModel filePreview)
+        private ThumbnailViewModel LoadThumbnailData(ThumbnailViewModel filePreview)
         {
             Task.Run(async () =>
             {
@@ -183,7 +177,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             PageRequestViewModel.NextPage();
         }
 
-        private async Task FetchThumbnailImage(FilePreviewBaseViewModel file, bool checkFileCanRead = true)
+        private async Task FetchThumbnailImage(ThumbnailViewModel file, bool checkFileCanRead = true)
         {
             file.IsLoading = true;
             if (checkFileCanRead)
@@ -200,7 +194,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             file.IsLoading = false;
         }
 
-        private async Task<string> GetOrCreateFileId(FilePreviewBaseViewModel viewModel)
+        private async Task<string> GetOrCreateFileId(ThumbnailViewModel viewModel)
         {
             var localFile = await LocalFileApi.GetFile(viewModel.FullLocalPath);
             if (localFile == null)
@@ -211,7 +205,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             return localFile.Id;
         }
 
-        private async Task FetchQRCodeImage(FilePreviewBaseViewModel file)
+        private async Task FetchQRCodeImage(ThumbnailViewModel file)
         {
             file.Id = await GetOrCreateFileId(file);
             file.SharedLink = WebServerService.GetFilePath(file.Id);
@@ -261,14 +255,14 @@ namespace QRSharingApp.ViewModel.ViewModels
             }
         }
 
-        private SortExpressionComparer<FilePreviewBaseViewModel> GetSortFilesComparer()
+        private SortExpressionComparer<ThumbnailViewModel> GetSortFilesComparer()
         {
             if (ShowNewestFilesInTheBeginning)
             {
-                return SortExpressionComparer<FilePreviewBaseViewModel>.Descending(t => t.CreationDate);
+                return SortExpressionComparer<ThumbnailViewModel>.Descending(t => t.CreationDate);
             }
 
-            return SortExpressionComparer<FilePreviewBaseViewModel>.Ascending(t => t.CreationDate);
+            return SortExpressionComparer<ThumbnailViewModel>.Ascending(t => t.CreationDate);
         }
 
         private void UpdateGridStructure(int size)
@@ -297,7 +291,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             }
         }
 
-        private void OnFileRemoved(FilePreviewBaseViewModel file)
+        private void OnFileRemoved(ThumbnailViewModel file)
         {
             Task.Run(async () =>
             {

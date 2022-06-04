@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="QRSharingApp.Client.Views.FilePreviews.VideoPreviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:local="clr-namespace:QRSharingApp.Client.Views.FilePreviews"
+             xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
+             xmlns:vm="clr-namespace:QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;assembly=QRSharingApp.ViewModel"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContextChanged="UserControl_DataContextChanged"
+             d:DataContext="{d:DesignInstance Type=vm:VideoFilePreviewViewModel}">
+    <Grid Margin="0"
+          Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Grid.RowSpan="2">
+            <Grid.Background>
+                <ImageBrush
+                    ImageSource="{Binding BackgroundImagePath, Converter={StaticResource NullToDoNothingConverter}}"
+                    Stretch="UniformToFill" />
+            </Grid.Background>
+        </Grid>
+
+        <Grid Grid.Row="0" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <hc:LoadingCircle
+                Grid.Row="0"
+                Width="80"
+                Height="80"
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverterWhereFalseIsCollapsed}}"/>
+
+            <ffme:MediaElement
+                Grid.Row="0"
+                Name="VideoPlayer"
+                LoadedBehavior="Manual"
+                UnloadedBehavior="Manual"
+                Background="Transparent"
+                MouseDown="VideoPlayer_MouseDown"/>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="0.7*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Source="{Binding QRImage}" />
+            </Grid>
+        </Grid>
+
+        <Button
+            Grid.Row="1"
+            Width="150"
+            Focusable="False"
+            HorizontalAlignment="Left"
+            Style="{StaticResource EmptyButtonStyle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DataContext.CloseFilePreviewCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+    </Grid>
+</UserControl>

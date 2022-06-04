@@ -35,7 +35,7 @@ namespace QRSharingApp.Client
             {
                 SetupExceptionHandling();
                 RegisterTypes();
-                Task.Run(InitFFMPEG);
+                InitFFMPEG();
                 CreateShell();
             }
             catch (Exception ex)
@@ -90,13 +90,13 @@ namespace QRSharingApp.Client
             Container.RegisterSingleton<WifiConfigurationViewModel>();
         }
 
-        private async Task InitFFMPEG()
+        private void InitFFMPEG()
         {
             var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Library.FFmpegDirectory = Path.Combine(assemblyFolder, "FFMPEGBinaries");
             Library.EnableWpfMultiThreadedVideo = false;
             Library.FFmpegLoadModeFlags = FFmpegLoadMode.FullFeatures;
-            await Library.LoadFFmpegAsync();
+            Library.LoadFFmpeg();
         }
 
         private void SetupExceptionHandling()

@@ -4,34 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
              xmlns:vm="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
-             xmlns:filePreviewVM="clr-namespace:QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;assembly=QRSharingApp.ViewModel"
              xmlns:local="clr-namespace:QRSharingApp.Client.Views"
              xmlns:gu="https://github.com/GuOrg/Gu.Wpf.FlipView"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             Loaded="UserControl_Loaded"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:GridFilePreviewViewModel}">
 
     <Grid Background="White">
-        <!--<Grid.Resources>
-            <DataTemplate DataType="{x:Type filePreviewVM:PhotoFilePreviewViewModel}">
-                <Image Source="{Binding Image}"
-                       Stretch="Uniform"
-                       VerticalAlignment="Center" />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type filePreviewVM:VideoFilePreviewViewModel}">
-                <MediaElement Source="{Binding FullLocalPath}"
-                              Loaded="MediaElement_Loaded"
-                              LoadedBehavior="Manual"
-                              UnloadedBehavior="Manual"
-                              MouseDown="MediaElement_MouseDown"/>
-            </DataTemplate>
-        </Grid.Resources>-->
-        
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="100" />
@@ -139,12 +121,13 @@
                             <Border Margin="5,0,5,5">
                                 <Grid Cursor="Hand">
 
-                                    <!--<i:Interaction.Triggers>
+                                    <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseUp">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenFullPreviewCmd, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                                   CommandParameter="{Binding}"/>
+                                            <i:InvokeCommandAction
+                                                Command="{Binding DataContext.OpenFilePreviewCmd, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}"/>
                                         </i:EventTrigger>
-                                    </i:Interaction.Triggers>-->
+                                    </i:Interaction.Triggers>
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />

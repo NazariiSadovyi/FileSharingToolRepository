@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodels="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
-                    xmlns:views="clr-namespace:QRSharingApp.Client.Views">
+                    xmlns:filePreviewVM="clr-namespace:QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;assembly=QRSharingApp.ViewModel"
+                    xmlns:views="clr-namespace:QRSharingApp.Client.Views"
+                    xmlns:previewViews="clr-namespace:QRSharingApp.Client.Views.FilePreviews">
     <DataTemplate DataType="{x:Type viewmodels:HotFoldersViewModel}">
         <views:HotFoldersView/>
     </DataTemplate>
@@ -19,5 +21,11 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:GridFilePreviewViewModel}">
         <views:GridFilePreviewView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type filePreviewVM:PhotoFilePreviewViewModel}">
+        <previewViews:PhotoPreviewView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type filePreviewVM:VideoFilePreviewViewModel}">
+        <previewViews:VideoPreviewView/>
     </DataTemplate>
 </ResourceDictionary>

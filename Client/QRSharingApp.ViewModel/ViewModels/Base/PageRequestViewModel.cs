@@ -45,7 +45,7 @@ namespace QRSharingApp.ViewModel.ViewModels.Base
             return false;
         }
 
-        public IObservable<Unit> WhenAnyValueChanged()
+        public IObservable<Unit> WhenPageOrSizeChanged()
         {
             return this.WhenAnyValue(_ => _.Page, _ => _.Size).IgnoreValue();
         }
@@ -61,6 +61,14 @@ namespace QRSharingApp.ViewModel.ViewModels.Base
                 }
                 Page++;
             });
+        }
+
+        public int PageCount()
+        {
+            var itemsCount = _itemsCollection.Count;
+            return itemsCount == itemsCount / Size * Size
+                ? itemsCount / Size
+                : itemsCount / Size + 1;
         }
 
         public void PreviousPage()
@@ -99,14 +107,6 @@ namespace QRSharingApp.ViewModel.ViewModels.Base
                 default:
                     break;
             }
-        }
-
-        private int PageCount()
-        {
-            var itemsCount = _itemsCollection.Count;
-            return itemsCount == itemsCount / Size * Size
-                ? itemsCount / Size
-                : itemsCount / Size + 1;
         }
     }
 }

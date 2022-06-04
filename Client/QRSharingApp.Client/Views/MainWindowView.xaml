@@ -17,7 +17,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="KeyDown">
-            <i:InvokeCommandAction Command="{Binding ClosePreviewCmd}" />
+            <i:InvokeCommandAction Command="{Binding KeyDownCmd}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -97,7 +97,7 @@
                         Height="70"
                         Background="#00657F"
                         Content="{DynamicResource MainViewButtonStart}"
-                        Command="{Binding StartPreviewCmd}" />
+                        Command="{Binding OpenGridPreviewCmd}" />
             </StackPanel>
             
             <StackPanel VerticalAlignment="Bottom"
@@ -122,7 +122,7 @@
                         Grid.Row="0"
                         Focusable="False"
                         Visibility="{Binding SharedAppDataViewModel.IsPreviewVisible, Converter={StaticResource BoolToVisibilityConverterWhereFalseIsHidden}}"
-                        Content="{Binding CurrentGridFilePreviewViewModel}"/>
+                        Content="{Binding CurrentPreviewViewModel}"/>
 
         <controls:TaskLoadingControl Grid.Column="0"
                                      Grid.ColumnSpan="2"

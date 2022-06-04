@@ -1,4 +1,4 @@
-﻿using QRSharingApp.Infrastructure.Models;
+﻿using System.Threading.Tasks;
 
 namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
 {
@@ -6,7 +6,12 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
     {
         public bool IsPlaying { get; set; }
 
-        public VideoFilePreviewViewModel(LocalFile localFile)
-            : base(localFile) { }
+        public VideoFilePreviewViewModel(ThumbnailViewModel thumbnailViewModel)
+            : base(thumbnailViewModel) { }
+
+        public override Task OnLoadDataAsync()
+        {
+            return Task.CompletedTask;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using QRSharingApp.Infrastructure.Models;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
@@ -7,7 +9,29 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
     {
         public BitmapSource Image { get; set; }
 
-        public PhotoFilePreviewViewModel(LocalFile localFile)
-            : base(localFile) { }
+        public PhotoFilePreviewViewModel(ThumbnailViewModel thumbnailViewModel)
+            : base(thumbnailViewModel) { }
+
+        public override async Task OnLoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Image = CreateBitmapImage();
+                });
+            });
+        }
+
+        private BitmapImage CreateBitmapImage()
+        {
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.UriSource = new Uri(FullLocalPath);
+            image.EndInit();
+
+            return image;
+        }
     }
 }

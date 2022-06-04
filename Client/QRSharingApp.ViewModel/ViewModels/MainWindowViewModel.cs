@@ -3,6 +3,7 @@ using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels.Base;
+using QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using ReactiveUI;
 using System;
@@ -33,7 +34,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         [Dependency]
         public IActivationService ActivationService { get; set; }
         [Dependency]
-        public IGridFilePreviewViewModel GridFilePreviewViewModel { get; set; }
+        public GridFilePreviewViewModel GridFilePreviewViewModel { get; set; }
         #endregion
 
         #region Properties
@@ -46,12 +47,12 @@ namespace QRSharingApp.ViewModel.ViewModels
         public bool IsTaskControlShown { get; set; }
 
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
-        public IGridFilePreviewViewModel CurrentGridFilePreviewViewModel { get; set; }
 
         public string InformationMessage { get; set; }
         public InformationKind InformationKind { get; set; }
         public bool ShowInformationMessage { get; set; }
 
+        public object CurrentPreviewViewModel { get; set; }
         public BaseNavigationViewModel CurrentPage { get; set; }
         #endregion
 
@@ -64,21 +65,49 @@ namespace QRSharingApp.ViewModel.ViewModels
             }
         );
 
-        public ICommand StartPreviewCmd => ReactiveCommand.Create(() =>
+        public ICommand OpenGridPreviewCmd => ReactiveCommand.Create(() =>
             {
                 SharedAppDataViewModel.IsPreviewVisible = true;
-                CurrentGridFilePreviewViewModel = GridFilePreviewViewModel;
+                CurrentPreviewViewModel = GridFilePreviewViewModel;
                 GridFilePreviewViewModel.StartAutoSwitchTimer();
             }
         );
 
-        public ICommand ClosePreviewCmd => ReactiveCommand.Create(() =>
+        public ICommand OpenFilePreviewCmd => ReactiveCommand.CreateFromTask<ThumbnailViewModel>(
+            async thumbnailViewModel =>
+            {
+                var filePreviewBaseViewModel = thumbnailViewModel.ToPreviewViewModel();
+                UnityContainer.BuildUp(filePreviewBaseViewModel);
+                CurrentPreviewViewModel = filePreviewBaseViewModel;
+                await filePreviewBaseViewModel.OnLoadAsync();
+            }
+        );
+
+        public ICommand CloseFilePreviewCmd => ReactiveCommand.Create(
+            () =>
+            {
+                CurrentPreviewViewModel = GridFilePreviewViewModel;
+            }
+        );
+
+        public ICommand KeyDownCmd => ReactiveCommand.Create(
+            () =>
             {
                 if (Keyboard.IsKeyDown(Key.Escape))
                 {
-                    CurrentGridFilePreviewViewModel = null;
-                    SharedAppDataViewModel.IsPreviewVisible = false;
-                    GridFilePreviewViewModel.StopAutoSwitchTimer();
+                    switch (CurrentPreviewViewModel)
+                    {
+                        case GridFilePreviewViewModel _ when SharedAppDataViewModel.IsPreviewVisible:
+                            CurrentPreviewViewModel = null;
+                            SharedAppDataViewModel.IsPreviewVisible = false;
+                            GridFilePreviewViewModel.StopAutoSwitchTimer();
+                            break;
+                        case FilePreviewBaseViewModel _:
+                            CurrentPreviewViewModel = GridFilePreviewViewModel;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         );
@@ -187,8 +216,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                     false,
                     false);
 
-                SharedAppDataViewModel.ActivationStatus = ActivationStatus.Activated;
-                //SharedAppDataViewModel.ActivationStatus = activationStatus;
+                SharedAppDataViewModel.ActivationStatus = activationStatus;
                 switch (activationStatus)
                 {
                     case ActivationStatus.NotActivated:

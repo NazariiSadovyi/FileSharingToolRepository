@@ -9,7 +9,6 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
