@@ -37,12 +37,12 @@ namespace QRSharingApp.ClientApi.Implementations
 
         public async Task<LocalFileContract> GetFile(string filePath)
         {
-            return await _clientProvider.GetAsync<LocalFileContract>($"api/localFile/{HttpUtility.UrlEncodeUnicode(filePath)}");
+            return await _clientProvider.GetAsync<LocalFileContract>($"api/localFile/{Uri.EscapeDataString(filePath)}");
         }
 
         public async Task DeleteFile(string filePath)
         {
-            await _clientProvider.DeleteAsync($"api/localFile/{HttpUtility.UrlEncodeUnicode(filePath)}");
+            await _clientProvider.DeleteAsync($"api/localFile/{Uri.EscapeDataString(filePath)}");
         }
     }
 }

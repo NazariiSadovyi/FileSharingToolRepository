@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
-using QRSharingApp.WebApplication.Services;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
@@ -13,17 +11,10 @@ namespace QRSharingApp.WebApplication.Controllers
     public class HotFolderController : ControllerBase
     {
         private readonly IHotFolderRepository _hotFolderRepository;
-        private readonly ILocalFileRepository _localFileRepository;
-        private readonly IFileHubService _fileHubService;
 
-        public HotFolderController(
-            IHotFolderRepository hotFolderRepository,
-            ILocalFileRepository localFileRepository,
-            IFileHubService fileHubService)
+        public HotFolderController(IHotFolderRepository hotFolderRepository)
         {
             _hotFolderRepository = hotFolderRepository;
-            _localFileRepository = localFileRepository;
-            _fileHubService = fileHubService;
         }
 
         [HttpGet]
@@ -38,7 +29,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpGet("{folderPath}")]
         public async Task<IActionResult> Get(string folderPath)
         {
-            var decodedPath = HttpUtility.UrlDecode(folderPath);
+            var decodedPath = Uri.EscapeDataString(folderPath);
             var entity = await _hotFolderRepository.GetByPath(decodedPath);
             var contract = entity.ToContract();
 

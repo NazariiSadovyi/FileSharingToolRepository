@@ -1,5 +1,6 @@
 ﻿using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Contract;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,7 +23,7 @@ namespace QRSharingApp.ClientApi.Implementations
 
         public async Task<HotFolderContract> GetByPath(string folderPath)
         {
-            return await _clientProvider.GetAsync<HotFolderContract>($"api/hotfolder/{HttpUtility.UrlEncodeUnicode(folderPath)}");
+            return await _clientProvider.GetAsync<HotFolderContract>($"api/hotfolder/{Uri.EscapeDataString(folderPath)}");
         }
 
         public async Task<HotFolderContract> Create(string folderPath)

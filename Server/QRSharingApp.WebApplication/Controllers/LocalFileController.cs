@@ -3,8 +3,8 @@ using QRSharingApp.Contract.LocalFile;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
 using QRSharingApp.WebApplication.Services;
+using System;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
@@ -34,7 +34,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpGet("{filePath}")]
         public async Task<IActionResult> Get(string filePath)
         {
-            var decodedPath = HttpUtility.UrlDecode(filePath);
+            var decodedPath = Uri.EscapeDataString(filePath);
             var localFile = await _localFileRepository.GetByFullPath(decodedPath);
             var contract = localFile.ToContract();
 
@@ -56,7 +56,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpDelete("{filePath}")]
         public async Task<IActionResult> Delete(string filePath)
         {
-            var decodedPath = HttpUtility.UrlDecode(filePath);
+            var decodedPath = Uri.EscapeDataString(filePath);
             var localFile = await _localFileRepository.GetByFullPath(decodedPath);
 
             await _localFileRepository.Remove(localFile.Id);
