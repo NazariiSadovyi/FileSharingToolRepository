@@ -184,7 +184,8 @@
                                     Padding="0"
                                     Command="{Binding ChangeItemsInGridCommand}"
                                     CommandParameter="1"
-                                    
+                                    BorderThickness="2"
+                                    Margin="2"
                                     IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=1}">
                                     <RadioButton.Content>
                                         <Image Source="/QRSharingApp.Client;component/Resources/Img/1x1.png" />
@@ -195,6 +196,8 @@
                                     Padding="0"
                                     Command="{Binding ChangeItemsInGridCommand}"
                                     CommandParameter="4"
+                                    BorderThickness="2"
+                                    Margin="2"
                                     IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=4}">
                                     <RadioButton.Content>
                                         <Image Source="/QRSharingApp.Client;component/Resources/Img/2x2.png" />
@@ -205,6 +208,8 @@
                                     Padding="0"
                                     Command="{Binding ChangeItemsInGridCommand}"
                                     CommandParameter="9"
+                                    BorderThickness="2"
+                                    Margin="2"
                                     IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=9}">
                                     <RadioButton.Content>
                                         <Image Source="/QRSharingApp.Client;component/Resources/Img/3x3.png" />
@@ -215,6 +220,8 @@
                                     Padding="0"
                                     Command="{Binding ChangeItemsInGridCommand}"
                                     CommandParameter="12"
+                                    BorderThickness="2"
+                                    Margin="2"
                                     IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=12}">
                                     <RadioButton.Content>
                                         <Image Source="/QRSharingApp.Client;component/Resources/Img/4x3.png" />
@@ -225,6 +232,8 @@
                                     Padding="0"
                                     Command="{Binding ChangeItemsInGridCommand}"
                                     CommandParameter="20"
+                                    BorderThickness="2"
+                                    Margin="2"
                                     IsChecked="{Binding ItemsInGrid, Converter={StaticResource IsValuesEqualsToBoolConverter}, ConverterParameter=20}">
                                     <RadioButton.Content>
                                         <Image Source="/QRSharingApp.Client;component/Resources/Img/5x4.png" />
