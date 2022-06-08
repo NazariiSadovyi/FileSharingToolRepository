@@ -1,4 +1,5 @@
-﻿@using QRSharingApp.WebApplication.Controllers
+﻿@using QRSharingApp.Common.Services
+@using QRSharingApp.WebApplication.Controllers
 @using QRSharingApp.WebApplication.Helpers
 @using QRSharingApp.WebApplication.Services
 @model DownloadDataViewModel
@@ -6,8 +7,9 @@
 @inject ISharedSettingService sharedSettingService
 
 @{
-    var currentCountryCode = System.Globalization.RegionInfo.CurrentRegion.TwoLetterISORegionName;
+    var currentCountryCode = sharedSettingService.DefaultCountryOnDownload;
     var requiredFields = sharedSettingService.RequiredFieldsForDownload;
+    var showAgreementCheckbox = sharedSettingService.ShowAgreedCheckboxOnDownload;
 }
 
 <style>
@@ -47,7 +49,7 @@
                             <label class="form-label">Country</label>
                             @Html.DropDownList(
                                 "country-code-dropdown",
-                                CountriesHelper.GetAll().OrderBy(_ => _.Code).Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
+                                CountriesProvider.GetAll().Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
                                 new { @class = "form-select" })
                         </div>
                         <div class="col-6">
@@ -84,12 +86,22 @@
                             <label class="form-label">Country</label>
                             @Html.DropDownList(
                                 "country-code-dropdown",
-                                CountriesHelper.GetAll().OrderBy(_ => _.Code).Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
+                                CountriesProvider.GetAll().Select(_ => new SelectListItem(_.DisplayName, _.CallingCode, _.Code == currentCountryCode)),
                                 new { @class = "form-select" })
                         </div>
                         <div class="col-6">
                             <label for="phone" class="form-label">Phone number</label>
                             <input id="phone" name="phone" type="tel" class="form-control" pattern="^\d{2}-\d{3}-\d{2}-\d{2}" required onkeyup="OnFormInputChanged(event)">
+                        </div>
+                    </div>
+                }
+
+                @if (showAgreementCheckbox)
+                {
+                    <div class="row">
+                        <div style="margin-top: 30px">
+                            <input style="height: 15px; width: 15px" type="checkbox" class="form-input" id="AgreementCheckbox" onchange="OnFormInputChanged(this)">
+                            <label style="vertical-align: middle" class="form-label" for="exampleCheck1">I agree to the processing of personal data</label>
                         </div>
                     </div>
                 }
@@ -109,13 +121,24 @@
 
 <script type="text/JavaScript">
     var baseFileAdress = '/File/PhysicalFileWithDataSave?';
-    var fileId = '@Model.Id'
+    var fileId = '@Model.Id';
+    var checkAgreementCheckbox = '@showAgreementCheckbox';
 
     function OnFormInputChanged(e) {
         if (document.getElementById("name").checkValidity()
             && document.getElementById("email").checkValidity()
             && (!document.getElementById("phone").value.includes('_') || !document.getElementById("phone").hasAttribute("required")))
         {
+            if(checkAgreementCheckbox == "True")
+            {
+                if(document.getElementById("AgreementCheckbox").checked == false)
+                {
+                    var element1 = document.getElementById("download-file-link");
+                    element1.classList.add("disabled");
+                    return;
+                }
+            }
+
             var element = document.getElementById("download-file-link");
             element.classList.remove("disabled");
 

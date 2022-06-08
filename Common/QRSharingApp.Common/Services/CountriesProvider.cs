@@ -1,27 +1,31 @@
-﻿using QRSharingApp.WebApplication.Models;
-using Maddalena;
+﻿using Maddalena;
+using QRSharingApp.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QRSharingApp.WebApplication.Helpers
+namespace QRSharingApp.Common.Services
 {
-    public static class CountriesHelper
+    public static class CountriesProvider
     {
-        private static IEnumerable<CountryViewModel> _countriesPrivate; 
+        private static CountryModel[] _countriesPrivate;
 
-        public static IEnumerable<CountryViewModel> GetAll()
+        public static CountryModel[] GetAll()
         {
             if (_countriesPrivate != null)
             {
                 return _countriesPrivate;
             }
 
-            _countriesPrivate = Country.All.SelectMany(SelectManyCountries);
+            _countriesPrivate = Country
+                .All
+                .SelectMany(SelectManyCountries)
+                .OrderBy(_ => _.DisplayName)
+                .ToArray();
 
             return _countriesPrivate;
         }
 
-        private static IEnumerable<CountryViewModel> SelectManyCountries(Country country)
+        private static IEnumerable<CountryModel> SelectManyCountries(Country country)
         {
             if (country.CallingCodes == null || country.CallingCodes.Count() == 0)
             {
@@ -30,7 +34,7 @@ namespace QRSharingApp.WebApplication.Helpers
 
             foreach (var callingCode in country.CallingCodes.Take(1))
             {
-                yield return new CountryViewModel() 
+                yield return new CountryModel()
                 {
                     Code = country.CountryCode.ToString(),
                     Name = country.CommonName,

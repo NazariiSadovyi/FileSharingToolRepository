@@ -8,6 +8,8 @@ namespace QRSharingApp.WebApplication.Services
         bool DownloadViaForm { get; set; }
         string WebBackgroundImagePath { get; set; }
         int[] RequiredFieldsForDownload { get; set; }
+        string DefaultCountryOnDownload { get; set; }
+        bool ShowAgreedCheckboxOnDownload { get; set; }
     }
 
     public class SharedSettingService : ISharedSettingService
@@ -18,18 +20,25 @@ namespace QRSharingApp.WebApplication.Services
         private readonly string _downloadViaForm = "DownloadViaForm";
         private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
         private readonly string _showWifiQrCodeInWeb = "ShowWifiQrCodeInWeb";
+        private readonly string _defaultCountryOnDownload = "DefaultCountryOnDownload";
+        private readonly string _showAgreedCheckboxOnDownload = "ShowAgreedCheckboxOnDownload";
+
+        public string DefaultCountryOnDownload
+        {
+            get { return _settingRepository.GetStringSetting(_defaultCountryOnDownload) ?? "BY"; } //Belarus
+            set { _settingRepository.SetSetting(_defaultCountryOnDownload, value); }
+        }
 
         public bool ShowWifiQrCodeInWeb
         {
-            get
-            {
-                var value = _settingRepository.GetStringSetting(_showWifiQrCodeInWeb);
-                if (string.IsNullOrEmpty(value))
-                    return default;
-
-                return bool.Parse(value);
-            }
+            get { return _settingRepository.GetBoolSetting(_showWifiQrCodeInWeb, false); }
             set { _settingRepository.SetSetting(_showWifiQrCodeInWeb, value.ToString()); }
+        }
+
+        public bool ShowAgreedCheckboxOnDownload
+        {
+            get { return _settingRepository.GetBoolSetting(_showAgreedCheckboxOnDownload, false); }
+            set { _settingRepository.SetSetting(_showAgreedCheckboxOnDownload, value.ToString()); }
         }
 
         public int[] RequiredFieldsForDownload

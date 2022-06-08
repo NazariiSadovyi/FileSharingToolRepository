@@ -38,6 +38,8 @@
     <v:String x:Key="WebPreviewBackgroundPicture">Фоновая картинка в web просмотре</v:String>
     <v:String x:Key="WebPreviewShowQrCodeLabel">Показать QR-код</v:String>
     <v:String x:Key="WebPreviewRequiredFieldsLabel">Обязательные поля</v:String>
+    <v:String x:Key="WebPreviewDefaultCountryCodeOnDownloadLabel">Код страны по умолчанию &#10;при загрузке</v:String>
+    <v:String x:Key="WebPreviewShowAgreedCheckboxOnDownloadLabel">Показывать галочку «Я согласен на обработку персональных данных»</v:String>
 
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">ВВЕДИТЕ КЛЮЧ</v:String>

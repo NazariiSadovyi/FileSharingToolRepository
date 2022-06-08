@@ -29,7 +29,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpGet("{folderPath}")]
         public async Task<IActionResult> Get(string folderPath)
         {
-            var decodedPath = Uri.EscapeDataString(folderPath);
+            var decodedPath = Uri.UnescapeDataString(folderPath);
             var entity = await _hotFolderRepository.GetByPath(decodedPath);
             var contract = entity.ToContract();
 

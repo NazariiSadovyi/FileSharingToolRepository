@@ -16,5 +16,7 @@
         int ItemsInGrid { get; set; }
         bool ShowWifiQrCodeInWeb { get; set; }
         string SkinType { get; set; }
+        string DefaultCountryOnDownload { get; set; }
+        bool ShowAgreedCheckboxOnDownload { get; set; }
     }
 }

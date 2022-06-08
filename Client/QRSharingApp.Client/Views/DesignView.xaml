@@ -265,6 +265,13 @@
                                         <Setter Property="Padding" Value="5 3.5 0 0"/>
                                         <Setter Property="VerticalAlignment" Value="Center"/>
                                     </Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                        <Setter Property="Width" Value="250"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="5 3.5 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
                                         <Setter Property="Width" Value="370"/>
@@ -322,7 +329,7 @@
                                 HorizontalAlignment="Left"
                                 Style="{StaticResource ToggleButtonSwitch}"/>
                         </WrapPanel>
-                        <WrapPanel >
+                        <WrapPanel>
                             <Label Content="{DynamicResource WebPreviewRequiredFieldsLabel}"/>
                             <hc:CheckComboBox
                                 Width="370"
@@ -340,6 +347,25 @@
                                     </Style>
                                 </hc:CheckComboBox.ItemContainerStyle>
                             </hc:CheckComboBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="{DynamicResource WebPreviewDefaultCountryCodeOnDownloadLabel}"/>
+                            <hc:ComboBox
+                                Width="370"
+                                FontSize="13"
+                                HorizontalAlignment="Stretch"
+                                ItemsSource="{Binding Countries}"
+                                DisplayMemberPath="DisplayName"
+                                SelectedItem="{Binding SelectedCountry}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="{DynamicResource WebPreviewShowAgreedCheckboxOnDownloadLabel}"/>
+                            <ToggleButton
+                                IsChecked="{Binding ShowAgreedCheckboxOnDownload}"
+                                Height="25"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ToggleButtonSwitch}"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>

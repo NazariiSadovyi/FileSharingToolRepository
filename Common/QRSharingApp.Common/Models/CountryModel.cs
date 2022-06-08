@@ -1,6 +1,6 @@
-﻿namespace QRSharingApp.WebApplication.Models
+﻿namespace QRSharingApp.Common.Models
 {
-    public class CountryViewModel
+    public class CountryModel
     {
         public string DisplayName => $"{Name} (+{CallingCode})";
         public string Name { get; set; }

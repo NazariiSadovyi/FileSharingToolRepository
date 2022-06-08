@@ -22,6 +22,36 @@ namespace QRSharingApp.Infrastructure.Services
         private readonly string _requiredFieldsForDownload = "RequiredFieldsForDownload";
         private readonly string _itemsInGridKey = "ItemsInGrid";
         private readonly string _skinType = "SkinType";
+        private readonly string _defaultCountryOnDownload = "DefaultCountryOnDownload";
+        private readonly string _showAgreedCheckboxOnDownload = "ShowAgreedCheckboxOnDownload";
+
+        public bool ShowAgreedCheckboxOnDownload
+        {
+            get
+            {
+                var value = _settingApi.GetSetting(_showAgreedCheckboxOnDownload);
+                if (string.IsNullOrEmpty(value))
+                    return false;
+
+                return value == "1";
+            }
+            set { _settingApi.SetSetting(_showAgreedCheckboxOnDownload, value ? "1" : "0"); }
+        }
+
+        public string DefaultCountryOnDownload
+        {
+            get
+            {
+                var skinType = _settingApi.GetSetting(_defaultCountryOnDownload);
+                if (string.IsNullOrEmpty(skinType))
+                {
+                    return "BY"; //Belarus
+                }
+
+                return skinType;
+            }
+            set { _settingApi.SetSetting(_defaultCountryOnDownload, value); }
+        }
 
         public string SkinType
         {

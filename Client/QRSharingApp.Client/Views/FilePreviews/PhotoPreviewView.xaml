@@ -13,7 +13,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"
@@ -25,7 +25,7 @@
             </Grid.Background>
         </Grid>
 
-        <Grid Grid.Row="0" Margin="20">
+        <Grid Grid.Row="0" Margin="20 20 20 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -56,13 +56,9 @@
             Grid.Row="1"
             Width="150"
             Focusable="False"
-            HorizontalAlignment="Left"
-            Style="{StaticResource EmptyButtonStyle}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding DataContext.CloseFilePreviewCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+            HorizontalAlignment="Center"
+            Content="{DynamicResource ExitButton}"
+            Style="{StaticResource ButtonSuccess}"
+            Command="{Binding DataContext.CloseFilePreviewCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
     </Grid>
 </UserControl>

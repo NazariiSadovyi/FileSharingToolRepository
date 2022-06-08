@@ -38,6 +38,8 @@
     <v:String x:Key="WebPreviewBackgroundPicture">Web preview background picture</v:String>
     <v:String x:Key="WebPreviewShowQrCodeLabel">Show QR code</v:String>
     <v:String x:Key="WebPreviewRequiredFieldsLabel">Required fields</v:String>
+    <v:String x:Key="WebPreviewDefaultCountryCodeOnDownloadLabel">Default country code on download</v:String>
+    <v:String x:Key="WebPreviewShowAgreedCheckboxOnDownloadLabel">Show checkbox «I agree to the processing of personal data»</v:String>
 
     <!-- Activation view -->
     <v:String x:Key="ActivationViewTextBoxInsert">INSERT KEY</v:String>

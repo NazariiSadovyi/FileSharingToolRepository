@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Input;
 using Unity;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
+using QRSharingApp.Common.Models;
+using QRSharingApp.Common.Services;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -39,8 +41,12 @@ namespace QRSharingApp.ViewModel.ViewModels
         public bool SortingDisplayFiles { get; set; }
         public bool DownloadViaForm { get; set; }
         public bool ShowWifiQrCodeInWeb { get; set; }
+        public bool ShowAgreedCheckboxOnDownload { get; set; }
         public int AutoSwitchSeconds { get; set; }
         public int ItemsInGrid { get; set; }
+
+        public ObservableCollection<CountryModel> Countries { get; set; }
+        public CountryModel SelectedCountry { get; set; }
 
         public ObservableCollection<ListBoxItemViewModel> FormRequiredFields { get; set; }
         public bool AllFieldsWereRequired { get; set; }
@@ -137,6 +143,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             AutoSwitchSeconds = AppSettingService.AutoSwitchSeconds;
             ItemsInGrid = AppSettingService.ItemsInGrid;
             ShowWifiQrCodeInWeb = AppSettingService.ShowWifiQrCodeInWeb;
+            ShowAgreedCheckboxOnDownload = AppSettingService.ShowAgreedCheckboxOnDownload;
 
             var selectedRequiredFields = AppSettingService.RequiredFieldsForDownload;
             FormRequiredFields = new ObservableCollection<ListBoxItemViewModel>
@@ -156,6 +163,9 @@ namespace QRSharingApp.ViewModel.ViewModels
                         .Select(_ => _.Id)
                         .ToArray();
                 });
+
+            Countries = new ObservableCollection<CountryModel>(CountriesProvider.GetAll());
+            SelectedCountry = Countries.FirstOrDefault(_ => _.Code == AppSettingService.DefaultCountryOnDownload);
 
             PropertyChanged += (e, args) =>
             {
@@ -184,6 +194,12 @@ namespace QRSharingApp.ViewModel.ViewModels
                         break;
                     case nameof(ShowWifiQrCodeInWeb):
                         AppSettingService.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
+                        break;
+                    case nameof(SelectedCountry):
+                        AppSettingService.DefaultCountryOnDownload = SelectedCountry.Code;
+                        break;
+                    case nameof(ShowAgreedCheckboxOnDownload):
+                        AppSettingService.ShowAgreedCheckboxOnDownload = ShowAgreedCheckboxOnDownload;
                         break;
                     default:
                         break;
