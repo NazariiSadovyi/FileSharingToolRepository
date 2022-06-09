@@ -1,6 +1,11 @@
 ﻿@using QRSharingApp.WebApplication.Services
 @inject ISharedSettingService SharedSettingService
 
+@{
+    var mainDivClass = Model is FilesGalleryViewModel ? "" : "container";
+    var isFilesGalleryPage = Model is FilesGalleryViewModel;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,11 +40,57 @@
             background-attachment: fixed;
             background-size: cover;
         }
+
+        
     </style>
 </head>
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
+    @if (isFilesGalleryPage)
+    {
+        <style>
+            .qrcodebar {
+              height: 100%;
+              width: 210px;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              overflow-x: hidden;
+              padding-top: 20px;
+              padding-left: 10px;
+              padding-right: 10px;
+            }
+
+            @@media only screen and (max-width: 520px) {
+              main {
+                margin-left: 0px !important;
+              }
+
+              .qrcodebar {
+                display: none;
+              }
+            }
+        </style>
+    }
+
+    @if (SharedSettingService.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+    {
+        <style>
+            main {
+              margin-left: 210px;
+            }
+        </style>
+    }
+
+    <div class="@mainDivClass">
+        @if (SharedSettingService.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+        {
+            <div class="qrcodebar">
+                <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+            </div> 
+        }
+
+        <main>
             @RenderBody()
         </main>
     </div>

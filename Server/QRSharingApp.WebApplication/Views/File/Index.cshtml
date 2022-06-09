@@ -1,4 +1,4 @@
-﻿@model List<FilePreviewViewModel>
+﻿@model FilesGalleryViewModel
 @{
     ViewData["Title"] = "Web Gallery";
 }
@@ -40,15 +40,10 @@
         bottom: 0%;
         right: 0%;
     }
-
-/*    #lg-download-1
-    {
-        display: none
-    }*/
 </style>
 
 <div id="lightgallery" style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly;">
-    @foreach (var viewModel in Model.Where(_ => _.IsPhoto || _.IsVideo))
+    @foreach (var viewModel in Model.FilePreviews.Where(_ => _.IsPhoto || _.IsVideo))
     {
         @if (viewModel.IsVideo)
         {

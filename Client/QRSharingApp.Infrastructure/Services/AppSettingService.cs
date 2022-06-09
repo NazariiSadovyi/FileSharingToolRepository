@@ -170,11 +170,11 @@ namespace QRSharingApp.Infrastructure.Services
             {
                 var value = _settingApi.GetSetting(_showWifiQrCodeInWeb);
                 if (string.IsNullOrEmpty(value))
-                    return default;
+                    return false;
 
-                return bool.Parse(value);
+                return value == "1";
             }
-            set { _settingApi.SetSetting(_showWifiQrCodeInWeb, value.ToString()); }
+            set { _settingApi.SetSetting(_showWifiQrCodeInWeb, value ? "1" : "0"); }
         }
 
         public bool SortingDisplayFiles 

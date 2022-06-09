@@ -10,6 +10,7 @@ namespace QRSharingApp.WebApplication.Services
         int[] RequiredFieldsForDownload { get; set; }
         string DefaultCountryOnDownload { get; set; }
         bool ShowAgreedCheckboxOnDownload { get; set; }
+        bool ShowWifiQrCodeInWeb { get; set; }
     }
 
     public class SharedSettingService : ISharedSettingService

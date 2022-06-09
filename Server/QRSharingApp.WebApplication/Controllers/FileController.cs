@@ -5,7 +5,6 @@ using QRSharingApp.WebApplication.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var result = new List<FilePreviewViewModel>();
+            var result = new FilesGalleryViewModel();
 
             var hotFolderPathes = (await _hotFolderRepository.GetAll()).Select(_ => _.FolderPath).ToList();
             var localFiles = await _localFileRepository.GetAll();
@@ -63,9 +62,11 @@ namespace QRSharingApp.WebApplication.Controllers
                 var fileExist = System.IO.File.Exists(Path.Combine(localFile.Path, localFile.Name));
                 if (fileExist && hotFolderPathes.Contains(localFile.Path))
                 {
-                    result.Add(LocalFileConverter.ComposeFilePreviewViewModel(localFile, this));
+                    result.FilePreviews.Add(LocalFileConverter.ComposeFilePreviewViewModel(localFile, this));
                 }
             }
+            var qrCodeData = _qrCodeGeneratorService.Base64Image(_webServerService.WebUrl);
+            result.GalleryUrlQRImageData = qrCodeData;
 
             return View(result);
         }
