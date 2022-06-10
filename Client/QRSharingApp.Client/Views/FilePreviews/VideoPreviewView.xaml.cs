@@ -27,6 +27,8 @@ namespace QRSharingApp.Client.Views.FilePreviews
             {
                 _logger.Info($"Opening video: {viewModel.FullLocalPath}");
                 await VideoPlayer.Open(new Uri(viewModel.FullLocalPath));
+                await System.Threading.Tasks.Task.Delay(200);
+                LoadingCircle.Visibility = Visibility.Hidden;
                 await VideoPlayer.Play();
                 _logger.Info($"End opening video: {viewModel.FullLocalPath}");
             }

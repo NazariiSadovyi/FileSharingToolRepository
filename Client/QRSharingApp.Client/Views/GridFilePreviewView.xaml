@@ -81,7 +81,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <Label
-                        Content="Wifif QR Code"
+                        Content="Wifi QR Code"
                         BorderThickness="0"
                         FontSize="15"/>
                     <Grid>

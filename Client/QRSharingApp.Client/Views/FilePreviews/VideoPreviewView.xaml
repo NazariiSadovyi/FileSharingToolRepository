@@ -34,12 +34,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <hc:LoadingCircle
-                Grid.Row="0"
-                Width="80"
-                Height="80"
-                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverterWhereFalseIsCollapsed}}"/>
-
             <ffme:MediaElement
                 Grid.Row="0"
                 Name="VideoPlayer"
@@ -47,6 +41,15 @@
                 UnloadedBehavior="Manual"
                 Background="Transparent"
                 MouseDown="VideoPlayer_MouseDown"/>
+
+            <Grid
+                Name="LoadingCircle"
+                Background="{DynamicResource RegionBrush}"
+                Grid.Row="0">
+                <hc:LoadingCircle
+                    Width="80"
+                    Height="80"/>
+            </Grid>
 
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
