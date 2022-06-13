@@ -314,9 +314,17 @@
                             </Grid>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label Content="{DynamicResource WebPreviewShowQrCodeLabel}"/>
+                            <Label Content="{DynamicResource WebPreviewShowWifiQrCodeLabel}"/>
                             <ToggleButton
                                 IsChecked="{Binding ShowWifiQrCodeInWeb}"
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ToggleButtonSwitch}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="{DynamicResource WebPreviewShowGalleryUrlQrCodeLabel}"/>
+                            <ToggleButton
+                                IsChecked="{Binding ShowGalleryUrlQrCodeInWeb}"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 Style="{StaticResource ToggleButtonSwitch}"/>

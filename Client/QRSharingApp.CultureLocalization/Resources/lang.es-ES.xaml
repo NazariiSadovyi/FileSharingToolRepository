@@ -36,7 +36,8 @@
     <v:String x:Key="DesignViewLabelFilesOnPage">Files on page</v:String>
     <v:String x:Key="PreviewFileAutoSwitchSeconds">INTERRUPTOR AUTOMÁTICO DE ARCHIVO DE VISTA PREVIA (SEG.)</v:String>
     <v:String x:Key="WebPreviewBackgroundPicture">IMAGEN DE FONDO DE LA GALERÍA WEB</v:String>
-    <v:String x:Key="WebPreviewShowQrCodeLabel">Show QR code</v:String>
+    <v:String x:Key="WebPreviewShowWifiQrCodeLabel">Show Wi-fi QR code</v:String>
+    <v:String x:Key="WebPreviewShowGalleryUrlQrCodeLabel">Show gallery QR code</v:String>
     <v:String x:Key="WebPreviewRequiredFieldsLabel">Required fields</v:String>
     <v:String x:Key="WebPreviewDefaultCountryCodeOnDownloadLabel">Default country code on download</v:String>
     <v:String x:Key="WebPreviewShowAgreedCheckboxOnDownloadLabel">Show checkbox «I agree to the processing of personal data»</v:String>

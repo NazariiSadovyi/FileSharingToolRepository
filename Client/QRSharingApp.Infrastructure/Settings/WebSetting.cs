@@ -84,5 +84,18 @@ namespace QRSharingApp.Infrastructure.Settings
             }
             set { _settingApi.SetSetting(ShowWifiQrCodeInWebKey, value ? "1" : "0"); }
         }
+
+        public override bool ShowGalleryUrlQrCodeInWeb
+        {
+            get
+            {
+                var value = _settingApi.GetSetting(ShowGalleryUrlQrCodeInWebKey);
+                if (string.IsNullOrEmpty(value))
+                    return false;
+
+                return value == "1";
+            }
+            set { _settingApi.SetSetting(ShowGalleryUrlQrCodeInWebKey, value ? "1" : "0"); }
+        }
     }
 }

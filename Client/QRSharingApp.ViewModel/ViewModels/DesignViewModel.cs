@@ -44,6 +44,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         public bool SortingDisplayFiles { get; set; }
         public bool DownloadViaForm { get; set; }
         public bool ShowWifiQrCodeInWeb { get; set; }
+        public bool ShowGalleryUrlQrCodeInWeb { get; set; }
         public bool ShowAgreedCheckboxOnDownload { get; set; }
         public int AutoSwitchSeconds { get; set; }
         public int ItemsInGrid { get; set; }
@@ -147,6 +148,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             DownloadViaForm = WebSetting.DownloadViaForm;
             WebBackgroundImagePath = WebSetting.WebBackgroundImagePath;
             ShowWifiQrCodeInWeb = WebSetting.ShowWifiQrCodeInWeb;
+            ShowGalleryUrlQrCodeInWeb = WebSetting.ShowGalleryUrlQrCodeInWeb;
             ShowAgreedCheckboxOnDownload = WebSetting.ShowAgreedCheckboxOnDownload;
             var selectedRequiredFields = WebSetting.RequiredFieldsForDownload;
             FormRequiredFields = new ObservableCollection<ListBoxItemViewModel>
@@ -203,6 +205,9 @@ namespace QRSharingApp.ViewModel.ViewModels
                         break;
                     case nameof(ShowAgreedCheckboxOnDownload):
                         WebSetting.ShowAgreedCheckboxOnDownload = ShowAgreedCheckboxOnDownload;
+                        break;
+                    case nameof(ShowGalleryUrlQrCodeInWeb):
+                        WebSetting.ShowGalleryUrlQrCodeInWeb = ShowGalleryUrlQrCodeInWeb;
                         break;
                     default:
                         break;

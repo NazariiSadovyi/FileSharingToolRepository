@@ -36,7 +36,8 @@
     <v:String x:Key="DesignViewLabelFilesOnPage">Файлов на странице</v:String>
     <v:String x:Key="PreviewFileAutoSwitchSeconds">Автоматическое переключение (сек.)</v:String>
     <v:String x:Key="WebPreviewBackgroundPicture">Фоновая картинка в web просмотре</v:String>
-    <v:String x:Key="WebPreviewShowQrCodeLabel">Показать QR-код</v:String>
+    <v:String x:Key="WebPreviewShowWifiQrCodeLabel">Показать Wi-fi QR-код</v:String>
+    <v:String x:Key="WebPreviewShowGalleryUrlQrCodeLabel">Показать QR-код галереи</v:String>
     <v:String x:Key="WebPreviewRequiredFieldsLabel">Обязательные поля</v:String>
     <v:String x:Key="WebPreviewDefaultCountryCodeOnDownloadLabel">Код страны по умолчанию &#10;при загрузке</v:String>
     <v:String x:Key="WebPreviewShowAgreedCheckboxOnDownloadLabel">Показывать галочку «Я согласен на обработку персональных данных»</v:String>

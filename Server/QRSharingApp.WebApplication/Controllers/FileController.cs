@@ -50,11 +50,11 @@ namespace QRSharingApp.WebApplication.Controllers
             _webHostEnvironment = webHostEnvironment;
             _webServerService = webServerService;
             _wifiSetting = wifiSetting;
+            _wifiService = wifiService;
             _webSetting = webSetting;
             _logger = logger;
 
             InitBackgroundImage();
-            _wifiService = wifiService;
         }
 
         [HttpGet]

@@ -74,7 +74,7 @@
         </style>
     }
 
-    @if (WebSetting.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+    @if (isFilesGalleryPage && (WebSetting.ShowWifiQrCodeInWeb || WebSetting.ShowGalleryUrlQrCodeInWeb))
     {
         <style>
             main {
@@ -84,17 +84,23 @@
     }
 
     <div class="@mainDivClass">
-        @if (WebSetting.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+        @if (isFilesGalleryPage && (WebSetting.ShowWifiQrCodeInWeb || WebSetting.ShowGalleryUrlQrCodeInWeb))
         {
             <div class="qrcodebar">
-                <div>
-                    <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
-                    <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
-                </div>
-                <div style="margin-top: 40px">
-                    <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
-                    <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
-                </div>
+                @if (WebSetting.ShowWifiQrCodeInWeb)
+                {
+                    <div>
+                        <h6 style="margin-bottom: 0px; text-align: center;">Connect to Wi-Fi</h6>
+                        <img src="@(((FilesGalleryViewModel)Model).WifiQRImageData)"/>
+                    </div>
+                }
+                @if (WebSetting.ShowGalleryUrlQrCodeInWeb)
+                {
+                    <div style="margin-top: 20px">
+                        <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
+                        <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+                    </div>
+                }
             </div> 
         }
 

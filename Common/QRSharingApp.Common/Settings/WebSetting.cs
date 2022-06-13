@@ -10,9 +10,11 @@ namespace QRSharingApp.Common.Settings
         protected readonly string ShowWifiQrCodeInWebKey = "ShowWifiQrCodeInWeb";
         protected readonly string DefaultCountryOnDownloadKey = "DefaultCountryOnDownload";
         protected readonly string ShowAgreedCheckboxOnDownloadKey = "ShowAgreedCheckboxOnDownload";
+        protected readonly string ShowGalleryUrlQrCodeInWebKey = "ShowGalleryUrlQrCodeInWeb";
 
         public abstract string DefaultCountryOnDownload { get; set; }
         public abstract bool ShowWifiQrCodeInWeb { get; set; }
+        public abstract bool ShowGalleryUrlQrCodeInWeb { get; set; }
         public abstract bool ShowAgreedCheckboxOnDownload { get; set; }
         public abstract int[] RequiredFieldsForDownload { get; set; }
         public abstract bool DownloadViaForm { get; set; }

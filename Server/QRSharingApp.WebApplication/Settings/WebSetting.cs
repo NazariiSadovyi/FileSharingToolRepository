@@ -24,6 +24,12 @@ namespace QRSharingApp.WebApplication.Settings
             set => _settingRepository.SetSetting(ShowWifiQrCodeInWebKey, value);
         }
 
+        public override bool ShowGalleryUrlQrCodeInWeb
+        {
+            get => _settingRepository.GetBoolSetting(ShowGalleryUrlQrCodeInWebKey, false);
+            set => _settingRepository.SetSetting(ShowGalleryUrlQrCodeInWebKey, value);
+        }
+
         public override bool ShowAgreedCheckboxOnDownload
         {
             get => _settingRepository.GetBoolSetting(ShowAgreedCheckboxOnDownloadKey, false);
