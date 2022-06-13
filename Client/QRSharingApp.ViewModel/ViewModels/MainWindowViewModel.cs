@@ -76,10 +76,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         public ICommand OpenFilePreviewCmd => ReactiveCommand.CreateFromTask<ThumbnailViewModel>(
             async thumbnailViewModel =>
             {
-                var filePreviewBaseViewModel = thumbnailViewModel.ToPreviewViewModel();
-                UnityContainer.BuildUp(filePreviewBaseViewModel);
-                CurrentPreviewViewModel = filePreviewBaseViewModel;
-                await filePreviewBaseViewModel.OnLoadAsync();
+                await OpenFilePreviewAsync(thumbnailViewModel);
             }
         );
 
@@ -87,6 +84,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             () =>
             {
                 CurrentPreviewViewModel = GridFilePreviewViewModel;
+                SharedAppDataViewModel.IsFilePreviewOpened = false;
             }
         );
 
@@ -164,6 +162,15 @@ namespace QRSharingApp.ViewModel.ViewModels
             await LoadPagesAsync();
             await CheckActivationAsync();
             await InitCurrentFilesAsync();
+        }
+
+        public async Task OpenFilePreviewAsync(ThumbnailViewModel thumbnailViewModel)
+        {
+            var filePreviewBaseViewModel = thumbnailViewModel.ToPreviewViewModel();
+            UnityContainer.BuildUp(filePreviewBaseViewModel);
+            CurrentPreviewViewModel = filePreviewBaseViewModel;
+            SharedAppDataViewModel.IsFilePreviewOpened = true;
+            await filePreviewBaseViewModel.OnLoadAsync();
         }
 
         private Task LoadPagesAsync()

@@ -61,12 +61,32 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Image
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Image Source="{Binding SharedAppDataViewModel.WifiQRImage}" />
+                    <TextBlock
+                        Text="Wi-Fi"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Foreground="Black"/>
+                </Grid>
+
+                <Grid
                     Grid.Row="1"
                     Grid.Column="2"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Source="{Binding QRImage}" />
+                    VerticalAlignment="Bottom">
+                    <Image Source="{Binding QRImage}" />
+                    <TextBlock
+                        Text="Download"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Foreground="Black"/>
+                </Grid>
             </Grid>
         </Grid>
 

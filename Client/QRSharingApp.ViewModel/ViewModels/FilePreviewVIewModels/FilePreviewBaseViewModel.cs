@@ -1,5 +1,6 @@
 ﻿using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
+using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Unity;
@@ -9,7 +10,9 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
     public abstract class FilePreviewBaseViewModel : ViewModelBase
     {
         [Dependency]
-        public IAppSetting AppSetting;
+        public IAppSetting AppSetting { get; set; }
+        [Dependency]
+        public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
 
         public string Id { get; set; }
         public string Name { get; set; }

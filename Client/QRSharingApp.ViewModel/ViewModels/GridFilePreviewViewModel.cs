@@ -3,7 +3,6 @@ using DynamicData.Binding;
 using Microsoft.WindowsAPICodePack.Shell;
 using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.Infrastructure.Services.Interfaces;
 using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Services;
@@ -45,6 +44,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IApplicationTaskUtility ApplicationTaskUtility;
         [Dependency]
         public IQRCodeGeneratorService QRCodeGeneratorService;
+        [Dependency]
+        public IUnityContainer UnityContainer;
         #endregion
 
         #region Commands
@@ -98,7 +99,6 @@ namespace QRSharingApp.ViewModel.ViewModels
                 .Filter(_ => _.IsPhoto || _.IsVideo)
                 .Transform(ThumbnailViewModel.Compose)
                 .Transform(LoadThumbnailData)
-                .OnItemRemoved(OnFileRemoved)
                 .Bind(out ReadOnlyObservableCollection<ThumbnailViewModel> allFiles)
                 .Sort(this.WhenAnyValue(_ => _.ShowNewestFilesInTheBeginning).Select(_ => GetSortFilesComparer()))
                 .Page(this.WhenAnyValue(_ => _.PageRequestViewModel))
@@ -107,6 +107,13 @@ namespace QRSharingApp.ViewModel.ViewModels
 
             CurrentPageFiles = currentPageFiles;
             AllFiles = allFiles;
+
+            AllFiles
+                .ToObservableChangeSet()
+                .OnItemRemoved(OnFileRemoved)
+                .Throttle(TimeSpan.FromSeconds(1))
+                .OnItemAdded(OnFileAdded)
+                .Subscribe();
 
             Observable.CombineLatest(
                 this.WhenAnyValue(_ => _.LocalFilesService.LocalFiles.Count).DistinctUntilChanged(),
@@ -299,6 +306,20 @@ namespace QRSharingApp.ViewModel.ViewModels
             Task.Run(async () =>
             {
                 await LocalFileApi.DeleteFile(file.FullLocalPath);
+            });
+        }
+
+        private void OnFileAdded(ThumbnailViewModel file)
+        {
+            if (!SharedAppDataViewModel.IsFilePreviewOpened)
+            {
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                var mainWindowViewModel = UnityContainer.Resolve<IMainWindowViewModel>();
+                await mainWindowViewModel.OpenFilePreviewAsync(file);
             });
         }
     }
