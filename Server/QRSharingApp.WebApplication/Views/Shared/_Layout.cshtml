@@ -1,5 +1,6 @@
-﻿@using QRSharingApp.WebApplication.Services
-@inject ISharedSettingService SharedSettingService
+﻿@using QRSharingApp.Common.Settings.Interfaces
+@using QRSharingApp.WebApplication.Services
+@inject IWebSetting WebSetting
 
 @{
     var mainDivClass = Model is FilesGalleryViewModel ? "" : "container";
@@ -35,7 +36,7 @@
 
     <style>
         body {
-            background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(SharedSettingService.WebBackgroundImagePath)}")');
+            background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(WebSetting.WebBackgroundImagePath)}")');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -73,7 +74,7 @@
         </style>
     }
 
-    @if (SharedSettingService.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+    @if (WebSetting.ShowWifiQrCodeInWeb && isFilesGalleryPage)
     {
         <style>
             main {
@@ -83,10 +84,17 @@
     }
 
     <div class="@mainDivClass">
-        @if (SharedSettingService.ShowWifiQrCodeInWeb && isFilesGalleryPage)
+        @if (WebSetting.ShowWifiQrCodeInWeb && isFilesGalleryPage)
         {
             <div class="qrcodebar">
-                <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+                <div>
+                    <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
+                    <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+                </div>
+                <div style="margin-top: 40px">
+                    <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
+                    <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+                </div>
             </div> 
         }
 

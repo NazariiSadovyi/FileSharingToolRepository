@@ -1,16 +1,17 @@
-using QRSharingApp.Common.Services;
-using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.DataAccess;
-using QRSharingApp.DataAccess.Repositories;
-using QRSharingApp.DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.SignalR;
+using QRSharingApp.Common.Services;
+using QRSharingApp.Common.Services.Interfaces;
+using QRSharingApp.DataAccess;
+using QRSharingApp.DataAccess.Repositories;
+using QRSharingApp.DataAccess.Repositories.Interfaces;
+using QRSharingApp.Infrastructure.Services;
 using QRSharingApp.WebApplication.Services;
+using QRSharingApp.WebApplication.Settings;
 
 namespace QRSharingApp.WebApplication
 {
@@ -34,8 +35,11 @@ namespace QRSharingApp.WebApplication
             services.AddScoped<IHotFolderRepository, HotFolderRepository>();
             services.AddScoped<ILocalFileRepository, LocalFileRepository>();
             services.AddScoped<IDownloadHistoryRepository, DownloadHistoryRepository>();
-            services.AddScoped<ISharedSettingService, SharedSettingService>();
 
+            services.AddScoped<Common.Settings.Interfaces.IWebSetting, WebSetting>();
+            services.AddScoped<Common.Settings.Interfaces.IWifiSetting, WifiSetting>();
+
+            services.AddScoped<IWifiService, WifiService>();
             services.AddScoped<IWebServerService, WebServerService>();
             services.AddScoped<IFileThumbnailService, FileThumbnailService>();
             services.AddScoped<IQRCodeGeneratorService, QRCodeGeneratorService>();

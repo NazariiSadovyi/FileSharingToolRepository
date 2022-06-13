@@ -1,6 +1,6 @@
-﻿using QRSharingApp.Infrastructure.Enums;
+﻿using QRSharingApp.Common.Enums;
 
-namespace QRSharingApp.Infrastructure.Services.Interfaces
+namespace QRSharingApp.Common.Services.Interfaces
 {
     public interface IWifiService
     {

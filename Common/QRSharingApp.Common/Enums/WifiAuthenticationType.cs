@@ -1,4 +1,4 @@
-﻿namespace QRSharingApp.Infrastructure.Enums
+﻿namespace QRSharingApp.Common.Enums
 {
     public enum WifiAuthenticationType
     {

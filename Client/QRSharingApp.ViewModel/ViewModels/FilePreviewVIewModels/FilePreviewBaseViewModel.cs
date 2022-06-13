@@ -1,4 +1,4 @@
-﻿using QRSharingApp.Infrastructure.Services.Interfaces;
+﻿using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -9,7 +9,7 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
     public abstract class FilePreviewBaseViewModel : ViewModelBase
     {
         [Dependency]
-        public IAppSettingService AppSettingService;
+        public IAppSetting AppSetting;
 
         public string Id { get; set; }
         public string Name { get; set; }
@@ -38,7 +38,7 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
             IsLoading = true;
             try
             {
-                BackgroundImagePath = AppSettingService.BackgroundImagePath;
+                BackgroundImagePath = AppSetting.BackgroundImagePath;
                 await OnLoadDataAsync();
             }
             finally

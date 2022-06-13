@@ -1,5 +1,5 @@
-﻿using QRSharingApp.Infrastructure.Enums;
-using QRSharingApp.Infrastructure.Services.Interfaces;
+﻿using QRSharingApp.Common.Enums;
+using QRSharingApp.Common.Services.Interfaces;
 
 namespace QRSharingApp.Infrastructure.Services
 {

@@ -4,6 +4,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
+using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Services;
 using QRSharingApp.ViewModel.ViewModels.Base;
@@ -33,9 +34,9 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         #region Dependencies
         [Dependency]
-        public IWebServerService WebServerService;
+        public IAppSetting AppSetting;
         [Dependency]
-        public IAppSettingService AppSettingService;
+        public IWebServerService WebServerService;
         [Dependency]
         public ILocalFilesService LocalFilesService;
         [Dependency]
@@ -71,7 +72,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             ISharedAppDataViewModel sharedAppDataViewModel,
             ILocalFilesService localFilesService,
             IWebServerService webServerService,
-            IAppSettingService appSettingService)
+            IAppSetting appSettingService)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
             ShowNewestFilesInTheBeginning = appSettingService.SortingDisplayFiles;
@@ -90,7 +91,7 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public override Task OnLoadAsync()
         {
-            BackgroundImagePath = AppSettingService.BackgroundImagePath;
+            BackgroundImagePath = AppSetting.BackgroundImagePath;
 
             LocalFilesService.LocalFiles
                 .ToObservableChangeSet()
@@ -157,7 +158,7 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public void StartAutoSwitchTimer()
         {
-            var milliseconds = (int)TimeSpan.FromSeconds(AppSettingService.AutoSwitchSeconds).TotalMilliseconds;
+            var milliseconds = (int)TimeSpan.FromSeconds(AppSetting.AutoSwitchSeconds).TotalMilliseconds;
             if (milliseconds == 0)
                 return;
 

@@ -1,6 +1,7 @@
-﻿using QRSharingApp.Common.Services.Interfaces;
-using QRSharingApp.Infrastructure.Enums;
-using QRSharingApp.Infrastructure.Services.Interfaces;
+﻿using QRSharingApp.Common.Enums;
+using QRSharingApp.Common.Services.Interfaces;
+using QRSharingApp.Common.Settings.Interfaces;
+using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using ReactiveUI;
@@ -20,7 +21,9 @@ namespace QRSharingApp.ViewModel.ViewModels
         [Dependency]
         public IWifiService WifiService;
         [Dependency]
-        public IAppSettingService AppSettingService;
+        public IWifiSetting WifiSetting;
+        [Dependency]
+        public IAppSetting AppSetting;
         [Dependency]
         public IQRCodeGeneratorService QRCodeGeneratorService;
         [Dependency]
@@ -106,13 +109,13 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public override Task OnLoadAsync()
         {
-            SSID = AppSettingService.WifiLogin;
+            SSID = WifiSetting.WifiLogin;
             CurrentSSID = SSID;
-            Password = AppSettingService.WifiPassword;
+            Password = WifiSetting.WifiPassword;
             CurrentPassword = Password;
-            WifiAuthenticationType = (WifiAuthenticationType)AppSettingService.WifiAuthenticationType;
+            WifiAuthenticationType = (WifiAuthenticationType)WifiSetting.WifiAuthenticationType;
             CurrentWifiAuthenticationType = WifiAuthenticationType;
-            IsHidden = AppSettingService.WifiIsHidden;
+            IsHidden = WifiSetting.WifiIsHidden;
             CurrentIsHidden = IsHidden;
 
             if (!string.IsNullOrEmpty(SSID))
@@ -176,18 +179,18 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         private void UpdateWifiConfiguration()
         {
-            AppSettingService.WifiLogin = CurrentSSID;
-            AppSettingService.WifiPassword = CurrentPassword;
-            AppSettingService.WifiAuthenticationType = (int)CurrentWifiAuthenticationType;
-            AppSettingService.WifiIsHidden = CurrentIsHidden;
+            WifiSetting.WifiLogin = CurrentSSID;
+            WifiSetting.WifiPassword = CurrentPassword;
+            WifiSetting.WifiAuthenticationType = (int)CurrentWifiAuthenticationType;
+            WifiSetting.WifiIsHidden = CurrentIsHidden;
         }
 
         private void ClearWifiConfiguration()
         {
-            AppSettingService.WifiLogin = string.Empty;
-            AppSettingService.WifiPassword = string.Empty;
-            AppSettingService.WifiAuthenticationType = 0;
-            AppSettingService.WifiIsHidden = false;
+            WifiSetting.WifiLogin = string.Empty;
+            WifiSetting.WifiPassword = string.Empty;
+            WifiSetting.WifiAuthenticationType = 0;
+            WifiSetting.WifiIsHidden = false;
         }
     }
 }

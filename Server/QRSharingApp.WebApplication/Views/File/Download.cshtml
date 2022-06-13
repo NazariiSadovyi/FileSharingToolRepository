@@ -1,10 +1,12 @@
-﻿@using QRSharingApp.Common.Services
+﻿@using QRSharingApp.Common
+@using QRSharingApp.Common.Services
+@using QRSharingApp.Common.Settings.Interfaces
 @using QRSharingApp.WebApplication.Controllers
 @using QRSharingApp.WebApplication.Helpers
 @using QRSharingApp.WebApplication.Services
 @model DownloadDataViewModel
 
-@inject ISharedSettingService sharedSettingService
+@inject IWebSetting sharedSettingService
 
 @{
     var currentCountryCode = sharedSettingService.DefaultCountryOnDownload;

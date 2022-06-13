@@ -60,7 +60,7 @@ namespace QRSharingApp.Client.Views
                 return;
             }
 
-            switch (dataContext.AppSettingService.CultureName)
+            switch (dataContext.AppSetting.CultureName)
             {
                 case "en-US":
                     USLanguageRadioButton.IsChecked = true;
@@ -75,7 +75,7 @@ namespace QRSharingApp.Client.Views
                     break;
             }
 
-            switch (dataContext.AppSettingService.SkinType)
+            switch (dataContext.AppSetting.SkinType)
             {
                 case "white":
                     WhiteApplicationStyleRadioButton.IsChecked = true;
@@ -95,11 +95,11 @@ namespace QRSharingApp.Client.Views
             {
                 case "WhiteApplicationStyleRadioButton":
                     ((App)Application.Current).UpdateSkin(SkinType.Default);
-                    ((DesignViewModel)DataContext).AppSettingService.SkinType = "white";
+                    ((DesignViewModel)DataContext).AppSetting.SkinType = "white";
                     break;
                 case "BlackApplicationStyleRadioButton":
                     ((App)Application.Current).UpdateSkin(SkinType.Dark);
-                    ((DesignViewModel)DataContext).AppSettingService.SkinType = "dark";
+                    ((DesignViewModel)DataContext).AppSetting.SkinType = "dark";
                     break;
                 default:
                     break;

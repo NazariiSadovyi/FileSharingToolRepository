@@ -1,20 +1,21 @@
 ﻿using DynamicData;
 using DynamicData.Binding;
+using QRSharingApp.Common;
+using QRSharingApp.Common.Models;
+using QRSharingApp.Common.Settings.Interfaces;
 using QRSharingApp.Infrastructure.Services.Interfaces;
+using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using ReactiveUI;
-using System.Collections.ObjectModel;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
-using QRSharingApp.ViewModel.ViewModels.Interfaces;
-using QRSharingApp.Common.Models;
-using QRSharingApp.Common.Services;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -26,7 +27,9 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         #region Dependencies
         [Dependency]
-        public IAppSettingService AppSettingService;
+        public IWebSetting WebSetting;
+        [Dependency]
+        public IAppSetting AppSetting;
         [Dependency]
         public IFileExplorerService FileExplorerService;
         [Dependency]
@@ -68,7 +71,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                     return;
                 }
                 CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
-                AppSettingService.CultureName = cultureName;
+                AppSetting.CultureName = cultureName;
             }
         );
 
@@ -130,22 +133,22 @@ namespace QRSharingApp.ViewModel.ViewModels
         );
         #endregion
 
-        public DesignViewModel(IAppSettingService appSettingService)
+        public DesignViewModel()
         {
         }
 
         public override Task OnLoadAsync()
         {
-            WebBackgroundImagePath = AppSettingService.WebBackgroundImagePath;
-            BackgroundImagePath = AppSettingService.BackgroundImagePath;
-            SortingDisplayFiles = AppSettingService.SortingDisplayFiles;
-            DownloadViaForm = AppSettingService.DownloadViaForm;
-            AutoSwitchSeconds = AppSettingService.AutoSwitchSeconds;
-            ItemsInGrid = AppSettingService.ItemsInGrid;
-            ShowWifiQrCodeInWeb = AppSettingService.ShowWifiQrCodeInWeb;
-            ShowAgreedCheckboxOnDownload = AppSettingService.ShowAgreedCheckboxOnDownload;
+            BackgroundImagePath = AppSetting.BackgroundImagePath;
+            SortingDisplayFiles = AppSetting.SortingDisplayFiles;
+            AutoSwitchSeconds = AppSetting.AutoSwitchSeconds;
+            ItemsInGrid = AppSetting.ItemsInGrid;
 
-            var selectedRequiredFields = AppSettingService.RequiredFieldsForDownload;
+            DownloadViaForm = WebSetting.DownloadViaForm;
+            WebBackgroundImagePath = WebSetting.WebBackgroundImagePath;
+            ShowWifiQrCodeInWeb = WebSetting.ShowWifiQrCodeInWeb;
+            ShowAgreedCheckboxOnDownload = WebSetting.ShowAgreedCheckboxOnDownload;
+            var selectedRequiredFields = WebSetting.RequiredFieldsForDownload;
             FormRequiredFields = new ObservableCollection<ListBoxItemViewModel>
             {
                new ListBoxItemViewModel(1, "Name", selectedRequiredFields.Contains(1)),
@@ -158,48 +161,48 @@ namespace QRSharingApp.ViewModel.ViewModels
                 .WhenAnyPropertyChanged()
                 .Subscribe(_ =>
                 {
-                    AppSettingService.RequiredFieldsForDownload = FormRequiredFields
+                    WebSetting.RequiredFieldsForDownload = FormRequiredFields
                         .Where(_ => _.IsSelected)
                         .Select(_ => _.Id)
                         .ToArray();
                 });
 
             Countries = new ObservableCollection<CountryModel>(CountriesProvider.GetAll());
-            SelectedCountry = Countries.FirstOrDefault(_ => _.Code == AppSettingService.DefaultCountryOnDownload);
+            SelectedCountry = Countries.FirstOrDefault(_ => _.Code == WebSetting.DefaultCountryOnDownload);
 
             PropertyChanged += (e, args) =>
             {
                 switch (args.PropertyName)
                 {
                     case nameof(SortingDisplayFiles):
-                        AppSettingService.SortingDisplayFiles = SortingDisplayFiles;
+                        AppSetting.SortingDisplayFiles = SortingDisplayFiles;
                         GridFilePreviewViewModel.UpdateSorting(SortingDisplayFiles);
                         break;
                     case nameof(BackgroundImagePath):
-                        AppSettingService.BackgroundImagePath = BackgroundImagePath;
+                        AppSetting.BackgroundImagePath = BackgroundImagePath;
                         GridFilePreviewViewModel.BackgroundImagePath = BackgroundImagePath;
                         break;
                     case nameof(AutoSwitchSeconds):
-                        AppSettingService.AutoSwitchSeconds = AutoSwitchSeconds;
-                        break;
-                    case nameof(DownloadViaForm):
-                        AppSettingService.DownloadViaForm = DownloadViaForm;
-                        break;
-                    case nameof(WebBackgroundImagePath):
-                        AppSettingService.WebBackgroundImagePath = WebBackgroundImagePath;
+                        AppSetting.AutoSwitchSeconds = AutoSwitchSeconds;
                         break;
                     case nameof(ItemsInGrid) when ItemsInGrid != 0:
-                        AppSettingService.ItemsInGrid = ItemsInGrid;
+                        AppSetting.ItemsInGrid = ItemsInGrid;
                         GridFilePreviewViewModel.PageRequestViewModel.Size = ItemsInGrid;
                         break;
+                    case nameof(DownloadViaForm):
+                        WebSetting.DownloadViaForm = DownloadViaForm;
+                        break;
+                    case nameof(WebBackgroundImagePath):
+                        WebSetting.WebBackgroundImagePath = WebBackgroundImagePath;
+                        break;
                     case nameof(ShowWifiQrCodeInWeb):
-                        AppSettingService.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
+                        WebSetting.ShowWifiQrCodeInWeb = ShowWifiQrCodeInWeb;
                         break;
                     case nameof(SelectedCountry):
-                        AppSettingService.DefaultCountryOnDownload = SelectedCountry.Code;
+                        WebSetting.DefaultCountryOnDownload = SelectedCountry.Code;
                         break;
                     case nameof(ShowAgreedCheckboxOnDownload):
-                        AppSettingService.ShowAgreedCheckboxOnDownload = ShowAgreedCheckboxOnDownload;
+                        WebSetting.ShowAgreedCheckboxOnDownload = ShowAgreedCheckboxOnDownload;
                         break;
                     default:
                         break;

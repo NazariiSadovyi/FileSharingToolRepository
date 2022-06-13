@@ -3,7 +3,7 @@ using QRSharingApp.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QRSharingApp.Common.Services
+namespace QRSharingApp.Common
 {
     public static class CountriesProvider
     {

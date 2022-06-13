@@ -5,7 +5,7 @@ using NLog;
 using QRSharingApp.Client.Views;
 using QRSharingApp.ClientApi;
 using QRSharingApp.Infrastructure;
-using QRSharingApp.Infrastructure.Services.Interfaces;
+using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.Shared;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Services;
@@ -39,7 +39,7 @@ namespace QRSharingApp.Client
                 RegisterTypes();
                 InitFFMPEG();
 
-                var appSettingService = Container.Resolve<IAppSettingService>();
+                var appSettingService = Container.Resolve<IAppSetting>();
                 UpdateSkin(appSettingService.SkinType == "white" ? SkinType.Default : SkinType.Dark);
                 
                 CreateShell();
@@ -79,7 +79,7 @@ namespace QRSharingApp.Client
 
         private void CreateShell()
         {
-            var appSettingService = Container.Resolve<IAppSettingService>();
+            var appSettingService = Container.Resolve<IAppSetting>();
             Localization.Language = new System.Globalization.CultureInfo(appSettingService.CultureName ?? string.Empty);
 
             var window = Container.Resolve<MainWindowView>();

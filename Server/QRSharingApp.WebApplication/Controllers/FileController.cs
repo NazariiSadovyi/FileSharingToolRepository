@@ -1,16 +1,17 @@
-﻿using QRSharingApp.Common.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using QRSharingApp.Common.Enums;
+using QRSharingApp.Common.Services.Interfaces;
+using QRSharingApp.Common.Settings.Interfaces;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
 using QRSharingApp.WebApplication.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Linq;
-using QRSharingApp.WebApplication.Services;
-using System;
+using System.Threading.Tasks;
 
 namespace QRSharingApp.WebApplication.Controllers
 {
@@ -20,34 +21,40 @@ namespace QRSharingApp.WebApplication.Controllers
         private readonly IDownloadHistoryRepository _downloadHistoryRepository;
         private readonly IQRCodeGeneratorService _qrCodeGeneratorService;
         private readonly IFileThumbnailService _fileThumbnailService;
-        private readonly ISharedSettingService _sharedSettingService;
         private readonly IHotFolderRepository _hotFolderRepository;
         private readonly ILocalFileRepository _localFileRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWebServerService _webServerService;
+        private readonly IWebSetting _webSetting;
+        private readonly IWifiSetting _wifiSetting;
+        private readonly IWifiService _wifiService;
 
         public FileController(
             ILogger<FileController> logger,
             IDownloadHistoryRepository downloadHistoryRepository,
             IQRCodeGeneratorService qrCodeGeneratorService,
             IFileThumbnailService fileThumbnailService,
-            ISharedSettingService sharedSettingService,
             ILocalFileRepository localFileRepository,
             IWebServerService webServerService,
             IWebHostEnvironment webHostEnvironment,
-            IHotFolderRepository hotFolderRepository)
+            IHotFolderRepository hotFolderRepository,
+            IWebSetting webSetting,
+            IWifiSetting wifiSetting,
+            IWifiService wifiService)
         {
             _downloadHistoryRepository = downloadHistoryRepository;
             _qrCodeGeneratorService = qrCodeGeneratorService;
-            _sharedSettingService = sharedSettingService;
             _fileThumbnailService = fileThumbnailService;
             _hotFolderRepository = hotFolderRepository;
             _localFileRepository = localFileRepository;
             _webHostEnvironment = webHostEnvironment;
             _webServerService = webServerService;
+            _wifiSetting = wifiSetting;
+            _webSetting = webSetting;
             _logger = logger;
 
             InitBackgroundImage();
+            _wifiService = wifiService;
         }
 
         [HttpGet]
@@ -65,8 +72,16 @@ namespace QRSharingApp.WebApplication.Controllers
                     result.FilePreviews.Add(LocalFileConverter.ComposeFilePreviewViewModel(localFile, this));
                 }
             }
-            var qrCodeData = _qrCodeGeneratorService.Base64Image(_webServerService.WebUrl);
-            result.GalleryUrlQRImageData = qrCodeData;
+
+            var urlQrCodeData = _qrCodeGeneratorService.Base64Image(_webServerService.WebUrl);
+            result.GalleryUrlQRImageData = urlQrCodeData;
+
+            var wifiConfigString = _wifiService.GenerateConfigString(
+                _wifiSetting.WifiLogin,
+                (WifiAuthenticationType)_wifiSetting.WifiAuthenticationType,
+                _wifiSetting.WifiPassword,
+                _wifiSetting.WifiIsHidden);
+            result.WifiQRImageData = _qrCodeGeneratorService.Base64Image(wifiConfigString);
 
             return View(result);
         }
@@ -76,7 +91,7 @@ namespace QRSharingApp.WebApplication.Controllers
         {
             var localFile = await _localFileRepository.GetById(id);
             var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFile, this);
-            viewModel.DownloadViaForm = _sharedSettingService.DownloadViaForm;
+            viewModel.DownloadViaForm = _webSetting.DownloadViaForm;
 
             return View(viewModel);
         }
@@ -162,7 +177,7 @@ namespace QRSharingApp.WebApplication.Controllers
 
         private void InitBackgroundImage()
         {
-            var localImagePath = _sharedSettingService.WebBackgroundImagePath;
+            var localImagePath = _webSetting.WebBackgroundImagePath;
             if (string.IsNullOrEmpty(localImagePath) || !System.IO.File.Exists(localImagePath))
             {
                 return;
