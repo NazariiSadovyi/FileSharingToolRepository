@@ -17,7 +17,7 @@ connection.on("FileAdded", function (id, fileName, adress, thumbnailAdress, qRCo
     }
 
     var element = $(htmlContent);
-    $("#lightgallery").append(element);
+    $("#lightgallery").prepend(element);
 
     try {
         if (lightGalleryInstance == null || !lightGalleryInstance.lgOpened) {

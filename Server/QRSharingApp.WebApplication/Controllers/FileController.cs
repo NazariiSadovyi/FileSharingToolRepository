@@ -64,7 +64,7 @@ namespace QRSharingApp.WebApplication.Controllers
 
             var hotFolderPathes = (await _hotFolderRepository.GetAll()).Select(_ => _.FolderPath).ToList();
             var localFiles = await _localFileRepository.GetAll();
-            foreach (var localFile in localFiles.OrderBy(_ => DateTime.Parse(_.AddedDate)))
+            foreach (var localFile in localFiles.OrderByDescending(_ => DateTime.Parse(_.AddedDate)))
             {
                 var fileExist = System.IO.File.Exists(Path.Combine(localFile.Path, localFile.Name));
                 if (fileExist && hotFolderPathes.Contains(localFile.Path))
