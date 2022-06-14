@@ -316,6 +316,11 @@ namespace QRSharingApp.ViewModel.ViewModels
                 return;
             }
 
+            if (PageRequestViewModel.Size != 1)
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 var mainWindowViewModel = UnityContainer.Resolve<IMainWindowViewModel>();

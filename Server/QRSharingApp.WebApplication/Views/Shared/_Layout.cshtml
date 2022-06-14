@@ -35,17 +35,38 @@
     @*<script src="~/lib/lightboxed/lightboxed.js"></script>*@
 
     <style>
-        body {
+        /*body {
             background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(WebSetting.WebBackgroundImagePath)}")');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
-        }
+        }*/
 
-        
+        #bg {
+          position: fixed; 
+          top: -50%; 
+          left: -50%; 
+          width: 200%; 
+          height: 200%;
+        }
+        #bg img {
+          position: absolute; 
+          top: 0; 
+          left: 0; 
+          right: 0; 
+          bottom: 0; 
+          margin: auto; 
+          min-width: 50%;
+          min-height: 50%;
+        }
     </style>
 </head>
 <body>
+
+    <div id="bg">
+      <img src='@Url.Content($"~/{System.IO.Path.GetFileName(WebSetting.WebBackgroundImagePath)}")' alt="">
+    </div>
+
     @if (isFilesGalleryPage)
     {
         <style>
