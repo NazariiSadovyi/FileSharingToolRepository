@@ -1,4 +1,5 @@
-﻿using QRSharingApp.ViewModel.Interfaces;
+﻿using QRSharingApp.Infrastructure.Settings.Interfaces;
+using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Models;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
@@ -20,6 +21,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IActivationService ActivationService;
         [Dependency]
         public IApplicationTaskUtility ApplicationUtility;
+        [Dependency]
+        public IAppSetting AppSetting;
         #endregion
 
         #region Commands
@@ -32,6 +35,11 @@ namespace QRSharingApp.ViewModel.ViewModels
                     switch (result)
                     {
                         case true:
+                            if (!string.IsNullOrEmpty(CurrentActivationKey))
+                            {
+                                LastActivationKey = CurrentActivationKey;
+                                AppSetting.LastActivationKey = CurrentActivationKey;
+                            }
                             CurrentActivationKey = NewActivationKey;
                             NewActivationKey = string.Empty;
                             SharedAppData.ActivationStatus = ActivationStatus.Activated;
@@ -65,6 +73,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                     }
 
                     SharedAppData.ActivationStatus = ActivationStatus.NotActivated;
+                    LastActivationKey = CurrentActivationKey;
+                    AppSetting.LastActivationKey = CurrentActivationKey;
                     CurrentActivationKey = string.Empty;
 
                     RunTaskToCloseToolAfter5minutes();
@@ -98,10 +108,19 @@ namespace QRSharingApp.ViewModel.ViewModels
             },
             SharedAppData.WhenAnyValue(_ => _.ActivationStatus).Select(s => s != ActivationStatus.Activated || s != ActivationStatus.NotActivated)
         );
+
+        public ICommand SetTextToClipboardCmd => ReactiveCommand.Create<string>(
+            (text) =>
+            {
+                Clipboard.SetText(text);
+            }
+        );
         #endregion
 
         #region Properties
+        public string MachineId { get; set; }
         public string CurrentActivationKey { get; set; }
+        public string LastActivationKey { get; set; }
         public string NewActivationKey { get; set; }
         public ISharedAppDataViewModel SharedAppData { get; set; }
         #endregion
@@ -114,6 +133,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public override Task OnLoadAsync()
         {
             CurrentActivationKey = ActivationService.Key;
+            LastActivationKey = AppSetting.LastActivationKey;
+            MachineId = ActivationService.MachineId;
             return Task.CompletedTask;
         }
 

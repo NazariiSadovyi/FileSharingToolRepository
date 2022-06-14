@@ -14,7 +14,26 @@ namespace QRSharingApp.Activation
         //private const string _serviceAdress = "https://localhost:5001/";
         private const string _serviceAdress = "http://sadoviybogdan-001-site1.htempurl.com/";
 
-        private readonly HttpClient _client;
+        private string _machineId;
+        private HttpClient _client;
+
+        public string MachineId
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_machineId))
+                {
+                    _machineId = new DeviceIdBuilder()
+                        .AddMachineName()
+                        .AddSystemUUID()
+                        .AddProcessorId()
+                        .AddMotherboardSerialNumber()
+                        .ToString();
+                }
+
+                return _machineId;
+            }
+        }
 
         public ActivationApiClient()
         {
@@ -73,20 +92,10 @@ namespace QRSharingApp.Activation
             var baseApiControlleAdress = "api/activation";
             var programToolAdress = $"programTool/{_programToolId}";
             var keyAdress = $"key/{key}";
-            var machineAdress = $"machine/{MachineId()}";
+            var machineAdress = $"machine/{MachineId}";
             var adress = Path.Combine(_serviceAdress, baseApiControlleAdress, programToolAdress, keyAdress, machineAdress);
 
             return adress;
-        }
-
-        private string MachineId()
-        {
-            return new DeviceIdBuilder()
-                .AddMachineName()
-                .AddSystemUUID()
-                .AddProcessorId()
-                .AddMotherboardSerialNumber()
-                .ToString();
         }
     }
 

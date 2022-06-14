@@ -8,5 +8,6 @@
         int AutoSwitchSeconds { get; set; }
         int ItemsInGrid { get; set; }
         string SkinType { get; set; }
+        string LastActivationKey { get; set; }
     }
 }

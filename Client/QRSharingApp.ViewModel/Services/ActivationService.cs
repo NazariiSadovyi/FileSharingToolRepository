@@ -14,7 +14,8 @@ namespace QRSharingApp.ViewModel.Services
         private readonly IActivationProvider _activationProvider;
         public readonly IApplicationTaskUtility _applicationTaskUtility;
 
-        public string Key { get => _activationProvider.GetSavedLicenseKey(); }
+        public string Key => _activationProvider.GetSavedLicenseKey();
+        public string MachineId => _activationProvider.MachineId;
 
         public ActivationService(IApplicationTaskUtility applicationTaskUtility)
         {

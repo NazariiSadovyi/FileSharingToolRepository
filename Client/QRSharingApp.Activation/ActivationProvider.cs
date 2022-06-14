@@ -9,6 +9,8 @@ namespace QRSharingApp.Activation
         private readonly ActivationApiClient _activationApiClient = new();
         private readonly LicenseKeyProvider _licenseKeyProvider = new();
 
+        public string MachineId => _activationApiClient.MachineId;
+
         public async Task<bool?> CheckAndSaveLicense(string key)
         {
             var response = await _activationApiClient.ActivateToolAsync(key);

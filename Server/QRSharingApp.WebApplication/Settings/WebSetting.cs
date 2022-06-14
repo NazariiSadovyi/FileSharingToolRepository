@@ -14,7 +14,7 @@ namespace QRSharingApp.WebApplication.Settings
 
         public override string DefaultCountryOnDownload
         {
-            get => _settingRepository.GetStringSetting(DefaultCountryOnDownloadKey) ?? "BY"; //Belarus
+            get => _settingRepository.GetStringSetting(DefaultCountryOnDownloadKey) ?? "US";
             set => _settingRepository.SetSetting(DefaultCountryOnDownloadKey, value);
         }
 

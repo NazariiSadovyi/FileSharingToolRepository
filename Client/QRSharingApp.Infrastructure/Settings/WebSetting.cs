@@ -32,7 +32,7 @@ namespace QRSharingApp.Infrastructure.Settings
                 var skinType = _settingApi.GetSetting(DefaultCountryOnDownloadKey);
                 if (string.IsNullOrEmpty(skinType))
                 {
-                    return "BY"; //Belarus
+                    return "US";
                 }
 
                 return skinType;

@@ -20,25 +20,29 @@
                     VerticalAlignment="Center">
 
             <WrapPanel HorizontalAlignment="Center"
-                       Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
-                       Margin="0 0 0 0">
-                <TextBlock FontSize="14" Text="Tool activation status"/>
-                <TextBlock FontSize="14" Text=": "/>
-                <TextBlock FontSize="14" Text="{Binding SharedAppData.ActivationStatus}">
+                       Margin="0 2 0 2"
+                       Height="20">
+                <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="Tool activation status"/>
+                <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text=": "/>
+                <TextBlock FontSize="14">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Activated">
                                     <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="Text" Value="Activated"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="NotActivated">
-                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                                    <Setter Property="Text" Value="Not activated"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Expired">
                                     <Setter Property="Foreground" Value="Orange"/>
+                                    <Setter Property="Text" Value="Expired"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding SharedAppData.ActivationStatus}" Value="Error">
                                     <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Text" Value="Error"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -47,11 +51,45 @@
             </WrapPanel>
 
             <WrapPanel HorizontalAlignment="Center"
+                       Margin="0 2 0 2"
                        Visibility="{Binding CurrentActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
-                       Margin="0 0 0 0">
-                <TextBlock FontSize="14" Text="Current key"/>
-                <TextBlock FontSize="14" Text=": "/>
-                <TextBlock FontSize="14" Text="{Binding CurrentActivationKey}"/>
+                       Height="20">
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="Current key"/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text=": "/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="{Binding CurrentActivationKey}"/>
+            </WrapPanel>
+
+            <WrapPanel HorizontalAlignment="Center"
+                       Margin="0 2 0 2"
+                       Visibility="{Binding LastActivationKey, Converter={StaticResource StringIsEmptyVisibilityConverter}}"
+                       Height="20">
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="Last activation key"/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text=": "/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="{Binding LastActivationKey}"/>
+                <Button
+                    Margin="3 0 0 0"
+                    ToolTip="Copy"
+                    BorderThickness="0"
+                    Style="{StaticResource ButtonIcon.Small}"
+                    hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                    Command="{Binding SetTextToClipboardCmd}"
+                    CommandParameter="{Binding LastActivationKey}"/>
+            </WrapPanel>
+
+            <WrapPanel HorizontalAlignment="Center"
+                       Margin="0 5 0 2"
+                       Height="20">
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="Machine id"/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text=": "/>
+                <TextBlock VerticalAlignment="Bottom" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="14" Text="{Binding MachineId}"/>
+                <Button
+                    Margin="3 0 0 0"
+                    ToolTip="Copy"
+                    BorderThickness="0"
+                    Style="{StaticResource ButtonIcon.Small}"
+                    hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                    Command="{Binding SetTextToClipboardCmd}"
+                    CommandParameter="{Binding MachineId}"/>
             </WrapPanel>
 
             <Grid Margin="20 20 20 10">

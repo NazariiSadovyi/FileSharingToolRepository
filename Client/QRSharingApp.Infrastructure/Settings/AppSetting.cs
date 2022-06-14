@@ -13,6 +13,7 @@ namespace QRSharingApp.Infrastructure.Settings
         private readonly string _autoSwitchSeconds = "AutoSwitchSeconds";
         private readonly string _itemsInGridKey = "ItemsInGrid";
         private readonly string _skinType = "SkinType";
+        private readonly string _lastActivationKey = "LastActivationKey";
 
         public AppSetting(ISettingApi settingApi)
         {
@@ -32,6 +33,21 @@ namespace QRSharingApp.Infrastructure.Settings
                 return skinType;
             }
             set { _settingApi.SetSetting(_skinType, value); }
+        }
+
+        public string LastActivationKey
+        {
+            get
+            {
+                var key = _settingApi.GetSetting(_lastActivationKey);
+                if (string.IsNullOrEmpty(key))
+                {
+                    return string.Empty;
+                }
+
+                return key;
+            }
+            set { _settingApi.SetSetting(_lastActivationKey, value); }
         }
 
         public int ItemsInGrid

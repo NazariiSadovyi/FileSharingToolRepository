@@ -12,7 +12,7 @@ namespace QRSharingApp.Client.Converters
             var _value = (string)value;
             if (string.IsNullOrEmpty(_value))
             {
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
             else
             {
