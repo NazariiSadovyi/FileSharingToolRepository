@@ -12,6 +12,12 @@ namespace QRSharingApp.WebApplication.Settings
             _settingRepository = settingRepository;
         }
 
+        public override string WebCultureCode
+        {
+            get => _settingRepository.GetStringSetting(WebCultureCodeKey) ?? null;
+            set => _settingRepository.SetSetting(WebCultureCodeKey, value);
+        }
+
         public override string DefaultCountryOnDownload
         {
             get => _settingRepository.GetStringSetting(DefaultCountryOnDownloadKey) ?? "US";

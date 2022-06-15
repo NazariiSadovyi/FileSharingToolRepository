@@ -72,6 +72,12 @@ namespace QRSharingApp.Infrastructure.Settings
             set { _settingApi.SetSetting(WebBackgroundImagePathKey, value); }
         }
 
+        public override string WebCultureCode
+        {
+            get { return _settingApi.GetSetting(WebCultureCodeKey); }
+            set { _settingApi.SetSetting(WebCultureCodeKey, value); }
+        }
+
         public override bool ShowWifiQrCodeInWeb
         {
             get

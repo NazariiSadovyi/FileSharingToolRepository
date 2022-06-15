@@ -73,6 +73,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                 }
                 CultureLocalization.Localization.Language = new System.Globalization.CultureInfo(cultureName);
                 AppSetting.CultureName = cultureName;
+                WebSetting.WebCultureCode = cultureName;
             }
         );
 

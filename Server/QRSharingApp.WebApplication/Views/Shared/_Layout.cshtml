@@ -1,6 +1,9 @@
-﻿@using QRSharingApp.Common.Settings.Interfaces
+﻿@using Microsoft.Extensions.Localization
+@using QRSharingApp.Common.Settings.Interfaces
+@using QRSharingApp.WebApplication.Controllers
 @using QRSharingApp.WebApplication.Services
 @inject IWebSetting WebSetting
+@inject IStringLocalizer<FileController> Localizer
 
 @{
     var mainDivClass = Model is FilesGalleryViewModel ? "" : "container";
@@ -35,13 +38,6 @@
     @*<script src="~/lib/lightboxed/lightboxed.js"></script>*@
 
     <style>
-        /*body {
-            background-image: url('@Url.Content($"~/{System.IO.Path.GetFileName(WebSetting.WebBackgroundImagePath)}")');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }*/
-
         #bg {
           position: fixed; 
           top: -50%; 
@@ -111,15 +107,15 @@
                 <div class="qrcodebar">
                     @if (WebSetting.ShowWifiQrCodeInWeb)
                     {
-                        <div>
-                            <h6 style="margin-bottom: 0px; text-align: center;">Connect to Wi-Fi</h6>
+                        <div style="text-align-last: center">
+                            <h6 style="margin-bottom: 0px; text-align: center;">@Localizer.GetString("ConnectToWifi")</h6>
                             <img style="width: 190px;" src="@(((FilesGalleryViewModel)Model).WifiQRImageData)"/>
                         </div>
                     }
                     @if (WebSetting.ShowGalleryUrlQrCodeInWeb)
                     {
-                        <div style="margin-top: 20px">
-                            <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
+                        <div style="margin-top: 20px; text-align-last: center">
+                            <h6 style="margin-bottom: 0px; text-align: center;">@Localizer.GetString("Gallery")</h6>
                             <img style="width: 190px;" src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
                         </div>
                     }

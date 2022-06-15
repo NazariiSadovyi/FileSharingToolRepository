@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -12,6 +13,8 @@ using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.Infrastructure.Services;
 using QRSharingApp.WebApplication.Services;
 using QRSharingApp.WebApplication.Settings;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace QRSharingApp.WebApplication
 {
@@ -50,6 +53,8 @@ namespace QRSharingApp.WebApplication
                 option.MaximumReceiveMessageSize = 102400000;
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddControllersWithViews();
         }
 
@@ -73,6 +78,23 @@ namespace QRSharingApp.WebApplication
             });
 
             app.UseRouting();
+            app.UseRequestLocalization(options =>
+            {
+                options.RequestCultureProviders = new List<IRequestCultureProvider>()
+                {
+                    new RequestCultureProvider()
+                };
+                options.SupportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU"),
+                };
+                options.SupportedUICultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU"),
+                };
+            });
 
             app.UseAuthorization();
 

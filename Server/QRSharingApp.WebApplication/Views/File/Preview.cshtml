@@ -1,5 +1,8 @@
-﻿@using QRSharingApp.WebApplication.Controllers
+﻿@using Microsoft.Extensions.Localization
+@using QRSharingApp.WebApplication.Controllers
 @model FilePreviewViewModel
+
+@inject IStringLocalizer<FileController> Localizer
 
 @if (Model.IsPhoto)
 {
@@ -22,14 +25,14 @@ else
 @if (Model.DownloadViaForm)
 {
     <div style="display: flex; justify-content: center; margin-top: 10px;">
-        @Html.ActionLink("Download", nameof(FileController.Download), new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink(Localizer.GetString("Download"), nameof(FileController.Download), new { id = Model.Id }, new { @class = "btn btn-primary" })
     </div>
 }
 else
 {
     <div style="display: flex; justify-content: center; margin-top: 10px;">
         <a id="download-file-link" class="btn btn-primary" href="@Model.Adress" download="@Model.Name">
-            Download
+            @Localizer.GetString("Download")
         </a>
     </div>
 }

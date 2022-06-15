@@ -9,5 +9,6 @@
         bool ShowAgreedCheckboxOnDownload { get; set; }
         bool ShowWifiQrCodeInWeb { get; set; }
         bool ShowGalleryUrlQrCodeInWeb { get; set; }
+        string WebCultureCode { get; set; }
     }
 }

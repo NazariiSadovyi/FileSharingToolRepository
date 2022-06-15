@@ -9,6 +9,7 @@ using QRSharingApp.WebApplication.Converters;
 using QRSharingApp.WebApplication.Models;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace QRSharingApp.WebApplication.Controllers
 
             var hotFolderPathes = (await _hotFolderRepository.GetAll()).Select(_ => _.FolderPath).ToList();
             var localFiles = await _localFileRepository.GetAll();
-            foreach (var localFile in localFiles.OrderByDescending(_ => DateTime.Parse(_.AddedDate)))
+            foreach (var localFile in localFiles.OrderByDescending(_ => DateTime.Parse(_.AddedDate, CultureInfo.InvariantCulture)))
             {
                 var fileExist = System.IO.File.Exists(Path.Combine(localFile.Path, localFile.Name));
                 if (fileExist && hotFolderPathes.Contains(localFile.Path))

@@ -20,7 +20,7 @@
             <ExePackage Id='WindowsdesktopRuntime'
 	         			Compressed='yes'
                         After='DotnetRuntime'
-	         			SourceFile='$(var.SolutionDir)Installer\Runtime\windowsdesktop-runtime-6.0.5-win-x64.exe'
+	         			SourceFile='$(var.SolutionDir)Installer\Runtime\windowsdesktop-runtime-6.0.6-win-x64.exe'
 	         			PerMachine='yes'
                         InstallCommand='/passive'/>
             <ExePackage Id='DotnetHostingRuntime'
