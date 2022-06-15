@@ -38,7 +38,7 @@ namespace QRSharingApp.WebApplication.Settings
 
         public override int[] RequiredFieldsForDownload
         {
-            get => _settingRepository.GetStringSetting(RequiredFieldsForDownloadKey).Split(",").Select(int.Parse).ToArray();
+            get => _settingRepository.GetStringSetting(RequiredFieldsForDownloadKey)?.Split(",").Select(int.Parse).ToArray() ?? new int[0];
             set => _settingRepository.SetSetting(RequiredFieldsForDownloadKey, string.Join(",", value));
         }
 

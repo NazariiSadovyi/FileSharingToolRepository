@@ -61,7 +61,7 @@
         }
     </style>
 </head>
-<body>
+<body style="position: relative">
 
     <div id="bg">
       <img src='@Url.Content($"~/{System.IO.Path.GetFileName(WebSetting.WebBackgroundImagePath)}")' alt="">
@@ -104,30 +104,32 @@
         </style>
     }
 
-    <div class="@mainDivClass">
-        @if (isFilesGalleryPage && (WebSetting.ShowWifiQrCodeInWeb || WebSetting.ShowGalleryUrlQrCodeInWeb))
-        {
-            <div class="qrcodebar">
-                @if (WebSetting.ShowWifiQrCodeInWeb)
-                {
-                    <div>
-                        <h6 style="margin-bottom: 0px; text-align: center;">Connect to Wi-Fi</h6>
-                        <img style="max-width: 190px;" src="@(((FilesGalleryViewModel)Model).WifiQRImageData)"/>
-                    </div>
-                }
-                @if (WebSetting.ShowGalleryUrlQrCodeInWeb)
-                {
-                    <div style="margin-top: 20px">
-                        <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
-                        <img src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
-                    </div>
-                }
-            </div> 
-        }
+    <div style="position: sticky;">
+        <div class="@mainDivClass">
+            @if (isFilesGalleryPage && (WebSetting.ShowWifiQrCodeInWeb || WebSetting.ShowGalleryUrlQrCodeInWeb))
+            {
+                <div class="qrcodebar">
+                    @if (WebSetting.ShowWifiQrCodeInWeb)
+                    {
+                        <div>
+                            <h6 style="margin-bottom: 0px; text-align: center;">Connect to Wi-Fi</h6>
+                            <img style="width: 190px;" src="@(((FilesGalleryViewModel)Model).WifiQRImageData)"/>
+                        </div>
+                    }
+                    @if (WebSetting.ShowGalleryUrlQrCodeInWeb)
+                    {
+                        <div style="margin-top: 20px">
+                            <h6 style="margin-bottom: 0px; text-align: center;">Gallery</h6>
+                            <img style="width: 190px;" src="@(((FilesGalleryViewModel)Model).GalleryUrlQRImageData)"/>
+                        </div>
+                    }
+                </div> 
+            }
 
-        <main>
-            @RenderBody()
-        </main>
+            <main>
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     @await RenderSectionAsync("Scripts", required: false)
