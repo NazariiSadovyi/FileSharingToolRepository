@@ -10,6 +10,6 @@ namespace QRSharingApp.ViewModel.Interfaces
 
         Task<ActivationStatus> IsActivatedAsync();
         Task<bool?> UpdateActivationAsync(string key);
-        Task<bool> DeactivateLicenseAsync();
+        Task<(bool, string)> DeactivateLicenseAsync();
     }
 }

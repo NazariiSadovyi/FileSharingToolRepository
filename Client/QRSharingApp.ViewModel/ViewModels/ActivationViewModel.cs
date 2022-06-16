@@ -67,14 +67,14 @@ namespace QRSharingApp.ViewModel.ViewModels
                 await ApplicationUtility.ExecuteFetchDataAsync(async () =>
                 {
                     var result = await ActivationService.DeactivateLicenseAsync();
-                    if (!result)
+                    if (!result.Item1)
                     {
                         return;
                     }
 
                     SharedAppData.ActivationStatus = ActivationStatus.NotActivated;
-                    LastActivationKey = CurrentActivationKey;
-                    AppSetting.LastActivationKey = CurrentActivationKey;
+                    LastActivationKey = result.Item2;
+                    AppSetting.LastActivationKey = result.Item2;
                     CurrentActivationKey = string.Empty;
 
                     RunTaskToCloseToolAfter5minutes();

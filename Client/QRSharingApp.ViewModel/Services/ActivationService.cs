@@ -11,7 +11,7 @@ namespace QRSharingApp.ViewModel.Services
     public class ActivationService : IActivationService
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-        private readonly IActivationProvider _activationProvider;
+        private readonly ActivationProvider _activationProvider;
         public readonly IApplicationTaskUtility _applicationTaskUtility;
 
         public string Key => _activationProvider.GetSavedLicenseKey();
@@ -39,8 +39,6 @@ namespace QRSharingApp.ViewModel.Services
                         return ActivationStatus.Activated;
                     case false:
                         return ActivationStatus.NotActivated;
-                    case null:
-                        return ActivationStatus.Expired;
                     default:
                         throw new ArgumentOutOfRangeException(result.ToString());
                 }
@@ -69,19 +67,19 @@ namespace QRSharingApp.ViewModel.Services
             }
         }
 
-        public async Task<bool> DeactivateLicenseAsync()
+        public async Task<(bool, string)> DeactivateLicenseAsync()
         {
             try
             {
-                await _activationProvider.DeactivateLicense();
-                return true;
+                var newKey = await _activationProvider.RemoveKey();
+                return (true, newKey);
             }
             catch (Exception e)
             {
                 _logger.Warn(e, "Deactivate License");
                 _applicationTaskUtility.ShowInformationMessage(Localization.GetResource("CantDeactivateLicense"), InformationKind.Error);
 
-                return false;
+                return (true, "");
             }
         }
     }
