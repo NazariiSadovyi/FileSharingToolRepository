@@ -14,26 +14,15 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
         [Dependency]
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
 
-        public string Id { get; set; }
-        public string Name { get; set; }
         public bool IsLoading { get; set; }
-        public string LocalPath { get; set; }
-        public string FullLocalPath { get; set; }
-        public BitmapImage QRImage { get; set; }
-        public string SharedLink { get; set; }
-
+        public ThumbnailViewModel ThumbnailViewModel { get; set; }
         public string BackgroundImagePath { get; set; }
 
         public abstract Task OnLoadDataAsync();
 
         public FilePreviewBaseViewModel(ThumbnailViewModel thumbnailViewModel)
         {
-            Id = thumbnailViewModel.Name;
-            Name = thumbnailViewModel.Name;
-            LocalPath = thumbnailViewModel.LocalPath;
-            FullLocalPath = thumbnailViewModel.FullLocalPath;
-            QRImage = thumbnailViewModel.QRImage;
-            SharedLink = thumbnailViewModel.SharedLink;
+            ThumbnailViewModel = thumbnailViewModel;
         }
 
         public async Task OnLoadAsync()

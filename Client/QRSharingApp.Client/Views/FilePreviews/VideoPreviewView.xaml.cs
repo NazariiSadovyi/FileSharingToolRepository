@@ -17,26 +17,47 @@ namespace QRSharingApp.Client.Views.FilePreviews
         public VideoPreviewView()
         {
             InitializeComponent();
-            VideoPlayer.PositionChanged += VideoPlayer_PositionChanged;
         }
 
-        private async void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var viewModel = DataContext as VideoFilePreviewViewModel;
             if (viewModel != null)
             {
-                _logger.Info($"Opening video: {viewModel.FullLocalPath}");
-                await VideoPlayer.Open(new Uri(viewModel.FullLocalPath));
-                await System.Threading.Tasks.Task.Delay(200);
-                LoadingCircle.Visibility = Visibility.Hidden;
-                await VideoPlayer.Play();
-                _logger.Info($"End opening video: {viewModel.FullLocalPath}");
+                Application.Current.Dispatcher.Invoke(async () =>
+                {
+                    try
+                    {
+                        _logger.Info($"Opening video: {viewModel.ThumbnailViewModel.FullLocalPath}");
+                        await VideoPlayer.Open(new Uri(viewModel.ThumbnailViewModel.FullLocalPath));
+                        _logger.Info($"End opening video: {viewModel.ThumbnailViewModel.FullLocalPath}");
+                        await System.Threading.Tasks.Task.Delay(200);
+                        _logger.Info($"Start playing video: {viewModel.ThumbnailViewModel.FullLocalPath}");
+                        await VideoPlayer.Play();
+                        _logger.Info($"End playing video: {viewModel.ThumbnailViewModel.FullLocalPath}");
+                        LoadingCircle.Visibility = Visibility.Hidden;
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e, "Opening video exception");
+                    }
+                });
             }
             else
             {
-                _logger.Info($"Start closing video");
-                await VideoPlayer.Close();
-                _logger.Info($"End closing video");
+                Application.Current.Dispatcher.Invoke(async () =>
+                {
+                    try
+                    {
+                        _logger.Info($"Start closing video");
+                        await VideoPlayer.Close();
+                        _logger.Info($"End closing video");
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e, "Closing video exception");
+                    }
+                });
             }
         }
 
@@ -52,16 +73,20 @@ namespace QRSharingApp.Client.Views.FilePreviews
             }
         }
 
-        private void VideoPlayer_PositionChanged(object sender, Unosquare.FFME.Common.PositionChangedEventArgs e)
+        private void VideoPlayer_MediaEnded(object sender, EventArgs e)
         {
-            if (e.Position == e.EngineState.NaturalDuration)
+            Application.Current.Dispatcher.Invoke(async () =>
             {
-                Application.Current.Dispatcher.Invoke(async () =>
+                try
                 {
-                    await VideoPlayer.Seek(TimeSpan.Zero);
+                    await VideoPlayer.Seek(new TimeSpan(0, 0, 0, 0, 10));
                     await VideoPlayer.Play();
-                });
-            }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, "Loop video exception");
+                }
+            });
         }
     }
 }

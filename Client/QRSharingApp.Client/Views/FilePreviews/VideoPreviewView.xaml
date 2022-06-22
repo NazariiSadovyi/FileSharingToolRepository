@@ -40,7 +40,8 @@
                 LoadedBehavior="Manual"
                 UnloadedBehavior="Manual"
                 Background="Transparent"
-                MouseDown="VideoPlayer_MouseDown"/>
+                MouseDown="VideoPlayer_MouseDown"
+                MediaEnded="VideoPlayer_MediaEnded"/>
 
             <Grid
                 Name="LoadingCircle"
@@ -79,8 +80,9 @@
                     Grid.Row="1"
                     Grid.Column="2"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom">
-                    <Image Source="{Binding QRImage}" />
+                    VerticalAlignment="Bottom"
+                    Visibility="{Binding ThumbnailViewModel.QRImage, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Image Source="{Binding ThumbnailViewModel.QRImage}" />
                     <TextBlock
                         Text="Download"
                         FontSize="15"

@@ -28,7 +28,7 @@ namespace QRSharingApp.ViewModel.ViewModels.FilePreviewVIewModels
             var image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(FullLocalPath);
+            image.UriSource = new Uri(ThumbnailViewModel.FullLocalPath);
             image.EndInit();
 
             return image;

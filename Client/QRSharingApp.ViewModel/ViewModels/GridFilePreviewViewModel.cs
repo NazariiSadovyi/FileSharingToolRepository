@@ -225,21 +225,28 @@ namespace QRSharingApp.ViewModel.ViewModels
             }
             
             var bitMap = QRCodeGeneratorService.BitmapImage(file.SharedLink);
-            file.QRImage = ToBitmapImage(bitMap);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                file.QRImage = ToBitmapImage(bitMap);
+            });
         }
 
         private void WebServerService_NetworkChanged(object sender, bool isValid)
         {
             Task.Run(async () =>
             {
-                foreach (var file in AllFiles)
+                var localFileList = AllFiles.ToList();
+                foreach (var file in localFileList)
                 {
-                    file.QRImage = null;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        file.QRImage = null;
+                    });
                 }
 
                 if (isValid)
                 {
-                    foreach (var file in AllFiles)
+                    foreach (var file in localFileList)
                     {
                         await FetchQRCodeImage(file);
                     }
