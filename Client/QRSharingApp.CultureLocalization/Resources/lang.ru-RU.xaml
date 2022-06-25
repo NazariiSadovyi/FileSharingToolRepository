@@ -4,7 +4,7 @@
     <!-- Main view -->
     <v:String x:Key="TitleApp">QR Sharing App</v:String>
     <v:String x:Key="MainViewButtonHotFolders">ГОРЯЧИЕ ПАПКИ</v:String>
-    <v:String x:Key="MainViewButtonWifiSetting">НАСТРОЙКА WI-FI</v:String>
+    <v:String x:Key="MainViewButtonWifiSetting">НАСТРОЙКА СЕТИ</v:String>
     <v:String x:Key="MainViewButtonDownloadHistory">ИСТОРИЯ ЗАГРУЗОК</v:String>
     <v:String x:Key="MainViewButtonWebPreview">WEB ГАЛЕРЕЯ</v:String>
     <v:String x:Key="MainViewButtonStart">СТАРТ</v:String>
@@ -85,7 +85,11 @@
     <v:String x:Key="WifiSettingsIsHiddenTougleLabel">Is Hidden</v:String>
     <v:String x:Key="WifiSettingsButtonUpdate">Обновить</v:String>
     <v:String x:Key="WifiSettingsButtonClean">Очистить</v:String>
-    
+    <v:String x:Key="WifiSettingsWifiConfigTitle">Конфигурация WI-FI</v:String>
+    <v:String x:Key="WifiSettingsNetworkConfigTitle">Конфигурация сети</v:String>
+    <v:String x:Key="WifiSettingsNetworkSourceHint">Сетевой источник</v:String>
+    <v:String x:Key="WifiSettingsRefreshNetworkSourceTooltip">Обновить сетевой источник</v:String>
+
     <!-- Other -->
     <v:String x:Key="DialogTextFetching">Получение данных...</v:String>
     <v:String x:Key="ToggleButtonOn">Вкл</v:String>

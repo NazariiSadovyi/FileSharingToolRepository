@@ -78,6 +78,12 @@ namespace QRSharingApp.Infrastructure.Settings
             set { _settingApi.SetSetting(WebCultureCodeKey, value); }
         }
 
+        public override string NetworkId
+        {
+            get { return _settingApi.GetSetting(NetworkIdKey); }
+            set { _settingApi.SetSetting(NetworkIdKey, value); }
+        }
+
         public override bool ShowWifiQrCodeInWeb
         {
             get

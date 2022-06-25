@@ -10,5 +10,6 @@
         bool ShowWifiQrCodeInWeb { get; set; }
         bool ShowGalleryUrlQrCodeInWeb { get; set; }
         string WebCultureCode { get; set; }
+        string NetworkId { get; set; }
     }
 }

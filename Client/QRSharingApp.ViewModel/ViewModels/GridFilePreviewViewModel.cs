@@ -3,6 +3,7 @@ using DynamicData.Binding;
 using Microsoft.WindowsAPICodePack.Shell;
 using QRSharingApp.ClientApi.Interfaces;
 using QRSharingApp.Common.Services.Interfaces;
+using QRSharingApp.Common.Settings.Interfaces;
 using QRSharingApp.Infrastructure.Settings.Interfaces;
 using QRSharingApp.ViewModel.Interfaces;
 using QRSharingApp.ViewModel.Services;
@@ -46,6 +47,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IQRCodeGeneratorService QRCodeGeneratorService;
         [Dependency]
         public IUnityContainer UnityContainer;
+        [Dependency]
+        public IWebSetting WebSetting;
         #endregion
 
         #region Commands
@@ -78,7 +81,7 @@ namespace QRSharingApp.ViewModel.ViewModels
             SharedAppDataViewModel = sharedAppDataViewModel;
             ShowNewestFilesInTheBeginning = appSettingService.SortingDisplayFiles;
 
-            webServerService.NetworkChanged += WebServerService_NetworkChanged;
+            sharedAppDataViewModel.NetworkChanged.Subscribe(NetworkChanged);
             _autoSwitchTimer = new Timer(new TimerCallback(AutoPageSwitch));
             
             PageRequestViewModel = new PageRequestViewModel(1, appSettingService.ItemsInGrid, localFilesService.LocalFiles);
@@ -88,6 +91,34 @@ namespace QRSharingApp.ViewModel.ViewModels
 
             this.WhenAnyValue(_ => _.PageRequestViewModel.Size)
                 .Subscribe(UpdateGridStructure);
+        }
+
+        private void NetworkChanged(string networkId)
+        {
+            Task.Run(async () =>
+            {
+                if (AllFiles == null)
+                {
+                    return;
+                }
+
+                var localFileList = AllFiles.ToList();
+                foreach (var file in localFileList)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        file.QRImage = null;
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(networkId))
+                {
+                    foreach (var file in localFileList)
+                    {
+                        await FetchQRCodeImage(file, networkId);
+                    }
+                }
+            });
         }
 
         public override Task OnLoadAsync()
@@ -152,11 +183,12 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         private ThumbnailViewModel LoadThumbnailData(ThumbnailViewModel filePreview)
         {
+            var networkId = WebSetting.NetworkId;
             Task.Run(async () =>
             {
                 filePreview.IsLoading = true;
                 await FetchThumbnailImage(filePreview);
-                await FetchQRCodeImage(filePreview);
+                await FetchQRCodeImage(filePreview, networkId);
                 filePreview.IsLoading = false;
             });
 
@@ -215,10 +247,15 @@ namespace QRSharingApp.ViewModel.ViewModels
             return localFile.Id;
         }
 
-        private async Task FetchQRCodeImage(ThumbnailViewModel file)
+        private async Task FetchQRCodeImage(ThumbnailViewModel file, string networkId)
         {
             file.Id = await GetOrCreateFileId(file);
-            file.SharedLink = WebServerService.GetFilePath(file.Id);
+            if (string.IsNullOrEmpty(networkId))
+            {
+                return;
+            }
+
+            file.SharedLink = WebServerService.GetFilePath(file.Id, networkId);
             if (string.IsNullOrEmpty(file.SharedLink))
             {
                 return;
@@ -228,29 +265,6 @@ namespace QRSharingApp.ViewModel.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 file.QRImage = ToBitmapImage(bitMap);
-            });
-        }
-
-        private void WebServerService_NetworkChanged(object sender, bool isValid)
-        {
-            Task.Run(async () =>
-            {
-                var localFileList = AllFiles.ToList();
-                foreach (var file in localFileList)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        file.QRImage = null;
-                    });
-                }
-
-                if (isValid)
-                {
-                    foreach (var file in localFileList)
-                    {
-                        await FetchQRCodeImage(file);
-                    }
-                }
             });
         }
 

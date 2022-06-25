@@ -9,125 +9,192 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:WifiConfigurationViewModel}">
-    <Grid Margin="20 20 20 0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"/>
-            <ColumnDefinition Width="0.4*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="20 0 20 20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0">
-            <hc:TextBox
-                Text="{Binding SSID, UpdateSourceTrigger=PropertyChanged}"
-                ShowClearButton="True"
-                Margin="0 0 0 10"
-                Height="35"
-                FontSize="14"
-                hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxSSIDHint}" />
-            <hc:TextBox
-                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0 0 0 10"
-                Height="35"
-                FontSize="14"
-                ShowClearButton="True"
-                hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxPasswordHint}" />
-            <hc:ComboBox
-                ItemsSource="{Binding WifiAuthenticationTypes}"
-                SelectedItem="{Binding WifiAuthenticationType}"
-                hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxSecurityHint}"
-                HorizontalAlignment="Left"
-                FontSize="14"
-                Width="256"/>
-            
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        Margin="0 10 0 0">
-                <ToggleButton
-                    IsChecked="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}"
-                    Height="25"
-                    Width="50"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource ToggleButtonSwitch}"/>
-                <Label Content="{DynamicResource WifiSettingsIsHiddenTougleLabel}"
-                       BorderThickness="0"
-                       FontSize="14"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <hc:Divider
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Content="{DynamicResource WifiSettingsWifiConfigTitle}"
+                FontSize="14"/>
+
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <hc:TextBox
+                    Text="{Binding SSID, UpdateSourceTrigger=PropertyChanged}"
+                    ShowClearButton="True"
+                    Margin="0 0 0 10"
+                    Height="35"
+                    FontSize="14"
+                    hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxSSIDHint}" />
+                <hc:TextBox
+                    Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="0 0 0 10"
+                    Height="35"
+                    FontSize="14"
+                    ShowClearButton="True"
+                    hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxPasswordHint}" />
+                <hc:ComboBox
+                    ItemsSource="{Binding WifiAuthenticationTypes}"
+                    SelectedItem="{Binding WifiAuthenticationType}"
+                    hc:InfoElement.Placeholder="{DynamicResource WifiSettingsTextBoxSecurityHint}"
+                    HorizontalAlignment="Left"
+                    FontSize="14"
+                    Width="256"/>
+                
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="0 10 0 0">
+                    <ToggleButton
+                        IsChecked="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}"
+                        Height="25"
+                        Width="50"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource ToggleButtonSwitch}"/>
+                    <Label
+                        Content="{DynamicResource WifiSettingsIsHiddenTougleLabel}"
+                        BorderThickness="0"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <UniformGrid Margin="0 10 0 0">
+                    <Button
+                        Style="{DynamicResource ButtonSuccess}"
+                        Content="{DynamicResource WifiSettingsButtonUpdate}"
+                        Margin="0 0 10 0"
+                        Width="130"
+                        Command="{Binding UpdateQRCodeCmd}"/>
+                    <Button
+                        Style="{DynamicResource ButtonDefault}"
+                        Content="{DynamicResource WifiSettingsButtonClean}"
+                        Margin="10 0 0 0"
+                        Width="130"
+                        Command="{Binding ClearQRCodeCmd}"/>
+                </UniformGrid>
             </StackPanel>
 
-            <UniformGrid Margin="0 10 0 0">
-                <Button
-                    Style="{DynamicResource ButtonSuccess}"
-                    Content="{DynamicResource WifiSettingsButtonUpdate}"
-                    Margin="0 0 10 0"
-                    Width="130"
-                    Command="{Binding UpdateQRCodeCmd}"/>
-                <Button
-                    Style="{DynamicResource ButtonDefault}"
-                    Content="{DynamicResource WifiSettingsButtonClean}"
-                    Margin="10 0 0 0"
-                    Width="130"
-                    Command="{Binding ClearQRCodeCmd}"/>
-            </UniformGrid>
-
-        </StackPanel>
-        
-        <StackPanel Grid.Column="1">
             <!--Wifi QR link-->
-            <Label
-                Content="Wifi QR link"
-                BorderThickness="0"
-                Panel.ZIndex="1"
-                FontSize="14"
-                HorizontalAlignment="Center"/>
-            <Image
-                Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                HorizontalAlignment="Center"
-                Margin="0 10 0 64"
-                Width="200"
-                Height="200">
-                <Image.Source>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing Geometry="{DynamicResource WifiNotConfiguredGeometry}" Brush="LightGray"/>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Image.Source>
-            </Image>
-            <Image
-                Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}}"
-                Source="{Binding SharedAppDataViewModel.WifiQRImage}"
-                VerticalAlignment="Top"
-                Margin="0 -25 0 0"
-                Height="300" />
+            <Grid
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="10 0 10 0">
+                <Label
+                    Content="Wifi QR link"
+                    BorderThickness="0"
+                    Panel.ZIndex="1"
+                    FontSize="13"
+                    hc:BorderElement.CornerRadius="0 0 5 5"
+                    Margin="0 -1 0 0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"/>
+                <Image
+                    Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="150"
+                    Height="200">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Geometry="{DynamicResource WifiNotConfiguredGeometry}" Brush="LightGray"/>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <Image
+                    Visibility="{Binding SharedAppDataViewModel.WifiQRImage, Converter={StaticResource NullToVisibilityConverter}}"
+                    Source="{Binding SharedAppDataViewModel.WifiQRImage}"
+                    VerticalAlignment="Top"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <hc:Divider
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Content="{DynamicResource WifiSettingsNetworkConfigTitle}"
+                FontSize="14"/>
+            
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <hc:ComboBox
+                        Grid.Column="0"
+                        ItemsSource="{Binding NetworkInformations}"
+                        SelectedValue="{Binding NetworkId}"
+                        SelectedValuePath="Id"
+                        DisplayMemberPath="Name"
+                        hc:InfoElement.Placeholder="{DynamicResource WifiSettingsNetworkSourceHint}"
+                        HorizontalAlignment="Stretch"
+                        FontSize="14"/>
+                    <Button
+                        Grid.Column="1"
+                        Margin="10 0 10 0"
+                        Command="{Binding RefreshNetworkListCmd}"
+                        ToolTip="{DynamicResource WifiSettingsRefreshNetworkSourceTooltip}"
+                        Style="{StaticResource ButtonIconCircular}"
+                        hc:IconElement.Geometry="{StaticResource RotateLeftGeometry}"/>
+                </Grid>
+            </StackPanel>
             
             <!--Web gallery QR link-->
-            <Label
-                Content="Web gallery QR link"
-                Margin="0 10 0 0"
-                BorderThickness="0"
-                Panel.ZIndex="1"
-                FontSize="14"
-                HorizontalAlignment="Center"/>
-            <Image
-                Visibility="{Binding SharedAppDataViewModel.WebUrlQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
-                HorizontalAlignment="Center"
-                Margin="0 10 0 0"
-                Width="150"
-                Height="200">
-                <Image.Source>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing Geometry="{DynamicResource CancelGeometry}" Brush="LightGray"/>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Image.Source>
-            </Image>
-            <Image
-                Margin="0 -25 0 0"
-                Panel.ZIndex="0"
-                Source="{Binding SharedAppDataViewModel.WebUrlQRImage}"
-                VerticalAlignment="Top"
-                Height="300" />
-        </StackPanel>
+            <Grid
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="10 0 10 0">
+                <Label
+                    Content="Web gallery QR link"
+                    BorderThickness="0"
+                    Panel.ZIndex="1"
+                    FontSize="13"
+                    hc:BorderElement.CornerRadius="0 0 5 5"
+                    Margin="0 -1 0 0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"/>
+                <Image
+                    Visibility="{Binding SharedAppDataViewModel.WebUrlQRImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Invert'}"
+                    HorizontalAlignment="Center"
+                    Width="150"
+                    Height="200">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Geometry="{DynamicResource CancelGeometry}" Brush="LightGray"/>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <Image
+                    Panel.ZIndex="0"
+                    Source="{Binding SharedAppDataViewModel.WebUrlQRImage}"
+                    VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

@@ -74,8 +74,16 @@ namespace QRSharingApp.WebApplication.Controllers
                 }
             }
 
-            var urlQrCodeData = _qrCodeGeneratorService.Base64Image(_webServerService.WebUrl);
-            result.GalleryUrlQRImageData = urlQrCodeData;
+            var networkId = _webSetting.NetworkId;
+            if (!string.IsNullOrEmpty(networkId))
+            {
+                var webUrl = _webServerService.GetWebUrl(networkId);
+                if (!string.IsNullOrEmpty(webUrl))
+                {
+                    var urlQrCodeData = _qrCodeGeneratorService.Base64Image(webUrl);
+                    result.GalleryUrlQRImageData = urlQrCodeData;
+                }
+            }
 
             var wifiConfigString = _wifiService.GenerateConfigString(
                 _wifiSetting.WifiLogin,
@@ -149,11 +157,17 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpGet]
         public IActionResult QRCode(string id)
         {
-            var fileWebPath = _webServerService.GetFilePath(id);
-            var qrCodeStream = new MemoryStream();
-            _qrCodeGeneratorService.SaveToStream(fileWebPath, qrCodeStream);
+            var networkId = _webSetting.NetworkId;
+            if (!string.IsNullOrEmpty(networkId))
+            {
+                var fileWebPath = _webServerService.GetFilePath(id, networkId);
+                var qrCodeStream = new MemoryStream();
+                _qrCodeGeneratorService.SaveToStream(fileWebPath, qrCodeStream);
 
-            return File(qrCodeStream, "image/jpeg");
+                return File(qrCodeStream, "image/jpeg");
+            }
+
+            return Ok();
         }
 
         [HttpGet]

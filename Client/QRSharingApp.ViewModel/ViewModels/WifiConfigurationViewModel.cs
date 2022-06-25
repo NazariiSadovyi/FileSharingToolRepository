@@ -1,14 +1,19 @@
 ﻿using QRSharingApp.Common.Enums;
+using QRSharingApp.Common.Models;
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Common.Settings.Interfaces;
 using QRSharingApp.Infrastructure.Settings.Interfaces;
+using QRSharingApp.ViewModel.Helpers;
 using QRSharingApp.ViewModel.ViewModels.Base;
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
@@ -24,6 +29,8 @@ namespace QRSharingApp.ViewModel.ViewModels
         public IWifiSetting WifiSetting;
         [Dependency]
         public IAppSetting AppSetting;
+        [Dependency]
+        public IWebSetting WebSetting;
         [Dependency]
         public IQRCodeGeneratorService QRCodeGeneratorService;
         [Dependency]
@@ -63,6 +70,12 @@ namespace QRSharingApp.ViewModel.ViewModels
                 })
         );
 
+        public ICommand RefreshNetworkListCmd => ReactiveCommand.Create(() =>
+            {
+                RefreshNetworkInformationCollection();
+            }
+        );
+
         public ICommand ClearQRCodeCmd => ReactiveCommand.Create(() =>
             {
                 SharedAppDataViewModel.WifiQRImage = null;
@@ -93,11 +106,15 @@ namespace QRSharingApp.ViewModel.ViewModels
 
         public ObservableCollection<WifiAuthenticationType> WifiAuthenticationTypes { get; set; }
         public ISharedAppDataViewModel SharedAppDataViewModel { get; set; }
+
+        public string NetworkId { get; set; }
+        public ObservableCollection<NetworkInformationModel> NetworkInformations { get; set; }
         #endregion
 
         public WifiConfigurationViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
+            NetworkInformations = new ObservableCollection<NetworkInformationModel>();
             WifiAuthenticationTypes = new ObservableCollection<WifiAuthenticationType>()
             {
                 WifiAuthenticationType.Nopass,
@@ -118,30 +135,52 @@ namespace QRSharingApp.ViewModel.ViewModels
             IsHidden = WifiSetting.WifiIsHidden;
             CurrentIsHidden = IsHidden;
 
+            NetworkId = WebSetting.NetworkId;
+            RefreshNetworkInformationCollection();
+
+            var networkIdObservable = this.WhenAnyValue(_ => _.NetworkId);
+            networkIdObservable.Subscribe(_ => WebSetting.NetworkId = _);
+
+            var networkChangedObservable = Observable.FromEventPattern<EventHandler, EventArgs>(
+                handler => WebServerService.NetworkChanged += handler,
+                handler => WebServerService.NetworkChanged -= handler)
+                .Throttle(TimeSpan.FromMilliseconds(300));
+            networkChangedObservable.Subscribe(_ => RefreshNetworkInformationCollection());
+
+            var networkObservable = Observable.Merge(networkIdObservable.IgnoreValue(), networkChangedObservable.IgnoreValue()).Throttle(TimeSpan.FromMilliseconds(300));
+            networkObservable.Subscribe(_ => UpdateWebUrlQRImage());
+            networkObservable.Subscribe(_ => SharedAppDataViewModel.NetworkChanged.OnNext(NetworkId));
+
             if (!string.IsNullOrEmpty(SSID))
             {
                 SharedAppDataViewModel.WifiQRImage = GenerateWifiBitmapImage();
             }
 
-            if (!string.IsNullOrEmpty(WebServerService.WebUrl))
-            {
-                SharedAppDataViewModel.WebUrlQRImage = GenerateWebUrlImage();
-            }
-            WebServerService.NetworkChanged += WebServerService_NetworkChanged;
-
             return Task.CompletedTask;
         }
 
-        private void WebServerService_NetworkChanged(object sender, bool isAvailable)
+        private void RefreshNetworkInformationCollection()
         {
-            if (isAvailable)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                SharedAppDataViewModel.WebUrlQRImage = GenerateWebUrlImage();
-            }
-            else
-            {
-                SharedAppDataViewModel.WebUrlQRImage = null;
-            }
+                var newNetworkInformations = WebServerService.GetAvailableNetworks();
+
+                var newNetworkInformationsIds = newNetworkInformations.Select(_ => _.Id);
+                var itemsToRemove = NetworkInformations.Where(network => !newNetworkInformationsIds.Contains(network.Id)).ToList();
+
+                var currentNetworkInformationsIds = NetworkInformations.Select(_ => _.Id);
+                var itemsToAdd = newNetworkInformations.Where(network => !currentNetworkInformationsIds.Contains(network.Id)).ToList();
+
+                foreach (var itemToRemove in itemsToRemove)
+                {
+                    NetworkInformations.Remove(itemToRemove);
+                }
+
+                foreach (var itemToAdd in itemsToAdd)
+                {
+                    NetworkInformations.Add(itemToAdd);
+                }
+            });
         }
 
         private BitmapImage GenerateWifiBitmapImage()
@@ -161,12 +200,33 @@ namespace QRSharingApp.ViewModel.ViewModels
             return bitmap;
         }
 
-        private BitmapImage GenerateWebUrlImage()
+        private void UpdateWebUrlQRImage()
+        {
+            if (NetworkId == null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    SharedAppDataViewModel.WebUrlQRImage = null;
+                });
+            }
+
+            var webUrl = WebServerService.GetWebUrl(NetworkId);
+            if (!string.IsNullOrEmpty(webUrl))
+            {
+                var image = GenerateWebUrlImage(webUrl);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    SharedAppDataViewModel.WebUrlQRImage = image;
+                });
+            }
+        }
+
+        private BitmapImage GenerateWebUrlImage(string webUrl)
         {
             var bitmap = new BitmapImage();
             using (var stream = new MemoryStream())
             {
-                QRCodeGeneratorService.SaveToStream(WebServerService.WebUrl, stream);
+                QRCodeGeneratorService.SaveToStream(webUrl, stream);
                 bitmap.BeginInit();
                 bitmap.StreamSource = stream;
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;

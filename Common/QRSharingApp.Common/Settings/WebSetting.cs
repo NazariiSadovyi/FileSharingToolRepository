@@ -12,6 +12,7 @@ namespace QRSharingApp.Common.Settings
         protected readonly string ShowAgreedCheckboxOnDownloadKey = "ShowAgreedCheckboxOnDownload";
         protected readonly string ShowGalleryUrlQrCodeInWebKey = "ShowGalleryUrlQrCodeInWeb";
         protected readonly string WebCultureCodeKey = "WebCultureCode";
+        protected readonly string NetworkIdKey = "NetworkId";
 
         public abstract string DefaultCountryOnDownload { get; set; }
         public abstract bool ShowWifiQrCodeInWeb { get; set; }
@@ -21,5 +22,6 @@ namespace QRSharingApp.Common.Settings
         public abstract bool DownloadViaForm { get; set; }
         public abstract string WebBackgroundImagePath { get; set; }
         public abstract string WebCultureCode { get; set; }
+        public abstract string NetworkId { get; set; }
     }
 }

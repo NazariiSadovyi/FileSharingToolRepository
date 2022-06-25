@@ -2,6 +2,8 @@
 using QRSharingApp.ViewModel.ViewModels.Interfaces;
 using System.Windows.Media.Imaging;
 using QRSharingApp.ViewModel.ViewModels.Base;
+using System.Reactive.Subjects;
+using System.Reactive;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
@@ -12,5 +14,11 @@ namespace QRSharingApp.ViewModel.ViewModels
         public bool IsFilePreviewOpened { get; set; }
         public BitmapImage WifiQRImage { get; set; }
         public BitmapImage WebUrlQRImage { get; set; }
+        public Subject<string> NetworkChanged { get; set; }
+
+        public SharedAppDataViewModel()
+        {
+            NetworkChanged = new Subject<string>();
+        }
     }
 }
