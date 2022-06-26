@@ -39,10 +39,10 @@ namespace QRSharingApp.CultureLocalization
                 if (value == null) throw new ArgumentNullException("value");
                 if (value == Thread.CurrentThread.CurrentUICulture) return;
 
-                //1. Меняем язык приложения:
+                //1. Change application language:
                 Thread.CurrentThread.CurrentUICulture = value;
 
-                //2. Создаём ResourceDictionary для новой культуры
+                //2. Create ResourceDictionary for new culture
                 var dict = new ResourceDictionary();
                 switch (value.Name)
                 {
@@ -57,7 +57,7 @@ namespace QRSharingApp.CultureLocalization
                         break;
                 }
 
-                //3. Находим старую ResourceDictionary и удаляем его и добавляем новую ResourceDictionary
+                //3. Find old ResourceDictionary and remove it, add new ResourceDictionary
                 var oldDict = (from d in Application.Current.Resources.MergedDictionaries
                                where d.Source != null && d.Source.OriginalString
                                  .StartsWith("pack://application:,,,/QRSharingApp.CultureLocalization;component/Resources/lang.")

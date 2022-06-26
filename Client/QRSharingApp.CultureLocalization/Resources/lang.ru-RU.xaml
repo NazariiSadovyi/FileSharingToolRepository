@@ -66,6 +66,14 @@
     <v:String x:Key="ToolKeyIsExpiredWarningMessage">Срок действия этого ключа активации истек, инструмент будет закрыт через 5 минут.</v:String>
     <v:String x:Key="ToolHasBeenActivated">Программа была активирована</v:String>
     <v:String x:Key="CheckingActivationFetchMessage">Проверка активации...</v:String>
+    <v:String x:Key="ActiationViewToolActivationStatusLabel">Статус активации</v:String>
+    <v:String x:Key="ActiationViewStatusActivated">Активирован</v:String>
+    <v:String x:Key="ActiationViewStatusNotActivated">Не активирован</v:String>
+    <v:String x:Key="ActiationViewStatusExpired">Истекший</v:String>
+    <v:String x:Key="ActiationViewStatusError">Ошибка</v:String>
+    <v:String x:Key="ActiationViewCurrentKeyLabel">Текущий ключ</v:String>
+    <v:String x:Key="ActiationViewLastKeyLabel">Последний ключ</v:String>
+    <v:String x:Key="ActiationViewMachineId">Идентификатор машины</v:String>
 
     <!--Download history view-->
     <v:String x:Key="DownloadHistoryTableFileName">File Name</v:String>
@@ -97,5 +105,6 @@
     <v:String x:Key="ExitButton">ВЫХОД</v:String>
     <v:String x:Key="FetchingDownloadHistoryData">Получение данных истории загрузок...</v:String>
     <v:String x:Key="AplicationIsStartingProcess">Приложение запускается...</v:String>
+    <v:String x:Key="CopyText">Копировать</v:String>
 
 </ResourceDictionary>
