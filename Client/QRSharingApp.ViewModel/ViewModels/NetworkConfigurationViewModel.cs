@@ -20,7 +20,7 @@ using Unity;
 
 namespace QRSharingApp.ViewModel.ViewModels
 {
-    public class WifiConfigurationViewModel : BaseNavigationViewModel
+    public class NetworkConfigurationViewModel : BaseNavigationViewModel
     {
         #region Dependencies
         [Dependency]
@@ -111,7 +111,7 @@ namespace QRSharingApp.ViewModel.ViewModels
         public ObservableCollection<NetworkInformationModel> NetworkInformations { get; set; }
         #endregion
 
-        public WifiConfigurationViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
+        public NetworkConfigurationViewModel(ISharedAppDataViewModel sharedAppDataViewModel)
         {
             SharedAppDataViewModel = sharedAppDataViewModel;
             NetworkInformations = new ObservableCollection<NetworkInformationModel>();
@@ -138,7 +138,9 @@ namespace QRSharingApp.ViewModel.ViewModels
             NetworkId = WebSetting.NetworkId;
             RefreshNetworkInformationCollection();
 
-            var networkIdObservable = this.WhenAnyValue(_ => _.NetworkId);
+            var networkIdObservable = this.WhenAnyValue(_ => _.NetworkId)
+                .Throttle(TimeSpan.FromMilliseconds(300))
+                .DistinctUntilChanged();
             networkIdObservable.Subscribe(_ => WebSetting.NetworkId = _);
 
             var networkChangedObservable = Observable.FromEventPattern<EventHandler, EventArgs>(
@@ -147,7 +149,10 @@ namespace QRSharingApp.ViewModel.ViewModels
                 .Throttle(TimeSpan.FromMilliseconds(300));
             networkChangedObservable.Subscribe(_ => RefreshNetworkInformationCollection());
 
-            var networkObservable = Observable.Merge(networkIdObservable.IgnoreValue(), networkChangedObservable.IgnoreValue()).Throttle(TimeSpan.FromMilliseconds(300));
+            var networkObservable = Observable.Merge(
+                networkIdObservable.IgnoreValue(),
+                networkChangedObservable.IgnoreValue())
+                .Throttle(TimeSpan.FromMilliseconds(300));
             networkObservable.Subscribe(_ => UpdateWebUrlQRImage());
             networkObservable.Subscribe(_ => SharedAppDataViewModel.NetworkChanged.OnNext(NetworkId));
 
@@ -163,23 +168,14 @@ namespace QRSharingApp.ViewModel.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var newNetworkInformations = WebServerService.GetAvailableNetworks();
-
-                var newNetworkInformationsIds = newNetworkInformations.Select(_ => _.Id);
-                var itemsToRemove = NetworkInformations.Where(network => !newNetworkInformationsIds.Contains(network.Id)).ToList();
-
-                var currentNetworkInformationsIds = NetworkInformations.Select(_ => _.Id);
-                var itemsToAdd = newNetworkInformations.Where(network => !currentNetworkInformationsIds.Contains(network.Id)).ToList();
-
-                foreach (var itemToRemove in itemsToRemove)
+                var currentNetworkId = NetworkId;
+                var networkInformations = WebServerService.GetAvailableNetworks();
+                NetworkInformations.Clear();
+                foreach (var networkInformation in networkInformations)
                 {
-                    NetworkInformations.Remove(itemToRemove);
+                    NetworkInformations.Add(networkInformation);
                 }
-
-                foreach (var itemToAdd in itemsToAdd)
-                {
-                    NetworkInformations.Add(itemToAdd);
-                }
+                NetworkId = currentNetworkId;
             });
         }
 

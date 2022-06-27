@@ -109,7 +109,7 @@ namespace QRSharingApp.Client
             Container.RegisterSingleton<IMainWindowViewModel, MainWindowViewModel>();
             Container.RegisterSingleton<GridFilePreviewViewModel>();
             Container.RegisterSingleton<IGridFilePreviewViewModel, GridFilePreviewViewModel>();
-            Container.RegisterSingleton<WifiConfigurationViewModel>();
+            Container.RegisterSingleton<NetworkConfigurationViewModel>();
         }
 
         private void InitFFMPEG()

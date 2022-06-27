@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NLog.Web;
 using QRSharingApp.Shared;
 
@@ -35,6 +36,12 @@ namespace QRSharingApp.WebApplication
                     webBuilder
                         .UseUrls(SharedConstants.LocalhostPath)
                         .UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }

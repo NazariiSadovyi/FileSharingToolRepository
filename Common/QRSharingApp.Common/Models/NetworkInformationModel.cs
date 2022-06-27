@@ -7,5 +7,8 @@
         public string Description { get; set; }
         public string Adress { get; set; }
         public bool IsUp { get; set; }
+        public string ConnectionName { get; set; }
+
+        public string DisplayName => string.IsNullOrEmpty(ConnectionName) ? $"{Name}" : $"{Name} ({ConnectionName})";
     }
 }

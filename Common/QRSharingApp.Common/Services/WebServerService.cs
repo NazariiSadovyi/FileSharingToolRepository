@@ -1,4 +1,5 @@
-﻿using QRSharingApp.Common.Models;
+﻿using ManagedNativeWifi;
+using QRSharingApp.Common.Models;
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Shared;
 using System;
@@ -60,6 +61,8 @@ namespace QRSharingApp.Common.Services
 
         public List<NetworkInformationModel> GetAvailableNetworks()
         {
+            var currentConnections = NativeWifi.EnumerateInterfaceConnections().ToList();
+            var qwer = NativeWifi.EnumerateInterfaceConnections().Select(_ => _.Id.ToString().ToUpper()).ToList();
             var networks = new List<NetworkInformationModel>();
             foreach (var item in NetworkInterface.GetAllNetworkInterfaces().Where(_ => _supportedNetworkTypes.Contains(_.NetworkInterfaceType)))
             {
@@ -77,6 +80,7 @@ namespace QRSharingApp.Common.Services
                             .FirstOrDefault(_ => _.Address.AddressFamily == AddressFamily.InterNetwork)?
                             .Address?
                             .ToString();
+                        network.ConnectionName = currentConnections.FirstOrDefault(_ => network.Id.Contains(_.Id.ToString().ToUpper()))?.ProfileName;
                         break;
                     case NetworkInterfaceType.Ethernet:
                         network.Adress = item.GetIPProperties()

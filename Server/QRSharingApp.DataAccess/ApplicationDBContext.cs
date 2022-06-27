@@ -21,7 +21,7 @@ namespace QRSharingApp.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            _logger.Info($"SQLite Data Source='{DbPath}'");
+            //_logger.Info($"SQLite Data Source='{DbPath}'");
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
         }
 

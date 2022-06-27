@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace QRSharingApp.Client.Views
 {
     /// <summary>
-    /// Interaction logic for WifiConfigurationView.xaml
+    /// Interaction logic for NetworkConfigurationView.xaml
     /// </summary>
-    public partial class WifiConfigurationView : UserControl
+    public partial class NetworkConfigurationView : UserControl
     {
-        public WifiConfigurationView()
+        public NetworkConfigurationView()
         {
             InitializeComponent();
         }

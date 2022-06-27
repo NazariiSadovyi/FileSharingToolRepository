@@ -183,7 +183,7 @@ namespace QRSharingApp.ViewModel.ViewModels
                         _pageDictionary = new Dictionary<PageType, BaseNavigationViewModel>()
                         {
                             { PageType.HotFolder, UnityContainer.Resolve<HotFoldersViewModel>() },
-                            { PageType.WifiSetting, UnityContainer.Resolve<WifiConfigurationViewModel>() },
+                            { PageType.WifiSetting, UnityContainer.Resolve<NetworkConfigurationViewModel>() },
                             { PageType.Design, UnityContainer.Resolve<DesignViewModel>() },
                             { PageType.DownloadHistory, UnityContainer.Resolve<DownloadHistoryViewModel>() },
                             { PageType.Activation, UnityContainer.Resolve<ActivationViewModel>() }
