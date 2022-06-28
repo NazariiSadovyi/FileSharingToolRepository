@@ -39,7 +39,7 @@ namespace QRSharingApp.WebApplication
                 })
                 .ConfigureLogging(logging =>
                 {
-                    logging.ClearProviders();
+                    //logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .UseNLog();

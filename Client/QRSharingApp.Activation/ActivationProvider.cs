@@ -66,8 +66,6 @@ namespace QRSharingApp.Activation
         // Проверка активации
         public async Task<bool> IsActivatedCheck()
         {
-            return true;
-
             var savedKey = GetSavedLicenseKey();
             if (string.IsNullOrEmpty(savedKey))
             {
