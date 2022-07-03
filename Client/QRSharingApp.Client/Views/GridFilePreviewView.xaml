@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:vm="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
              xmlns:local="clr-namespace:QRSharingApp.Client.Views"
              xmlns:gu="https://github.com/GuOrg/Gu.Wpf.FlipView"
@@ -122,13 +121,13 @@
                             <Border Margin="5,0,5,5">
                                 <Grid Cursor="Hand">
 
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseUp">
-                                            <i:InvokeCommandAction
+                                    <hc:Interaction.Triggers>
+                                        <hc:EventTrigger EventName="MouseUp">
+                                            <hc:EventToCommand
                                                 Command="{Binding DataContext.OpenFilePreviewCmd, RelativeSource={RelativeSource AncestorType=Window}}"
                                                 CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                        </hc:EventTrigger>
+                                    </hc:Interaction.Triggers>
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -202,11 +201,11 @@
             <Button Height="100"
                     Grid.Row="1"
                     Style="{StaticResource EmptyButtonStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding ClosePreviewCmd}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <hc:Interaction.Triggers>
+                    <hc:EventTrigger EventName="MouseDoubleClick">
+                        <hc:EventToCommand Command="{Binding ClosePreviewCmd}"/>
+                    </hc:EventTrigger>
+                </hc:Interaction.Triggers>
             </Button>
         </Grid>
 

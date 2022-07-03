@@ -4,7 +4,6 @@
         FontFamily="/Resources/Fonts/Roboto-Regular.ttf#Roboto"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:QRSharingApp.ViewModel.ViewModels;assembly=QRSharingApp.ViewModel"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:QRSharingApp.Client.Controls"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         Title="{DynamicResource TitleApp}"
@@ -15,11 +14,11 @@
         WindowStyle="{Binding WindowStyle}"
         WindowState="{Binding WindowState}">
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="KeyDown">
-            <i:InvokeCommandAction Command="{Binding KeyDownCmd}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="KeyDown">
+            <hc:EventToCommand Command="{Binding KeyDownCmd}"/>
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
 
     <Grid Background="{DynamicResource RegionBrush}">
         <Grid.ColumnDefinitions>

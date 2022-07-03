@@ -33,11 +33,19 @@ namespace QRSharingApp.Client
         protected override void OnStartup(StartupEventArgs e)
         {
             _logger.Info("Application initialization started");
+
             try
             {
                 SetupExceptionHandling();
                 RegisterTypes();
                 InitFFMPEG();
+
+                if (!CheckConnectionToServer())
+                {
+                    _logger.Info("Application connection to server failed");
+                    Application.Current.Shutdown();
+                    return;
+                }
 
                 var appSettingService = Container.Resolve<IAppSetting>();
                 UpdateSkin(appSettingService.SkinType == "white" ? SkinType.Default : SkinType.Dark);
@@ -50,6 +58,22 @@ namespace QRSharingApp.Client
             }
 
             _logger.Info("Application initialization ended");
+        }
+
+        private bool CheckConnectionToServer()
+        {
+            try
+            {
+                var appSettingService = Container.Resolve<IAppSetting>();
+                var result = appSettingService.SkinType;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Can't connect to server.{Environment.NewLine}Please, contact administrator", "Error");
+                _logger.Error(ex);
+                return false;
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)
