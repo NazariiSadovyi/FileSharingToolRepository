@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Globalization;
 
 namespace QRSharingApp.DataAccess.Repositories
 {
@@ -23,7 +24,7 @@ namespace QRSharingApp.DataAccess.Repositories
                     Id = Guid.NewGuid().ToString(),
                     Name = Path.GetFileName(localFilePath),
                     Path = Path.GetDirectoryName(localFilePath),
-                    AddedDate = DateTime.Now.ToString()
+                    AddedDate = DateTime.Now.ToString(CultureInfo.InvariantCulture)
                 };
                 Context.LocalFile.Add(localfile);
                 await Context.SaveChangesAsync();
