@@ -33,7 +33,10 @@
     <script src="~/lib/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
     <script src="~/lib/lightgallery/plugins/video/lg-video.umd.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (isFilesGalleryPage)
+    {
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    }
 
     @*<script src="~/lib/lightboxed/lightboxed.js"></script>*@
 
