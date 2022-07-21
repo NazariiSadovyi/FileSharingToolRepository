@@ -37,9 +37,9 @@ namespace QRSharingApp.Client.Views.FilePreviews
                         _logger.Info($"End playing video: {viewModel.ThumbnailViewModel.FullLocalPath}");
                         LoadingCircle.Visibility = Visibility.Hidden;
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        _logger.Error(e, "Opening video exception");
+                        _logger.Error(ex, "Opening video exception");
                     }
                 });
             }
@@ -53,9 +53,9 @@ namespace QRSharingApp.Client.Views.FilePreviews
                         await VideoPlayer.Close();
                         _logger.Info($"End closing video");
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        _logger.Error(e, "Closing video exception");
+                        _logger.Error(ex, "Closing video exception");
                     }
                 });
             }
@@ -82,9 +82,9 @@ namespace QRSharingApp.Client.Views.FilePreviews
                     await VideoPlayer.Seek(new TimeSpan(0, 0, 0, 0, 10));
                     await VideoPlayer.Play();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    _logger.Error(e, "Loop video exception");
+                    _logger.Error(ex, "Loop video exception");
                 }
             });
         }

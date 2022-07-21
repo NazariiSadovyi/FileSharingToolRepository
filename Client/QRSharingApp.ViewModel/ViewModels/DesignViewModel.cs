@@ -165,8 +165,8 @@ namespace QRSharingApp.ViewModel.ViewModels
                 .Subscribe(_ =>
                 {
                     WebSetting.RequiredFieldsForDownload = FormRequiredFields
-                        .Where(_ => _.IsSelected)
-                        .Select(_ => _.Id)
+                        .Where(i => i.IsSelected)
+                        .Select(i => i.Id)
                         .ToArray();
                 });
 

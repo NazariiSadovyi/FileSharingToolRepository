@@ -1,89 +1,367 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E0283B79-59DB-4D15-B889-8427B5F6F857}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Platforms>AnyCPU;x64;x86</Platforms>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
-    <AssemblyName>QRSharingApp.Client</AssemblyName>
     <RootNamespace>QRSharingApp.Client</RootNamespace>
+    <AssemblyName>QRSharingApp.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <None Remove="C:\Users\nazarii.sadovyi\.nuget\packages\nlog.schema\4.7.11\contentFiles\any\any\NLog.xsd" />
-    <None Remove="Resources\Img\1x1.png" />
-    <None Remove="Resources\Img\2x2.png" />
-    <None Remove="Resources\Img\3x3.png" />
-    <None Remove="Resources\Img\4x3.png" />
-    <None Remove="Resources\Img\5x4.png" />
+    <Reference Include="DynamicData, Version=7.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DynamicData.7.9.5\lib\net462\DynamicData.dll</HintPath>
+    </Reference>
+    <Reference Include="ffme.win, Version=4.4.350.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FFME.Windows.4.4.350\lib\net48\ffme.win.dll</HintPath>
+    </Reference>
+    <Reference Include="FFmpeg.AutoGen, Version=4.4.0.0, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FFmpeg.AutoGen.4.4.0\lib\net472\FFmpeg.AutoGen.dll</HintPath>
+    </Reference>
+    <Reference Include="Gu.Wpf.FlipView, Version=2.0.2.0, Culture=neutral, PublicKeyToken=5fdc803b1f5d8362, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Gu.Wpf.FlipView.2.0.2\lib\net45\Gu.Wpf.FlipView.dll</HintPath>
+    </Reference>
+    <Reference Include="HandyControl, Version=3.3.0.0, Culture=neutral, PublicKeyToken=45be8712787a1e5b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HandyControl.3.3.0\lib\net48\HandyControl.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.7.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI, Version=18.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ReactiveUI.18.3.1\lib\net472\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Wpf, Version=18.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ReactiveUI.WPF.18.3.1\lib\net48\ReactiveUI.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat, Version=14.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Splat.14.4.1\lib\netstandard2.0\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.5.0.0\lib\net472\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.11.10\lib\net48\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.11.10\lib\net48\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="FFME.Windows" Version="4.4.350" />
-    <PackageReference Include="Gu.Wpf.FlipView" Version="2.0.2" />
-    <PackageReference Include="HandyControl" Version="3.3.0" />
-    <PackageReference Include="NLog" Version="4.7.11" />
-    <PackageReference Include="NLog.Schema" Version="4.7.11" />
-    <PackageReference Include="ReactiveUI.WPF" Version="18.0.10" />
-    <PackageReference Include="Unity" Version="5.11.10" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskLoadingControl.xaml.cs">
+      <DependentUpon>TaskLoadingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\EnumToStringConverter.cs" />
+    <Compile Include="Converters\IsStringsNotEqualToVisibilityConverter.cs" />
+    <Compile Include="Converters\IsStringsNotEqualToVisibilityConverterInvert.cs" />
+    <Compile Include="Converters\IsValuesEqualsToBoolConverter.cs" />
+    <Compile Include="Converters\IsValuesEqualsToBoolMultiConverter.cs" />
+    <Compile Include="Converters\NullToDoNothingConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\PagesToChunkListConverter.cs" />
+    <Compile Include="Converters\ReversBoolConverter.cs" />
+    <Compile Include="Converters\StringIsEmptyVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToStarsConverter.cs" />
+    <Compile Include="Helpers\DependencyObjectHelpers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Resources\WindowStyles.xaml.cs">
+      <DependentUpon>WindowStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ActivationView.xaml.cs">
+      <DependentUpon>ActivationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DesignView.xaml.cs">
+      <DependentUpon>DesignView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DownloadHistoryView.xaml.cs">
+      <DependentUpon>DownloadHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilePreviews\PhotoPreviewView.xaml.cs">
+      <DependentUpon>PhotoPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilePreviews\VideoPreviewView.xaml.cs">
+      <DependentUpon>VideoPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GridFilePreviewView.xaml.cs">
+      <DependentUpon>GridFilePreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HotFoldersView.xaml.cs">
+      <DependentUpon>HotFoldersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NetworkConfigurationView.xaml.cs">
+      <DependentUpon>NetworkConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="Resources\Fonts\Roboto-Black.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Light.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-ThinItalic.ttf" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj" />
-    <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj" />
-    <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj" />
-    <ProjectReference Include="..\QRSharingApp.ViewModel\QRSharingApp.ViewModel.csproj" />
+    <None Include="App.config" />
   </ItemGroup>
-
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Controls\TaskLoadingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DataGridStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Geometries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\RadioButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ViewToViewModelBindings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\WindowStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ActivationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DesignView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DownloadHistoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilePreviews\PhotoPreviewView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilePreviews\VideoPreviewView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GridFilePreviewView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HotFoldersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NetworkConfigurationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FFMPEGBinaries\avcodec-58.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FFMPEGBinaries\avdevice-58.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\avfilter-7.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\avformat-58.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\avutil-56.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\ffplay.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\postproc-55.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\swresample-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <None Include="FFMPEGBinaries\swscale-5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace>FFMPEGBinaries</CustomToolNamespace>
+    </None>
+    <Resource Include="icon.ico" />
     <Resource Include="Resources\Img\1x1.png" />
     <Resource Include="Resources\Img\2x2.png" />
     <Resource Include="Resources\Img\3x3.png" />
     <Resource Include="Resources\Img\4x3.png" />
     <Resource Include="Resources\Img\5x4.png" />
+    <Resource Include="Resources\Img\dropboxIco.png" />
+    <Resource Include="Resources\Img\megaIco.png" />
+    <Resource Include="Resources\Img\ms.png" />
+    <Resource Include="Resources\Img\ms2.png" />
+    <Resource Include="Resources\Img\Qr-Code-256.ico" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="FFMPEGBinaries\avcodec-58.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\avdevice-58.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\avfilter-7.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\avformat-58.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\avutil-56.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\ffmpeg.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\ffplay.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\ffprobe.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\postproc-55.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\swresample-3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FFMPEGBinaries\swscale-5.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="NLog.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj">
+      <Project>{9482400a-7cee-4157-bb8e-9d6304900402}</Project>
+      <Name>QRSharingApp.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj">
+      <Project>{50e1772a-856a-413a-bfad-ce3ab94e6319}</Project>
+      <Name>QRSharingApp.ClientApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj">
+      <Project>{0b674430-d047-4ea5-be50-d827c15a6fec}</Project>
+      <Name>QRSharingApp.CultureLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.Infrastructure\QRSharingApp.Infrastructure.csproj">
+      <Project>{412f7c2b-4203-4015-ac51-df5e766bd5d3}</Project>
+      <Name>QRSharingApp.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.ViewModel\QRSharingApp.ViewModel.csproj">
+      <Project>{8570d7b8-7d09-41a2-8c35-0cc37bb03d99}</Project>
+      <Name>QRSharingApp.ViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
-
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

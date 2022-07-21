@@ -1,26 +1,191 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\PropertyChanged.Fody.3.4.1\build\PropertyChanged.Fody.props" Condition="Exists('..\..\packages\PropertyChanged.Fody.3.4.1\build\PropertyChanged.Fody.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8570D7B8-7D09-41A2-8C35-0CC37BB03D99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QRSharingApp.ViewModel</RootNamespace>
+    <AssemblyName>QRSharingApp.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
-    <PackageReference Include="QRCoder" Version="1.4.1" />
-    <PackageReference Include="ReactiveUI" Version="18.0.10" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="Unity" Version="5.11.10" />
+    <Reference Include="DynamicData, Version=7.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DynamicData.7.9.5\lib\net462\DynamicData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.7.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged, Version=3.4.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PropertyChanged.Fody.3.4.1\lib\net40\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI, Version=18.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ReactiveUI.18.3.1\lib\net472\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat, Version=14.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Splat.14.4.1\lib\netstandard2.0\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.5.0.0\lib\net472\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.11.10\lib\net48\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.11.10\lib\net48\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj" />
-    <ProjectReference Include="..\QRSharingApp.Activation\QRSharingApp.Activation.csproj" />
-    <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj" />
-    <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj" />
-    <ProjectReference Include="..\QRSharingApp.Infrastructure\QRSharingApp.Infrastructure.csproj" />
+    <Compile Include="Helpers\HashStringHelper.cs" />
+    <Compile Include="Helpers\LocalFileHelper.cs" />
+    <Compile Include="Helpers\ReactiveExtension.cs" />
+    <Compile Include="Interfaces\IActivationService.cs" />
+    <Compile Include="Interfaces\IApplicationTaskUtility.cs" />
+    <Compile Include="Interfaces\IDataExportService.cs" />
+    <Compile Include="Interfaces\IMainWindowViewModel.cs" />
+    <Compile Include="Interfaces\ISharedAppDataViewModel.cs" />
+    <Compile Include="Models\ActivationStatus.cs" />
+    <Compile Include="Models\FetchDataInfo.cs" />
+    <Compile Include="Models\InformationKind.cs" />
+    <Compile Include="Models\InformationMessageInfo.cs" />
+    <Compile Include="Models\PageType.cs" />
+    <Compile Include="Models\PreviewType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ActivationService.cs" />
+    <Compile Include="Services\ApplicationTaskUtility.cs" />
+    <Compile Include="Services\DataExportService.cs" />
+    <Compile Include="Services\LocalFilesService.cs" />
+    <Compile Include="ViewModels\ActivationViewModel.cs" />
+    <Compile Include="ViewModels\Base\BaseNavigationViewModel.cs" />
+    <Compile Include="ViewModels\Base\ListBoxItemViewModel.cs" />
+    <Compile Include="ViewModels\Base\PageRequestViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\DesignViewModel.cs" />
+    <Compile Include="ViewModels\DownloadHistoryViewModel.cs" />
+    <Compile Include="ViewModels\FilePreviewVIewModels\FilePreviewBaseViewModel.cs" />
+    <Compile Include="ViewModels\FilePreviewVIewModels\PhotoFilePreviewViewModel.cs" />
+    <Compile Include="ViewModels\FilePreviewVIewModels\VideoFilePreviewViewModel.cs" />
+    <Compile Include="ViewModels\GridFilePreviewViewModel.cs" />
+    <Compile Include="ViewModels\HotFoldersViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IGridFilePreviewViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NetworkConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\SharedAppDataViewModel.cs" />
+    <Compile Include="ViewModels\ThumbnailViewModel.cs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\QRSharingApp.Common\QRSharingApp.Common.csproj">
+      <Project>{9482400a-7cee-4157-bb8e-9d6304900402}</Project>
+      <Name>QRSharingApp.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\QRSharingApp.Contract\QRSharingApp.Contract.csproj">
+      <Project>{5df1eddd-e365-485d-b1c5-bb59a1d2a82f}</Project>
+      <Name>QRSharingApp.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.Activation\QRSharingApp.Activation.csproj">
+      <Project>{eb7c0338-57fd-4ef0-a409-ba96025ebe32}</Project>
+      <Name>QRSharingApp.Activation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.ClientApi\QRSharingApp.ClientApi.csproj">
+      <Project>{50e1772a-856a-413a-bfad-ce3ab94e6319}</Project>
+      <Name>QRSharingApp.ClientApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.CultureLocalization\QRSharingApp.CultureLocalization.csproj">
+      <Project>{0b674430-d047-4ea5-be50-d827c15a6fec}</Project>
+      <Name>QRSharingApp.CultureLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QRSharingApp.Infrastructure\QRSharingApp.Infrastructure.csproj">
+      <Project>{412f7c2b-4203-4015-ac51-df5e766bd5d3}</Project>
+      <Name>QRSharingApp.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Fody.6.6.2\build\Fody.targets" Condition="Exists('..\..\packages\Fody.6.6.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Fody.6.6.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.6.6.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\PropertyChanged.Fody.3.4.1\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\PropertyChanged.Fody.3.4.1\build\PropertyChanged.Fody.props'))" />
+  </Target>
 </Project>

@@ -2,33 +2,49 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
 	<Bundle Name="QR Sharing App" Version="1.0.0.0" Manufacturer="Spinner 360" UpgradeCode="2427d1ab-535c-4548-8493-f91a9ce186bd" >
-        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
-          <bal:WixStandardBootstrapperApplication SuppressOptionsUI="yes" LicenseFile="License.rtf" LogoFile="icon.jpg"/>
-        </BootstrapperApplicationRef>
-    
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
+			<bal:WixStandardBootstrapperApplication SuppressOptionsUI="yes" LicenseFile="License.rtf" LogoFile="icon.jpg"/>
+		</BootstrapperApplicationRef>
+
 		<Chain>
-            <MsiPackage Id='MsiInstaller'
+			<MsiPackage Id='MsiInstaller'
                         Compressed='yes'
                         DisplayInternalUI='no'
                         SourceFile='$(var.SolutionDir)Installer\QRSharingApp.Installer\bin\x64\Release\QRSharingApp.Installer.msi'/>
-            <ExePackage Id='DotnetRuntime'
+			<ExePackage Id='DotnetRuntime'
 	         			Compressed='yes'
-                        After='MsiInstaller'
-	         			SourceFile='$(var.SolutionDir)Installer\Runtime\dotnet-runtime-5.0.17-win-x64.exe'
+					    After='MsiInstaller'
+						Name='dotnet-runtime-5.0.17-win-x64.exe'
+					    DownloadUrl='https://download.visualstudio.microsoft.com/download/pr/a0832b5a-6900-442b-af79-6ffddddd6ba4/e2df0b25dd851ee0b38a86947dd0e42e/dotnet-runtime-5.0.17-win-x64.exe'
 	         			PerMachine='yes'
-                        InstallCommand='/passive'/>
-            <ExePackage Id='WindowsdesktopRuntime'
+                        InstallCommand='/passive'>
+				<RemotePayload
+					Description="Microsoft .NET Runtime - 5.0.17 (x64)"
+					ProductName="Microsoft .NET Runtime - 5.0.17 (x64)"
+					Version="5.0.17.31213"
+					Size="26578888"
+					Hash="F204EB09203562B5B5A0BA3292FEDE9C1F71DE4D" />
+			</ExePackage>
+			<ExePackage Id='NetFramework48'
 	         			Compressed='yes'
                         After='DotnetRuntime'
-	         			SourceFile='$(var.SolutionDir)Installer\Runtime\windowsdesktop-runtime-6.0.6-win-x64.exe'
+	         			SourceFile='$(var.SolutionDir)Installer\Runtime\ndp48-web.exe'
 	         			PerMachine='yes'
                         InstallCommand='/passive'/>
-            <ExePackage Id='DotnetHostingRuntime'
+			<ExePackage Id='DotnetHostingRuntime'
 	         			Compressed='yes'
-                        After='WindowsdesktopRuntime'
-	         			SourceFile='$(var.SolutionDir)Installer\Runtime\dotnet-hosting-5.0.17-win.exe'
+                        After='NetFramework48'
+						DownloadUrl='https://download.visualstudio.microsoft.com/download/pr/05726c49-3a3d-4862-9ff8-0660d9dc3c52/71c295f9287faad89e2d3233a38b44fb/dotnet-hosting-5.0.17-win.exe'
+	         			Name='dotnet-hosting-5.0.17-win.exe'
 	         			PerMachine='yes'
-                        InstallCommand='/passive'/>
+                        InstallCommand='/passive'>
+				<RemotePayload
+					Description="Microsoft .NET 5.0.17 - Windows Server Hosting"
+					ProductName="Microsoft .NET 5.0.17 - Windows Server Hosting"
+					Version="5.0.17.22215"
+					Size="67654840"
+					Hash="342EAF38822C5BB8082F07DADBA63704D562B237" />
+			</ExePackage>
 		</Chain>
 	</Bundle>
 </Wix>

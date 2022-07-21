@@ -10,7 +10,7 @@ namespace QRSharingApp.Common.Services
 {
     public class QRCodeGeneratorService : IQRCodeGeneratorService
     {
-        private static readonly QRCodeGenerator _qrGenerator = new();
+        private static readonly QRCodeGenerator _qrGenerator = new QRCodeGenerator();
 
         public Bitmap BitmapImage(string data)
         {

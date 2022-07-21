@@ -48,7 +48,7 @@ namespace QRSharingApp.Infrastructure.Settings
                 if (string.IsNullOrEmpty(value))
                     return new int[0];
 
-                return value.Split(",").Select(_ => int.Parse(_)).ToArray();
+                return value.Split(',').Select(_ => int.Parse(_)).ToArray();
             }
             set { _settingApi.SetSetting(RequiredFieldsForDownloadKey, string.Join(",", value)); }
         }
