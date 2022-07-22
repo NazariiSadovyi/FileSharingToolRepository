@@ -2,263 +2,266 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="CLIENT_DIR">
-            <Component Id="cmp4F7EDC92E82D1C8D3A18C63C26659FEC" Guid="{BC739F57-5823-4E27-9582-ECF234524EC5}">
+            <Component Id="cmp4F7EDC92E82D1C8D3A18C63C26659FEC" Guid="{8B33EF1E-3E78-42D2-A05A-205B4B9C7681}">
                 <File Id="fil7C47D70B1C8302A4159B1E9E7B89F21E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\BouncyCastle.Crypto.dll" />
             </Component>
-            <Component Id="cmp4296CFD925A6BF65E265E716DE091EAC" Guid="{3500C4BF-7471-4297-B10D-B8DAC9B4EB53}">
+            <Component Id="cmp4296CFD925A6BF65E265E716DE091EAC" Guid="{4D899695-A5C0-46D0-86D1-B0DF5131E2C2}">
                 <File Id="fil7C192496F4B2825105B57C5A6B12A553" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\BouncyCastle.Crypto.xml" />
             </Component>
-            <Component Id="cmp80E283C87B96080690D3ACCA001A53FE" Guid="{5509D8D5-0BE9-4232-BA69-79D5EB3C6E5E}">
+            <Component Id="cmp80E283C87B96080690D3ACCA001A53FE" Guid="{02F44BE7-B852-4CFF-9228-D15DA733E6F5}">
                 <File Id="fil5DA049E6059DD3BB52EFEB8B60EAFDB7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Countries.dll" />
             </Component>
-            <Component Id="cmp94D22045ED1BC3D98D227E71C064EEC9" Guid="{99946DA6-2CBE-41D5-AD98-CCEDDC67F64E}">
+            <Component Id="cmp94D22045ED1BC3D98D227E71C064EEC9" Guid="{8EDC5CC9-DE2D-42B4-B5B6-D5221ED5EA12}">
                 <File Id="fil98BB9E2148D826FEAAFC154FAFDD728A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\DynamicData.dll" />
             </Component>
-            <Component Id="cmpEC1891DC0A50025749909B0B1870930A" Guid="{C929E0F2-954F-465F-8117-B776BDF1D00E}">
+            <Component Id="cmpEC1891DC0A50025749909B0B1870930A" Guid="{30D3CDC8-9DB0-48AF-9196-DC6CDB80FE28}">
                 <File Id="fil75B885AD9C643B31FC0BDFB32DB71236" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\DynamicData.xml" />
             </Component>
-            <Component Id="cmp9C19CFBAF5C7416E6E1E64B2ED5E32B6" Guid="{F36A63C3-B43A-49BA-A783-D68E23F924CE}">
+            <Component Id="cmp9C19CFBAF5C7416E6E1E64B2ED5E32B6" Guid="{F9DA9C9C-0760-4FD0-83BF-0E285AD654DD}">
                 <File Id="filBF9798DDAE2BAD068D461A6A4D586789" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ffme.win.dll" />
             </Component>
-            <Component Id="cmpDF5A39B49E2F532CA10024A419C09925" Guid="{B6BB6E67-B0DE-4F83-949D-8D778E0810E8}">
+            <Component Id="cmpDF5A39B49E2F532CA10024A419C09925" Guid="{3727C029-D298-4D02-B048-A1D3F6E24CEF}">
                 <File Id="filE7AE297A9385ABABDA12B87DA053C14B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ffme.win.xml" />
             </Component>
-            <Component Id="cmpD929E23ED1A818FB35F5FA4BAA9773CF" Guid="{C59FA5E6-A2AC-4867-B794-9118089A9552}">
+            <Component Id="cmpD929E23ED1A818FB35F5FA4BAA9773CF" Guid="{A79D4E3D-AF2F-4012-9FBF-E27AD8E0FC22}">
                 <File Id="filDB8C8C2607B5123B8766438255DCF8E7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFmpeg.AutoGen.dll" />
             </Component>
-            <Component Id="cmp2CB176FE2FFCE7672263704ACA37B9CD" Guid="{D9EF3232-8D48-4C38-A7FD-2509EA27362C}">
+            <Component Id="cmp2CB176FE2FFCE7672263704ACA37B9CD" Guid="{3C1282D8-C7DA-4A9D-BF76-699B136DEA57}">
                 <File Id="filACB7DD014B50A603660F541CF4BADF6B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFmpeg.AutoGen.xml" />
             </Component>
-            <Component Id="cmp2FFF79D4BE95E03922972826FAB38B08" Guid="{89574A91-832D-4F6A-B8EC-AB60673C1300}">
+            <Component Id="cmp2FFF79D4BE95E03922972826FAB38B08" Guid="{38E9B32B-8380-4DA3-A200-E94B9CFEC65D}">
                 <File Id="fil3B61E6E581CE5710D8FD1A4EC27E2A92" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Gu.Wpf.FlipView.dll" />
             </Component>
-            <Component Id="cmp9985F5311E654DF91AEEA4E6EC1C0170" Guid="{3CF4FBB6-A754-42FC-AD8A-EDEBC89092EF}">
+            <Component Id="cmp9985F5311E654DF91AEEA4E6EC1C0170" Guid="{B138F0AC-4920-48D1-AD9E-1AD77182C2A6}">
                 <File Id="fil60871DC93C5E215A391C2983EFAC064D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Gu.Wpf.FlipView.xml" />
             </Component>
-            <Component Id="cmp67F24E3883E6A2BA7BA21AE77D34B10E" Guid="{E54B43E0-B061-4089-ABE1-699C058FAAD6}">
+            <Component Id="cmp67F24E3883E6A2BA7BA21AE77D34B10E" Guid="{90611AF1-248C-4390-A4CE-0DBD268BEA37}">
                 <File Id="fil7D92809D0CB5007DAC0CDED4DD35A973" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\HandyControl.dll" />
             </Component>
-            <Component Id="cmp3FDFB2E7DF19551FB2857A735A248E22" Guid="{180BA234-8FF4-4FCE-9645-E25F3C952A26}">
+            <Component Id="cmp3FDFB2E7DF19551FB2857A735A248E22" Guid="{11743C4C-DE55-4B27-9BCA-9E3F46225F3A}">
                 <File Id="filB2EEFFA311E2B2E718735C2D9A77BDE5" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\HandyControl.xml" />
             </Component>
-            <Component Id="cmp7B333C0EABA96D4A951475F45B9D83D2" Guid="{F6297838-49FA-4797-841E-391509539AD2}">
+            <Component Id="cmp7B333C0EABA96D4A951475F45B9D83D2" Guid="{81C20492-8574-49C0-AE1E-8813EC7883F8}">
                 <File Id="filAB250F9BF5900B2D3D35DCCCA29C54C7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ICSharpCode.SharpZipLib.dll" />
             </Component>
-            <Component Id="cmpDE7E3FC892900020F07AE1B6098741D6" Guid="{FCDFE6AB-0EF9-427A-AAFE-34DA8BDBED09}">
+            <Component Id="cmpDE7E3FC892900020F07AE1B6098741D6" Guid="{E457DE11-61B1-4FB9-B67F-5EDE517FCE2C}">
                 <File Id="filC6BD4C3F55D0B25160E9AD4A5041787E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ICSharpCode.SharpZipLib.pdb" />
             </Component>
-            <Component Id="cmp358461C182BFE3F871CC473761F0FEB6" Guid="{2A3F5A59-6EDA-4F0C-A114-36D8BB05F0F3}">
+            <Component Id="cmp358461C182BFE3F871CC473761F0FEB6" Guid="{140998CE-A39E-4572-9033-4FE2B5F92A26}">
                 <File Id="fil5782481A586249F7730E76E5CC8D6D34" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ICSharpCode.SharpZipLib.xml" />
             </Component>
-            <Component Id="cmp5FC231A43474DE64E211BC40C35009E1" Guid="{0EDC6686-C3E5-4A9E-B53B-917142891079}">
+            <Component Id="cmp5FC231A43474DE64E211BC40C35009E1" Guid="{839959C3-7470-4DCC-AE55-DE3AEA2C57B0}">
                 <File Id="fil37EAF4C3EE43F5EA577E81ACA26CF66E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ManagedNativeWifi.dll" />
             </Component>
-            <Component Id="cmp16D06E385D7515AD10C0EECFFD701203" Guid="{3C9114CF-AE69-4FD4-BC64-71B35D804EF4}">
+            <Component Id="cmp16D06E385D7515AD10C0EECFFD701203" Guid="{B71F3972-4CD5-44F4-89A7-9D57B6E9677B}">
                 <File Id="filA150D2507342A0055EEC548B837AC2F7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ManagedNativeWifi.xml" />
             </Component>
-            <Component Id="cmp0C7D7B8BED4AC9491A6E22D34CB7D0A9" Guid="{B73BD28A-5A36-4829-AC59-EAE3B735923D}">
+            <Component Id="cmp0C7D7B8BED4AC9491A6E22D34CB7D0A9" Guid="{7971BC83-4161-4FBB-AACB-EA6DFCF02D65}">
                 <File Id="fil9FBB4392AD8BBC09F597B31AB975994B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Microsoft.WindowsAPICodePack.dll" />
             </Component>
-            <Component Id="cmpE3501C044A4ABF7264A2B616BF598F4E" Guid="{256646A2-E993-4FF6-9882-D5E6A282FA02}">
+            <Component Id="cmpE3501C044A4ABF7264A2B616BF598F4E" Guid="{9375EB61-9F5F-44DE-B920-C7DA5E33CC10}">
                 <File Id="fil92D4E75F4335F26A2F8AE465565D01CA" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Microsoft.WindowsAPICodePack.Shell.dll" />
             </Component>
-            <Component Id="cmpD9DA28D7206D686A337EE3D33DA9D383" Guid="{3345746C-D39A-4D7A-A01C-6751AFF95D97}">
+            <Component Id="cmpD9DA28D7206D686A337EE3D33DA9D383" Guid="{017442A7-B445-4A03-9937-556C6DEFE70C}">
                 <File Id="fil75A08B7DEBD95E156AD0FBE9462A085C" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Microsoft.WindowsAPICodePack.Shell.xml" />
             </Component>
-            <Component Id="cmp465C0BFDBC6CD2014536F67C5F9F1D81" Guid="{C4A63C8D-C2C9-479F-B8AA-EFEC8442CE2D}">
+            <Component Id="cmp465C0BFDBC6CD2014536F67C5F9F1D81" Guid="{3221DB07-AE82-4868-BD63-7E36159D343D}">
                 <File Id="fil1C043A50E1313BA374CD4E5F459892CD" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Microsoft.WindowsAPICodePack.xml" />
             </Component>
-            <Component Id="cmp125CEAF3E25E1BD8794DE7CD3AA4FBE9" Guid="{F9AD5277-13CE-4297-9126-546118E30BF7}">
+            <Component Id="cmp125CEAF3E25E1BD8794DE7CD3AA4FBE9" Guid="{F3FCDC84-1405-4D7D-82EB-4494D9F3CE6A}">
                 <File Id="fil27163087C97127A294E842C80905AEFF" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmp366002F67A167BADF646951F23B3BA49" Guid="{A54D72A5-D81F-4794-B5D3-454A97A572E0}">
+            <Component Id="cmp366002F67A167BADF646951F23B3BA49" Guid="{FC8194A8-9A3B-4F08-8B69-7B3B1977C45E}">
                 <File Id="filD56A5444CFCE29401714A0813450533A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Newtonsoft.Json.xml" />
             </Component>
-            <Component Id="cmpD61C7320DD7208869FA6CDA48C4C7EB6" Guid="{BF872F55-8097-4E8D-B0DA-BB0C9C27C752}">
+            <Component Id="cmp92601A93B70A871A2D1DE625A34CBF35" Guid="{7261577E-6DD3-45FD-A7A7-9D66CE3A75A9}">
+                <File Id="fil5C496F97B843E272D0AB0713C99D7694" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NLog.config" />
+            </Component>
+            <Component Id="cmpD61C7320DD7208869FA6CDA48C4C7EB6" Guid="{2042C2B3-6913-40DA-8762-1669B2DCF082}">
                 <File Id="filA668B2BFD5F8ADDF0E3B544CD1FDDDF8" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NLog.dll" />
             </Component>
-            <Component Id="cmp02CDFFA47DEE2C9FED09404F2E72130A" Guid="{9461A9AD-08CB-4522-8B84-CD3E135B1E04}">
+            <Component Id="cmp02CDFFA47DEE2C9FED09404F2E72130A" Guid="{74E48ABC-ECA7-4205-98B4-6A97305A8007}">
                 <File Id="fil9586F35344ABDDBB5DD6ADD3A1118C59" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NLog.xml" />
             </Component>
-            <Component Id="cmpD1A139060816631B37EB4A65D491214D" Guid="{364F6057-9E15-4214-8356-0859D2CBAF5E}">
+            <Component Id="cmpD1A139060816631B37EB4A65D491214D" Guid="{DC1000C3-4508-4178-847A-37938F668329}">
                 <File Id="fil0D79390798C2CBB3F5576404DE3E0797" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.dll" />
             </Component>
-            <Component Id="cmp3CEC8CAF04767BD29F181B10788B95EB" Guid="{DC8A57AC-B0CD-44A7-B630-0825B436B5CE}">
+            <Component Id="cmp3CEC8CAF04767BD29F181B10788B95EB" Guid="{6AB4DA4D-D93B-4DC6-8553-986BC6166D43}">
                 <File Id="fil35830A383338F76BCB4521B33E3B4970" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OOXML.dll" />
             </Component>
-            <Component Id="cmpB8FEF60400F1D4957EF0CB45607FD223" Guid="{89AF6239-7A9E-43FB-805E-6F89F8F12538}">
+            <Component Id="cmpB8FEF60400F1D4957EF0CB45607FD223" Guid="{BB7BA2B7-CE44-4C3C-9145-784AFDCA7773}">
                 <File Id="fil1BA1075C9606EDD31AE51F01F6D0D54F" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OOXML.pdb" />
             </Component>
-            <Component Id="cmp731705E4AE74EB06D0BD489D12C3AC10" Guid="{376973F5-BADD-443A-A7B4-DC6645DE4C5C}">
+            <Component Id="cmp731705E4AE74EB06D0BD489D12C3AC10" Guid="{C6A1C96C-8533-428B-8632-93EF7C60AFAA}">
                 <File Id="fil6416CE828BE319BAFB01CF7DA4852A41" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OOXML.xml" />
             </Component>
-            <Component Id="cmpD49435887230580E5BDCAD537923D1A5" Guid="{2519A1DA-0361-4A25-9E02-8E817125A409}">
+            <Component Id="cmpD49435887230580E5BDCAD537923D1A5" Guid="{DD863AC0-79DE-42CC-ABFC-C46EA52A5BB7}">
                 <File Id="filC67FF0A231076A0AC05DF99B02D4092B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OpenXml4Net.dll" />
             </Component>
-            <Component Id="cmp6C8FF4025057C0912C0759DFAA985591" Guid="{0E6A1540-E7CF-4D9E-B954-6A8DA329E469}">
+            <Component Id="cmp6C8FF4025057C0912C0759DFAA985591" Guid="{40260DFF-603D-40C2-9814-E0931FAA69D5}">
                 <File Id="filBC5F3469C3378A7A086B89C9E7EC54C0" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OpenXml4Net.pdb" />
             </Component>
-            <Component Id="cmp591A54743EA2997DD5D08E11A64720B3" Guid="{F5187C86-84C0-4D5E-9C1D-5CAF24222627}">
+            <Component Id="cmp591A54743EA2997DD5D08E11A64720B3" Guid="{7A99E404-D159-483A-B80E-CB31ECA05667}">
                 <File Id="fil436DCE58B89C10BA3F131F3EEDB7AF35" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OpenXml4Net.xml" />
             </Component>
-            <Component Id="cmp502044102BE2D7EB7293C390C28D2B4D" Guid="{607200A0-518C-4D55-A230-65A9477C83C8}">
+            <Component Id="cmp502044102BE2D7EB7293C390C28D2B4D" Guid="{E5E26682-E1B8-4237-B15E-F1D9A84B3501}">
                 <File Id="fil911D2B80C1CB68479E950F4434C4819B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OpenXmlFormats.dll" />
             </Component>
-            <Component Id="cmpBC557FC6819D9FAFE9F93E5E2DDA6B3E" Guid="{42E7A39A-F55E-4588-8DF6-31BCED4D17FB}">
+            <Component Id="cmpBC557FC6819D9FAFE9F93E5E2DDA6B3E" Guid="{D3291DA5-02B5-414C-B574-3744AAFD2261}">
                 <File Id="filDBC93E695232157855358409BDC4B2E4" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.OpenXmlFormats.pdb" />
             </Component>
-            <Component Id="cmpBB0553F111FBF63393534C690B81A060" Guid="{D7DF159C-674A-4CEB-B9A1-FD17DB744C99}">
+            <Component Id="cmpBB0553F111FBF63393534C690B81A060" Guid="{F521FD5C-FDB3-42A8-9D3A-FF751AFD8265}">
                 <File Id="fil36F0A41FDD9F950ABD843BCB3FD30632" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.pdb" />
             </Component>
-            <Component Id="cmp9BBD3E054EB26091E8A36219EDBF7C05" Guid="{3CDDBF9D-4458-4550-85DD-2C73587721DA}">
+            <Component Id="cmp9BBD3E054EB26091E8A36219EDBF7C05" Guid="{A9B0136C-4A6A-40F3-BF3A-0C958E466162}">
                 <File Id="fil4006C7098024A74176806D617223E1AC" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\NPOI.xml" />
             </Component>
-            <Component Id="cmpC6C12BD76BDB08D266A4BAA409A1E328" Guid="{63AE39DE-0BB3-4652-AA95-D996C422E0FD}">
+            <Component Id="cmpC6C12BD76BDB08D266A4BAA409A1E328" Guid="{EE478C9B-56F4-4DBD-ACF1-6C8D9E488A9B}">
                 <File Id="fil35657D4B04C288408C69F6987935C58D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRCoder.dll" />
             </Component>
-            <Component Id="cmp375E0968492B7CE03B38CEFF72567B2B" Guid="{1962B0C0-F7A0-41FC-A746-B51634D2DB9D}">
+            <Component Id="cmp375E0968492B7CE03B38CEFF72567B2B" Guid="{001AB7EF-0033-4F92-82DC-1925EDD84DC0}">
                 <File Id="fil1EFA154A852427FB41C80C40179D3ECB" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Activation.dll" />
             </Component>
-            <Component Id="cmpBC6D4A98EDF52E6246AFEF22F7BA33AD" Guid="{11D9E9CD-542C-4B49-AE35-63DF9FFE7D40}">
+            <Component Id="cmpBC6D4A98EDF52E6246AFEF22F7BA33AD" Guid="{7C940E60-F560-4929-BD08-9D4759697A6C}">
                 <File Id="fil165C2B6DEF4FBAF8CE3130C9F1296A83" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Activation.dll.config" />
             </Component>
-            <Component Id="cmp4EE55E08F036FF314637DFE8DD05BA73" Guid="{1047D9F6-89D9-4A20-B491-DC80DB903B12}">
+            <Component Id="cmp4EE55E08F036FF314637DFE8DD05BA73" Guid="{A41D5677-9354-4F2B-B5E8-F3594A18FB75}">
                 <File Id="filDEEF14AF7915740CC9FCAEE65BDF586B" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Activation.pdb" />
             </Component>
-            <Component Id="cmp14F6BBC6B1912E580051B9549876C2A7" Guid="{CFA283EC-11DD-4799-B7EF-4B4A47AB291E}">
+            <Component Id="cmp14F6BBC6B1912E580051B9549876C2A7" Guid="{0D8C6A1C-5753-41D9-A7C8-781B40FD379B}">
                 <File Id="fil0A4779B1DC04AC5844D3668DAE8086BA" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Client.exe" />
             </Component>
-            <Component Id="cmp9E16AA421EFEB74C4526CBDD607E8264" Guid="{0DF1058C-AB17-4B75-AB96-4310B715DE20}">
+            <Component Id="cmp9E16AA421EFEB74C4526CBDD607E8264" Guid="{E513FA47-1595-4593-BD53-D8E104E85F8A}">
                 <File Id="filA4099FCD343EECC332070FD078D9A996" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Client.exe.config" />
             </Component>
-            <Component Id="cmp39692F6E7C371A68B3AD5D70C04A5F80" Guid="{B04458FC-3C46-4F7A-8D3D-2E10BF38175E}">
+            <Component Id="cmp39692F6E7C371A68B3AD5D70C04A5F80" Guid="{D27513D8-EDC2-428A-9D71-06A46BD27AB2}">
                 <File Id="filA30D39DD42C1BA45F21534DB2C52C6E4" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Client.pdb" />
             </Component>
-            <Component Id="cmp715B32CEE66B4C88346B2889D42059AE" Guid="{095D9F43-6FE9-4845-9550-AE98BB652C74}">
+            <Component Id="cmp715B32CEE66B4C88346B2889D42059AE" Guid="{CD875D96-E9B5-4981-8565-45C7FFF140C0}">
                 <File Id="fil42916E4BB27A013E61BB43D7E4F2C3F7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.ClientApi.dll" />
             </Component>
-            <Component Id="cmpB9FA114E6CF00A5042E75652A772466E" Guid="{ACD7B81A-E3CD-4BCB-8B78-588DFD12DA18}">
+            <Component Id="cmpB9FA114E6CF00A5042E75652A772466E" Guid="{FE49CB83-A1AE-40F6-93B1-CBB5D186FE49}">
                 <File Id="filDED6711A39EB02EA04988C3B435A874C" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.ClientApi.pdb" />
             </Component>
-            <Component Id="cmpBD870982A80E84C669391AF249409E46" Guid="{14971218-3D22-43F6-8093-1A0651EF9D68}">
+            <Component Id="cmpBD870982A80E84C669391AF249409E46" Guid="{79A57B1C-5DEB-499B-AD2A-A26494174B7B}">
                 <File Id="filDEC7936C7CDAF62042C9B36DCCF66A68" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Common.dll" />
             </Component>
-            <Component Id="cmp01EB7D24E626232A3AE23EBA4EAAFD5E" Guid="{177E7E65-CD7F-40D6-BD64-9F51D5093EEF}">
+            <Component Id="cmp01EB7D24E626232A3AE23EBA4EAAFD5E" Guid="{6E830711-055D-464B-A364-09441B2C69EC}">
                 <File Id="fil1B03E51D442B752F5E1CED813C512E3A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Common.pdb" />
             </Component>
-            <Component Id="cmp1223C2C2BD99E1A82379FAA286747E21" Guid="{36494EDF-4790-4AC6-ACB4-F7D0F0CA776D}">
+            <Component Id="cmp1223C2C2BD99E1A82379FAA286747E21" Guid="{4F3A6333-5915-4B12-8EDF-4A980BED922D}">
                 <File Id="filF436D1476576F58C322FCA4404752AF1" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Contract.dll" />
             </Component>
-            <Component Id="cmp02623A1C9EE299551C5F2A55E250423D" Guid="{B8F8DE53-4E51-4AD6-B172-FD91B7A65F4A}">
+            <Component Id="cmp02623A1C9EE299551C5F2A55E250423D" Guid="{1B91262F-12D1-4D56-B1B9-0E0C1755C9CA}">
                 <File Id="fil0C1DF8F2B5B68135F42E3B11FF59E498" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Contract.pdb" />
             </Component>
-            <Component Id="cmp03A1CA8B6FCF3B5D61AE80A53C5C00CA" Guid="{EF82D108-847E-458D-956F-DB383CE1902C}">
+            <Component Id="cmp03A1CA8B6FCF3B5D61AE80A53C5C00CA" Guid="{D656415B-53C6-410B-88B2-969C2D165FDB}">
                 <File Id="fil5E4CF4B04D439FEEC1F002F7DB9F87A2" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.CultureLocalization.dll" />
             </Component>
-            <Component Id="cmp99277AA368896D40124A7824BB22431C" Guid="{E1B127AA-D800-4FFC-9DA6-4B8B5AEB5C2B}">
+            <Component Id="cmp99277AA368896D40124A7824BB22431C" Guid="{4823D43A-B4EE-46F7-AAF6-7C676C0BD82F}">
                 <File Id="filEC317A3BE3C4ECE0702B641D50057080" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.CultureLocalization.pdb" />
             </Component>
-            <Component Id="cmp7F6C3F31247263181C474BFEDAAC044E" Guid="{6DD896F2-5E02-4B61-B4CF-A75C7AFE9925}">
+            <Component Id="cmp7F6C3F31247263181C474BFEDAAC044E" Guid="{1CCEB939-0226-428E-884E-3FA0419C8BFA}">
                 <File Id="fil1173B0BE876097C59D1B64E0F26A5FB5" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Infrastructure.dll" />
             </Component>
-            <Component Id="cmpCFEF1A522D142287FD6F71DF8DF3469D" Guid="{A73DD5C3-A962-497A-9846-88B54C0824E3}">
+            <Component Id="cmpCFEF1A522D142287FD6F71DF8DF3469D" Guid="{0F4F1F7E-EF0B-41A5-8785-F481B913C7DC}">
                 <File Id="fil42BD6481D5181A6BAD690DF2FC06E1F0" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.Infrastructure.pdb" />
             </Component>
-            <Component Id="cmp2DD94726E2AD1D3E85721258DF9CBAA9" Guid="{632B72B8-11AE-4072-AE52-89CDC47E2444}">
+            <Component Id="cmp2DD94726E2AD1D3E85721258DF9CBAA9" Guid="{383EC3D6-82A3-496E-BF3F-65DEC19BAB8E}">
                 <File Id="fil0EA02AA1113E1B193D0E15A1F8D67D5A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.ViewModel.dll" />
             </Component>
-            <Component Id="cmpE24BBF7F37F74A8AB19BFAA0E28626B9" Guid="{3BDE5FF9-B4E8-4B25-89D1-F5BF925D17FD}">
+            <Component Id="cmpE24BBF7F37F74A8AB19BFAA0E28626B9" Guid="{D9AB9DAF-5420-42CB-890E-76957642B096}">
                 <File Id="fil673EE8C22644DF7A1478D68E30B9A1EE" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.ViewModel.dll.config" />
             </Component>
-            <Component Id="cmpC31280D61249D1D94ECD19FFB31C0753" Guid="{7A1C5878-C4C1-45B4-A1B4-E18335947060}">
+            <Component Id="cmpC31280D61249D1D94ECD19FFB31C0753" Guid="{51584DF6-696E-4CAC-B974-2D6E6433D10A}">
                 <File Id="fil89FB5139137EFA9FC17D7B22ACC7420D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\QRSharingApp.ViewModel.pdb" />
             </Component>
-            <Component Id="cmpC1C3D726B75D77C98083F24C1DDF5702" Guid="{C95B8EF4-A200-4704-929B-187ECC4DF310}">
+            <Component Id="cmpC1C3D726B75D77C98083F24C1DDF5702" Guid="{D7250AF8-7F1A-47D9-BE59-115AF32E908B}">
                 <File Id="fil98DE9F0B132B1DCF3B54FCDDCE1A5627" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ReactiveUI.dll" />
             </Component>
-            <Component Id="cmp260E9C965EBFE79B06E1B557CA8DC127" Guid="{AFD6766B-3940-4C0D-A996-F4B4D4172891}">
+            <Component Id="cmp260E9C965EBFE79B06E1B557CA8DC127" Guid="{8F28BCE6-74EC-4509-A722-0B0915AD8C20}">
                 <File Id="fil5565F5130E586A7D3D3BCFDDE6E0DD71" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ReactiveUI.Wpf.dll" />
             </Component>
-            <Component Id="cmp83325CE4469246142C0EDC0194FC6313" Guid="{564E4F85-6182-42E3-979F-D6706CCAD61C}">
+            <Component Id="cmp83325CE4469246142C0EDC0194FC6313" Guid="{B84C3761-4CD5-4127-AD04-2956AA6802D8}">
                 <File Id="fil9795E78B1F65F5024F03B2D1E40C4690" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ReactiveUI.Wpf.xml" />
             </Component>
-            <Component Id="cmpCB5FA977C6F90051A9DEE4FD3199399E" Guid="{0F40FD38-2D09-4C3B-927C-525E7ED4C1EF}">
+            <Component Id="cmpCB5FA977C6F90051A9DEE4FD3199399E" Guid="{41671DB2-AC5C-4F4A-9148-49AC012C65E0}">
                 <File Id="fil5080E4C7E208D2C8DC9DA419A2EE431A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\ReactiveUI.xml" />
             </Component>
-            <Component Id="cmpB3A410D9D08186F0C0A03204F2B44B66" Guid="{7530BC89-195A-4CBB-B04B-826EEA55011F}">
+            <Component Id="cmpB3A410D9D08186F0C0A03204F2B44B66" Guid="{E7C45EDE-1542-4F1A-8E18-C65BD1E42523}">
                 <File Id="fil3022655E1FE53DBD49E69A7B86162683" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\RestSharp.dll" />
             </Component>
-            <Component Id="cmpEBA00C839495F282492B978D726C2424" Guid="{2499950E-4373-456A-8E1E-FF5E16903324}">
+            <Component Id="cmpEBA00C839495F282492B978D726C2424" Guid="{C3C3692C-9B29-4A45-A723-35FB76C1F9B2}">
                 <File Id="filB58D2B0E6420E85ED222742ED05E33E6" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\RestSharp.xml" />
             </Component>
-            <Component Id="cmp4959FD55EF210921FE0CC9CC24B35935" Guid="{F542549C-B481-449A-89F2-E68BD73EA92F}">
+            <Component Id="cmp4959FD55EF210921FE0CC9CC24B35935" Guid="{219F30A6-D09C-4B73-89FA-5B6E54FF8DB7}">
                 <File Id="fil61D1A862B4D5C6AE221604D7169A06A3" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Splat.dll" />
             </Component>
-            <Component Id="cmp71241528AEA34F0C75A93939F4CABB59" Guid="{0539C5EB-1090-4C0B-85F9-2C36AC43E947}">
+            <Component Id="cmp71241528AEA34F0C75A93939F4CABB59" Guid="{E007A68D-EC12-4BD7-B12F-78FA9773DBB4}">
                 <File Id="fil74FBE83823FA39A055B34C3621247619" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Splat.xml" />
             </Component>
-            <Component Id="cmp536299D2610F3B0FD9339CC78A518DE3" Guid="{4B2B0101-4774-43D2-9A1C-F01C2CF8997F}">
+            <Component Id="cmp536299D2610F3B0FD9339CC78A518DE3" Guid="{76C96E74-6FFE-4B2A-B687-6263913374DE}">
                 <File Id="fil940D0939C7D8D3F3A0AE3ECFF8C0EC1A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Reactive.dll" />
             </Component>
-            <Component Id="cmp27D7F864D5654D6AE9DD1D55EC27A709" Guid="{73918977-4413-489F-882B-D5C78917BB4F}">
+            <Component Id="cmp27D7F864D5654D6AE9DD1D55EC27A709" Guid="{795A9AA8-6ED4-431A-A246-902311CAB5DA}">
                 <File Id="fil11B605CA4449586484E4A267D2B7CDFD" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Reactive.xml" />
             </Component>
-            <Component Id="cmp57E0FF075176157327E70514B616B043" Guid="{360E06D3-73B2-46D6-847A-2EC53DFCD8F9}">
+            <Component Id="cmp57E0FF075176157327E70514B616B043" Guid="{198B95BD-3A77-43AF-9DCB-B3E8A3BD58E6}">
                 <File Id="filB31366D00A7D0607EFF1E7FA9FD3E39E" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.dll" />
             </Component>
-            <Component Id="cmpBE7925ED87947FDC9BCB8E9E77C78BC0" Guid="{90EB9699-B0DC-4EEA-B17B-2587CE8C4E84}">
+            <Component Id="cmpBE7925ED87947FDC9BCB8E9E77C78BC0" Guid="{64F437C5-C03B-46CA-88C0-468B169B6E02}">
                 <File Id="fil7650DF32689C47DAD0354236FE6E35B4" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.xml" />
             </Component>
-            <Component Id="cmp440710A41343C353BC959CB0B9B506AC" Guid="{9D9084DB-0A01-4A2D-9F19-24899AB1CDCE}">
+            <Component Id="cmp440710A41343C353BC959CB0B9B506AC" Guid="{C69037AE-931D-44A3-B5B0-3ED9139E1E99}">
                 <File Id="fil7FC14F61179E28F566AA639C56C789BC" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Threading.Tasks.Extensions.dll" />
             </Component>
-            <Component Id="cmp83A5FBD07367550EB54164798440267D" Guid="{35A9DB13-F130-4A1F-BBE8-5E267C6A76DB}">
+            <Component Id="cmp83A5FBD07367550EB54164798440267D" Guid="{FE59F840-DCF0-4733-A250-CD8EDA28091B}">
                 <File Id="fil2FDC696BD4BB543FEF0FA8271CBE6795" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\System.Threading.Tasks.Extensions.xml" />
             </Component>
-            <Component Id="cmp5DB6151B921AF0B629F08E70DE67A5DF" Guid="{C1388EDA-CC13-4990-9195-6887FB7667D1}">
+            <Component Id="cmp5DB6151B921AF0B629F08E70DE67A5DF" Guid="{C19051FE-51B4-44AF-BD29-7D9669AB4ADE}">
                 <File Id="fil99A4F9FECFD68850691E444F14F61FD7" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Unity.Abstractions.dll" />
             </Component>
-            <Component Id="cmp95644B54E7AE851D990FAFD11ED2EC69" Guid="{61BDE08A-B58E-4DAF-82B7-579F367BF2C5}">
+            <Component Id="cmp95644B54E7AE851D990FAFD11ED2EC69" Guid="{1253A1AC-B27F-435F-94CE-46865FE76819}">
                 <File Id="filA328E0C276DBC3990589F59A533C5B6C" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Unity.Abstractions.pdb" />
             </Component>
-            <Component Id="cmpFDBFA609C26956C33BDE5280E6EB69E2" Guid="{FBB62635-CD5D-4A23-98C1-4D73FF85635D}">
+            <Component Id="cmpFDBFA609C26956C33BDE5280E6EB69E2" Guid="{B13540B4-C7EF-4AE5-A4CF-55C9B14FFC6D}">
                 <File Id="filC4DEEDF5DA582B0BF31B89A69836B103" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Unity.Container.dll" />
             </Component>
-            <Component Id="cmp7945930F92A5D3097CF394599377C2E1" Guid="{58A333BC-0669-4627-9725-D55B53DFEA5E}">
+            <Component Id="cmp7945930F92A5D3097CF394599377C2E1" Guid="{92261F0B-C530-447A-B5BC-429D75EF0509}">
                 <File Id="fil575F5E682D4AFC4D42B858D8956691A6" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\Unity.Container.pdb" />
             </Component>
             <Directory Id="dir4DB01DDEE77D3A42118389933F4CBA51" Name="FFMPEGBinaries">
-                <Component Id="cmp8CD26556182DBD1D1C93E6451D04FC42" Guid="{D42CA17E-E555-40A2-89D6-960927AFD41B}">
+                <Component Id="cmp8CD26556182DBD1D1C93E6451D04FC42" Guid="{026F63FB-A649-4227-9EF8-9C68DC6D284D}">
                     <File Id="filB0315C8DEC76ACA5AEA6D186B6CA3AD9" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\avcodec-58.dll" />
                 </Component>
-                <Component Id="cmp10E2D51D640D698A9A68315B0CC71B73" Guid="{5C3F2135-C64C-4C66-BF35-06BBCEEAC88B}">
+                <Component Id="cmp10E2D51D640D698A9A68315B0CC71B73" Guid="{881F44D2-EE51-41D7-9263-9C8E6F456956}">
                     <File Id="fil4CA6B9D049BCB64E0127E8C49E1C02D0" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\avdevice-58.dll" />
                 </Component>
-                <Component Id="cmp3D77781206149F0CDC1DA3F78E929A6A" Guid="{598D7DE5-04D2-4F71-BEDB-AF215E63AFE7}">
+                <Component Id="cmp3D77781206149F0CDC1DA3F78E929A6A" Guid="{3525CC8A-E11A-4CB9-AA32-75CDD4AAB74A}">
                     <File Id="fil0C4EC8E287D0B2B9E4528DADABD95B94" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\avfilter-7.dll" />
                 </Component>
-                <Component Id="cmp1BE008939D7E94E4C4D0CE612D5B85E2" Guid="{5F211B8C-A324-4C39-9BCB-B648640DBB69}">
+                <Component Id="cmp1BE008939D7E94E4C4D0CE612D5B85E2" Guid="{00A05ACD-E1C5-4C9D-9620-EE9553B4C142}">
                     <File Id="fil788DAF7B821D12444DAB11EED83CA070" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\avformat-58.dll" />
                 </Component>
-                <Component Id="cmp13F32224958B1EB01657744228827C82" Guid="{C095EE5C-CE43-49CB-A435-576A0E82FC48}">
+                <Component Id="cmp13F32224958B1EB01657744228827C82" Guid="{C892633A-8AEC-4F53-A9E0-F82115B875A5}">
                     <File Id="fil3E0E87AE12337DD4633A7E710AAD536A" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\avutil-56.dll" />
                 </Component>
-                <Component Id="cmpD3B9DA194A84EB417AA4785628C7C15E" Guid="{EC09866C-8370-46C2-B495-FF6398DC126F}">
+                <Component Id="cmpD3B9DA194A84EB417AA4785628C7C15E" Guid="{7FD6A7C2-E924-4CDC-9DBE-0FFDDC8AA0FB}">
                     <File Id="filB2C6A72E1F8ED5D9E42C869600B39CDA" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\ffmpeg.exe" />
                 </Component>
-                <Component Id="cmp320B2225E7DF26A9B9417B677C28B033" Guid="{628518F1-878A-4C51-92A6-56CF3BCD0368}">
+                <Component Id="cmp320B2225E7DF26A9B9417B677C28B033" Guid="{6C8C9D32-F25D-4C96-A2E8-77C3F1139179}">
                     <File Id="fil6641AE9B3B30154041F0A0E579637C3D" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\ffplay.exe" />
                 </Component>
-                <Component Id="cmp7C3AF89B0489A2B654E34AE22197D29C" Guid="{35FD0800-0633-47B6-9BBE-4E0CD79E72F8}">
+                <Component Id="cmp7C3AF89B0489A2B654E34AE22197D29C" Guid="{AD164E5C-5464-4564-9A3D-2A42D05A3DF4}">
                     <File Id="filA0B00455B26F6A52A9C0BA2290BFDABF" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\ffprobe.exe" />
                 </Component>
-                <Component Id="cmp9BCA399BA3D448B3CD3340E7C23C3395" Guid="{70CAC1CC-5626-4C91-95AF-BD4DE0929D72}">
+                <Component Id="cmp9BCA399BA3D448B3CD3340E7C23C3395" Guid="{6038E98E-F19D-4C48-9EC3-7CD15970E081}">
                     <File Id="fil66E71B0C3512D7D344180463F40B0974" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\postproc-55.dll" />
                 </Component>
-                <Component Id="cmp37A6C8F2B2DBB122A86987B77AC220B1" Guid="{8C4B0329-D7D5-45DC-85B6-704AE9AF4078}">
+                <Component Id="cmp37A6C8F2B2DBB122A86987B77AC220B1" Guid="{EA45B489-1D28-48B4-87CF-51DA661450D7}">
                     <File Id="fil5BE495E9CE2FD6C208D1657105156A57" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\swresample-3.dll" />
                 </Component>
-                <Component Id="cmp620217B29BF151BE64F33EA5264421A6" Guid="{9B998C54-0BA0-419D-9BBC-FA0B4E40B855}">
+                <Component Id="cmp620217B29BF151BE64F33EA5264421A6" Guid="{73A2529C-D766-4653-B382-4F79F043224E}">
                     <File Id="fil532A216C3D519292B57B2610B92F5533" KeyPath="yes" Source="C:\Users\nazarii.sadovyi\source\repos\FileSharingToolSolution\Client\QRSharingApp.Client\bin\x64\Release\FFMPEGBinaries\swscale-5.dll" />
                 </Component>
             </Directory>
@@ -290,6 +293,7 @@
             <ComponentRef Id="cmp465C0BFDBC6CD2014536F67C5F9F1D81" />
             <ComponentRef Id="cmp125CEAF3E25E1BD8794DE7CD3AA4FBE9" />
             <ComponentRef Id="cmp366002F67A167BADF646951F23B3BA49" />
+            <ComponentRef Id="cmp92601A93B70A871A2D1DE625A34CBF35" />
             <ComponentRef Id="cmpD61C7320DD7208869FA6CDA48C4C7EB6" />
             <ComponentRef Id="cmp02CDFFA47DEE2C9FED09404F2E72130A" />
             <ComponentRef Id="cmpD1A139060816631B37EB4A65D491214D" />

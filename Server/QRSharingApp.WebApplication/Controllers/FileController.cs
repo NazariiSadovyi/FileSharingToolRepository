@@ -62,7 +62,6 @@ namespace QRSharingApp.WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var result = new FilesGalleryViewModel();
-
             var hotFolderPathes = (await _hotFolderRepository.GetAll()).Select(_ => _.FolderPath).ToList();
             var localFiles = await _localFileRepository.GetAll();
             foreach (var localFile in localFiles.OrderByDescending(_ => DateTime.Parse(_.AddedDate, CultureInfo.InvariantCulture)))

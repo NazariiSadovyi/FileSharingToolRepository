@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using QRSharingApp.Contract.LocalFile;
 using QRSharingApp.DataAccess.Repositories.Interfaces;
 using QRSharingApp.WebApplication.Converters;
@@ -14,12 +15,16 @@ namespace QRSharingApp.WebApplication.Controllers
     {
         private readonly ILocalFileRepository _localFileRepository;
         private readonly IFileHubService _fileHubService;
+        private readonly ILogger<LocalFileController> _logger;
 
-        public LocalFileController(ILocalFileRepository localFileRepository,
-            IFileHubService fileHubService)
+        public LocalFileController(
+            ILocalFileRepository localFileRepository,
+            IFileHubService fileHubService,
+            ILogger<LocalFileController> logger)
         {
             _localFileRepository = localFileRepository;
             _fileHubService = fileHubService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -44,6 +49,7 @@ namespace QRSharingApp.WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateLocalFile createLocalFile)
         {
+            _logger.LogInformation($"New file added: {createLocalFile.Path}");
             var localFile = await _localFileRepository.Add(createLocalFile.Path);
             var contract = localFile.ToContract();
             var viewModel = LocalFileConverter.ComposeFilePreviewViewModel(localFile, this);

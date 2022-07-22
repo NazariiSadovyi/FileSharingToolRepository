@@ -70,23 +70,13 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if $(PlatformName) == x64 (
-  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\QRSharingApp.Client\bin\x64\Release" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
+    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\QRSharingApp.Client\bin\x64\Release" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
   powershell -Command "(gc %27$(ProjectDir)ClientDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Client\QRSharingApp.Client\bin\x64\Release%27 | Out-File -encoding ASCII %27$(ProjectDir)ClientDynamic.wxs%27"
   
   dotnet publish "$(SolutionDir)\Server\QRSharingApp.WebApplication\QRSharingApp.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\QRSharingApp.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
   
   "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
-  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
-) ELSE (
-  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Client\QRSharingApp.Client\bin\x86\Release" -cg ClientDynamic -gg -scom -sreg -sfrag -srd -dr "CLIENT_DIR" -wixvar SourcePath -o "$(ProjectDir)ClientDynamic.wxs"
-  powershell -Command "(gc %27$(ProjectDir)ClientDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Client\QRSharingApp.Client\bin\x86\Release%27 | Out-File -encoding ASCII %27$(ProjectDir)ClientDynamic.wxs%27"
-  
-  dotnet publish "$(SolutionDir)\Server\QRSharingApp.WebApplication\QRSharingApp.WebApplication.csproj"   "/p:PublishProfile=$(SolutionDir)\Server\QRSharingApp.WebApplication\Properties\PublishProfiles\FolderProfile.pubxml"
-  
-  "C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish" -cg ServerDynamic -gg -scom -sreg -sfrag -srd -dr "SERVER_DIR" -wixvar SourcePath -o "$(ProjectDir)ServerDynamic.wxs"
-  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"
-)</PreBuildEvent>
+  powershell -Command "(gc %27$(ProjectDir)ServerDynamic.wxs%27) -replace %27SourceDir%27, %27$(SolutionDir)Server\QRSharingApp.WebApplication\bin\Debug\net5.0-windows\win-x64\publish%27 | Out-File -encoding ASCII %27$(ProjectDir)ServerDynamic.wxs%27"</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

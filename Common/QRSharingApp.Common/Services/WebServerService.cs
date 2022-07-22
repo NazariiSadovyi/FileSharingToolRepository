@@ -1,4 +1,5 @@
 ﻿using ManagedNativeWifi;
+using NLog;
 using QRSharingApp.Common.Models;
 using QRSharingApp.Common.Services.Interfaces;
 using QRSharingApp.Shared;
@@ -12,6 +13,7 @@ namespace QRSharingApp.Common.Services
 {
     public class WebServerService : IWebServerService
     {
+        private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
         private NetworkInterfaceType[] _supportedNetworkTypes = new[] { NetworkInterfaceType.Wireless80211, NetworkInterfaceType.Ethernet };
 
         public string WebLocalhostUrl => SharedConstants.LocalhostPath;
@@ -71,19 +73,14 @@ namespace QRSharingApp.Common.Services
                 network.Name = item.Name;
                 network.Description = item.Description;
                 network.IsUp = item.OperationalStatus == OperationalStatus.Up;
+                network.ConnectionName = currentConnections.FirstOrDefault(_ => network.Id.Contains(_.Id.ToString().ToUpper()))?.ProfileName;
 
                 switch (item.NetworkInterfaceType)
                 {
                     case NetworkInterfaceType.Wireless80211:
-                        network.Adress = item.GetIPProperties()
-                            .UnicastAddresses?
-                            .FirstOrDefault(_ => _.Address.AddressFamily == AddressFamily.InterNetwork)?
-                            .Address?
-                            .ToString();
-                        network.ConnectionName = currentConnections.FirstOrDefault(_ => network.Id.Contains(_.Id.ToString().ToUpper()))?.ProfileName;
-                        break;
                     case NetworkInterfaceType.Ethernet:
-                        network.Adress = item.GetIPProperties()
+                        var ipProperties = item.GetIPProperties();
+                        network.Adress = ipProperties
                             .UnicastAddresses?
                             .FirstOrDefault(_ => _.Address.AddressFamily == AddressFamily.InterNetwork)?
                             .Address?
