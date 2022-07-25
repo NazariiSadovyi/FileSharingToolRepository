@@ -68,6 +68,9 @@ namespace QRSharingApp.Installer.CustomAction
                 inboundRule.Enabled = true;
                 //Allow through firewall
                 inboundRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
+                //Profiles
+                inboundRule.Profiles = (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE
+                    | (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN | (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC;
                 //Using protocol TCP
                 inboundRule.Protocol = 6; // TCP
                 inboundRule.LocalPorts = port.ToString();
